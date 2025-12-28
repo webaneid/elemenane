@@ -294,7 +294,8 @@ new Elemenane_Updater();
 function elemenane_add_manual_update_check() {
 	add_action( 'admin_notices', function() {
 		$screen = get_current_screen();
-		if ( 'themes' === $screen->base && isset( $_GET['elemenane_force_check'] ) ) {
+		// Support both 'ane_force_check' (from admin dashboard) and 'elemenane_force_check'
+		if ( 'themes' === $screen->base && ( isset( $_GET['ane_force_check'] ) || isset( $_GET['elemenane_force_check'] ) ) ) {
 			Elemenane_Updater::force_update_check();
 			?>
 			<div class="notice notice-success is-dismissible">
@@ -304,7 +305,7 @@ function elemenane_add_manual_update_check() {
 		}
 
 		// Debug: Show update transient data (remove after debugging).
-		if ( 'themes' === $screen->base && isset( $_GET['elemenane_debug'] ) ) {
+		if ( 'themes' === $screen->base && ( isset( $_GET['ane_debug'] ) || isset( $_GET['elemenane_debug'] ) ) ) {
 			$updates = get_site_transient( 'update_themes' );
 			echo '<div class="notice notice-info"><pre>';
 			echo 'Current version: ' . wp_get_theme()->get( 'Version' ) . "\n";
