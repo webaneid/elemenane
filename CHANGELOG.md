@@ -15,6 +15,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.2] - 2025-12-29
+
+### Changed
+- **Header Redesign** - Restructured desktop header layout
+  - Changed from 2-column (logo + banner) to 3-column layout (logo + menu + actions)
+  - Logo now fixed width (max 200px) on left
+  - Main menu centered in header with flexbox
+  - Action buttons and icons grouped on right side
+  - Maintained original class names for compatibility (`.ane-isi`, `.ane-kanan`)
+  - File: [tp/header-asli.php](tp/header-asli.php)
+
+- **Active Menu Styling** - Modern gradient and border design
+  - Replaced solid background with gradient (white to terang color)
+  - Added 3px bottom border with primary color (warna utama)
+  - Active menu link color changed to primary color
+  - File: [scss/_header.scss](scss/_header.scss)
+
+### Added
+- **ACF Header Fields** - Dynamic header customization
+  - Get In Touch Button Link - ACF Link field for page selection or custom URL
+  - Show Product/Cart Link - True/False toggle to show/hide product cart icon
+  - Phone Label - Customizable text field (default: "Sales Team")
+  - All fields accessible in **General Setting** admin page
+  - File: [inc/header-acf.php](inc/header-acf.php)
+
+- **Header Action Elements** - New interactive components
+  - Primary CTA button with ACF customization support
+  - SVG cart icon with mask technique (inherits currentColor)
+  - Conditional product archive link (only shows if enabled)
+  - Phone number display with customizable label
+  - Search button icon
+  - Files: [tp/header-asli.php](tp/header-asli.php), [scss/_header.scss](scss/_header.scss)
+
+### Fixed
+- **Submenu Hover Functionality** - Resolved click requirement issue
+  - Enhanced CSS specificity with child selectors (`> li`, `> a`)
+  - Added both `visibility` and `opacity` for smooth transitions
+  - Submenu now appears on hover without requiring click
+  - Fixed 3D rotateX animation with proper transform-origin
+  - Prevented navigation to parent menu when hovering for submenu
+  - File: [scss/_header.scss](scss/_header.scss)
+
+---
+
 ## [1.0.1] - 2025-12-28
 
 ### Fixed

@@ -66,7 +66,69 @@
                         ?>
                     </div>
                     <div class="ane-isi">
-                        <?php get_template_part('tp/banner/header') ?>
+                        <?php
+                            wp_nav_menu(  array(
+                            'theme_location' => 'menuutama',
+                            'container_id'    => 'main-menu',
+                            'echo'            => true,
+                            'fallback_cb'    => 'wp_page_menu',
+                            'items_wrap'      => '<ul class="main-menu">%3$s</ul>',
+                            'depth'          => 4,
+                            )
+                            );
+                        ?>
+                    </div>
+                    <div class="ane-kanan">
+                        <?php
+                        // Get In Touch Button - ACF Link Field
+                        $cta_link = get_field( 'ane_header_cta_link', 'option' );
+                        if ( $cta_link ) :
+                            $link_url    = $cta_link['url'];
+                            $link_title  = $cta_link['title'] ? $cta_link['title'] : __( 'Get In Touch', 'elemenane' );
+                            $link_target = $cta_link['target'] ? $cta_link['target'] : '_self';
+                            ?>
+                            <a class="btn-primary" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
+                                <?php echo esc_html( $link_title ); ?>
+                            </a>
+                        <?php else : ?>
+                            <a class="btn-primary" href="#contact"><?php echo esc_html__( 'Get In Touch', 'elemenane' ); ?></a>
+                        <?php endif; ?>
+
+                        <!-- Search Button -->
+                        <a class="icon-button search-button" href="#" aria-label="<?php echo esc_attr__( 'Search', 'elemenane' ); ?>">
+                            <i class="ane-search"></i>
+                        </a>
+
+                        <?php
+                        // Product/Cart Link - Show only if enabled in ACF
+                        $show_product = get_field( 'ane_header_show_product', 'option' );
+                        if ( $show_product ) :
+                            $product_archive = get_post_type_archive_link( 'product' );
+                            if ( $product_archive ) :
+                                ?>
+                                <a class="icon-button cart-button" href="<?php echo esc_url( $product_archive ); ?>" aria-label="<?php echo esc_attr__( 'Products', 'elemenane' ); ?>">
+                                    <span class="solar--cart-bold"></span>
+                                </a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <?php
+                        // Phone Number - Show only if filled
+                        $phone_number = get_field( 'ane_telepon', 'option' );
+                        if ( $phone_number ) :
+                            $phone_label = get_field( 'ane_telepon_label', 'option' );
+                            if ( empty( $phone_label ) ) {
+                                $phone_label = __( 'Sales Team', 'elemenane' );
+                            }
+                            ?>
+                            <div class="header-phone">
+                                <i class="ane-phone"></i>
+                                <div class="phone-info">
+                                    <span class="phone-label"><?php echo esc_html( $phone_label ); ?></span>
+                                    <span class="phone-number"><?php echo esc_html( $phone_number ); ?></span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
