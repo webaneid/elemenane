@@ -1,0 +1,863 @@
+/**
+ * Branch Archive Styles
+ *
+ * Styles for branch location archive with map, filters, and cards.
+ *
+ * @package elemenane
+ * @since 1.0.0
+ */
+
+// Container
+.ane-branch-archive {
+	padding: 40px 0;
+
+	@media (max-width: 768px) {
+		padding: 20px 0;
+	}
+}
+
+.ane-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+// Header
+.ane-branch-archive__header {
+	text-align: center;
+	margin-bottom: 40px;
+
+	h1 {
+		font-size: 2.5rem;
+		margin-bottom: 10px;
+		color: #333;
+
+		@media (max-width: 768px) {
+			font-size: 2rem;
+		}
+	}
+
+	p {
+		font-size: 1.1rem;
+		color: #666;
+	}
+}
+
+// Filter Section
+.ane-branch-filter {
+	display: flex;
+	gap: 15px;
+	margin-bottom: 30px;
+	align-items: center;
+	flex-wrap: wrap;
+
+	@media (max-width: 768px) {
+		flex-direction: column;
+		gap: 10px;
+	}
+}
+
+.ane-branch-filter__select {
+	flex: 1;
+	min-width: 200px;
+	padding: 12px 15px;
+	border: 2px solid #e0e0e0;
+	border-radius: 8px;
+	font-size: 1rem;
+	background-color: #fff;
+	transition: border-color 0.3s ease;
+
+	&:focus {
+		outline: none;
+		border-color: #007bff;
+	}
+
+	&:disabled {
+		background-color: #f5f5f5;
+		cursor: not-allowed;
+	}
+
+	@media (max-width: 768px) {
+		width: 100%;
+	}
+}
+
+.ane-branch-filter__reset {
+	padding: 12px 24px;
+	background-color: #6c757d;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: #5a6268;
+	}
+
+	@media (max-width: 768px) {
+		width: 100%;
+	}
+}
+
+// Google Maps
+.ane-branch-map {
+	width: 100%;
+	height: 500px;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	margin-bottom: 40px;
+
+	@media (max-width: 768px) {
+		height: 350px;
+		margin-bottom: 30px;
+	}
+}
+
+// Map Info Window
+.ane-map-info {
+	padding: 10px;
+	max-width: 250px;
+
+	h4 {
+		margin: 0 0 8px 0;
+		font-size: 1.1rem;
+		color: #333;
+	}
+
+	p {
+		margin: 5px 0;
+		font-size: 0.9rem;
+		color: #666;
+	}
+}
+
+.ane-map-info__detail {
+	display: inline-block;
+	margin-top: 10px;
+	padding: 6px 12px;
+	background-color: #007bff;
+	color: #fff !important;
+	text-decoration: none;
+	border-radius: 4px;
+	font-size: 0.9rem;
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: #0056b3;
+	}
+}
+
+// Branch Card List
+.ane-branch-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 25px;
+
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+}
+
+.ane-branch-list__empty,
+.ane-branch-list__empty-filter {
+	text-align: center;
+	padding: 60px 20px;
+	color: #999;
+	font-size: 1.1rem;
+	grid-column: 1 / -1;
+}
+
+// Branch Card
+.ane-branch-card {
+	background: #fff;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+	&:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+	}
+
+	&--active {
+		border: 3px solid #007bff;
+		transform: translateY(-5px);
+		box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
+	}
+}
+
+.ane-branch-card__image {
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+	background-color: #f0f0f0;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+
+	.ane-branch-card:hover & img {
+		transform: scale(1.05);
+	}
+}
+
+.ane-branch-card__content {
+	padding: 20px;
+}
+
+.ane-branch-card__title {
+	font-size: 1.25rem;
+	margin: 0 0 10px 0;
+	color: #333;
+	font-weight: 600;
+}
+
+.ane-branch-card__address,
+.ane-branch-card__phone {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin: 8px 0;
+	font-size: 0.95rem;
+	color: #666;
+	line-height: 1.5;
+
+	.dashicons {
+		flex-shrink: 0;
+		margin-top: 2px;
+		color: #007bff;
+	}
+}
+
+.ane-branch-card__actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 15px;
+
+	@media (max-width: 480px) {
+		flex-direction: column;
+	}
+}
+
+.ane-branch-card__detail,
+.ane-branch-card__directions {
+	flex: 1;
+	padding: 10px 15px;
+	text-align: center;
+	border-radius: 6px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+.ane-branch-card__detail {
+	background-color: #007bff;
+	color: #fff !important;
+
+	&:hover {
+		background-color: #0056b3;
+	}
+}
+
+.ane-branch-card__directions {
+	background-color: #fff;
+	color: #007bff !important;
+	border: 2px solid #007bff;
+
+	&:hover {
+		background-color: #007bff;
+		color: #fff !important;
+	}
+}
+
+// Modal
+.ane-branch-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+}
+
+.ane-branch-modal__overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(4px);
+}
+
+.ane-branch-modal__content {
+	position: relative;
+	max-width: 600px;
+	margin: 50px auto;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+	z-index: 10000;
+	animation: modalSlideIn 0.3s ease;
+
+	@media (max-width: 768px) {
+		margin: 20px;
+		max-width: calc(100% - 40px);
+	}
+}
+
+@keyframes modalSlideIn {
+	from {
+		transform: translateY(-50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.ane-branch-modal__close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	width: 36px;
+	height: 36px;
+	background: #f0f0f0;
+	border: none;
+	border-radius: 50%;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	z-index: 10001;
+
+	&:hover {
+		background-color: #e0e0e0;
+	}
+}
+
+.ane-branch-modal__inner {
+	padding: 40px 30px 30px;
+	max-height: 80vh;
+	overflow-y: auto;
+
+	@media (max-width: 768px) {
+		padding: 40px 20px 20px;
+	}
+
+	h2 {
+		margin: 0 0 20px 0;
+		font-size: 1.8rem;
+		color: #333;
+
+		@media (max-width: 768px) {
+			font-size: 1.5rem;
+		}
+	}
+}
+
+.ane-branch-modal__info {
+	margin-bottom: 25px;
+
+	p {
+		margin: 12px 0;
+		line-height: 1.6;
+		color: #555;
+
+		strong {
+			color: #333;
+			display: inline-block;
+			min-width: 120px;
+		}
+
+		a {
+			color: #007bff;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
+
+.ane-branch-modal__actions {
+	display: flex;
+	gap: 15px;
+	padding-top: 20px;
+	border-top: 1px solid #e0e0e0;
+
+	@media (max-width: 480px) {
+		flex-direction: column;
+	}
+}
+
+.ane-btn {
+	flex: 1;
+	padding: 12px 20px;
+	text-align: center;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	display: inline-block;
+}
+
+.ane-btn--primary {
+	background-color: #007bff;
+	color: #fff !important;
+
+	&:hover {
+		background-color: #0056b3;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+	}
+}
+
+.ane-btn--secondary {
+	background-color: #fff;
+	color: #007bff !important;
+	border: 2px solid #007bff;
+
+	&:hover {
+		background-color: #007bff;
+		color: #fff !important;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+	}
+}
+
+// ============================================
+// SINGLE BRANCH
+// ============================================
+
+.ane-single-branch {
+	background-color: #f9f9f9;
+	padding: 0;
+}
+
+// Header
+.ane-single-branch__header {
+	background: #fff;
+	margin-bottom: 40px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+	@media (max-width: 768px) {
+		margin-bottom: 30px;
+	}
+}
+
+.ane-single-branch__hero {
+	width: 100%;
+	height: 400px;
+	overflow: hidden;
+	background-color: #f0f0f0;
+
+	@media (max-width: 768px) {
+		height: 250px;
+	}
+}
+
+.ane-single-branch__hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.ane-single-branch__title-area {
+	padding: 30px;
+
+	@media (max-width: 768px) {
+		padding: 20px 0;
+	}
+}
+
+.ane-single-branch__title {
+	font-size: 2.5rem;
+	margin: 0 0 15px 0;
+	color: #333;
+	font-weight: 700;
+
+	@media (max-width: 768px) {
+		font-size: 1.8rem;
+	}
+}
+
+.ane-single-branch__location-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 16px;
+	background-color: #e8f4ff;
+	color: #007bff;
+	border-radius: 20px;
+	font-size: 0.95rem;
+	font-weight: 500;
+
+	.dashicons {
+		width: 20px;
+		height: 20px;
+		font-size: 20px;
+	}
+}
+
+// Content Layout
+.ane-single-branch__content {
+	display: grid;
+	grid-template-columns: 1fr 350px;
+	gap: 40px;
+	margin-bottom: 60px;
+
+	@media (max-width: 992px) {
+		grid-template-columns: 1fr;
+		gap: 30px;
+	}
+}
+
+// Main Content
+.ane-single-branch__main {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.ane-single-branch__section {
+	background: #fff;
+	border-radius: 12px;
+	padding: 30px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+	@media (max-width: 768px) {
+		padding: 20px;
+	}
+}
+
+.ane-single-branch__section-title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 1.5rem;
+	margin: 0 0 20px 0;
+	color: #333;
+	font-weight: 600;
+	padding-bottom: 15px;
+	border-bottom: 2px solid #f0f0f0;
+
+	.dashicons {
+		width: 24px;
+		height: 24px;
+		font-size: 24px;
+		color: #007bff;
+	}
+}
+
+.ane-single-branch__section-content {
+	color: #555;
+	line-height: 1.8;
+
+	p {
+		margin: 10px 0;
+	}
+
+	strong {
+		color: #333;
+	}
+}
+
+// Map
+.ane-single-branch__map-container {
+	position: relative;
+}
+
+.ane-single-branch__map {
+	width: 100%;
+	height: 400px;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	margin-bottom: 15px;
+
+	@media (max-width: 768px) {
+		height: 300px;
+	}
+}
+
+.ane-btn--directions {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 24px;
+	background-color: #28a745;
+	color: #fff !important;
+	text-decoration: none;
+	border-radius: 8px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+
+	.dashicons {
+		width: 20px;
+		height: 20px;
+		font-size: 20px;
+	}
+
+	&:hover {
+		background-color: #218838;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+	}
+}
+
+// Gallery
+.ane-single-branch__gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 15px;
+
+	@media (max-width: 768px) {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+	}
+}
+
+.ane-single-branch__gallery-item {
+	display: block;
+	border-radius: 8px;
+	overflow: hidden;
+	aspect-ratio: 4/3;
+	transition: transform 0.3s ease;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	&:hover {
+		transform: scale(1.05);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
+}
+
+// Sidebar
+.ane-single-branch__sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.ane-single-branch__card {
+	background: #fff;
+	border-radius: 12px;
+	padding: 25px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ane-single-branch__card-title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 1.25rem;
+	margin: 0 0 20px 0;
+	color: #333;
+	font-weight: 600;
+	padding-bottom: 15px;
+	border-bottom: 2px solid #f0f0f0;
+
+	.dashicons {
+		width: 22px;
+		height: 22px;
+		font-size: 22px;
+		color: #007bff;
+	}
+}
+
+// Contact List
+.ane-single-branch__contact-list {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.ane-single-branch__contact-item {
+	display: flex;
+	gap: 12px;
+
+	.dashicons {
+		flex-shrink: 0;
+		width: 24px;
+		height: 24px;
+		font-size: 24px;
+		color: #007bff;
+		margin-top: 2px;
+	}
+
+	div {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	strong {
+		font-size: 0.85rem;
+		color: #666;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	a {
+		color: #333;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s ease;
+
+		&:hover {
+			color: #007bff;
+		}
+	}
+}
+
+// Hours
+.ane-single-branch__hours {
+	color: #555;
+	line-height: 1.8;
+	font-size: 0.95rem;
+}
+
+// Related Branches
+.ane-single-branch__related {
+	background: #fff;
+	border-radius: 12px;
+	padding: 40px 30px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	margin-bottom: 40px;
+
+	@media (max-width: 768px) {
+		padding: 30px 20px;
+	}
+}
+
+.ane-single-branch__related-title {
+	font-size: 1.8rem;
+	margin: 0 0 30px 0;
+	color: #333;
+	font-weight: 600;
+	text-align: center;
+
+	@media (max-width: 768px) {
+		font-size: 1.5rem;
+		margin-bottom: 20px;
+	}
+}
+
+.ane-single-branch__related-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	gap: 25px;
+
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+}
+
+// Related Branch Card (Mini)
+.ane-branch-card-mini {
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	border-radius: 12px;
+	overflow: hidden;
+	transition: all 0.3s ease;
+
+	&:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+		border-color: #007bff;
+	}
+}
+
+.ane-branch-card-mini__image {
+	width: 100%;
+	height: 160px;
+	overflow: hidden;
+	background-color: #f0f0f0;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+
+	a:hover img {
+		transform: scale(1.1);
+	}
+}
+
+.ane-branch-card-mini__content {
+	padding: 20px;
+}
+
+.ane-branch-card-mini__title {
+	margin: 0 0 10px 0;
+	font-size: 1.1rem;
+	font-weight: 600;
+
+	a {
+		color: #333;
+		text-decoration: none;
+		transition: color 0.3s ease;
+
+		&:hover {
+			color: #007bff;
+		}
+	}
+}
+
+.ane-branch-card-mini__location,
+.ane-branch-card-mini__phone {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 8px 0;
+	font-size: 0.9rem;
+	color: #666;
+
+	.dashicons {
+		flex-shrink: 0;
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+		color: #007bff;
+	}
+}
+
+.ane-btn--small {
+	display: inline-block;
+	margin-top: 15px;
+	padding: 8px 16px;
+	background-color: #007bff;
+	color: #fff !important;
+	text-decoration: none;
+	border-radius: 6px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	transition: all 0.3s ease;
+
+	&:hover {
+		background-color: #0056b3;
+		transform: translateY(-2px);
+		box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
+	}
+}

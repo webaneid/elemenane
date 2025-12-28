@@ -1,0 +1,79 @@
+.pagination-area {
+    @include DisplayBlock;
+    margin-bottom: 30px;
+
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--ane-warna-putih);
+
+      li {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 8px;
+          font-size: 16px;
+          line-height: 40px;
+          cursor: pointer;
+          text-align: center;
+          background: rgba(var(--ane-warna-gelap-rgb),0.08);
+
+          .page-numbers {
+              color: var(--ane-warna-text);
+              width: 40px;
+              height: 40px;
+              border-radius: 3px;
+          }
+
+          .current {
+              color: var(--ane-warna-putih);
+              background: var(--ane-warna-utama);
+              font-weight: 600;
+              border: 1px solid var(--ane-warna-utama);
+          }
+          .prev,
+          .next {
+              background: var(--ane-warna-putih);
+              color: var(--ane-warna-utama);
+              pointer-events: none;
+              font-size: 14px;
+          }
+          .dots {
+              background: var(--ane-warna-putih);
+              color: var(--ane-warna-utama);
+          }
+
+          &:last-child {
+              margin-right: 0;
+          }
+            &:hover {
+                background: var(--ane-warna-utama-2);
+
+                .page-numbers {
+                    color: var(--ane-warna-gelap);
+                }
+            }
+      }
+    }
+
+    @include mobile {
+        ul {
+            li {
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 32px;
+                margin-right: 3px;
+
+                .page-numbers {
+                    width: 32px;
+                    height: 32px;
+                }
+                .prev,
+                .next {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}

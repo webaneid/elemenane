@@ -1,0 +1,186 @@
+.ane-col-73 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .ane-kiri {
+        width: 70%;
+        padding: 0 7.5px 0 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+
+        @include tablet {
+            margin-bottom: 30px;
+            padding: 0;
+        }
+
+        .ane-kiri-1 {
+            width: 50%;
+            padding: 0 7.5px 0 0;
+            
+        }
+        .ane-kiri-2 {
+            width: 50%;
+            padding: 0 0 0 7.5px;
+        }
+    }
+    .ane-kanan {
+        padding: 0 0 0 7.5px;
+        width: 30%;
+        @include tablet {
+            padding: 0;
+        }
+    }
+}
+.ane-col-46 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .ane-kiri {
+        width: 40%;
+        padding: 0 7.5px 0 0;
+    }
+    .ane-kanan {
+        padding: 0 0 0 7.5px;
+        width: 60%;
+    }
+}
+.ane-col-3 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .ane-isi {
+        width: calc(33.333% - 10px);
+        position: relative;
+        margin-right: 15px;
+
+        &:nth-child(3n+3) {
+          margin-right: 0px;
+        }
+        @include mobile {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    @include tablet {
+
+        .ane-isi {
+            width: calc(50% - 8px);
+            margin-right: 15px;
+
+            &:nth-child(2n+2) {
+              padding-right: 0px;
+              margin-right: 0;
+            }
+            &:nth-child(3n+3) {
+                display: block;
+                margin: 15px auto;
+                width: 70%;
+                padding-right: 0;
+                padding-left: 0;
+
+                .ane-konten-overlay {
+                    .entry-header {
+                        height: 250px;
+
+                        .post-content {
+                            padding: 50px 20px 20px 20px;
+                            h2 {
+                                font-size: 20px;
+                            }
+                        }
+                    }
+                }
+                .ane-konten-lis {
+                    .entry-content {
+                        h2 {
+                            font-size: 20px;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    
+}
+.ane-col-55 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .ane-isi {
+        width: calc(50% - 8px);
+        position: relative;
+        margin-right: 15px;
+
+        &:nth-child(2n+2) {
+          margin-right: 0px;
+        }
+        @include mobile {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
+
+.ane-col-64 {
+    @include FlexRow;
+    align-items: flex-start;
+    justify-content: center;
+    @include tablet {
+        justify-content: center;
+    }
+
+    .ane-kiri {
+        width: calc(65% - 15px);
+        margin-right: 15px;
+        @include tablet {
+            width: 80%;
+        }
+        @include mobile {
+            width: 100%;
+            margin: 0;
+        }
+    }
+    .ane-kanan {
+        width: calc(35% - 15px);
+        margin-left: 15px;
+
+        @include tablet {
+            width: 80%;
+            margin: auto;
+        }
+        @include mobile {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
+
+.ane-col-8 {
+    @include FlexRow;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+
+    .ane-isi {
+        width: 80%;
+        margin: auto;
+        @include tablet {
+            width: 90%;
+        }
+        @include mobile {
+            width: 100%;
+        }
+    }
+}

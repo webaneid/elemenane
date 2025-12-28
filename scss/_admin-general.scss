@@ -1,0 +1,92 @@
+@media screen and (max-width: 600px) {
+  #wpbody {
+    padding-top: 0px !important;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+      display: block;
+      width: 100%;
+      height: 30vh;
+      background-color: var(--ane-color-primary);
+      background: linear-gradient(180deg,rgba(var(--ane-color-primary-rgb), 0.71) 50%, rgba(var(--ane-color-white-rgb), 0) 100%);
+      z-index: 0;
+    }
+  }
+}
+@media screen and (max-width: 782px) {
+  body.admin-bar {
+    padding-top: 56px !important;
+  }
+}
+@media screen and (max-width: 782px) {
+  .wrap h1.wp-heading-inline {
+    color: var(--ane-color-white);
+  }
+}
+
+.acf-fields.-border {
+  border-color: var(--ane-color-light) !important;
+  border-width: 0 !important;
+  background: #fff;
+}
+.acf-fields > .acf-field {
+  border-top-width: 0 !important;
+}
+.acf-input .acf-fields > .acf-field {
+  padding: 0 0 20px;
+}
+.acf-field .acf-label label {
+  font-weight: 600;
+}
+
+#menu-management .menu-edit, #menu-settings-column .accordion-container, .comment-ays, .feature-filter, .manage-menus, .menu-item-handle, .popular-tags, .stuffbox, .widget-inside, .widget-top, .widgets-holder-wrap, .wp-editor-container, p.popular-tags, table.widefat {
+  border: 1px solid var(--ane-color-white) !important;
+}
+
+.wp-core-ui select {
+  line-height: 1 !important;
+}
+
+// ACF Options Page - Mobile layout adjustment
+@media (max-width: 782px) {
+  #poststuff #post-body.columns-2 {
+    margin-right: 0;
+    display: flex;
+    flex-direction: column;
+
+    // Content area (ACF fields) - show FIRST
+    #post-body-content {
+      order: 1;
+      margin-bottom: 1rem;
+    }
+
+    // Sidebar (Publish box) - show LAST
+    #postbox-container-1 {
+      order: 2;
+      width: 100% !important;
+      margin: 0;
+    }
+  }
+
+  // Make Update button full width and taller
+  #submitdiv {
+    #major-publishing-actions,
+    #publishing-action {
+      text-align: left;
+
+      .button,
+      #publish {
+        width: 100%;
+        height: 48px;
+        font-size: 0.9375rem;
+        font-weight: 500;
+        justify-content: center;
+      }
+    }
+  }
+}

@@ -1,0 +1,300 @@
+.right-sidebar {
+    @include DisplayBlock;
+
+    .ane-sidebar {
+        background: var(--ane-warna-putih);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+        border-bottom: 3px solid var(--ane-warna-utama);
+
+        h2.widget-title {
+            color: var(--ane-warna-gelap);
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+            padding-left: 15px;
+            z-index: 1;
+            position: relative;
+            margin-bottom: 20px;
+
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0px;
+                width: 0.6rem;
+                height: 1.5rem;
+                background: var(--ane-warna-alternatif);
+                border-radius: 0 4px 4px 0;
+            }
+        }
+
+        &>ul {
+            padding: 0;
+            margin: 0;
+
+            li {
+                color: var(--ane-warna-gelap);
+                list-style: none;
+                position: relative;
+                padding: 7.5px 0 7.5px 20px;
+                border-bottom: 1px solid;
+                @include BorderColor;
+
+                &:before {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    top: 7.5px;
+                    content: '\e901';
+                    font-family: FontAne;
+                    font-size: 7px;
+                    line-height: 24px;
+                    color: var(--ane-warna-utama);
+                    font-weight: 400;
+                }
+
+                a {
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: var(--ane-warna-text);
+                    @include Transisi;
+
+                    &:hover {
+                        color: var(--ane-warna-utama);
+                    }
+                    @include mobile {
+                        font-size: 16px;
+                        font-weight: 700;
+                        line-height: 1.4;
+                    }
+                }
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+        .post-widget {
+            .ane-konten-lis {
+                flex-direction: row-reverse;
+                margin-bottom: 0;
+                padding: 7.5px 0 7.5px 0;
+                border-bottom: 1px solid;
+                @include BorderColor;
+
+                .entry-header {
+                    padding: 0 0 0 7.5px;
+
+                }
+                .entry-content {
+                    padding: 0;
+
+                    h2 {
+                        font-size: 15px;
+                        font-weight: 600;
+                        margin-bottom: 10px;
+                        @include mobile {
+                            font-size: 16px;
+                            line-height: 1.4;
+                            margin-bottom: 15px;
+                            font-weight: 700;
+                        }
+
+                    }
+                    .post-meta-info {
+                        ul {
+                            li {
+                                border-bottom: 0;
+                                font-size: 12px;
+                                padding: 0;
+
+                                &::before {
+                                    content: '' !important;
+                                    @include tablet {
+                                        content: '';
+                                    }
+                                }
+
+                                .content-category {
+                                    margin-right: 0;
+                                    a {
+                                        font-size: 12px;
+                                        margin-right: 0;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .wp-block-table {
+            margin-bottom: 0;
+            box-shadow: 0 0 0;
+            border-radius: 0;
+        }
+
+        .wp-block-embed {
+            margin-bottom: 0;
+        }
+
+        ul.wp-block-social-links {
+            li {
+                font-size: 24px;
+                line-height: 1;
+                padding-top: 0;
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+        }
+
+        .wp-block-tag-cloud {
+            margin-bottom: 0;
+            a {
+                background-color: var(--ane-warna-utama);
+                color: var(--ane-warna-terang);
+                padding: 3px 8px;
+                font-size: 15px !important;
+                border-radius: 3px;
+                margin-right: 3px;
+                margin-bottom: 5px;
+                display: inline-block;
+                text-transform: capitalize;
+                @include Transisi;
+
+                &:before {
+                    content: '#';
+                    color: var(--ane-warna-alternatif);
+                }
+
+                &:hover {
+                    color: var(--ane-warna-terang);
+                    background-color: var(--ane-warna-utama);
+                }
+
+            }
+        }
+        .wp-block-image {
+            margin-bottom: 0;
+
+            img {
+                width: 100%;
+                max-width: none;
+                border-radius: 4px;
+            }
+            figcaption {
+                margin-top: 0;
+                margin-bottom: 0;
+                display: block;
+                padding: 10px;
+                padding-bottom: 0;
+                font-size: 14px;
+                text-align: center;
+                font-style: italic;
+                width: 100%;
+            }
+        }
+        .screen-reader-text {
+            display: none;
+        }
+
+        .wp-block-gallery {
+            margin-bottom: 0;
+        }
+        .columns-2 {
+            .wp-block-image {
+                width: calc(50% - 15px) !important;
+                margin-right: 5px!important;
+                margin-bottom: 5px!important;
+
+                &:nth-child(2n+2) {
+                  margin-right: 0px;
+                }
+            }
+        }
+        .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper {
+          padding: 4px;
+          border: 1px solid var(--ane-warna-utama);
+        }
+        .wp-block-search__inside-wrapper {
+            .wp-block-search__input {
+                border: 1px solid var(--ane-warna-utama);
+            }
+            .wp-block-search__button {
+                background: var(--ane-warna-utama);
+                border-color: var(--ane-warna-utama);
+                color: var(--ane-warna-terang);
+                border-radius: 2px;
+                padding: 0 8px;
+            }
+        }
+
+        .columns-3 {
+            .wp-block-image {
+                width: calc(34% - 15px) !important;
+                margin-right: 5px!important;
+                margin-bottom: 5px!important;
+
+                &:nth-child(3n+3) {
+                  margin-right: 0px;
+                }
+
+                img {
+                    border-radius: 2px !important;
+                }
+            }
+        }
+
+        @include mobile {
+            @include DisplayLebar;
+
+            .ane-sidebar {
+                border-radius: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+    }
+
+}
+
+.ane-cari {
+    @include DisplayBlock;
+    position: relative;
+    form {
+        display: flex;
+        flex: auto;
+        flex-wrap: nowrap;
+        max-width: 100%;
+
+        input {
+            padding: 8px;
+            flex-grow: 1;
+            min-width: 3em;
+            border: 1px solid var(--ane-warna-utama);
+        }
+        button {
+            background: var(--ane-warna-utama);
+            border: 1px solid var(--ane-warna-utama-2);
+            padding: .375em .625em;
+            color: var(--ane-warna-terang);
+            margin-left: .625em;
+            word-break: normal;
+            border-radius: 4px;
+            cursor: pointer;
+
+        }
+
+        &:hover {
+            input {
+                border: 1px solid var(--ane-warna-utama-2);
+            }
+            button {
+                background: var(--ane-warna-utama-2);
+            }
+        }
+    }
+}

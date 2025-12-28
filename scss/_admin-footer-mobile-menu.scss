@@ -1,0 +1,152 @@
+/* ============================================
+   ADMIN FOOTER MOBILE MENU
+   Bottom navigation bar for mobile admin
+   ============================================ */
+
+/* Only show on mobile */
+@media screen and (max-width: 782px) {
+	.ane-footer-mobile-menu {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: transparent;
+		z-index: 99999;
+		padding-bottom: env(safe-area-inset-bottom, 0); /* Safe area for notched devices */
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	.ane-footer-nav {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding: 0.5rem 26px;
+		max-width: 100%;
+		background: rgba var(--ane-color-white-rgb),.2 !important;
+		border: 1px solid hsla(0,0%,100%,.3);
+		height: 48px !important;
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		box-shadow: 0 4px 30px rgba(0,0,0,.1);
+		border-radius: 9999px;
+	}
+
+	.ane-footer-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		color: var(--ane-color-body, #474448);
+		transition: all 0.2s ease;
+		padding: 0.5rem;
+		flex: 1;
+		min-width: 0; /* Prevent flex overflow */
+		
+
+		&:hover,
+		&:focus {
+			color: var(--ane-color-primary, #2d232e);
+			outline: none;
+		}
+
+		&.is-active {
+			background: rgba(var(--ane-color-white-rgb), 0.4);
+			border: 1px solid rgba(var(--ane-color-white-rgb), 0.8);
+			border-radius: 15px;
+			
+
+			.ane-footer-icon {
+				opacity: 1;
+			}
+
+			.ane-footer-label {
+				font-weight: 600;
+			}
+		}
+	}
+
+	.ane-footer-icon {
+		width: 20px;
+		height: 20px;
+		margin-bottom: 0.25rem;
+		opacity: 0.7;
+		transition: opacity 0.2s ease;
+
+		/* Ensure SVG inherits opacity */
+		svg, g, path {
+			opacity: inherit;
+		}
+	}
+
+	.ane-footer-label {
+		font-size: 0.625rem; /* 10px - small but readable */
+		line-height: 1.2;
+		text-align: center;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+	}
+
+	/* Center create button - primary color */
+	.ane-footer-create {
+		margin-top: -45px;
+		.ane-footer-icon {
+			width: 25px;
+			height: 25px;
+			background: var(--ane-color-primary, #2d232e);
+			color: var(--ane-color-light, #f1f0ea);
+			border-radius: 50%;
+			padding: 6px;
+			opacity: 1;
+			box-shadow: 0 2px 8px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.2);
+		}
+
+		.ane-footer-label {
+			font-weight: 600;
+			color: var(--ane-color-primary, #2d232e);
+		}
+
+		&:hover,
+		&:focus {
+			.ane-footer-icon {
+				transform: scale(1.05);
+				box-shadow: 0 3px 12px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.3);
+			}
+		}
+
+		&.is-active {
+			.ane-footer-icon {
+				background: var(--ane-color-primary, #2d232e);
+			}
+		}
+	}
+
+	/* Add bottom padding to admin content to prevent overlap */
+	#wpwrap {
+		padding-bottom: 70px;
+	}
+
+	/* Animation */
+	.ane-footer-mobile-menu {
+		animation: ane-slide-up 0.3s ease;
+	}
+
+	@keyframes ane-slide-up {
+		from {
+			transform: translateY(100%);
+			opacity: 0;
+		}
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+}
+
+/* Hide on desktop */
+@media screen and (min-width: 783px) {
+	.ane-footer-mobile-menu {
+		display: none;
+	}
+}

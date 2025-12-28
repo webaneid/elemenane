@@ -1,0 +1,347 @@
+/**
+ * Admin Login Page Styles
+ *
+ * Glassmorphism login page with Webane green branding.
+ * Loaded via login_enqueue_scripts hook from inc/admin/customizer.php
+ *
+ * @package elemenane
+ */
+
+// Webane color palette
+:root {
+	--webane-green: #73ab01;
+	--webane-green-dark: #264113;
+	--webane-green-darker: #0c1606;
+	--webane-green-light: #e3eecc;
+}
+
+/* Dark background with blur circles */
+body.login {
+	background: #0a0a0a;
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Gradient blur circles */
+body.login::before,
+body.login::after {
+	content: '';
+	position: fixed;
+	border-radius: 50%;
+	filter: blur(120px);
+	z-index: 1;
+	pointer-events: none;
+}
+
+/* Green circle - top right */
+body.login::before {
+	width: 400px;
+	height: 400px;
+	background: linear-gradient(135deg, var(--webane-green) 0%, var(--webane-green-dark) 100%);
+	top: -100px;
+	right: -100px;
+	opacity: 0.6;
+}
+
+/* Dark green circle - bottom left */
+body.login::after {
+	width: 350px;
+	height: 350px;
+	background: linear-gradient(135deg, var(--webane-green-dark) 0%, var(--webane-green-darker) 100%);
+	bottom: -80px;
+	left: -80px;
+	opacity: 0.7;
+}
+
+/* Login container */
+#login {
+	position: relative;
+	z-index: 10;
+	padding: 5% 0;
+}
+
+/* Glassmorphism card */
+#loginform,
+#lostpasswordform,
+#registerform {
+	background: rgba(255, 255, 255, 0.08);
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 20px;
+	padding: 2.5rem 2rem;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	margin-top: 1.5rem;
+}
+
+/* Logo container */
+#login h1 {
+	margin-bottom: 1rem;
+}
+
+#login h1 a {
+	background-image: url('https://webane.com/aset/webane-login.svg');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 180px;
+	height: 80px;
+	margin: 0 auto;
+	display: block;
+}
+
+/* Login title */
+.login h1.login-title {
+	color: #ffffff;
+	font-size: 1.75rem;
+	font-weight: 700;
+	text-align: center;
+	margin: 1.5rem 0 0.5rem;
+}
+
+.login p.login-subtitle {
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 0.95rem;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+/* Labels */
+#loginform label,
+#lostpasswordform label,
+#registerform label {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 0.9rem;
+	font-weight: 500;
+	margin-bottom: 0.5rem;
+	display: block;
+}
+
+/* Input fields */
+#loginform input[type="text"],
+#loginform input[type="password"],
+#loginform input[type="email"],
+#lostpasswordform input[type="text"],
+#lostpasswordform input[type="email"],
+#registerform input[type="text"],
+#registerform input[type="email"] {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+	color: #ffffff;
+	padding: 0.85rem 1rem;
+	font-size: 0.95rem;
+	width: 100%;
+	transition: all 0.3s ease;
+	backdrop-filter: blur(10px);
+}
+
+#loginform input[type="text"]:focus,
+#loginform input[type="password"]:focus,
+#loginform input[type="email"]:focus,
+#lostpasswordform input[type="text"]:focus,
+#lostpasswordform input[type="email"]:focus,
+#registerform input[type="text"]:focus,
+#registerform input[type="email"]:focus {
+	background: rgba(255, 255, 255, 0.15);
+	border-color: var(--webane-green);
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(115, 171, 1, 0.1);
+}
+
+#loginform input[type="text"]::placeholder,
+#loginform input[type="password"]::placeholder,
+#loginform input[type="email"]::placeholder {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+/* Remember me & Forgot password row */
+.login .forgetmenot {
+	float: left;
+	margin: 0;
+}
+
+.login .forgetmenot label {
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 0.875rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.login .forgetmenot input[type="checkbox"] {
+	margin: 0;
+	accent-color: var(--webane-green);
+}
+
+.login #nav,
+.login #backtoblog {
+	text-align: center;
+	margin: 0;
+	padding: 1rem 0 0;
+}
+
+.login #nav a,
+.login #backtoblog a {
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 0.875rem;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.login #nav a:hover,
+.login #backtoblog a:hover {
+	color: var(--webane-green-light);
+}
+
+/* Submit button */
+#loginform .button-primary,
+#lostpasswordform .button-primary,
+#registerform .button-primary {
+	background: linear-gradient(135deg, var(--webane-green) 0%, var(--webane-green-dark) 100%);
+	border: none;
+	border-radius: 10px;
+	color: #ffffff;
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 0.9rem 2rem;
+	width: 100%;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px rgba(115, 171, 1, 0.3);
+	margin-top: 1rem;
+}
+
+#loginform .button-primary:hover,
+#lostpasswordform .button-primary:hover,
+#registerform .button-primary:hover {
+	background: linear-gradient(135deg, #86c401 0%, #2f5016 100%);
+	box-shadow: 0 6px 20px rgba(115, 171, 1, 0.4);
+	transform: translateY(-2px);
+}
+
+#loginform .button-primary:active,
+#lostpasswordform .button-primary:active,
+#registerform .button-primary:active {
+	transform: translateY(0);
+}
+
+/* Signup link */
+.login .signup-link {
+	text-align: center;
+	margin-top: 1.5rem;
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 0.9rem;
+}
+
+.login .signup-link a {
+	color: var(--webane-green);
+	font-weight: 600;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.login .signup-link a:hover {
+	color: var(--webane-green-light);
+}
+
+/* Messages & Notices - Glassmorphism style */
+.login .message,
+.login .notice,
+.login .success,
+.login #login_error {
+	background-color: rgba(255, 255, 255, 0.1) !important;
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-left: 4px solid var(--webane-green) !important;
+	color: #ffffff;
+	border-radius: 10px;
+	padding: 0.95rem 1.1rem;
+	margin-bottom: 1.5rem;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	word-wrap: break-word;
+}
+
+.login #login_error {
+	border-left-color: #ff6b6b !important;
+	background: rgba(255, 107, 107, 0.12) !important;
+}
+
+.login .message a,
+.login .notice a,
+.login .success a {
+	color: var(--webane-green-light);
+	font-weight: 500;
+	text-decoration: underline;
+}
+
+.login .message a:hover,
+.login .notice a:hover,
+.login .success a:hover {
+	color: #ffffff;
+}
+
+/* Language switcher */
+.language-switcher {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 100;
+}
+
+.language-switcher select {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: #ffffff;
+	padding: 0.5rem 2rem 0.5rem 1rem;
+	border-radius: 8px;
+	backdrop-filter: blur(10px);
+	font-size: 0.875rem;
+}
+
+/* Privacy link */
+.privacy-policy-page-link {
+	text-align: center;
+	margin-top: 1.5rem;
+}
+
+.privacy-policy-page-link a {
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 0.8rem;
+	text-decoration: none;
+}
+
+.privacy-policy-page-link a:hover {
+	color: var(--webane-green-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	body.login::before {
+		width: 300px;
+		height: 300px;
+		top: -50px;
+		right: -50px;
+	}
+
+	body.login::after {
+		width: 250px;
+		height: 250px;
+		bottom: -50px;
+		left: -50px;
+	}
+
+	#loginform,
+	#lostpasswordform,
+	#registerform {
+		padding: 2rem 1.5rem;
+	}
+
+	.login h1.login-title {
+		font-size: 1.5rem;
+	}
+}

@@ -1,0 +1,18 @@
+.owl-carousel {
+    .owl-dots {
+        @include DisplayBlock;
+        text-align: center;
+        .owl-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--ane-warna-utama);
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 5px;
+        }
+        .active {
+            width: 20px;
+            background-color: var(--ane-warna-utama-2);
+        }
+    }
+}

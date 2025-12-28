@@ -1,0 +1,379 @@
+body {
+    font-family: var(--ane-typography-primary-font-family);
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:"slnt" 0;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+    margin: 0;
+    text-rendering: optimizeLegibility;
+    visibility: visible;
+    color: var(--ane-warna-text);
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+}
+a {
+    text-decoration: none !important;
+    color: var(--ane-warna-utama);
+    transition: all .5s ease-in;
+
+    &:hover {
+        color: var(--ane-warna-alternatif);
+        text-decoration: none !important;
+    }
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--ane-typography-secondary-font-family);
+    font-weight: var(--ane-typography-secondary-font-weight);
+    letter-spacing: var(--ane-typography-secondary-letter-spacing);
+    color: var(--ane-warna-gelap);
+}
+h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+h2 {
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+h3 {
+    font-size: 22px;
+    margin-bottom: 30px;
+}
+h4 {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+p {
+    letter-spacing: .003em;
+    line-height: 1.7;
+}
+
+ul {
+    margin:0;
+    padding: 0;
+    li {
+        list-style: none;
+    }
+}
+
+.container {
+    display: block;
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
+    position: relative;
+
+    @include tablet {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    @include mobile {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+}
+.row {
+    @include FlexRow;
+    width: 100%;
+    max-width: 100%;
+}
+.col-md-4,
+.col-lg-4,
+.col-xl-4 {
+    width: 33.333%;
+    @include mobile {
+        width: 100%;
+    }
+}
+.col-12 {
+    @include mobile {
+        width: 100%;
+    }
+}
+
+.breadcrumb {
+    padding: 15px 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 40px;
+    background: rgba(var(--ane-warna-gelap-rgb),0.02);
+
+    @include mobile {
+        margin-bottom: 20px;
+        padding: 8px 0;
+
+        .breadcrumb_last {
+            display: none;
+        }
+    }
+}
+.webane-wrapper {
+    @include DisplayBlock;
+    max-width: 100%;
+    position: relative;
+
+    @include mobile {
+        overflow: hidden;
+    }
+}
+.content-area {
+    @include DisplayBlock;
+    margin-bottom: 70px;
+
+    @include mobile {
+        margin-bottom: 40px;
+    }
+}
+.post-tengah {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.ane-image {
+    @include DisplayBlock;
+    margin: 0;
+    padding: 0;
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+
+.author_bio_section {
+    @include DisplayBlock;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px 0 rgba(var(--ane-warna-gelap-rgb),0.1);
+    color: var(--e-global-color-text);
+    position: relative;
+    border-left: 3px solid var(--ane-warna-utama);
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    &:before {
+        content:"\e904";
+        font-family:'FontAne';
+        color: rgba(var(--ane-warna-gelap-rgb),0.1);
+        font-style: normal;
+        font-size: 100px;
+        line-height: 1;
+        position: absolute;
+        left: 0;
+        top: -10px;
+        z-index: -1;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    h2 {
+        margin-bottom: 15px;
+        font-size: 20px;
+        color: var(--ane-warna-gelap);
+    }
+    .author_details {
+        @include DisplayBlock;
+
+        img {
+            width: 100px;
+            height: auto;
+            display: block;
+            float: left;
+            margin-right: 20px;
+            border-radius: 8px;
+            border: 1px solid;
+            @include BorderColor;
+        }
+    }
+}
+.share-this {
+    @include DisplayBlock;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 30px;
+
+    .social-share-buttons {
+        @include FlexColumn;
+        width: 100%;
+        position: relative;
+        >ul {
+            @include FlexRow;
+            width: 100%;
+            align-items: center;
+            align-content: center;
+
+            >li {
+                text-align: center;
+                border-radius: 4px;
+                margin-right: 8px;
+                font-size: 15px;
+                transition: all 0.3s ease-in-out;
+
+                @include mobile {
+                    margin-right: 5px;
+                }
+
+                .fb-like {
+                    margin:0;
+                    span {
+                        width: 159px !important;
+                    }
+                }
+                a {
+                    background-color: var(--ane-warna-utama);
+                    height: 29px;
+                    width: 29px;
+                    line-height: 29px;
+                    border-radius: 5px;
+                    color: var(--ane-warna-putih);
+                    display: block;
+                    text-align: center;
+                }
+                a.twitter {
+                    background-color: #28a6e3;
+                }
+                a.whatsapp {
+                    background-color: #1ebea5;
+                }
+                a.linkedin {
+                    background-color: #0077b5;
+                }
+            }
+        }
+    }
+}
+.ane-sosmed {
+    @include DisplayBlock;
+
+    ul {
+        @include DisplayBlock;
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+
+        li {
+            display: inline-block;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+            text-align: center;
+            background: black;
+            border-radius: 3px;
+
+            i {
+                font-size: 15px;
+                line-height: 35px;
+            }
+
+
+            a {
+                color: var(--ane-warna-putih)
+            }
+
+        }
+        li.whatsapp {
+            background: #04b33e;
+        }
+        li.twitter {
+            background: #1DA1F2;
+        }
+        li.facebook {
+            background: #4867AA;
+        }
+        li.youtube {
+            background: #ff0000;
+        }
+        li.instagram {
+            background: #d23095;
+        }
+        li.linkedin {
+            background: #0077b0;
+        }
+    }
+}
+
+.acf-map {
+    width: 100%;
+    height: 636px;
+    margin: 20px 0;
+
+    img {
+        max-width: inherit !important;
+        float: left;
+        margin-right: 10px;
+    }
+    .marker {
+        width: 100%;
+        display: block;
+        height: auto;
+
+        img {
+            width: 100px;
+            height: auto;
+            display: block;
+            float: left;
+        }
+    }
+}
+
+.wpcf7-form {
+    label {
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    input[type=text], input[type=email], select, textarea  {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px 15px;
+            display: block;
+            border: 1px solid;
+            @include BorderColor;
+            border-bottom: 1px solid var(--ane-warna-utama);
+            border-radius: 20px;
+            box-shadow: 1px 1px 30px 1px rgba(var(--ane-warna-gelap-rgb), 0.1);
+    }
+
+}
+
+.wpcf7-submit {
+    display: block;
+    margin: 20px 0;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px !important;
+    text-transform: uppercase;
+    background-color: var(--ane-warna-utama);
+    color: $warna-terang;
+    font-weight: bold;
+    border: 1px solid;
+    @include BorderColor;
+    border-radius: 20px;
+    box-shadow: 1px 1px 30px 1px rgba(var(--ane-warna-gelap-rgb), 0.1);
+    transition: all .5s ease-in;
+
+    &:hover {
+        background-color: var(--ane-warna-alternatif);
+        color: $warna-terang;
+    }
+}

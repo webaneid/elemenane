@@ -1,0 +1,359 @@
+/* ============================================
+   MODERN CONTENT AREA STYLES
+   Cards, buttons, forms, tables - modern UI components
+   ============================================ */
+
+/* Body & Plugin background */
+body {
+	background: var(--ane-color-light);
+}
+
+.plugins .active td,
+.plugins .active th {
+	background-color: var(--ane-color-light) !important;
+}
+
+/* ============================================
+   MODERN CARDS & POSTBOXES
+   ============================================ */
+
+.postbox {
+	background: var(--ane-color-white);
+	border: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+	border-radius: var(--ane-radius-lg, 12px);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+	margin-bottom: 1.5rem;
+	transition: box-shadow var(--ane-transition-base, 0.2s ease);
+
+	&:hover {
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+	}
+
+	.postbox-header {
+		background: transparent;
+		border-bottom: 0px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.06);
+		padding: 1.25rem 1.5rem;
+		font-size: 16px;
+		font-weight: 600;
+		color: var(--ane-color-body, #2d232e);
+	}
+	.hndle {
+		background: transparent;
+		padding: 0 !important;
+		font-size: 16px;
+		font-weight: 600;
+		color: var(--ane-color-body, #2d232e);
+	}
+	#poststuff .stuffbox > h3, #poststuff h2, #poststuff h3.hndle {
+		font-size: 16px;
+		padding: 0 !important;
+		margin: 0;
+	}
+
+	.inside {
+		padding: 1.5rem;
+	}
+}
+
+/* ============================================
+   MODERN BUTTONS
+   ============================================ */
+
+.button,
+.button-secondary {
+	background: var(--ane-color-white);
+	border: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.15);
+	border-radius: var(--ane-radius-md, 10px);
+	color: var(--ane-color-body, #1e2d2f);
+	padding: 0.625rem 1.25rem;
+	font-size: 14px;
+	font-weight: 500;
+	height: auto;
+	line-height: 1.5;
+	transition: all var(--ane-transition-fast, 0.15s ease);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+	&:hover {
+		background: rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.04);
+		border-color: var(--ane-color-primary, #2d232e);
+		color: var(--ane-color-primary, #2d232e);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+		transform: translateY(-1px);
+	}
+}
+
+.button-primary {
+	background: var(--ane-color-primary, #2d232e);
+	border: 1px solid var(--ane-color-primary, #2d232e);
+	border-radius: var(--ane-radius-md, 10px);
+	color: var(--ane-color-white);
+	padding: 0.625rem 1.5rem;
+	font-size: 14px;
+	font-weight: 600;
+	height: auto;
+	line-height: 1.5;
+	box-shadow: 0 2px 4px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.15);
+	transition: all var(--ane-transition-fast, 0.15s ease);
+
+	&:hover {
+		background: var(--ane-color-secondary, #474448);
+		border-color: var(--ane-color-secondary, #474448);
+		box-shadow: 0 4px 12px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.25);
+		transform: translateY(-1px);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+}
+
+.button-large {
+	padding: 0.875rem 2rem;
+	font-size: 15px;
+}
+
+/* Button group spacing */
+.button + .button,
+.button + .button-primary,
+.button-primary + .button {
+	margin-left: 0.5rem;
+}
+
+/* Wrap add-new button */
+.wrap .add-new-h2,
+.wrap .add-new-h2:active,
+.wrap .page-title-action,
+.wrap .page-title-action:active {
+	border-color: var(--ane-color-primary) !important;
+	color: var(--ane-color-primary) !important;
+	@media screen and (max-width: 782px) {
+		line-height: 1;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		background: var(--ane-color-primary);
+		color: var(--ane-color-light) !important;
+		text-align: center;
+		justify-content: center;
+	}
+}
+
+.wp-core-ui .button,
+.wp-core-ui .button-secondary {
+	color: var(--ane-color-primary);
+	border-color: rgba(var(--ane-color-dark-rgb), 0.05) !important;
+}
+
+.wp-core-ui .button-primary {
+	background: var(--ane-color-primary);
+	color: var(--ane-color-light);
+}
+
+/* ============================================
+   MODERN INPUT FIELDS
+   ============================================ */
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+	background: var(--ane-color-white);
+	border: 1px solid rgba(var(--ane-color-body-rgb, 45, 35, 46), 0.15);
+	border-radius: var(--ane-radius-md, 10px);
+	padding: 0.625rem 1rem !important;
+	font-size: 14px;
+	color: var(--ane-color-body, #1e2d2f);
+	transition: all var(--ane-transition-base, 0.2s ease);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+
+	&:focus {
+		background: var(--ane-color-white);
+		border-color: var(--ane-color-primary, #2d232e);
+		box-shadow: 0 0 0 4px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+		outline: none;
+	}
+}
+
+/* Placeholder styling */
+::placeholder {
+	color: var(--ane-color-secondary, #6b7280);
+	opacity: 0.6;
+}
+
+/* ============================================
+   TOGGLE SWITCHES (MODERN CHECKBOXES)
+   ============================================ */
+
+.ane-toggle-wrapper {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	cursor: pointer;
+	user-select: none;
+}
+
+.ane-toggle {
+	position: relative;
+	display: inline-block;
+	width: 48px;
+	height: 26px;
+
+	input[type="checkbox"] {
+		opacity: 0;
+		width: 0;
+		height: 0;
+		position: absolute;
+
+		&:checked + .ane-toggle-slider {
+			background: var(--ane-color-primary, #2d232e);
+
+			&:before {
+				transform: translateX(22px);
+			}
+		}
+
+		&:focus + .ane-toggle-slider {
+			box-shadow: 0 0 0 4px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.1);
+		}
+	}
+}
+
+.ane-toggle-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(var(--ane-color-secondary-rgb, 71, 68, 72), 0.2);
+	border-radius: 999px;
+	transition: all var(--ane-transition-base, 0.2s ease);
+
+	&:before {
+		position: absolute;
+		content: "";
+		height: 20px;
+		width: 20px;
+		left: 3px;
+		bottom: 3px;
+		background: var(--ane-color-white);
+		border-radius: 50%;
+		transition: all var(--ane-transition-base, 0.2s ease);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+	}
+}
+
+/* ============================================
+   MODERN TABLES
+   ============================================ */
+
+.wp-list-table {
+	border: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+	border-radius: var(--ane-radius-lg, 12px);
+	overflow: hidden;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+	a {
+		color: var(--ane-color-body) !important;
+	}
+
+	thead th,
+	thead td {
+		background: rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.02);
+		border-bottom: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+		font-weight: 600;
+		color: var(--ane-color-primary, #2d232e);
+		padding: 1rem 1.25rem;
+	}
+
+	tbody tr {
+		transition: background var(--ane-transition-fast, 0.15s ease);
+
+		&:hover {
+			background: rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.02);
+		}
+	}
+
+	td {
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.06);
+	}
+	.column-title {
+		width: 25%;
+	}
+
+	.column-author,
+	.column-dates,
+	.column-categories,
+	.column-tags {
+		width: 8% !important;
+	}
+}
+
+/* ============================================
+   NOTICES & ALERTS
+   ============================================ */
+
+.notice,
+.notice-info,
+.notice-success,
+.notice-warning,
+.notice-error {
+	border-left-width: 4px;
+	border-radius: var(--ane-radius-md, 10px);
+	padding: 1rem 1.5rem;
+	margin: 1rem 0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.notice-success {
+	border-left-color: #10b981;
+	background: rgba(16, 185, 129, 0.05);
+}
+
+.notice-error {
+	border-left-color: #ef4444;
+	background: rgba(239, 68, 68, 0.05);
+}
+
+.notice-warning {
+	border-left-color: #f59e0b;
+	background: rgba(245, 158, 11, 0.05);
+}
+
+.notice-info {
+	border-left-color: #3b82f6;
+	background: rgba(59, 130, 246, 0.05);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 782px) {
+	.button,
+	.button-primary,
+	.button-secondary {
+		min-height: var(--ane-tap-target-min, 44px);
+		padding: 0.75rem 1.25rem;
+	}
+
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	input[type="number"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="url"],
+	textarea,
+	select {
+		min-height: var(--ane-tap-target-min, 44px);
+		padding: 0.75rem 1rem;
+		font-size: 16px; /* Prevent iOS zoom */
+	}
+}

@@ -1,0 +1,78 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Sass
+        run: npm install -g sass
+
+      - name: Compile SCSS
+        run: |
+          sass scss/main.scss css/main.min.css --style=compressed
+          sass scss/admin.scss css/admin.min.css --style=compressed
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create distribution package
+        run: |
+          mkdir -p dist
+          rsync -av --progress . dist/elemenane \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='scss' \
+            --exclude='dist' \
+            --exclude='.gitignore' \
+            --exclude='.DS_Store' \
+            --exclude='*.map' \
+            --exclude='package-lock.json' \
+            --exclude='*.log' \
+            --exclude='.vscode' \
+            --exclude='.idea'
+          cd dist
+          zip -r elemenane-${{ steps.get_version.outputs.VERSION }}.zip elemenane
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Elemen Ane v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            Release version ${{ steps.get_version.outputs.VERSION }}
+
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/elemenane-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_name: elemenane-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip

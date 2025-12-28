@@ -1,0 +1,205 @@
+.ane-linktree {
+    background: var(--ane-warna-gelap);
+    .webane-wrapper {
+        max-width: 400px;
+        margin: auto;
+    }
+    .linktree-content {
+        @include DisplayBlock;
+        width: 80%;
+        margin: auto;
+        padding: 60px 0;
+        
+       
+
+        .entry-header {
+            padding-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px dashed rgba(var(--ane-warna-putih), 0.3);
+            margin-bottom: 0;
+            .ane-logo {
+                width: 60%;
+                height: auto;
+                margin: auto;
+                margin-bottom: 10px;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    filter: brightness(0) invert(1);
+                }
+            }
+            .ane-title {
+                h2 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    margin-bottom: 10px;
+                    color: var(--ane-warna-utama);
+                }
+                h3 {
+                    font-size: 14px;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                    color: var(--ane-warna-alternatif);
+                    font-style: italic;
+                }
+            }
+        }
+        .entry-content {
+            display: block;
+            width: 100%;
+            padding: 20px 0 10px 0;
+
+            .ane-links {
+                width: 100%;
+                display: flex;
+                align-content: flex-start;
+                align-items: center;
+                flex-wrap: wrap;
+                flex-direction: row;
+                padding: 5px 20px;
+                border: 1px solid rgba(var(--ane-warna-putih), 0.06);
+                background: rgba(var(--ane-warna-putih), 0.04);
+                border-radius: 24px;
+                margin-bottom: 10px;
+
+                .icon-ane {
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    background: var(--ane-warna-putih);
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+                .ane-label {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: rgba(var(--ane-warna-putih), 0.5);
+                }
+            }
+            .whatsapp {
+                .icon-ane {
+                    background: #04b33e;
+
+                    &:after {
+                        content: "\e953";
+                        font-family: 'FontAne';
+                        color: var(--ane-warna-putih);
+                        font-size: 15px;
+                        line-height: 30px;
+                        text-align: center;
+                        width: 30px;
+                        height: 30px;
+                        display: block;
+                    }
+                    
+                }
+            }
+            .website {
+                .icon-ane {
+                    background: var(--ane-warna-utama);
+
+                    &:after {
+                        content: "\e9cb";
+                        font-family: 'FontAne';
+                        color: var(--ane-warna-putih);
+                        font-size: 15px;
+                        line-height: 30px;
+                        text-align: center;
+                        width: 30px;
+                        height: 30px;
+                        display: block;
+                    }
+                    
+                }
+            }
+            .tiktok {
+                .icon-ane {
+                    background: url('../img/logo-tiktok.png');
+                    background-color: var(--ane-warna-putih);
+                }
+            }
+            .telegram {
+                .icon-ane {
+                    background: url('../img/logo-telegram.png');
+                    background-color: var(--ane-warna-putih);
+                }
+            }
+
+        }
+
+        .entry-footer {
+            border-top: 1px dashed rgba(var(--ane-warna-putih), 0.3);
+            padding: 20px 0 0 0;
+
+            h2 {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--ane-warna-putih);
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .ane-sosmed {
+                
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    align-content: center;
+                    align-items: center;
+                    width: 100%;
+                    a {
+                        color: var(--ane-warna-putih);
+                        width: 100%;
+                    }
+                    
+                    li {
+                        width: 100%;
+                        height: auto;
+                        margin-bottom: 10px;
+                        border: 1px solid rgba(var(--ane-warna-putih), 0.4);
+                        border-radius: 20px;
+                        display: flex;
+                        padding: 5px 20px;
+                        align-content: center;
+                        align-items: center;
+                        font-size: 14px;
+                        font-weight: 600;
+
+                        i {
+                            font-size: 15px;
+                            width: 30px;
+                            height: 30px;
+                            line-height: 30px;
+                            background: var(--ane-warna-putih);
+                            border-radius: 50%;
+                            margin-right: 10px;
+                        }
+                        i.ane-whatsapp {
+                            color: #04b33e;
+                        }
+                        i.ane-facebook {
+                            color: #4867aa;
+                        }
+                        i.ane-youtube {
+                            color: red;
+                        }
+                        i.ane-twitter {
+                            color: #1da1f2;
+                        }
+                        i.ane-instagram {
+                            color: #d23095;
+                        }
+                        
+
+                        span {
+                            font-size: 14px;
+                            line-height: 30px;
+                        }
+                       
+                    }
+                }
+            }
+        }
+    }
+}

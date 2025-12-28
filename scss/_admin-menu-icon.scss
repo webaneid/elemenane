@@ -1,0 +1,272 @@
+/* Base styles for all custom icons */
+#adminmenu .wp-menu-image:before {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: block !important;
+}
+
+/* Hide dashicons font for all menus */
+#adminmenu .wp-menu-image {
+    font-size: 0 !important;
+}
+
+/* 1. Dashboard */
+#adminmenu #toplevel_page_ane-dashboard .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M13.5 13L17 9m-3 6a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm-8-3a6 6 0 0 1 9-5.197'/%3E%3Cpath d='M2.5 12c0-4.478 0-6.717 1.391-8.109c1.392-1.39 3.63-1.39 8.11-1.39c4.477 0 6.717 0 8.108 1.39c1.391 1.392 1.391 3.63 1.391 8.11c0 4.477 0 6.717-1.391 8.108S16.479 21.5 12 21.5c-4.478 0-6.717 0-8.109-1.391c-1.39-1.391-1.39-3.63-1.39-8.109Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #toplevel_page_ane-dashboard:hover .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-dashboard.current .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-dashboard.wp-has-current-submenu .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M13.5 13L17 9m-3 6a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm-8-3a6 6 0 0 1 9-5.197'/%3E%3Cpath d='M2.5 12c0-4.478 0-6.717 1.391-8.109c1.392-1.39 3.63-1.39 8.11-1.39c4.477 0 6.717 0 8.108 1.39c1.391 1.392 1.391 3.63 1.391 8.11c0 4.477 0 6.717-1.391 8.108S16.479 21.5 12 21.5c-4.478 0-6.717 0-8.109-1.391c-1.39-1.391-1.39-3.63-1.39-8.109Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* 2. Posts */
+#adminmenu #menu-posts .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='rgba(255,255,255,0.7)' fill-rule='evenodd' d='M11.943 1.25H13.5a.75.75 0 0 1 0 1.5H12c-2.378 0-4.086.002-5.386.176c-1.279.172-2.05.5-2.62 1.069c-.569.57-.896 1.34-1.068 2.619c-.174 1.3-.176 3.008-.176 5.386s.002 4.086.176 5.386c.172 1.279.5 2.05 1.069 2.62c.57.569 1.34.896 2.619 1.068c1.3.174 3.008.176 5.386.176s4.086-.002 5.386-.176c1.279-.172 2.05-.5 2.62-1.069c.569-.57.896-1.34 1.068-2.619c.174-1.3.176-3.008.176-5.386v-1.5a.75.75 0 0 1 1.5 0v1.557c0 2.309 0 4.118-.19 5.53c-.194 1.444-.6 2.584-1.494 3.479c-.895.895-2.035 1.3-3.48 1.494c-1.411.19-3.22.19-5.529.19h-.114c-2.309 0-4.118 0-5.53-.19c-1.444-.194-2.584-.6-3.479-1.494c-.895-.895-1.3-2.035-1.494-3.48c-.19-1.411-.19-3.22-.19-5.529v-.114c0-2.309 0-4.118.19-5.53c.194-1.444.6-2.584 1.494-3.479c.895-.895 2.035-1.3 3.48-1.494c1.411-.19 3.22-.19 5.529-.19m4.827 1.026a3.503 3.503 0 0 1 4.954 4.953l-6.648 6.649c-.371.37-.604.604-.863.806a5.3 5.3 0 0 1-.987.61c-.297.141-.61.245-1.107.411l-2.905.968a1.492 1.492 0 0 1-1.887-1.887l.968-2.905c.166-.498.27-.81.411-1.107q.252-.526.61-.987c.202-.26.435-.492.806-.863zm3.893 1.06a2.003 2.003 0 0 0-2.832 0l-.376.377q.032.145.098.338c.143.413.415.957.927 1.469a3.9 3.9 0 0 0 1.807 1.025l.376-.376a2.003 2.003 0 0 0 0-2.832m-1.558 4.391a5.4 5.4 0 0 1-1.686-1.146a5.4 5.4 0 0 1-1.146-1.686L11.218 9.95c-.417.417-.58.582-.72.76a4 4 0 0 0-.437.71c-.098.203-.172.423-.359.982l-.431 1.295l1.032 1.033l1.295-.432c.56-.187.779-.261.983-.358q.378-.18.71-.439c.177-.139.342-.302.759-.718z' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-posts:hover .wp-menu-image:before,
+#adminmenu #menu-posts.current .wp-menu-image:before,
+#adminmenu #menu-posts.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-posts.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' fill-rule='evenodd' d='M11.943 1.25H13.5a.75.75 0 0 1 0 1.5H12c-2.378 0-4.086.002-5.386.176c-1.279.172-2.05.5-2.62 1.069c-.569.57-.896 1.34-1.068 2.619c-.174 1.3-.176 3.008-.176 5.386s.002 4.086.176 5.386c.172 1.279.5 2.05 1.069 2.62c.57.569 1.34.896 2.619 1.068c1.3.174 3.008.176 5.386.176s4.086-.002 5.386-.176c1.279-.172 2.05-.5 2.62-1.069c.569-.57.896-1.34 1.068-2.619c.174-1.3.176-3.008.176-5.386v-1.5a.75.75 0 0 1 1.5 0v1.557c0 2.309 0 4.118-.19 5.53c-.194 1.444-.6 2.584-1.494 3.479c-.895.895-2.035 1.3-3.48 1.494c-1.411.19-3.22.19-5.529.19h-.114c-2.309 0-4.118 0-5.53-.19c-1.444-.194-2.584-.6-3.479-1.494c-.895-.895-1.3-2.035-1.494-3.48c-.19-1.411-.19-3.22-.19-5.529v-.114c0-2.309 0-4.118.19-5.53c.194-1.444.6-2.584 1.494-3.479c.895-.895 2.035-1.3 3.48-1.494c1.411-.19 3.22-.19 5.529-.19m4.827 1.026a3.503 3.503 0 0 1 4.954 4.953l-6.648 6.649c-.371.37-.604.604-.863.806a5.3 5.3 0 0 1-.987.61c-.297.141-.61.245-1.107.411l-2.905.968a1.492 1.492 0 0 1-1.887-1.887l.968-2.905c.166-.498.27-.81.411-1.107q.252-.526.61-.987c.202-.26.435-.492.806-.863zm3.893 1.06a2.003 2.003 0 0 0-2.832 0l-.376.377q.032.145.098.338c.143.413.415.957.927 1.469a3.9 3.9 0 0 0 1.807 1.025l.376-.376a2.003 2.003 0 0 0 0-2.832m-1.558 4.391a5.4 5.4 0 0 1-1.686-1.146a5.4 5.4 0 0 1-1.146-1.686L11.218 9.95c-.417.417-.58.582-.72.76a4 4 0 0 0-.437.71c-.098.203-.172.423-.359.982l-.431 1.295l1.032 1.033l1.295-.432c.56-.187.779-.261.983-.358q.378-.18.71-.439c.177-.139.342-.302.759-.718z' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+}
+
+/* 3. Media Library - Multiple paths untuk compatibility */
+#adminmenu #menu-media .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='rgba(255,255,255,0.7)' fill-rule='evenodd' clip-rule='evenodd'%3E%3Cpath d='M9.99 10.91a1.49 1.49 0 0 1 1.615-.022l3.371 2.09c.538.334.774.91.774 1.432c0 .523-.236 1.099-.774 1.432l-3.371 2.09c-.54.334-1.157.28-1.615-.022a1.67 1.67 0 0 1-.74-1.41v-4.18c0-.593.289-1.114.74-1.41m.823 1.254c-.019.012-.063.056-.063.156v4.18c0 .1.044.144.063.156l.001.001l3.372-2.09c.021-.013.064-.059.064-.157s-.043-.143-.064-.157l-3.371-2.09z'/%3E%3Cpath d='M8.7 1.25c-.22 0-.39 0-.536.016A2.75 2.75 0 0 0 5.71 3.87a2.89 2.89 0 0 0-2.055 2.721c-.6.18-1.119.465-1.543.923c-.652.705-.854 1.572-.862 2.586c-.007.975.167 2.207.382 3.736l.44 3.114c.168 1.196.305 2.168.518 2.929c.223.797.552 1.452 1.16 1.956c.604.5 1.32.715 2.166.817c.819.098 1.849.098 3.13.098h5.907c1.282 0 2.312 0 3.13-.098c.847-.102 1.563-.317 2.167-.817c.608-.504.937-1.16 1.16-1.956c.213-.761.35-1.733.519-2.93l.439-3.113c.216-1.53.39-2.761.382-3.736c-.008-1.014-.21-1.881-.862-2.586c-.424-.458-.943-.742-1.544-.923a2.89 2.89 0 0 0-2.054-2.72a2.75 2.75 0 0 0-2.454-2.605c-.147-.016-.316-.016-.536-.016zm10.11 5.078a1.38 1.38 0 0 0-1.348-1.078H6.538c-.669 0-1.212.47-1.349 1.078c.926-.078 2.06-.078 3.427-.078h6.768c1.366 0 2.5 0 3.427.078M16.769 3.75a1.25 1.25 0 0 0-1.092-.993a5 5 0 0 0-.417-.007H8.74c-.28 0-.361.001-.417.007a1.25 1.25 0 0 0-1.092.993zM3.213 8.533c.303-.327.758-.544 1.643-.662c.901-.12 2.108-.121 3.816-.121h6.656c1.708 0 2.915.002 3.816.121c.885.118 1.34.335 1.643.662c.296.32.457.755.463 1.579c.006.85-.15 1.97-.376 3.576l-.423 3c-.178 1.261-.302 2.133-.485 2.787c-.177.63-.384.965-.673 1.204c-.293.244-.687.4-1.388.484c-.719.086-1.658.087-3 .087h-5.81c-1.342 0-2.281-.001-3-.087c-.7-.085-1.095-.24-1.388-.483c-.289-.24-.496-.576-.673-1.205c-.183-.654-.307-1.526-.485-2.787l-.423-3c-.226-1.605-.382-2.726-.376-3.576c.006-.824.167-1.26.463-1.579'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-media:hover .wp-menu-image:before,
+#adminmenu #menu-media.current .wp-menu-image:before,
+#adminmenu #menu-media.wp-has-current-submenu .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23ffffff' fill-rule='evenodd' clip-rule='evenodd'%3E%3Cpath d='M9.99 10.91a1.49 1.49 0 0 1 1.615-.022l3.371 2.09c.538.334.774.91.774 1.432c0 .523-.236 1.099-.774 1.432l-3.371 2.09c-.54.334-1.157.28-1.615-.022a1.67 1.67 0 0 1-.74-1.41v-4.18c0-.593.289-1.114.74-1.41m.823 1.254c-.019.012-.063.056-.063.156v4.18c0 .1.044.144.063.156l.001.001l3.372-2.09c.021-.013.064-.059.064-.157s-.043-.143-.064-.157l-3.371-2.09z'/%3E%3Cpath d='M8.7 1.25c-.22 0-.39 0-.536.016A2.75 2.75 0 0 0 5.71 3.87a2.89 2.89 0 0 0-2.055 2.721c-.6.18-1.119.465-1.543.923c-.652.705-.854 1.572-.862 2.586c-.007.975.167 2.207.382 3.736l.44 3.114c.168 1.196.305 2.168.518 2.929c.223.797.552 1.452 1.16 1.956c.604.5 1.32.715 2.166.817c.819.098 1.849.098 3.13.098h5.907c1.282 0 2.312 0 3.13-.098c.847-.102 1.563-.317 2.167-.817c.608-.504.937-1.16 1.16-1.956c.213-.761.35-1.733.519-2.93l.439-3.113c.216-1.53.39-2.761.382-3.736c-.008-1.014-.21-1.881-.862-2.586c-.424-.458-.943-.742-1.544-.923a2.89 2.89 0 0 0-2.054-2.72a2.75 2.75 0 0 0-2.454-2.605c-.147-.016-.316-.016-.536-.016zm10.11 5.078a1.38 1.38 0 0 0-1.348-1.078H6.538c-.669 0-1.212.47-1.349 1.078c.926-.078 2.06-.078 3.427-.078h6.768c1.366 0 2.5 0 3.427.078M16.769 3.75a1.25 1.25 0 0 0-1.092-.993a5 5 0 0 0-.417-.007H8.74c-.28 0-.361.001-.417.007a1.25 1.25 0 0 0-1.092.993zM3.213 8.533c.303-.327.758-.544 1.643-.662c.901-.12 2.108-.121 3.816-.121h6.656c1.708 0 2.915.002 3.816.121c.885.118 1.34.335 1.643.662c.296.32.457.755.463 1.579c.006.85-.15 1.97-.376 3.576l-.423 3c-.178 1.261-.302 2.133-.485 2.787c-.177.63-.384.965-.673 1.204c-.293.244-.687.4-1.388.484c-.719.086-1.658.087-3 .087h-5.81c-1.342 0-2.281-.001-3-.087c-.7-.085-1.095-.24-1.388-.483c-.289-.24-.496-.576-.673-1.205c-.183-.654-.307-1.526-.485-2.787l-.423-3c-.226-1.605-.382-2.726-.376-3.576c.006-.824.167-1.26.463-1.579'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* 4. Pages */
+#adminmenu #menu-pages .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='rgba(255,255,255,0.7)' fill-rule='evenodd' d='M7.29 13.904L5.25 10.75L2.096 8.71a2.4 2.4 0 0 1 .5-4.278l9.273-3.296a2.346 2.346 0 0 1 2.996 2.995L13.45 3.63a.844.844 0 0 0-1.08-1.08L3.1 5.846a.9.9 0 0 0-.19 1.604l2.78 1.799l3.279-3.28a.75.75 0 1 1 1.06 1.061L6.75 10.31l1.799 2.779a.9.9 0 0 0 1.604-.188l3.297-9.272l1.413.502l-3.296 9.273a2.4 2.4 0 0 1-4.277.5' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-pages:hover .wp-menu-image:before,
+#adminmenu #menu-pages.current .wp-menu-image:before,
+#adminmenu #menu-pages.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-pages.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' fill-rule='evenodd' d='M7.29 13.904L5.25 10.75L2.096 8.71a2.4 2.4 0 0 1 .5-4.278l9.273-3.296a2.346 2.346 0 0 1 2.996 2.995L13.45 3.63a.844.844 0 0 0-1.08-1.08L3.1 5.846a.9.9 0 0 0-.19 1.604l2.78 1.799l3.279-3.28a.75.75 0 1 1 1.06 1.061L6.75 10.31l1.799 2.779a.9.9 0 0 0 1.604-.188l3.297-9.272l1.413.502l-3.296 9.273a2.4 2.4 0 0 1-4.277.5' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+}
+
+/* 5. Comments */
+#adminmenu #menu-comments .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='rgba(255,255,255,0.7)' d='M1 4.5A2.5 2.5 0 0 1 3.5 2h9A2.5 2.5 0 0 1 15 4.5v5a2.5 2.5 0 0 1-2.5 2.5H8.688l-3.063 2.68A.98.98 0 0 1 4 13.942V12h-.5A2.5 2.5 0 0 1 1 9.5zM3.5 3A1.5 1.5 0 0 0 2 4.5v5A1.5 1.5 0 0 0 3.5 11H5v2.898L8.312 11H12.5A1.5 1.5 0 0 0 14 9.5v-5A1.5 1.5 0 0 0 12.5 3zM12 5.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5m-2 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5'/%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-comments:hover .wp-menu-image:before,
+#adminmenu #menu-comments.current .wp-menu-image:before,
+#adminmenu #menu-comments.wp-has-current-submenu .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M1 4.5A2.5 2.5 0 0 1 3.5 2h9A2.5 2.5 0 0 1 15 4.5v5a2.5 2.5 0 0 1-2.5 2.5H8.688l-3.063 2.68A.98.98 0 0 1 4 13.942V12h-.5A2.5 2.5 0 0 1 1 9.5zM3.5 3A1.5 1.5 0 0 0 2 4.5v5A1.5 1.5 0 0 0 3.5 11H5v2.898L8.312 11H12.5A1.5 1.5 0 0 0 14 9.5v-5A1.5 1.5 0 0 0 12.5 3zM12 5.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5m-2 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5'/%3E%3C/svg%3E") !important;
+}
+
+/* 7. Appearance */
+#adminmenu #menu-appearance .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='rgba(255,255,255,0.7)' fill-rule='evenodd' d='M14 6.5A1.5 1.5 0 0 0 12.5 5h-2.3l.249-.374c.358-.537.549-1.17.549-1.81v-.314a2.5 2.5 0 0 0-5 0v.314c0 .645.191 1.28.549 1.81L6.796 5h-2.3a1.5 1.5 0 0 0-1.5 1.5v4.43c0 1.06-.421 2.08-1.17 2.83l-.536.536a1 1 0 0 0 .707 1.707h9c.265 0 .52-.105.707-.293l.536-.536a6 6 0 0 0 1.76-4.24v-4.43zM4 8h9V6.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5v-.197a1 1 0 0 1 .168-.555l.451-.677A2.27 2.27 0 0 0 10 2.811v-.314a1.5 1.5 0 0 0-3 0v.314c0 .448.132.885.381 1.26l.451.677c.11.164.168.357.168.555V5.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 0-.5.5zm7 7H8.99A3.5 3.5 0 0 0 10 12.54v-.04a.5.5 0 0 0-1 0v.04c0 1.19-.841 2.22-2.01 2.45l-.04.008H2l.536-.536a4.98 4.98 0 0 0 1.46-3.534v-1.93h9v1.93c0 1.33-.527 2.6-1.46 3.54l-.536.536z' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-appearance:hover .wp-menu-image:before,
+#adminmenu #menu-appearance.current .wp-menu-image:before,
+#adminmenu #menu-appearance.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-appearance.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' fill-rule='evenodd' d='M14 6.5A1.5 1.5 0 0 0 12.5 5h-2.3l.249-.374c.358-.537.549-1.17.549-1.81v-.314a2.5 2.5 0 0 0-5 0v.314c0 .645.191 1.28.549 1.81L6.796 5h-2.3a1.5 1.5 0 0 0-1.5 1.5v4.43c0 1.06-.421 2.08-1.17 2.83l-.536.536a1 1 0 0 0 .707 1.707h9c.265 0 .52-.105.707-.293l.536-.536a6 6 0 0 0 1.76-4.24v-4.43zM4 8h9V6.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5v-.197a1 1 0 0 1 .168-.555l.451-.677A2.27 2.27 0 0 0 10 2.811v-.314a1.5 1.5 0 0 0-3 0v.314c0 .448.132.885.381 1.26l.451.677c.11.164.168.357.168.555V5.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 0-.5.5zm7 7H8.99A3.5 3.5 0 0 0 10 12.54v-.04a.5.5 0 0 0-1 0v.04c0 1.19-.841 2.22-2.01 2.45l-.04.008H2l.536-.536a4.98 4.98 0 0 0 1.46-3.534v-1.93h9v1.93c0 1.33-.527 2.6-1.46 3.54l-.536.536z' clip-rule='evenodd'/%3E%3C/svg%3E") !important;
+}
+
+/* 8. Plugins */
+#adminmenu #menu-plugins .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='1.5'%3E%3Cpath d='M7 20.645a10 10 0 0 1-5-8.662c0-5.523 4.477-10 10-10s10 4.477 10 10s-4.477 10-10 10v-4.387'/%3E%3Cpath d='M6.91 10.02h10.023v2.506a5.012 5.012 0 1 1-10.023 0zm2.506 0V6.888m5.011 3.132V6.888'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-plugins:hover .wp-menu-image:before,
+#adminmenu #menu-plugins.current .wp-menu-image:before,
+#adminmenu #menu-plugins.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-plugins.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M7 20.645a10 10 0 0 1-5-8.662c0-5.523 4.477-10 10-10s10 4.477 10 10s-4.477 10-10 10v-4.387'/%3E%3Cpath d='M6.91 10.02h10.023v2.506a5.012 5.012 0 1 1-10.023 0zm2.506 0V6.888m5.011 3.132V6.888'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* 9. Users */
+#adminmenu #menu-users .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M5 20v-1a7 7 0 0 1 7-7v0a7 7 0 0 1 7 7v1m-7-8a4 4 0 1 0 0-8a4 4 0 0 0 0 8'/%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-users:hover .wp-menu-image:before,
+#adminmenu #menu-users.current .wp-menu-image:before,
+#adminmenu #menu-users.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-users.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M5 20v-1a7 7 0 0 1 7-7v0a7 7 0 0 1 7 7v1m-7-8a4 4 0 1 0 0-8a4 4 0 0 0 0 8'/%3E%3C/svg%3E") !important;
+}
+
+/* 10. Tools */
+#adminmenu #menu-tools .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='m10.05 10.607l-7.07 7.07a2 2 0 0 0 0 2.83v0a2 2 0 0 0 2.828 0l7.07-7.072m4.315.365l3.878 3.878a2 2 0 0 1 0 2.828v0a2 2 0 0 1-2.828 0l-6.209-6.208M6.733 5.904L4.61 6.61L2.49 3.075l1.414-1.414L7.44 3.782zm0 0l2.83 2.83'/%3E%3Cpath d='M10.05 10.607c-.844-2.153-.679-4.978 1.061-6.718s4.95-2.121 6.717-1.06l-3.04 3.04l-.283 3.111l3.111-.282l3.04-3.041c1.062 1.768.68 4.978-1.06 6.717c-1.74 1.74-4.564 1.905-6.717 1.061'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-tools:hover .wp-menu-image:before,
+#adminmenu #menu-tools.current .wp-menu-image:before,
+#adminmenu #menu-tools.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-tools.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='m10.05 10.607l-7.07 7.07a2 2 0 0 0 0 2.83v0a2 2 0 0 0 2.828 0l7.07-7.072m4.315.365l3.878 3.878a2 2 0 0 1 0 2.828v0a2 2 0 0 1-2.828 0l-6.209-6.208M6.733 5.904L4.61 6.61L2.49 3.075l1.414-1.414L7.44 3.782zm0 0l2.83 2.83'/%3E%3Cpath d='M10.05 10.607c-.844-2.153-.679-4.978 1.061-6.718s4.95-2.121 6.717-1.06l-3.04 3.04l-.283 3.111l3.111-.282l3.04-3.041c1.062 1.768.68 4.978-1.06 6.717c-1.74 1.74-4.564 1.905-6.717 1.061'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* 11. Settings */
+#adminmenu #menu-settings .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='rgba(255,255,255,0.7)' d='M9.854 5.854a.5.5 0 0 0-.708-.708L6.5 7.793L5.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0zM2 4.5A2.5 2.5 0 0 1 4.5 2h5A2.5 2.5 0 0 1 12 4.5v5A2.5 2.5 0 0 1 9.5 12h-5A2.5 2.5 0 0 1 2 9.5zM4.5 3A1.5 1.5 0 0 0 3 4.5v5A1.5 1.5 0 0 0 4.5 11h5A1.5 1.5 0 0 0 11 9.5v-5A1.5 1.5 0 0 0 9.5 3zM7 14a2.5 2.5 0 0 1-2-1h4.5A3.5 3.5 0 0 0 13 9.5V4c.607.456 1 1.182 1 2v3.5A4.5 4.5 0 0 1 9.5 14z'/%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #menu-settings:hover .wp-menu-image:before,
+#adminmenu #menu-settings.current .wp-menu-image:before,
+#adminmenu #menu-settings.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #menu-settings.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffffff' d='M9.854 5.854a.5.5 0 0 0-.708-.708L6.5 7.793L5.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0zM2 4.5A2.5 2.5 0 0 1 4.5 2h5A2.5 2.5 0 0 1 12 4.5v5A2.5 2.5 0 0 1 9.5 12h-5A2.5 2.5 0 0 1 2 9.5zM4.5 3A1.5 1.5 0 0 0 3 4.5v5A1.5 1.5 0 0 0 4.5 11h5A1.5 1.5 0 0 0 11 9.5v-5A1.5 1.5 0 0 0 9.5 3zM7 14a2.5 2.5 0 0 1-2-1h4.5A3.5 3.5 0 0 0 13 9.5V4c.607.456 1 1.182 1 2v3.5A4.5 4.5 0 0 1 9.5 14z'/%3E%3C/svg%3E") !important;
+}
+
+/* Ane Setup (custom menu) */
+#adminmenu #toplevel_page_ane-setup .wp-menu-image:before {
+    content: '' !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M9 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6'/%3E%3Cpath stroke-linejoin='round' d='M12 21v-4.639c0-.51.1-.999.284-1.453M22 21v-3.185m-7.778-5.08A5.5 5.5 0 0 1 17 12c2.28 0 4.203 1.33 4.805 3.15M15 22v-2.177M19 22v-5.147C19 15.83 18.105 15 17 15s-2 .83-2 1.853v.794M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #toplevel_page_ane-setup:hover .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-setup.current .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-setup.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-setup.opensub .wp-menu-image:before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M9 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6'/%3E%3Cpath stroke-linejoin='round' d='M12 21v-4.639c0-.51.1-.999.284-1.453M22 21v-3.185m-7.778-5.08A5.5 5.5 0 0 1 17 12c2.28 0 4.203 1.33 4.805 3.15M15 22v-2.177M19 22v-5.147C19 15.83 18.105 15 17 15s-2 .83-2 1.853v.794M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* ===============================================
+   MOBILE MENU ICONS (≤782px)
+   WordPress mobile drawer uses dashicons classes directly
+   Example HTML: <div class="wp-menu-image dashicons-before dashicons-dashboard">
+   We override each specific dashicon class
+   =============================================== */
+
+@media screen and (max-width: 782px) {
+    /* Base setup - hide dashicons font family */
+    .wp-responsive-open #adminmenu .wp-menu-image.dashicons-before {
+        font-family: inherit !important;
+        font-size: 0 !important;
+    }
+
+    .wp-responsive-open #adminmenu .wp-menu-image.dashicons-before::before {
+        content: '' !important;
+        display: block !important;
+        width: 24px !important;
+        height: 24px !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        font-family: inherit !important;
+    }
+
+    /* Override specific dashicons classes */
+
+    /* Dashboard */
+    .wp-responsive-open #adminmenu .dashicons-dashboard::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M13.5 13L17 9m-3 6a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm-8-3a6 6 0 0 1 9-5.197'/%3E%3Cpath d='M2.5 12c0-4.478 0-6.717 1.391-8.109c1.392-1.39 3.63-1.39 8.11-1.39c4.477 0 6.717 0 8.108 1.39c1.391 1.392 1.391 3.63 1.391 8.11c0 4.477 0 6.717-1.391 8.108S16.479 21.5 12 21.5c-4.478 0-6.717 0-8.109-1.391c-1.39-1.391-1.39-3.63-1.39-8.109Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-dashboard::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M13.5 13L17 9m-3 6a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm-8-3a6 6 0 0 1 9-5.197'/%3E%3Cpath d='M2.5 12c0-4.478 0-6.717 1.391-8.109c1.392-1.39 3.63-1.39 8.11-1.39c4.477 0 6.717 0 8.108 1.39c1.391 1.392 1.391 3.63 1.391 8.11c0 4.477 0 6.717-1.391 8.108S16.479 21.5 12 21.5c-4.478 0-6.717 0-8.109-1.391c-1.39-1.391-1.39-3.63-1.39-8.109Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Posts */
+    .wp-responsive-open #adminmenu .dashicons-admin-post::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='m8 10l2.5 2.5L16 7'/%3E%3Cpath stroke-linejoin='round' d='M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464c.974.974 1.3 2.343 1.41 4.536'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-post::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='m8 10l2.5 2.5L16 7'/%3E%3Cpath stroke-linejoin='round' d='M22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464c.974.974 1.3 2.343 1.41 4.536'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Media */
+    .wp-responsive-open #adminmenu .dashicons-admin-media::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath stroke-linejoin='round' d='m2 10.154l1.65-1.65a4 4 0 0 1 5.657 0L14 13.198a4 4 0 0 0 5.657 0l.685-.685A2 2 0 0 1 23 11.172V15c0 3.771 0 5.657-1.172 6.828C20.657 23 18.771 23 15 23H9c-3.771 0-5.657 0-6.828-1.172C1 20.657 1 18.771 1 15v-1.667c0-.736.597-1.333 1.333-1.333c.368 0 .72.147.98.41Z'/%3E%3Cpath d='M2 11c0-3.3 0-4.95.86-6.054a4 4 0 0 1 1.086-1.086C5.05 3 6.7 3 10 3h4c3.3 0 4.95 0 6.054.86a4 4 0 0 1 1.086 1.086C22 6.05 22 7.7 22 11'/%3E%3Cpath stroke-linejoin='round' d='M13.5 6.5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-media::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath stroke-linejoin='round' d='m2 10.154l1.65-1.65a4 4 0 0 1 5.657 0L14 13.198a4 4 0 0 0 5.657 0l.685-.685A2 2 0 0 1 23 11.172V15c0 3.771 0 5.657-1.172 6.828C20.657 23 18.771 23 15 23H9c-3.771 0-5.657 0-6.828-1.172C1 20.657 1 18.771 1 15v-1.667c0-.736.597-1.333 1.333-1.333c.368 0 .72.147.98.41Z'/%3E%3Cpath d='M2 11c0-3.3 0-4.95.86-6.054a4 4 0 0 1 1.086-1.086C5.05 3 6.7 3 10 3h4c3.3 0 4.95 0 6.054.86a4 4 0 0 1 1.086 1.086C22 6.05 22 7.7 22 11'/%3E%3Cpath stroke-linejoin='round' d='M13.5 6.5a1.5 1.5 0 0 1-3 0a1.5 1.5 0 0 1 3 0Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Pages */
+    .wp-responsive-open #adminmenu .dashicons-admin-page::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M3.889 14.889C3 13.65 3 11.935 3 8.503v-.997c0-2.804 0-4.207.867-5.078C4.733 1.556 6.128 1.556 8.914 1.556h6.172c2.786 0 4.18 0 5.047.872S21 4.703 21 7.506v.997c0 3.432 0 5.148-.889 6.387m-16.222 0c.6.833 1.54 1.318 3.421 2.029l.697.265c2.916 1.102 4.374 1.654 5.993 1.654c1.62 0 3.077-.552 5.993-1.654l.697-.265c1.881-.71 2.821-1.196 3.422-2.03m-16.223 0c-.491-.684-.71-1.535-.822-2.776'/%3E%3Cpath d='M15 11H9m3 5V6'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-page::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M3.889 14.889C3 13.65 3 11.935 3 8.503v-.997c0-2.804 0-4.207.867-5.078C4.733 1.556 6.128 1.556 8.914 1.556h6.172c2.786 0 4.18 0 5.047.872S21 4.703 21 7.506v.997c0 3.432 0 5.148-.889 6.387m-16.222 0c.6.833 1.54 1.318 3.421 2.029l.697.265c2.916 1.102 4.374 1.654 5.993 1.654c1.62 0 3.077-.552 5.993-1.654l.697-.265c1.881-.71 2.821-1.196 3.422-2.03m-16.223 0c-.491-.684-.71-1.535-.822-2.776'/%3E%3Cpath d='M15 11H9m3 5V6'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Comments */
+    .wp-responsive-open #adminmenu .dashicons-admin-comments::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath stroke-linejoin='round' d='M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22Z'/%3E%3Cpath d='M8 12h.009m3.982 0H12m3.991 0H16'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-comments::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath stroke-linejoin='round' d='M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22Z'/%3E%3Cpath d='M8 12h.009m3.982 0H12m3.991 0H16'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Appearance */
+    .wp-responsive-open #adminmenu .dashicons-admin-appearance::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='1.5'%3E%3Cpath d='M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z'/%3E%3Cpath stroke-linecap='round' d='M13 15.5c-.69 1.5-2.372 2.5-4.126 2.5a4.88 4.88 0 0 1-4.873-4.874C4.001 11.372 5.001 9.69 6.5 9M13 9l8-7M2 2l7 7m13 0l-7-7M2 22l7-7'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-appearance::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z'/%3E%3Cpath stroke-linecap='round' d='M13 15.5c-.69 1.5-2.372 2.5-4.126 2.5a4.88 4.88 0 0 1-4.873-4.874C4.001 11.372 5.001 9.69 6.5 9M13 9l8-7M2 2l7 7m13 0l-7-7M2 22l7-7'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Plugins */
+    .wp-responsive-open #adminmenu .dashicons-admin-plugins::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M15 2v5m0 0v3m0-3h3m-3 0h-3m6 9v5M6 10v5m0 0v3m0-3h3m-3 0H3'/%3E%3Cpath stroke-linejoin='round' d='M8 3.5A1.5 1.5 0 0 1 9.5 2h5A1.5 1.5 0 0 1 16 3.5v6.357c0 .806 0 1.21-.076 1.586a4 4 0 0 1-.648 1.415c-.217.33-.508.622-1.089 1.204l-4.374 4.374c-.581.582-.872.873-1.204 1.09a4 4 0 0 1-1.415.647C6.81 20.25 6.406 20.25 5.6 20.25H3.5A1.5 1.5 0 0 1 2 18.75v-2.1c0-.806 0-1.21.076-1.586a4 4 0 0 1 .648-1.415c.217-.33.508-.621 1.089-1.203l4.374-4.375c.581-.581.872-.872 1.204-1.089a4 4 0 0 1 1.415-.647C11.19 6.25 11.594 6.25 12.4 6.25H16'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-plugins::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M15 2v5m0 0v3m0-3h3m-3 0h-3m6 9v5M6 10v5m0 0v3m0-3h3m-3 0H3'/%3E%3Cpath stroke-linejoin='round' d='M8 3.5A1.5 1.5 0 0 1 9.5 2h5A1.5 1.5 0 0 1 16 3.5v6.357c0 .806 0 1.21-.076 1.586a4 4 0 0 1-.648 1.415c-.217.33-.508.622-1.089 1.204l-4.374 4.374c-.581.582-.872.873-1.204 1.09a4 4 0 0 1-1.415.647C6.81 20.25 6.406 20.25 5.6 20.25H3.5A1.5 1.5 0 0 1 2 18.75v-2.1c0-.806 0-1.21.076-1.586a4 4 0 0 1 .648-1.415c.217-.33.508-.621 1.089-1.203l4.374-4.375c.581-.581.872-.872 1.204-1.089a4 4 0 0 1 1.415-.647C11.19 6.25 11.594 6.25 12.4 6.25H16'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Users */
+    .wp-responsive-open #adminmenu .dashicons-admin-users::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M14.5 9a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Z'/%3E%3Cpath stroke-linejoin='round' d='M18 15.83A6.99 6.99 0 0 0 12 13c-2.493 0-4.647 1.3-5.878 3.253M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-users::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M14.5 9a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Z'/%3E%3Cpath stroke-linejoin='round' d='M18 15.83A6.99 6.99 0 0 0 12 13c-2.493 0-4.647 1.3-5.878 3.253M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Tools */
+    .wp-responsive-open #adminmenu .dashicons-admin-tools::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath stroke-linejoin='round' d='M14 3.27c0-.487 0-.731.095-.904a.69.69 0 0 1 .462-.354C14.733 2 14.968 2.097 15.438 2.29l5.46 2.273c.858.357 1.287.536 1.422.827a.84.84 0 0 1 0 .67c-.135.291-.564.47-1.422.827l-5.46 2.273c-.47.193-.705.29-.881.277a.69.69 0 0 1-.462-.353C14 8.81 14 8.567 14 8.08V3.27Z'/%3E%3Cpath d='M18 6.35h.008m-12.15 6.93a3.15 3.15 0 1 1-4.454 4.454a3.15 3.15 0 0 1 4.454-4.454Zm9.89 0a3.15 3.15 0 1 1-4.454 4.455a3.15 3.15 0 0 1 4.455-4.454Z'/%3E%3Cpath stroke-linejoin='round' d='m5.857 7.714l3.243 3.243M9.1 7.714L5.857 10.957'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-tools::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath stroke-linejoin='round' d='M14 3.27c0-.487 0-.731.095-.904a.69.69 0 0 1 .462-.354C14.733 2 14.968 2.097 15.438 2.29l5.46 2.273c.858.357 1.287.536 1.422.827a.84.84 0 0 1 0 .67c-.135.291-.564.47-1.422.827l-5.46 2.273c-.47.193-.705.29-.881.277a.69.69 0 0 1-.462-.353C14 8.81 14 8.567 14 8.08V3.27Z'/%3E%3Cpath d='M18 6.35h.008m-12.15 6.93a3.15 3.15 0 1 1-4.454 4.454a3.15 3.15 0 0 1 4.454-4.454Zm9.89 0a3.15 3.15 0 1 1-4.454 4.455a3.15 3.15 0 0 1 4.455-4.454Z'/%3E%3Cpath stroke-linejoin='round' d='m5.857 7.714l3.243 3.243M9.1 7.714L5.857 10.957'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    /* Settings */
+    .wp-responsive-open #adminmenu .dashicons-admin-settings::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M15.5 12a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z'/%3E%3Cpath d='M21.011 14.084c-.012.018-.319.51-.636.897c-.373.454-.856.816-1.403.797c-.438-.015-.694-.278-.99-.583a1.23 1.23 0 0 0-1.692-.111l-.298.262c-.502.44-.772 1.044-.722 1.607c.06.672.415 1.258 1.087 1.61c.278.148.494.42.676.702c.253.4.423.853.512 1.33c.088.473-.283.797-.74.913c-.617.158-1.256.26-1.896.303c-.492.034-.787-.336-.924-.753a3.47 3.47 0 0 0-.624-1.255c-.42-.518-1.116-.78-1.81-.602a1.79 1.79 0 0 0-1.212 1.062a3.47 3.47 0 0 0-.292 1.395c-.027.548-.438.856-.963.87a11.46 11.46 0 0 1-1.887-.152c-.55-.095-.858-.418-.868-.963a3.48 3.48 0 0 0-.544-1.778c-.412-.634-1.135-.956-1.918-.827c-.58.096-1.029.415-1.318.932c-.205.37-.587.603-1.025.61c-.625.009-1.26-.065-1.847-.254c-.463-.149-.717-.46-.67-.946c.042-.448.19-.895.433-1.284c.346-.553.395-1.228.122-1.848a1.79 1.79 0 0 0-1.158-1.03c-.632-.2-1.268-.167-1.848.085c-.455.198-.856.003-1.05-.434a11.45 11.45 0 0 1-.705-1.774c-.13-.474.097-.823.537-1.003c.404-.165.824-.283 1.26-.353c.62-.1 1.116-.519 1.37-1.084a1.79 1.79 0 0 0-.044-1.575c-.318-.615-.815-1.04-1.462-1.241c-.464-.145-.668-.523-.617-1.001c.07-.668.203-1.324.397-1.96c.15-.494.522-.71 1.014-.61c.45.092.904.235 1.319.458c.59.318 1.27.276 1.858-.098a1.79 1.79 0 0 0 .79-1.39c.052-.651-.133-1.253-.538-1.754c-.289-.36-.245-.813.085-1.148c.475-.481 1.003-.906 1.572-1.264c.449-.282.886-.198 1.186.235c.274.397.508.833.692 1.287c.262.646.798 1.053 1.467 1.117a1.79 1.79 0 0 0 1.559-.542c.465-.502.683-1.088.676-1.767c-.006-.518.269-.826.774-.908c.683-.112 1.378-.151 2.069-.119c.513.024.802.33.85.85c.045.486.042.982-.012 1.466c-.076.686.184 1.303.712 1.704a1.79 1.79 0 0 0 1.617.298c.637-.196 1.177-.567 1.588-1.098c.295-.381.71-.467 1.147-.244c.599.305 1.15.684 1.645 1.128c.39.35.428.783.14 1.195c-.263.378-.577.727-.936 1.029c-.51.429-.732 1.01-.608 1.636a1.79 1.79 0 0 0 1.035 1.29c.636.272 1.288.351 1.956.256c.508-.072.867.184 1 .678c.178.668.28 1.354.305 2.047c.02.543-.253.865-.787.953c-.49.08-.987.107-1.474.081c-.691-.037-1.314.263-1.71.816a1.79 1.79 0 0 0-.216 1.62c.241.622.653 1.13 1.216 1.485c.404.255.487.672.27 1.106a11.45 11.45 0 0 1-1.029 1.714c-.266.36-.654.456-1.08.275a3.47 3.47 0 0 0-1.408-.326c-.71-.004-1.335.336-1.714.927a1.79 1.79 0 0 0-.177 1.623c.233.613.631 1.102 1.17 1.448c.386.248.49.64.318 1.065Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+
+    .wp-responsive-open #adminmenu .current .dashicons-admin-settings::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M15.5 12a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z'/%3E%3Cpath d='M21.011 14.084c-.012.018-.319.51-.636.897c-.373.454-.856.816-1.403.797c-.438-.015-.694-.278-.99-.583a1.23 1.23 0 0 0-1.692-.111l-.298.262c-.502.44-.772 1.044-.722 1.607c.06.672.415 1.258 1.087 1.61c.278.148.494.42.676.702c.253.4.423.853.512 1.33c.088.473-.283.797-.74.913c-.617.158-1.256.26-1.896.303c-.492.034-.787-.336-.924-.753a3.47 3.47 0 0 0-.624-1.255c-.42-.518-1.116-.78-1.81-.602a1.79 1.79 0 0 0-1.212 1.062a3.47 3.47 0 0 0-.292 1.395c-.027.548-.438.856-.963.87a11.46 11.46 0 0 1-1.887-.152c-.55-.095-.858-.418-.868-.963a3.48 3.48 0 0 0-.544-1.778c-.412-.634-1.135-.956-1.918-.827c-.58.096-1.029.415-1.318.932c-.205.37-.587.603-1.025.61c-.625.009-1.26-.065-1.847-.254c-.463-.149-.717-.46-.67-.946c.042-.448.19-.895.433-1.284c.346-.553.395-1.228.122-1.848a1.79 1.79 0 0 0-1.158-1.03c-.632-.2-1.268-.167-1.848.085c-.455.198-.856.003-1.05-.434a11.45 11.45 0 0 1-.705-1.774c-.13-.474.097-.823.537-1.003c.404-.165.824-.283 1.26-.353c.62-.1 1.116-.519 1.37-1.084a1.79 1.79 0 0 0-.044-1.575c-.318-.615-.815-1.04-1.462-1.241c-.464-.145-.668-.523-.617-1.001c.07-.668.203-1.324.397-1.96c.15-.494.522-.71 1.014-.61c.45.092.904.235 1.319.458c.59.318 1.27.276 1.858-.098a1.79 1.79 0 0 0 .79-1.39c.052-.651-.133-1.253-.538-1.754c-.289-.36-.245-.813.085-1.148c.475-.481 1.003-.906 1.572-1.264c.449-.282.886-.198 1.186.235c.274.397.508.833.692 1.287c.262.646.798 1.053 1.467 1.117a1.79 1.79 0 0 0 1.559-.542c.465-.502.683-1.088.676-1.767c-.006-.518.269-.826.774-.908c.683-.112 1.378-.151 2.069-.119c.513.024.802.33.85.85c.045.486.042.982-.012 1.466c-.076.686.184 1.303.712 1.704a1.79 1.79 0 0 0 1.617.298c.637-.196 1.177-.567 1.588-1.098c.295-.381.71-.467 1.147-.244c.599.305 1.15.684 1.645 1.128c.39.35.428.783.14 1.195c-.263.378-.577.727-.936 1.029c-.51.429-.732 1.01-.608 1.636a1.79 1.79 0 0 0 1.035 1.29c.636.272 1.288.351 1.956.256c.508-.072.867.184 1 .678c.178.668.28 1.354.305 2.047c.02.543-.253.865-.787.953c-.49.08-.987.107-1.474.081c-.691-.037-1.314.263-1.71.816a1.79 1.79 0 0 0-.216 1.62c.241.622.653 1.13 1.216 1.485c.404.255.487.672.27 1.106a11.45 11.45 0 0 1-1.029 1.714c-.266.36-.654.456-1.08.275a3.47 3.47 0 0 0-1.408-.326c-.71-.004-1.335.336-1.714.927a1.79 1.79 0 0 0-.177 1.623c.233.613.631 1.102 1.17 1.448c.386.248.49.64.318 1.065Z'/%3E%3C/g%3E%3C/svg%3E") !important;
+    }
+}

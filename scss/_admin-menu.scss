@@ -1,0 +1,496 @@
+/**
+ * Admin Menu Styling (SCSS Partial)
+ *
+ * Modern sidebar menu dengan dynamic brand colors dan smooth animations.
+ *
+ * @package elemenane
+ */
+
+/* ============================================
+   MODERN ADMIN LAYOUT
+   ============================================ */
+
+/* Hide WordPress default menu background */
+#adminmenuback,
+#adminmenuwrap {
+	background: transparent !important;
+}
+
+#adminmenuback {
+	display: none !important; /* Remove completely */
+}
+
+#adminmenuwrap {
+	position: fixed !important;
+	top: 0 !important;
+	left: 0 !important;
+	height: 100vh !important;
+	overflow: visible !important; /* Allow submenu to show */
+	z-index: 0 !important;
+}
+
+/* Adjust layout - DEFAULT 60px only */
+#wpcontent {
+	margin-left: 60px !important; /* Icon only width - DEFAULT */
+	padding-left: 0;
+	transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+	@media screen and (max-width: 782px) {
+		width: 100% !important;
+		max-width: 100vw !important;
+		display: flex;
+		flex-direction: column;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+}
+
+/* Push content ONLY when submenu is open (via body class) */
+body.has-open-submenu #wpcontent {
+	margin-left: 300px !important; /* 60px sidebar + 240px submenu */
+}
+
+#wpbody-content {
+	padding: 0;
+}
+
+.wrap {
+	margin: 0;
+	padding: 2rem;
+	max-width: none;
+
+	@media screen and (max-width: 782px) {
+		padding: 15px;
+	}
+}
+
+/* ============================================
+   MODERN SIDEBAR - COMPACT ICON+LABEL
+   ============================================ */
+
+/* Menu container - dark sidebar with brand color */
+#adminmenu {
+	background: var(--ane-color-primary, #2d232e) !important;
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+	width: 60px !important; /* Icon only */
+	box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
+	position: fixed !important;
+	top: 32px !important; /* Below admin bar */
+	left: 0;
+	height: calc(100vh - 32px) !important;
+	max-height: calc(100vh - 32px) !important;
+	overflow-y: auto !important; /* Enable scrolling */
+	overflow-x: hidden !important;
+	z-index: 9999;
+	padding-top: 0;
+	padding-bottom: 80px; /* Extra space at bottom */
+
+	/* Hide scrollbar but keep scroll functionality */
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE and Edge */
+
+	&::-webkit-scrollbar {
+		display: none; /* Chrome, Safari, Opera */
+	}
+}
+
+/* Menu item base - icon only layout */
+#adminmenu li.menu-top {
+	border: none;
+	margin: 4px 0;
+
+	&:last-of-type {
+		margin-bottom: 12px;
+	}
+}
+
+#adminmenu a {
+	color: rgba(255, 255, 255, 0.7) !important;
+	transition: all var(--ane-transition-base, 0.2s ease);
+	border-radius: var(--ane-radius-md, 10px);
+	margin: 0 6px;
+	padding: 8px 0; /* Smaller padding */
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center !important;
+	min-height: 44px; /* Smaller height */
+	position: relative;
+}
+
+/* Hide menu text - show only on tooltip */
+#adminmenu .wp-menu-name {
+	display: none !important; /* Hidden - will show as tooltip */
+}
+
+/* Menu icon - smaller and cleaner */
+#adminmenu .wp-menu-image {
+	width: 20px !important; /* Smaller icon */
+	height: 20px !important;
+	margin: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	color: rgba(255, 255, 255, 0.7) !important;
+}
+
+#adminmenu .wp-menu-image:before {
+	font-size: 18px !important; /* Smaller dashicon */
+	width: 20px !important;
+	height: 20px !important;
+}
+
+#adminmenu .wp-menu-image img {
+	width: 18px !important; /* Smaller custom icon */
+	height: 18px !important;
+	opacity: 0.7; /* Match text opacity */
+	padding: 0 !important;
+}
+#adminmenu li.menu-top:hover {
+	background-color: transparent !important;
+}
+
+/* Menu item hover */
+#adminmenu li.menu-top:hover > a,
+#adminmenu li.opensub > a,
+#adminmenu li > a:focus {
+	background: rgba(var(--ane-color-white-rgb), 0.2) !important;
+	color: var(--ane-color-white) !important;
+	font-weight: var(--ane-font-semibold, 600);
+	box-shadow: inset 0 0 0 2px rgba(var(--ane-color-white-rgb), 0.2);
+}
+
+#adminmenu li.menu-top:hover .wp-menu-image,
+#adminmenu li.menu-top:hover .wp-menu-image img,
+#adminmenu li.menu-top:hover .wp-menu-image:before {
+	color: #ffffff !important;
+	opacity: 1;
+}
+
+/* Menu item active/current - darker background */
+#adminmenu li.menu-top.current > a,
+#adminmenu li.menu-top.wp-has-current-submenu > a {
+	background: rgba(var(--ane-color-white-rgb), 0.2) !important;
+	color: var(--ane-color-white) !important;
+	font-weight: var(--ane-font-semibold, 600);
+	box-shadow: inset 0 0 0 2px rgba(var(--ane-color-white-rgb), 0.2);
+}
+
+#adminmenu li.menu-top.current .wp-menu-image,
+#adminmenu li.menu-top.current .wp-menu-image:before,
+#adminmenu li.menu-top.wp-has-current-submenu .wp-menu-image,
+#adminmenu li.menu-top.wp-has-current-submenu .wp-menu-image:before {
+	color: var(--ane-color-light, #ffffff) !important;
+}
+
+#adminmenu li.menu-top.current .wp-menu-image img,
+#adminmenu li.menu-top.wp-has-current-submenu .wp-menu-image img {
+	opacity: 1;
+	filter: brightness(0) invert(1);
+}
+
+/* Additional icon styles */
+#adminmenu .wp-menu-image:before {
+	color: inherit;
+}
+
+/* ============================================
+   TOOLTIP ON HOVER
+   ============================================ */
+
+/* Tooltip element created by JS - positioned by JS */
+.ane-tooltip {
+	background: var(--ane-color-primary, #2d232e);
+	color: var(--ane-color-white);
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-size: 13px;
+	font-weight: 500;
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.2s ease, visibility 0.2s ease;
+	z-index: 999999 !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Tooltip arrow - positioned by JS */
+.ane-tooltip-arrow {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 6px 8px 6px 0;
+	border-color: transparent var(--ane-color-primary, #2d232e) transparent transparent;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.2s ease, visibility 0.2s ease;
+	z-index: 999999 !important;
+}
+
+/* Show tooltip on hover */
+.ane-tooltip-show {
+	opacity: 1 !important;
+	visibility: visible !important;
+}
+
+/* ============================================
+   SECONDARY PANEL - SUBMENU SLIDE-IN
+   ============================================ */
+
+/* Submenu as secondary panel */
+#adminmenu .wp-submenu {
+	background: var(--ane-color-light, #f1f0ea) !important; /* Light brand color */
+	backdrop-filter: none;
+	border-radius: 0;
+	border-right: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.12);
+	margin: 0 !important;
+	padding: 1rem 0 !important;
+	padding-top: 84px !important; /* Clear admin bar (32px) + spacing */
+	box-shadow: 2px 0 16px rgba(0, 0, 0, 0.06) !important;
+	left: 60px !important;
+	top: 0 !important;
+	position: fixed !important;
+	width: 240px !important;
+	min-width: 240px !important;
+	height: 100vh !important;
+	overflow-y: auto !important;
+	z-index: 99990 !important; /* Below admin bar but above everything else */
+}
+
+/* Submenu header (parent link) */
+#adminmenu .wp-submenu .wp-submenu-head {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ane-color-primary, #2d232e) !important; /* Brand primary */
+	padding: 12px 20px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+}
+
+/* KILL WordPress default list bullets - KEEP ::before for our icon */
+#adminmenu .wp-submenu ul,
+#adminmenu .wp-submenu li {
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+#adminmenu .wp-submenu li::before,
+#adminmenu .wp-submenu li::after,
+#adminmenu .wp-submenu a::after {
+	display: none !important;
+	content: none !important;
+	background: none !important;
+}
+
+/* Submenu wrapper - FLEX CONTAINER (NO HOVER) */
+#adminmenu li.menu-top.opensub .wp-submenu {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: stretch !important;
+}
+
+/* Submenu items - FLEX LAYOUT WITH ::BEFORE ICON */
+#adminmenu .wp-submenu a {
+	color: var(--ane-color-body, #1e2d2f) !important; /* Dark text */
+	font-size: 14px !important;
+	font-weight: 500;
+	padding: 10px 16px !important; /* Even padding */
+	margin: 4px 12px !important;
+	border-radius: 333px;
+	border-left: 0;
+	transition: all var(--ane-transition-fast, 0.15s ease);
+	display: flex !important; /* FLEX */
+	flex-direction: row !important;
+	align-items: center !important; /* Vertical center */
+	justify-content: flex-start !important; /* Align left */
+	gap: 12px !important; /* Space between icon and text */
+	min-height: 25px !important;
+	position: relative;
+	line-height: 1.5;
+	text-align: left !important;
+	background: transparent !important; /* Clear background */
+}
+
+/* Icon as ::before - FLEX CHILD */
+#adminmenu .wp-submenu a::before {
+	content: '' !important;
+	display: block !important; /* Block for sizing */
+	flex-shrink: 0 !important; /* Don't shrink */
+	width: 24px !important;
+	height: 24px !important;
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%232d232e" d="m11.71 15.29l2.59-2.59a.996.996 0 0 0 0-1.41L11.71 8.7c-.63-.62-1.71-.18-1.71.71v5.17c0 .9 1.08 1.34 1.71.71"/></svg>') !important;
+	background-size: contain !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	order: -1 !important; /* Icon first */
+}
+
+#adminmenu .wp-submenu a:hover,
+#adminmenu .wp-submenu a:focus {
+	background: rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.06) !important;
+}
+
+/* Current/Active submenu item - WHITE BACKGROUND */
+#adminmenu .wp-submenu li.current a,
+#adminmenu .wp-submenu li.current a:hover,
+#adminmenu .wp-submenu li.current a:focus {
+	background: var(--ane-color-light, #f1f0ea) !important; /* Pure white */
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+	font-weight: 600 !important;
+}
+
+/* KILL WordPress default hover behavior */
+#adminmenu li.menu-top:hover .wp-submenu,
+#adminmenu li.menu-top.wp-has-current-submenu:hover .wp-submenu,
+#adminmenu li.menu-top.wp-menu-open .wp-submenu {
+	display: none !important;
+}
+
+/* Hide submenu by default - HIGH SPECIFICITY */
+#adminmenu li.menu-top .wp-submenu,
+#adminmenu li.menu-top.wp-has-submenu .wp-submenu {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+/* Show submenu ONLY on CLICK (via .opensub class from JS) - HIGHEST PRIORITY */
+#adminmenu li.menu-top.opensub .wp-submenu,
+#adminmenu li.menu-top.opensub:hover .wp-submenu {
+	display: flex !important;
+	flex-direction: column !important;
+	visibility: visible !important;
+	align-items: stretch !important;
+}
+
+/* Separator styling */
+#adminmenu li.wp-menu-separator {
+	height: 3px;
+	margin: 3px 0;
+	background: none !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Update count bubble */
+#adminmenu .update-plugins,
+#adminmenu .awaiting-mod {
+	background: var(--ane-color-accent, #e0ddcf);
+	color: var(--ane-color-dark, #1a1a1a);
+	border-radius: var(--ane-radius-full, 999px);
+	font-weight: var(--ane-font-bold, 700);
+	font-size: var(--ane-font-xs, 0.75rem);
+	padding: 2px 6px;
+	margin-left: 4px;
+}
+
+/* Collapsed menu styles */
+.folded #adminmenu a {
+	margin: 2px 4px;
+}
+
+.folded #adminmenu li.menu-top:hover > a {
+	background: rgba(var(--ane-color-light-rgb, 241, 240, 234), 0.1) !important;
+}
+
+.folded #adminmenu .wp-submenu {
+	background: var(--ane-color-primary, #2d232e);
+	border: 1px solid rgba(var(--ane-color-light-rgb, 241, 240, 234), 0.1);
+	border-radius: var(--ane-radius-md, 10px);
+	box-shadow: var(--ane-shadow-lg, 0 8px 20px rgba(0, 0, 0, 0.1));
+	padding: 8px 0;
+}
+
+.wp-submenu .yoast-brand-insights-content {
+	color: #ffffff;
+}
+/* Collapse button - hide it (not needed for icon-only) */
+#collapse-button,
+#collapse-menu {
+	display: none !important;
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE
+   ============================================ */
+
+@media (max-width: 782px) {
+	/* Mobile menu overlay */
+	#adminmenu {
+		box-shadow: var(--ane-shadow-xl, 0 12px 28px rgba(0, 0, 0, 0.15));
+	}
+
+	/* Larger tap targets */
+	#adminmenu a {
+		min-height: var(--ane-tap-target-min, 44px);
+		padding: 12px 16px;
+		display: flex;
+		align-items: center;
+	}
+
+	/* Mobile submenu */
+	#adminmenu .wp-submenu a {
+		min-height: var(--ane-tap-target-min, 44px);
+		padding: 10px 16px 10px 32px;
+	}
+}
+
+/* ============================================
+   MENU ANIMATIONS - DISABLED FOR PERFORMANCE
+   ============================================ */
+
+/* NO animation - instant show/hide for better UX */
+#adminmenu .wp-submenu {
+	animation: none !important;
+	transform: none !important;
+	opacity: 1 !important;
+}
+
+/* Menu item pulse on active */
+#adminmenu li.menu-top.current > a {
+	animation: ane-pulse 0.3s ease;
+}
+
+@keyframes ane-pulse {
+	0%, 100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.02);
+	}
+}
+
+/* ============================================
+   CUSTOM ANE SETUP ICON
+   ============================================ */
+
+/* Replace dashicon with custom SVG icon */
+#adminmenu #toplevel_page_ane-setup .wp-menu-image:before {
+	content: '' !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.7)' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M9 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6'/%3E%3Cpath stroke-linejoin='round' d='M12 21v-4.639c0-.51.1-.999.284-1.453M22 21v-3.185m-7.778-5.08A5.5 5.5 0 0 1 17 12c2.28 0 4.203 1.33 4.805 3.15M15 22v-2.177M19 22v-5.147C19 15.83 18.105 15 17 15s-2 .83-2 1.853v.794M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011'/%3E%3C/g%3E%3C/svg%3E") !important;
+	background-size: contain !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	width: 24px !important;
+	height: 24px !important;
+	display: block !important;
+}
+
+/* Ensure icon is visible - hide dashicons font */
+#adminmenu #toplevel_page_ane-setup .wp-menu-image {
+	font-size: 0 !important; /* Hide dashicon */
+}
+
+/* Icon states - white on hover/active */
+#adminmenu #toplevel_page_ane-setup:hover .wp-menu-image:before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M9 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6'/%3E%3Cpath stroke-linejoin='round' d='M12 21v-4.639c0-.51.1-.999.284-1.453M22 21v-3.185m-7.778-5.08A5.5 5.5 0 0 1 17 12c2.28 0 4.203 1.33 4.805 3.15M15 22v-2.177M19 22v-5.147C19 15.83 18.105 15 17 15s-2 .83-2 1.853v.794M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011'/%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+#adminmenu #toplevel_page_ane-setup.current .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-setup.wp-has-current-submenu .wp-menu-image:before,
+#adminmenu #toplevel_page_ane-setup.opensub .wp-menu-image:before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-width='1.5'%3E%3Cpath d='M9 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6'/%3E%3Cpath stroke-linejoin='round' d='M12 21v-4.639c0-.51.1-.999.284-1.453M22 21v-3.185m-7.778-5.08A5.5 5.5 0 0 1 17 12c2.28 0 4.203 1.33 4.805 3.15M15 22v-2.177M19 22v-5.147C19 15.83 18.105 15 17 15s-2 .83-2 1.853v.794M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011'/%3E%3C/g%3E%3C/svg%3E") !important;
+	opacity: 1 !important;
+}

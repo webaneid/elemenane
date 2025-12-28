@@ -1,0 +1,107 @@
+.ane-wide-banner {
+    @include DisplayBlock;
+
+    @include mobile {
+        @include DisplayLebar;
+    }
+
+    .ane-image {
+        position: relative;
+
+        img {
+            border-radius: 4px;
+        }
+
+        .banner-info {
+            position: absolute;
+            right: 0;
+            top: 15px;
+            content: '';
+            background: rgba(var(--ane-warna-gelap-rgb),0.08);;
+            color: var(--ane-warna-text);
+            padding: 5px 20px;
+            font-size: 13px;
+            border-radius: 3px 0 0 3px;
+            opacity: 0.3;
+            transition: 0.5s;
+
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    @include mobile {
+        padding: 0 0 10px 0;
+        margin-bottom: 20px;
+        border-bottom: 7px solid rgba(var(--ane-warna-gelap-rgb),0.08);;
+
+        .ane-image {
+            @include DisplayLebar;
+
+            img {
+                border-radius: 0;
+            }
+
+            .banner-info {
+                top: 0;
+                padding: 5px;
+                font-size: 10px;
+                background: rgba(var(--ane-warna-gelap-rgb), 0.1);
+                opacity: 1;
+            }
+        }
+
+    }
+}
+.ane-iklan {
+    @include DisplayBlock;
+    background: transparent;
+    margin-bottom: 30px;
+    position: relative;
+
+    .isi {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin: auto;
+        border-radius: 4px;
+        overflow: hidden;
+
+        .banner-info {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            background: rgba(var(--ane-warna-putih-rgb), 0.3);
+            padding: 4px;
+            font-size: 11px;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.6);
+            line-height: 1;
+            font-weight: 600;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+    }
+    @include tablet {
+        .isi {
+            width: 60%;
+        }
+    }
+    @include mobile {
+        @include DisplayLebar;
+        background: rgba(var(--ane-warna-gelap-rgb),0.08);;
+        padding-top: 15px;
+        padding-bottom: 15px;
+
+        .isi {
+            width: 70%;
+            height: auto;
+        }
+    }
+}
+
+.google-auto-placed {
+    @include DisplayBlock;
+    background: transparent;
+    margin-bottom: 30px !important;
+}

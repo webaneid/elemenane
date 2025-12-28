@@ -1,0 +1,43 @@
+# WordPress
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+package-lock.json
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# SCSS source maps (optional - uncomment if you don't want to track them)
+# *.css.map
+
+# Compiled MO files (optional - we track them for distribution)
+# *.mo
+
+# Distribution folder
+dist/

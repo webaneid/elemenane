@@ -1,0 +1,448 @@
+/**
+ * Admin Animations & Transitions
+ *
+ * Smooth, professional animations untuk modern admin feel.
+ *
+ * @package elemenane
+ */
+
+// ============================================
+// PAGE LOAD ANIMATIONS - LIGHTWEIGHT
+// ============================================
+
+// NO initial hiding state for performance
+// Content shows immediately
+
+// Optional subtle fade in
+.ane-animate-in {
+  animation: ane-fade-in 0.2s ease-out forwards;
+}
+
+@keyframes ane-fade-in {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ============================================
+// PAGE TRANSITION ANIMATIONS
+// ============================================
+
+.ane-page-exit {
+  .wrap {
+    animation: ane-fade-out 0.3s ease-out forwards;
+  }
+}
+
+@keyframes ane-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+// ============================================
+// BUTTON RIPPLE EFFECT
+// ============================================
+
+.button,
+.button-primary,
+.button-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.ane-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transform: scale(0);
+  animation: ane-ripple-animation 0.6s ease-out;
+}
+
+@keyframes ane-ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+// ============================================
+// NOTICE ANIMATIONS
+// ============================================
+
+.ane-notice-animate {
+  animation: ane-notice-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ane-notice-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.notice,
+.updated,
+.error {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// ============================================
+// TABLE ROW HOVER ANIMATIONS
+// ============================================
+
+.widefat tbody tr,
+.wp-list-table tbody tr {
+  transition: all var(--ane-transition-fast, 0.15s) ease;
+  transform-origin: center;
+}
+
+// ============================================
+// SKELETON LOADING
+// ============================================
+
+.ane-skeleton-loading {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--ane-color-light-rgb, 241, 240, 234), 0.3) 0%,
+    rgba(var(--ane-color-light-rgb, 241, 240, 234), 0.5) 50%,
+    rgba(var(--ane-color-light-rgb, 241, 240, 234), 0.3) 100%
+  );
+  background-size: 200% 100%;
+  animation: ane-skeleton-shimmer 1.5s infinite;
+
+  // Hide content during loading
+  * {
+    visibility: hidden;
+  }
+}
+
+.ane-skeleton-loaded {
+  animation: ane-fade-in 0.3s ease-out forwards;
+}
+
+@keyframes ane-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes ane-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ============================================
+// POSTBOX ANIMATIONS
+// ============================================
+
+.postbox {
+  transition: all var(--ane-transition-base, 0.2s) ease;
+
+  &.closed {
+    .inside {
+      animation: ane-collapse 0.3s ease-out;
+    }
+  }
+
+  &:not(.closed) {
+    .inside {
+      animation: ane-expand 0.3s ease-out;
+    }
+  }
+}
+
+@keyframes ane-collapse {
+  from {
+    opacity: 1;
+    max-height: 1000px;
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+  }
+}
+
+@keyframes ane-expand {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+  }
+}
+
+// ============================================
+// STAT CARD ANIMATIONS
+// ============================================
+
+.ane-stat-card {
+  &__icon {
+    transition: all var(--ane-transition-base, 0.2s) ease;
+  }
+
+  &:hover {
+    .ane-stat-card__icon {
+      transform: scale(1.05) rotate(5deg);
+    }
+  }
+}
+
+// ============================================
+// PROGRESS BAR ANIMATIONS
+// ============================================
+
+.ane-breakdown-progress__fill {
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// ============================================
+// TAB ANIMATIONS
+// ============================================
+
+.nav-tab-wrapper .nav-tab {
+  transition: all var(--ane-transition-fast, 0.15s) ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--ane-color-primary, #2d232e);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-50%);
+  }
+
+  &.nav-tab-active::after,
+  &:hover::after {
+    width: 100%;
+  }
+
+  &:not(.nav-tab-active):hover {
+    background: rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.04);
+  }
+}
+
+// ============================================
+// FORM INPUT ANIMATIONS
+// ============================================
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+  transition: all var(--ane-transition-base, 0.2s) ease;
+
+  &:focus {
+    animation: ane-input-focus 0.3s ease-out;
+  }
+}
+
+@keyframes ane-input-focus {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+  }
+  100% {
+    box-shadow: 0 0 0 4px rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.08);
+  }
+}
+
+// ============================================
+// TOGGLE SWITCH ANIMATIONS
+// ============================================
+
+.ane-toggle-slider {
+  &::before {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.ane-toggle input:checked + .ane-toggle-slider::before {
+  animation: ane-toggle-bounce 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ane-toggle-bounce {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(26px);
+  }
+  100% {
+    transform: translateX(22px);
+  }
+}
+
+// ============================================
+// MENU ANIMATIONS
+// ============================================
+
+#adminmenu {
+  .wp-submenu {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: left center;
+
+    &:not(.opensub) {
+      opacity: 0;
+      transform: translateX(-10px) scale(0.95);
+      pointer-events: none;
+    }
+  }
+
+  li.menu-top.opensub .wp-submenu {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+    animation: ane-submenu-slide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes ane-submenu-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+// ============================================
+// ADMIN BAR ANIMATIONS
+// ============================================
+
+#wpadminbar {
+  .ab-submenu {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: top center;
+
+    a {
+      transition: all var(--ane-transition-fast, 0.15s) ease;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 3px;
+        height: 0;
+        background: var(--ane-color-accent, #e0ddcf);
+        transition: all 0.2s ease;
+        transform: translateY(-50%);
+      }
+
+      &:hover::before {
+        height: 60%;
+      }
+    }
+  }
+}
+
+// ============================================
+// DASHBOARD WIDGET ANIMATIONS
+// ============================================
+
+#dashboard-widgets {
+  .postbox {
+    &.closed {
+      .inside {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+    }
+
+    &:not(.closed) {
+      .inside {
+        max-height: 2000px;
+        transition: max-height 0.3s ease-out;
+      }
+    }
+  }
+}
+
+// ============================================
+// LOADING SPINNER ENHANCEMENT
+// ============================================
+
+.spinner {
+  &.is-active {
+    animation: ane-spinner-fade-in 0.2s ease-out;
+  }
+}
+
+@keyframes ane-spinner-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ============================================
+// RESPONSIVE ADJUSTMENTS
+// ============================================
+
+@media (max-width: 782px) {
+  // Reduce animation intensity on mobile for performance
+  .ane-animate-in {
+    animation-duration: 0.3s;
+  }
+
+  .ane-page-exit .wrap {
+    animation-duration: 0.2s;
+  }
+
+  // Disable parallax on mobile
+  .wrap > h1,
+  .wrap > h2 {
+    transform: none !important;
+  }
+}
+
+// Respect user's motion preferences
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

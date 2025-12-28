@@ -1,0 +1,34 @@
+/**
+ * Admin Color Tokens
+ *
+ * These are fallback/default colors for admin dashboard.
+ * In production, these values are dynamically overridden by Elementor Kit colors
+ * via inc/elementor.php -> ane_add_elementor_colors_to_admin()
+ *
+ * Color mapping:
+ * - primary, secondary, accent: Synced from Elementor system colors
+ * - body: Synced from Elementor 'text' color
+ * - light, dark, white, black: Static utility colors
+ * - Custom colors: All Elementor custom colors are also available
+ */
+:root {
+  /* Fallback colors (overridden by Elementor) */
+  --ane-color-primary: #2d232e;
+  --ane-color-primary-rgb: 45, 35, 46;
+  --ane-color-secondary: #474448;
+  --ane-color-secondary-rgb: 71, 68, 72;
+  --ane-color-body: #1e2d2f;
+  --ane-color-body-rgb: 30, 45, 47;
+  --ane-color-accent: #e0ddcf;
+  --ane-color-accent-rgb: 224, 221, 207;
+
+  /* Static utility colors */
+  --ane-color-light: #f1f0ea;
+  --ane-color-light-rgb: 241, 240, 234;
+  --ane-color-dark: #1a1a1a;
+  --ane-color-dark-rgb: 26, 26, 26;
+  --ane-color-white: #ffffff;
+  --ane-color-white-rgb: 255, 255, 255;
+  --ane-color-black: #000000;
+  --ane-color-black-rgb: 0, 0, 0;
+}

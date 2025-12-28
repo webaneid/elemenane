@@ -1,0 +1,195 @@
+.btn {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 20px 44px;
+    border-radius: 30px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.4s ease-in-out;
+
+    span {
+      position: absolute;
+      right: 10px;
+      background: var(--ane-warna-putih);
+      width: 35px;
+      height: 35px;
+      text-align: center;
+      line-height: 35px;
+      border-radius: 50%;
+      top: 10px;
+      display: inline-block;
+      z-index: 3;
+      border: 0;
+
+              i {
+         color: var(--ane-warna-utama);
+         font-size: 15px;
+         line-height: 35px;
+         -webkit-transition: all 0.4s ease-out 0s;
+         -moz-transition: all 0.4s ease-out 0s;
+         -ms-transition: all 0.4s ease-out 0s;
+         -o-transition: all 0.4s ease-out 0s;
+         transition: all 0.4s ease-out 0s;
+        }
+    }
+
+    &:before {
+        top: 0px;
+        width: 0px;
+        left: auto;
+        right: 0px;
+        z-index: -1;
+        bottom: 0px;
+        content: "";
+        position: absolute;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+    }
+    &:hover {
+        color:var(--ane-warna-putih);
+        &:before {
+            left: 0px;
+             width: 100%;
+             right: auto;
+        }
+        i {
+            transform: rotateY(180deg);
+        }
+    }
+}
+
+.btn-utama {
+    background-color: var(--ane-warna-utama);
+
+    &:hover {
+        color: var(--ane-warna-putih);
+        border-color: transparent;
+        &:before {
+            background: var(--ane-warna-utama-2)!important;
+        }
+    }
+
+}
+.btn-utama-2 {
+    background: var(--ane-warna-utama-2);
+
+    span {
+        i {
+            color: var(--ane-warna-utama-2);
+        }
+    }
+    &:hover {
+        color: var(--ane-warna-terang);
+        &:before {
+            background: var(--ane-warna-utama);
+        }
+        i {
+            color: var(--ane-warna-utama);
+        }
+    }
+
+
+}
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--ane-warna-utama);
+
+    span {
+        background: var(--ane-warna-utama);
+        i {
+            color: var(--ane-warna-putih);
+
+        }
+    }
+    &:hover {
+        color: var(--ane-warna-terang);
+        &:before {
+            background: var(--ane-warna-utama);
+        }
+        span {
+            background: var(--ane-warna-putih);
+            i {
+                color: var(--ane-warna-utama);
+            }
+        }
+    }
+
+}
+.btn-alternatif {
+    background: var(--ane-warna-alternatif);
+    color: var(--ane-warna-putih);
+
+    span {
+        i {
+            color: var(--ane-warna-alternatif);
+        }
+    }
+    &:hover {
+        color: var(--ane-warna-terang);
+        &:before {
+            background: var(--ane-warna-utama);
+        }
+        i {
+            color: var(--ane-warna-utama);
+        }
+    }
+}
+.btn-terang {
+    background: var(--ane-warna-terang);
+    color: var(--ane-warna-utama);
+
+    span {
+        i {
+            color: var(--ane-warna-utama);
+        }
+    }
+    &:hover {
+        color: var(--ane-warna-terang);
+        &:before {
+            background: var(--ane-warna-utama-2);
+        }
+        i {
+            color: var(--ane-warna-utama);
+        }
+    }
+}
+.buttons-excel {
+    display: inline-block;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.4s ease-in-out;
+    background: rgba(var(--ane-warna-gelap-rgb),0.08);
+    color: var(--ane-warna-utama);
+}
+
+@media (max-width: 767px) {
+
+    .btn {
+        font-size: 13px;
+        padding: 15px 60px 15px 30px;
+
+        span {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            top: 7px;
+            i {
+                line-height: 30px;
+            }
+        }
+    }
+}

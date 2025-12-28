@@ -1,0 +1,508 @@
+@font-face {
+    font-family: 'FontAne';
+    src: url('../fonts/FontAne.eot?w73ff');
+    src: url('fonts/FontAne.eot?w73ff#iefix') format('embedded-opentype'),
+        url('../fonts/FontAne.ttf?w73ff') format('truetype'),
+        url('fonts/FontAne.woff?w73ff') format('woff'),
+        url('fonts/FontAne.svg?w73ff#FontAne') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+i {
+    font-family: 'FontAne';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ane-arrow-left:before {
+    content: "\e900";
+}
+
+.ane-arrow-right:before {
+    content: "\e901";
+}
+
+.ane-bensin:before {
+    content: "\e902";
+}
+
+.ane-botol:before {
+    content: "\e903";
+}
+
+.ane-buku:before {
+    content: "\e904";
+}
+
+.ane-chevron-down-alt-2:before {
+    content: "\e905";
+}
+
+.ane-chevron-down-alt:before {
+    content: "\e906";
+}
+
+.ane-chevron-down-bulat:before {
+    content: "\e907";
+}
+
+.ane-chevron-down:before {
+    content: "\e908";
+}
+
+.ane-chevron-left-alt-2:before {
+    content: "\e909";
+}
+
+.ane-chevron-left-alt:before {
+    content: "\e90a";
+}
+
+.ane-chevron-left-box:before {
+    content: "\e90b";
+}
+
+.ane-chevron-left-bulat:before {
+    content: "\e90c";
+}
+
+.ane-chevron-left-double:before {
+    content: "\e90d";
+}
+
+.ane-chevron-left:before {
+    content: "\e90e";
+}
+
+.ane-chevron-right-alt-2:before {
+    content: "\e90f";
+}
+
+.ane-chevron-right-alt:before {
+    content: "\e910";
+}
+
+.ane-chevron-right-box:before {
+    content: "\e911";
+}
+
+.ane-chevron-right-bulat:before {
+    content: "\e912";
+}
+
+.ane-chevron-right-double:before {
+    content: "\e913";
+}
+
+.ane-chevron-right:before {
+    content: "\e914";
+}
+
+.ane-chevron-up:before {
+    content: "\e915";
+}
+
+.ane-dokumen:before {
+    content: "\e916";
+}
+
+.ane-driver-alt:before {
+    content: "\e917";
+}
+
+.ane-driver:before {
+    content: "\e918";
+}
+
+.ane-email-alt:before {
+    content: "\e919";
+}
+
+.ane-email:before {
+    content: "\e91a";
+}
+
+.ane-facebook:before {
+    content: "\e91b";
+}
+
+.ane-folder:before {
+    content: "\e91c";
+}
+
+.ane-handling:before {
+    content: "\e91d";
+}
+
+.ane-hotel:before {
+    content: "\e91e";
+}
+
+.ane-instagram:before {
+    content: "\e91f";
+}
+
+.ane-jam-alt-2:before {
+    content: "\e920";
+}
+
+.ane-jam-alt:before {
+    content: "\e921";
+}
+
+.ane-jam:before {
+    content: "\e922";
+}
+
+.ane-kabah-alt:before {
+    content: "\e923";
+}
+
+.ane-kabah:before {
+    content: "\e924";
+}
+
+.ane-kalender-alt:before {
+    content: "\e925";
+}
+
+.ane-kalender:before {
+    content: "\e926";
+}
+
+.ane-koper-alt:before {
+    content: "\e92b";
+}
+
+.ane-koper:before {
+    content: "\e92d";
+}
+
+.ane-linkedin:before {
+    content: "\e92e";
+}
+
+.ane-lokasi:before {
+    content: "\e92f";
+}
+
+.ane-makan-alt:before {
+    content: "\e931";
+}
+
+.ane-makan:before {
+    content: "\e932";
+}
+
+.ane-mata-alt:before {
+    content: "\e933";
+}
+
+.ane-lihat-alt:before {
+    content: "\e933";
+}
+
+.ane-mata:before {
+    content: "\e934";
+}
+
+.ane-lihat:before {
+    content: "\e934";
+}
+
+.ane-mobil-gigi:before {
+    content: "\e935";
+}
+
+.ane-mobil-kecelakaan:before {
+    content: "\e936";
+}
+
+.ane-mobil-kursi:before {
+    content: "\e937";
+}
+
+.ane-mobil-servis:before {
+    content: "\e938";
+}
+
+.ane-mobil:before {
+    content: "\e939";
+}
+
+.ane-parkir-alt:before {
+    content: "\e93a";
+}
+
+.ane-parkir:before {
+    content: "\e93b";
+}
+
+.ane-passport-alt:before {
+    content: "\e93c";
+}
+
+.ane-passport:before {
+    content: "\e93d";
+}
+
+.ane-pensil:before {
+    content: "\e93e";
+}
+
+.ane-pesawat-alt1:before {
+    content: "\e940";
+}
+
+.ane-pesawat-landing:before {
+    content: "\e941";
+}
+
+.ane-pesawat-takeoff:before {
+    content: "\e942";
+}
+
+.ane-pesawat:before {
+    content: "\e943";
+}
+
+.ane-play:before {
+    content: "\e944";
+}
+
+.ane-quote-left:before {
+    content: "\e945";
+}
+
+.ane-quote-right:before {
+    content: "\e946";
+}
+
+.ane-rumah:before {
+    content: "\e947";
+}
+
+.ane-search:before {
+    content: "\e949";
+}
+
+.ane-telepon:before {
+    content: "\e94a";
+}
+
+.ane-tiket:before {
+    content: "\e94c";
+}
+
+.ane-toga:before {
+    content: "\e94d";
+}
+
+.ane-tutup-alt:before {
+    content: "\e94e";
+}
+
+.ane-tutup:before {
+    content: "\e94f";
+}
+
+.ane-twitter:before {
+    content: "\e950";
+}
+
+.ane-user1:before {
+    content: "\e951";
+}
+
+.ane-users1:before {
+    content: "\e952";
+}
+
+.ane-whatsapp:before {
+    content: "\e953";
+}
+
+.ane-youtube:before {
+    content: "\e954";
+}
+
+.ane-gambar:before {
+    content: "\e927";
+}
+
+.ane-gallery:before {
+    content: "\e928";
+}
+
+.ane-kamera:before {
+    content: "\e929";
+}
+
+.ane-musik:before {
+    content: "\e92a";
+}
+
+.ane-pengumuman:before {
+    content: "\e92c";
+}
+
+.ane-folder-open:before {
+    content: "\e930";
+}
+
+.ane-kartu-kredit:before {
+    content: "\e93f";
+}
+
+.ane-lokasi-alt:before {
+    content: "\e948";
+}
+
+.ane-peta:before {
+    content: "\e94b";
+}
+
+.ane-laptop:before {
+    content: "\e956";
+}
+
+.ane-handphone:before {
+    content: "\e958";
+}
+
+.ane-download:before {
+    content: "\e960";
+}
+
+.ane-bubbles:before {
+    content: "\e96c";
+}
+
+.ane-bubbles3:before {
+    content: "\e96f";
+}
+
+.ane-user:before {
+    content: "\e971";
+}
+
+.ane-users:before {
+    content: "\e972";
+}
+
+.ane-user-tie:before {
+    content: "\e976";
+}
+
+.ane-kunci:before {
+    content: "\e98d";
+}
+
+.ane-kunci-alt:before {
+    content: "\e98e";
+}
+
+.ane-obeng:before {
+    content: "\e991";
+}
+
+.ane-equalizer:before {
+    content: "\e992";
+}
+
+.ane-mug:before {
+    content: "\e9a2";
+}
+
+.ane-meter2:before {
+    content: "\e9a7";
+}
+
+.ane-pesawat-alt:before {
+    content: "\e9af";
+}
+
+.ane-truck:before {
+    content: "\e9b0";
+}
+
+.ane-clipboard:before {
+    content: "\e9b8";
+}
+
+.ane-download-alt:before {
+    content: "\e9c5";
+}
+
+.ane-sphere:before {
+    content: "\e9c9";
+}
+
+.ane-bumi:before {
+    content: "\e9ca";
+}
+
+.ane-link:before {
+    content: "\e9cb";
+}
+
+.ane-bintang:before {
+    content: "\e9d9";
+}
+
+.ane-laki-laki:before {
+    content: "\e9dc";
+}
+
+.ane-perempuan:before {
+    content: "\e9dd";
+}
+
+.ane-laki-perempuan:before {
+    content: "\e9de";
+}
+
+.ane-point-up:before {
+    content: "\ea03";
+}
+
+.ane-point-right:before {
+    content: "\ea04";
+}
+
+.ane-point-down:before {
+    content: "\ea05";
+}
+
+.ane-point-left:before {
+    content: "\ea06";
+}
+
+.ane-warning:before {
+    content: "\ea07";
+}
+
+.ane-wordpress:before {
+    content: "\eab4";
+}
+
+.ane-blogger:before {
+    content: "\eab8";
+}
+
+.ane-apple:before {
+    content: "\eabe";
+}
+
+.ane-android:before {
+    content: "\eac0";
+}
