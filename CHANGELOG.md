@@ -15,6 +15,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2025-12-28
+
+### Fixed
+- **Bug Fix: ane_get_embedded_media()** - Fixed "Undefined offset: 0" error
+  - Added validation check for empty embed array in `inc/elemenane.php:173`
+  - Prevents error when post has no embedded media
+  - Returns empty string instead of accessing undefined array index
+
+- **Update Check Integration** - Dual URL parameter support
+  - Support both `ane_force_check` and `elemenane_force_check` parameters
+  - Support both `ane_debug` and `elemenane_debug` parameters
+  - Ensures compatibility with admin dashboard links in `inc/updater.php`
+
+### Changed
+- **page-home.php Template** - Restored "Landing Page" template name
+  - Template can be selected from Page Attributes dropdown
+  - Not used as default homepage (controlled via Settings → Reading)
+  - Mobile/desktop detection with separate template parts
+
+---
+
 ## [1.0.0] - 2025-12-28
 
 ### Added
