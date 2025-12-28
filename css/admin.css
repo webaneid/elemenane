@@ -1917,9 +1917,6 @@ select:focus {
   padding: 1rem 1.25rem;
   border-bottom: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.06);
 }
-.wp-list-table .column-title {
-  width: 25%;
-}
 .wp-list-table .column-author,
 .wp-list-table .column-dates,
 .wp-list-table .column-categories,
@@ -2261,6 +2258,11 @@ select:focus {
   left: 0 !important;
   height: 100vh !important;
   overflow: visible !important; /* Allow submenu to show */
+  z-index: 2 !important;
+  width: auto;
+}
+
+.acf-headerbar {
   z-index: 0 !important;
 }
 

@@ -168,6 +168,12 @@ function ane_get_embedded_media($type = array())
 {
     $content = do_shortcode(apply_filters('the_content', get_the_content()));
     $embed = get_media_embedded_in_content($content, $type);
+
+    // Check if embed array is not empty
+    if (empty($embed) || !isset($embed[0])) {
+        return '';
+    }
+
     if (in_array('audio', $type)):
         $output = str_replace('?visual=true', '?visual=false', $embed[0]); else:
         $output = $embed[0];

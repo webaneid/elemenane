@@ -26,6 +26,10 @@
 	left: 0 !important;
 	height: 100vh !important;
 	overflow: visible !important; /* Allow submenu to show */
+	z-index: 2 !important;
+	width: auto;
+}
+.acf-headerbar {
 	z-index: 0 !important;
 }
 
