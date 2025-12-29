@@ -34,7 +34,7 @@ if ( ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price )
 $thumbnail_id = get_post_thumbnail_id( $product_id );
 ?>
 
-<div class="col-6 col-md-4 col-lg-3">
+<div class="col-lg-4 col-md-3 col-6">
 	<article id="product-<?php echo esc_attr( $product_id ); ?>" <?php post_class( 'ane-product-card' ); ?>>
 
 		<!-- Product Image -->

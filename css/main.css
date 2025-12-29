@@ -105,16 +105,48 @@ ul li {
   max-width: 100%;
 }
 
-.col-md-4,
-.col-lg-4,
-.col-xl-4 {
-  width: 33.333%;
+.col-lg-4 {
+  width: 25%;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .col-lg-4 {
+    width: 33.333%;
+  }
 }
 @media only screen and (min-width: 100px) and (max-width: 767px) {
-  .col-md-4,
-  .col-lg-4,
-  .col-xl-4 {
+  .col-lg-4 {
     width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .col-md-3 {
+    width: 33.333%;
+  }
+}
+@media only screen and (min-width: 100px) and (max-width: 767px) {
+  .col-md-3 {
+    width: 100%;
+  }
+}
+
+.col-lg-4 {
+  width: 25%;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .col-lg-4 {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 100px) and (max-width: 767px) {
+  .col-lg-4 {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 767px) {
+  .col-6 {
+    width: 50%;
   }
 }
 
@@ -211,10 +243,6 @@ ul li {
   left: 0;
   top: -10px;
   z-index: -1;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 .author_bio_section h2 {
@@ -849,10 +877,6 @@ ul li {
   left: 0;
   top: -10px;
   z-index: -1;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 .ane-content ul.wp-block-latest-posts:before {
@@ -913,10 +937,6 @@ ul li {
   left: 0;
   top: -10px;
   z-index: -1;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 .ane-content blockquote cite {
@@ -956,9 +976,7 @@ ul li {
   .ane-content .wp-block-image {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -973,9 +991,7 @@ ul li {
   .ane-content .wp-block-cover {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -987,9 +1003,7 @@ ul li {
   .ane-content .wp-block-gallery {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -1000,9 +1014,7 @@ ul li {
   .ane-content .ane-author {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -1063,9 +1075,7 @@ ul li {
   .ane-wide-banner {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -1102,9 +1112,7 @@ ul li {
   .ane-wide-banner .ane-image {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -1159,9 +1167,7 @@ ul li {
   .ane-iklan {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -1234,10 +1240,6 @@ ul li {
   color: var(--ane-warna-utama);
   font-size: 15px;
   line-height: 35px;
-  -webkit-transition: all 0.4s ease-out 0s;
-  -moz-transition: all 0.4s ease-out 0s;
-  -ms-transition: all 0.4s ease-out 0s;
-  -o-transition: all 0.4s ease-out 0s;
   transition: all 0.4s ease-out 0s;
 }
 .btn:before {
@@ -1492,7 +1494,6 @@ ul li {
 .ane-header .desktop-menu .ane-top {
   background-color: var(--ane-warna-utama);
   background-image: linear-gradient(to right, var(--ane-warna-utama), var(--ane-warna-utama-2));
-  background-image: -o-linear-gradient(70deg, var(--ane-warna-utama) 0%, var(--ane-warna-utama-2) 100%);
   background-image: linear-gradient(90deg, var(--ane-warna-utama) 0%, var(--ane-warna-utama-2) 100%);
   display: block;
   width: 100%;
@@ -1603,97 +1604,111 @@ ul li {
   width: auto;
   padding: 0;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi {
   flex-grow: 1;
   display: flex;
   justify-content: center;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
   gap: 5px;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li {
   display: inline-block;
   position: relative;
   padding: 12px 18px;
   margin: 0;
   transition: all 0.3s ease;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li a {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > a {
   font-size: 15px;
   font-weight: 500;
   color: var(--ane-warna-gelap);
   transition: all 0.3s ease;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li:hover {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li:hover {
   background: var(--ane-warna-alternatif);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li:hover a {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li:hover > a {
   color: var(--ane-warna-terang);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li ul {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul.sub-menu {
   display: block;
   left: 0;
   padding: 0;
+  margin: 0;
   position: absolute;
   top: 100%;
   transform: rotateX(90deg);
   transform-origin: center top 0;
   transition: all 0.5s ease 0s;
   visibility: hidden;
+  opacity: 0;
   width: 250px;
   z-index: 999;
   background: var(--ane-warna-terang);
   border-bottom: 4px solid var(--ane-warna-utama);
   border-radius: 0 0 10px 10px;
-  -webkit-box-shadow: 10px 10px 40px -6px rgba(var(--ane-warna-gelap-rgb), 0.1);
-  box-shadow: 10px 10px 40px -6px rgba(var(--ane-warna-gelap-rgb), 0.1);
+  box-shadow: 0 2px 30px rgba(var(--ane-warna-gelap-rgb), 0.1);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li ul li {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul li,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul.sub-menu li {
   display: block;
   width: 100%;
-  padding: 9px 15px;
+  padding: 0;
+  margin: 0;
   border-bottom: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+  background: transparent;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li ul li:last-child {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul li:last-child,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul.sub-menu li:last-child {
   border-bottom: 0;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li ul li a {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul li a,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul.sub-menu li a {
   color: var(--ane-warna-utama);
+  display: block;
+  padding: 9px 15px;
+  width: 100%;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li ul li:hover {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul li:hover,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul.sub-menu li:hover {
   background: var(--ane-warna-utama);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li ul li:hover a {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul li:hover > a,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li > ul.sub-menu li:hover > a {
   color: var(--ane-warna-terang);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li:hover ul {
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li:hover > ul, .ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu > li:hover > ul.sub-menu {
   transform: rotateX(0);
   visibility: visible;
+  opacity: 1;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu .current-menu-item,
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu .current_page_item {
-  background: var(--ane-warna-utama);
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu .current-menu-item,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu .current_page_item {
+  background: linear-gradient(to bottom, var(--ane-warna-putih), var(--ane-warna-terang));
+  border-bottom: 3px solid var(--ane-warna-utama);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu .current-menu-item a,
-.ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu .current_page_item a {
-  color: var(--ane-warna-terang);
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu .current-menu-item > a,
+.ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu .current_page_item > a {
+  color: var(--ane-warna-utama);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 15px;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .btn-primary {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .btn-primary {
   background: var(--ane-warna-utama);
   color: var(--ane-warna-terang);
   padding: 12px 24px;
@@ -1704,11 +1719,11 @@ ul li {
   transition: all 0.3s ease;
   white-space: nowrap;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .btn-primary:hover {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .btn-primary:hover {
   background: var(--ane-warna-utama-2);
   color: var(--ane-warna-terang);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .icon-button {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .icon-button {
   width: 40px;
   height: 40px;
   display: flex;
@@ -1721,27 +1736,24 @@ ul li {
   transition: all 0.3s ease;
   position: relative;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .icon-button:hover {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .icon-button:hover {
   background: var(--ane-warna-alternatif);
   color: var(--ane-warna-terang);
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .icon-button .cart-count {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: var(--ane-warna-utama);
-  color: var(--ane-warna-terang);
-  font-size: 11px;
-  font-weight: 600;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .icon-button .solar--cart-bold {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' fill-rule='evenodd' d='M8.418 3.25c.28-.59.884-1 1.582-1h4c.698 0 1.301.41 1.582 1c.683.006 1.216.037 1.692.223a3.25 3.25 0 0 1 1.426 1.09c.367.494.54 1.127.776 1.998l.742 2.722l.28.841l.024.03c.901 1.154.472 2.87-.386 6.301c-.546 2.183-.818 3.274-1.632 3.91c-.814.635-1.939.635-4.189.635h-4.63c-2.25 0-3.375 0-4.189-.635c-.814-.636-1.087-1.727-1.632-3.91c-.858-3.431-1.287-5.147-.386-6.301l.024-.03l.28-.841l.742-2.722c.237-.871.41-1.505.776-1.999a3.25 3.25 0 0 1 1.426-1.089c.476-.186 1.008-.217 1.692-.222m.002 1.502c-.662.007-.928.032-1.148.118a1.75 1.75 0 0 0-.768.587c-.176.237-.28.568-.57 1.635l-.57 2.089C6.384 9 7.778 9 9.684 9h4.631c1.907 0 3.3 0 4.32.18l-.569-2.089c-.29-1.067-.394-1.398-.57-1.635a1.75 1.75 0 0 0-.768-.587c-.22-.086-.486-.111-1.148-.118A1.75 1.75 0 0 1 14 5.75h-4a1.75 1.75 0 0 1-1.58-.998' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .header-phone {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1749,9 +1761,28 @@ ul li {
   font-size: 14px;
   font-weight: 500;
 }
-.ane-header .desktop-menu .atas .atas-isi .ane-actions .header-phone i {
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone i {
   font-size: 18px;
   color: var(--ane-warna-utama);
+  flex-shrink: 0;
+}
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone .phone-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.2;
+}
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone .phone-info .phone-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ane-warna-utama);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone .phone-info .phone-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ane-warna-gelap);
 }
 .ane-header .desktop-menu .bawah {
   display: none;
@@ -1774,24 +1805,27 @@ ul li {
   .ane-header .desktop-menu .atas .atas-isi .ane-logo {
     max-width: 150px;
   }
-  .ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu {
+  .ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu {
     gap: 2px;
   }
-  .ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li {
+  .ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu li {
     padding: 10px 12px;
   }
-  .ane-header .desktop-menu .atas .atas-isi .ane-nav #main-menu ul.main-menu li a {
+  .ane-header .desktop-menu .atas .atas-isi .ane-isi #main-menu ul.main-menu li a {
     font-size: 14px;
   }
-  .ane-header .desktop-menu .atas .atas-isi .ane-actions {
+  .ane-header .desktop-menu .atas .atas-isi .ane-kanan {
     gap: 10px;
   }
-  .ane-header .desktop-menu .atas .atas-isi .ane-actions .btn-primary {
+  .ane-header .desktop-menu .atas .atas-isi .ane-kanan .btn-primary {
     padding: 10px 18px;
     font-size: 13px;
   }
-  .ane-header .desktop-menu .atas .atas-isi .ane-actions .header-phone {
-    display: none;
+  .ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone .phone-info .phone-label {
+    font-size: 10px;
+  }
+  .ane-header .desktop-menu .atas .atas-isi .ane-kanan .header-phone .phone-info .phone-number {
+    font-size: 12px;
   }
   .ane-header .ane-mobile-menu {
     display: none;
@@ -1835,7 +1869,6 @@ ul li {
     align-content: flex-start;
     background-color: var(--ane-warna-utama);
     background-image: linear-gradient(to right, var(--ane-warna-utama), var(--ane-warna-utama-2));
-    background-image: -o-linear-gradient(70deg, var(--ane-warna-utama) 0%, var(--ane-warna-utama-2) 100%);
     background-image: linear-gradient(90deg, var(--ane-warna-utama) 0%, var(--ane-warna-utama-2) 100%);
     overflow: hidden;
     padding: 0 10px;
@@ -1859,6 +1892,7 @@ ul li {
     font-size: 15px;
     padding: 5px 10px;
     border-left: 1px solid rgba(var(--ane-warna-putih-rgb), 0.2);
+    min-width: -moz-max-content;
     min-width: max-content;
   }
   .ane-header .ane-mobile-menu .ane-bawah .ane-menu ul li a {
@@ -1945,7 +1979,6 @@ ul li {
     background: var(--ane-warna-putih);
     background-color: var(--ane-warna-utama);
     background-image: linear-gradient(to right, var(--ane-warna-utama), var(--ane-warna-utama-2));
-    background-image: -o-linear-gradient(70deg, var(--ane-warna-utama) 0%, var(--ane-warna-utama-2) 100%);
     background-image: linear-gradient(90deg, var(--ane-warna-utama) 0%, var(--ane-warna-utama-2) 100%);
     overflow: hidden;
     box-shadow: 0 2px 30px rgba(var(--ane-warna-gelap-rgb), 0.1);
@@ -2224,9 +2257,7 @@ ul li {
   .ane-single .entry-header .ane-image {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -2370,9 +2401,6 @@ ul li {
   z-index: 1;
   left: 0;
   top: 0;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(14%, rgba(var(--ane-warna-gelap-rgb), 0)), to(rgba(var(--ane-warna-gelap-rgb), 0.85)));
-  background: -webkit-linear-gradient(top, rgba(var(--ane-warna-gelap-rgb), 0) 14%, rgba(var(--ane-warna-gelap-rgb), 0.85) 100%);
-  background: -o-linear-gradient(top, rgba(var(--ane-warna-gelap-rgb), 0) 14%, rgba(var(--ane-warna-gelap-rgb), 0.85) 100%);
   background: linear-gradient(to bottom, rgba(var(--ane-warna-gelap-rgb), 0) 14%, rgba(var(--ane-warna-gelap-rgb), 0.85) 100%);
   content: "";
   width: 100%;
@@ -2697,9 +2725,7 @@ ul li {
   .ane-post-nav {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -2763,9 +2789,7 @@ ul li {
   .ane-related {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -2806,10 +2830,6 @@ ul li {
   left: 0;
   top: -10px;
   z-index: -1;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 .ane-author h1 {
@@ -2941,9 +2961,7 @@ ul li {
   .ane-page .entry-header .ane-image {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -2969,9 +2987,7 @@ ul li {
   .ane-page-ns .entry-header .ane-image {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -2987,7 +3003,6 @@ ul li {
   width: 100%;
   height: auto;
   margin-bottom: 31px;
-  -webkit-box-shadow: 10px 10px 40px -6px rgba(var(--ane-warna-gelap-rgb), 0.1);
   box-shadow: 10px 10px 40px -6px rgba(var(--ane-warna-gelap-rgb), 0.1);
   border-radius: 4px;
   border-radius: 20px;
@@ -3007,10 +3022,6 @@ ul li {
   left: 0;
   top: -10px;
   z-index: -1;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 .ane-page-kontak .kontak-konten .alamat h3 {
@@ -3027,7 +3038,6 @@ ul li {
 }
 .ane-page-kontak .kontak-map .acf-map {
   border-radius: 4px;
-  -webkit-box-shadow: 10px 10px 40px -6px rgba(var(--ane-warna-gelap-rgb), 0.1);
   box-shadow: 10px 10px 40px -6px rgba(var(--ane-warna-gelap-rgb), 0.1);
   border-bottom: 2px solid var(--ane-warna-utama);
 }
@@ -3237,9 +3247,7 @@ ul li {
   .ane-konten-arsip .ane-konten-overlay .entry-header {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -3349,9 +3357,7 @@ ul li {
 .section-title {
   position: relative;
   display: flex;
-  -moz-box-align: center;
   align-items: center;
-  -moz-box-pack: justify;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 20px;
@@ -4114,8 +4120,6 @@ ul li {
   font-size: 15px;
   font-weight: 600;
   color: var(--ane-warna-text);
-  -webkit-transition: all 0.6s ease-in;
-  -o-transition: all 0.6s ease-in;
   transition: all 0.6s ease-in;
 }
 .right-sidebar .ane-sidebar > ul li a:hover {
@@ -4205,8 +4209,6 @@ ul li {
   margin-bottom: 5px;
   display: inline-block;
   text-transform: capitalize;
-  -webkit-transition: all 0.6s ease-in;
-  -o-transition: all 0.6s ease-in;
   transition: all 0.6s ease-in;
 }
 .right-sidebar .ane-sidebar .wp-block-tag-cloud a:before {
@@ -4279,9 +4281,7 @@ ul li {
   .right-sidebar .ane-sidebar {
     max-width: none;
     width: auto;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     margin-left: -15px;
     margin-right: -15px;
@@ -4468,7 +4468,6 @@ ul li {
   margin-bottom: 0 !important;
 }
 .ane-footer .atas .isi .isi-konten .ane-konten-lis .entry-header .ane-image img {
-  -webkit-filter: drop-shadow(0 0 0 var(--ane-warna-putih));
   filter: drop-shadow(0 0 0 var(--ane-warna-putih));
 }
 .ane-footer .atas .isi .isi-konten .ane-konten-lis .entry-content h2 a {
@@ -4732,7 +4731,8 @@ ul li {
 .ane-branch-card__image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   transition: transform 0.3s ease;
 }
 .ane-branch-card:hover .ane-branch-card__image img {
@@ -4824,7 +4824,8 @@ ul li {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
 }
 
 .ane-branch-modal__content {
@@ -4992,7 +4993,8 @@ ul li {
 .ane-single-branch__hero-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .ane-single-branch__title-area {
@@ -5156,7 +5158,8 @@ ul li {
 .ane-single-branch__gallery-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .ane-single-branch__gallery-item:hover {
   transform: scale(1.05);
@@ -5301,7 +5304,8 @@ ul li {
 .ane-branch-card-mini__image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   transition: transform 0.3s ease;
 }
 .ane-branch-card-mini__image a:hover img {
@@ -5443,6 +5447,7 @@ ul li {
 .ane-product-gallery {
   position: sticky;
   top: 2rem;
+  height: -moz-fit-content;
   height: fit-content;
 }
 @media (max-width: 968px) {
@@ -5455,8 +5460,11 @@ ul li {
   margin-bottom: 1rem;
   border-radius: 12px;
   overflow: hidden;
-  background: #fafaf8;
+  background: var(--ane-warna-putih);
   cursor: zoom-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .ane-gallery-main img {
   width: 100%;
@@ -5522,6 +5530,14 @@ ul li {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+.ane-product-info .ane-product-category {
+  margin-bottom: -1rem;
+}
+@media (max-width: 768px) {
+  .ane-product-info .ane-product-category {
+    margin-bottom: -0.75rem;
+  }
 }
 
 .ane-product-title {
@@ -5637,6 +5653,7 @@ ul li {
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 600;
+  width: -moz-fit-content;
   width: fit-content;
 }
 .ane-stock-status.in-stock {
@@ -5892,6 +5909,68 @@ ul li {
   color: #4b5563;
 }
 
+/* Product Tags */
+.ane-product-tags {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+@media (max-width: 768px) {
+  .ane-product-tags {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+}
+.ane-product-tags .tags-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  white-space: nowrap;
+  padding-top: 0.25rem;
+}
+.ane-product-tags .tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ane-product-tags .tag-item {
+  display: inline-block;
+  padding: 0.375rem 0.875rem;
+  background: transparent;
+  color: #4b5563;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1.5px solid #d1d5db;
+}
+.ane-product-tags .tag-item::before {
+  content: "#";
+  margin-right: 0.25rem;
+  opacity: 0.7;
+}
+.ane-product-tags .tag-item:hover {
+  background: #014C78;
+  color: #fff;
+  border-color: #014C78;
+  transform: translateY(-1px);
+}
+.ane-product-tags .tag-item:hover::before {
+  opacity: 1;
+}
+@media (max-width: 768px) {
+  .ane-product-tags .tag-item {
+    font-size: 0.75rem;
+    padding: 0.3125rem 0.75rem;
+  }
+}
+
 /* Specs Table */
 .ane-specs-table {
   width: 100%;
@@ -6019,7 +6098,8 @@ ul li {
 .ane-product-card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   transition: transform 0.3s;
 }
 .ane-product-card:hover .ane-product-card-image img {
@@ -6101,7 +6181,8 @@ ul li {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
 }
 
 .ane-branch-modal-content {
@@ -6181,6 +6262,9 @@ ul li {
   border-color: #2d232e;
   box-shadow: 0 0 0 4px rgba(45, 35, 46, 0.1);
 }
+.ane-branch-search::-moz-placeholder {
+  color: #9ca3af;
+}
 .ane-branch-search::placeholder {
   color: #9ca3af;
 }
@@ -6192,14 +6276,12 @@ ul li {
   max-height: 400px;
   overflow-y: auto;
   padding-right: 0.5rem;
+  /* Custom scrollbar */
 }
 @media (max-width: 768px) {
   .ane-branch-list {
     max-height: 300px;
   }
-}
-.ane-branch-list {
-  /* Custom scrollbar */
 }
 .ane-branch-list::-webkit-scrollbar {
   width: 6px;
@@ -6461,11 +6543,10 @@ body.ane-modal-open {
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 .ane-product-card:hover {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
+  transform: translateY(-5px) scale(1.03) rotate(1deg);
 }
 
 .ane-product-card-image {
@@ -6488,11 +6569,13 @@ body.ane-modal-open {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   transition: transform 0.3s ease;
 }
 .ane-product-card-image .product-image.placeholder {
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   padding: 2rem;
   opacity: 0.5;
 }
@@ -6666,6 +6749,4 @@ body.ane-modal-open {
 }
 .ane-product-stock.out-of-stock {
   color: #ef4444;
-}
-
-/*# sourceMappingURL=main.css.map */
+}/*# sourceMappingURL=main.css.map */

@@ -83,7 +83,7 @@ while ( have_posts() ) :
 						<div class="ane-gallery-main">
 							<a href="<?php echo esc_url( wp_get_attachment_image_url( $images[0], 'full' ) ); ?>"
 							   class="ane-gallery-popup">
-								<?php echo wp_get_attachment_image( $images[0], 'large', false, array( 'class' => 'ane-gallery-main-img' ) ); ?>
+								<?php echo wp_get_attachment_image( $images[0], 'kotak', false, array( 'class' => 'ane-gallery-main-img' ) ); ?>
 							</a>
 						</div>
 
@@ -108,6 +108,15 @@ while ( have_posts() ) :
 
 				<!-- Product Info Section -->
 				<div class="ane-product-info">
+
+					<!-- Category -->
+					<?php if ( $categories && ! is_wp_error( $categories ) ) : ?>
+						<div class="ane-product-category">
+							<a href="<?php echo esc_url( get_term_link( $categories[0] ) ); ?>">
+								<?php echo esc_html( $categories[0]->name ); ?>
+							</a>
+						</div>
+					<?php endif; ?>
 
 					<!-- Title -->
 					<h1 class="ane-product-title"><?php the_title(); ?></h1>
@@ -229,8 +238,25 @@ while ( have_posts() ) :
 
 				<div class="ane-tabs-content">
 					<!-- Description Tab -->
-					<div class="ane-tab-pane active" id="tab-description">
+					<div class="ane-content ane-tab-pane active" id="tab-description">
 						<?php the_content(); ?>
+
+						<!-- Product Tags -->
+						<?php
+						$tags = get_the_terms( $product_id, 'product_tag' );
+						if ( $tags && ! is_wp_error( $tags ) ) :
+						?>
+							<div class="ane-product-tags">
+								<span class="tags-label"><?php esc_html_e( 'Tags:', 'elemenane' ); ?></span>
+								<div class="tags-list">
+									<?php foreach ( $tags as $tag ) : ?>
+										<a href="<?php echo esc_url( get_term_link( $tag ) ); ?>" class="tag-item">
+											<?php echo esc_html( $tag->name ); ?>
+										</a>
+									<?php endforeach; ?>
+								</div>
+							</div>
+						<?php endif; ?>
 					</div>
 
 					<!-- Specifications Tab -->

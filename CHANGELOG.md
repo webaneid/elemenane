@@ -6,12 +6,72 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
 ### Planned Features
 - Enhanced SEO features
 - Additional custom widgets
 - Performance optimization improvements
 - More template variations
+
+---
+
+## [1.0.3] - 2025-12-29
+
+### Added
+- **Product Category Display** - Added category above product title
+  - Category appears above the product title on single product pages
+  - Uses existing `.ane-product-category` styling for consistency
+  - Links to category archive page
+  - File: [single-product.php](single-product.php)
+
+- **Product Tags Display** - Product tags below content with hashtag styling
+  - Tags displayed below product content with proper spacing (2rem margin-top)
+  - Each tag prefixed with hashtag (#) using CSS `::before` pseudo-element
+  - Border box styling (1.5px solid border) with transparent background
+  - Hover effect changes to primary color background
+  - File: [single-product.php](single-product.php), [scss/_product.scss](scss/_product.scss)
+
+- **Product Card Hover Animation** - Interactive zoom and rotate effect
+  - Hover animation with `translateY(-5px) scale(1.03) rotate(1deg)`
+  - Creates "approaching" visual effect on product cards
+  - Smooth 0.3s transition for better user experience
+  - File: [scss/_product.scss](scss/_product.scss)
+
+### Changed
+- **Product Gallery Main Image** - Changed to use square image size
+  - Updated main product image from 'large' (1000×563) to 'kotak' (394×394)
+  - Ensures consistent square display in product gallery
+  - File: [single-product.php](single-product.php)
+
+- **Product Gallery Container** - Added square aspect ratio styling
+  - Added `aspect-ratio: 1/1` to force square container
+  - Added `object-fit: cover` for proper image cropping
+  - Container uses flexbox for centering
+  - File: [scss/_product.scss](scss/_product.scss)
+
+- **Archive Product Grid Layout** - Increased to 4 columns on desktop
+  - Changed grid from 3 columns to 4 columns on desktop
+  - Responsive: 2 columns on mobile, 4 columns on desktop
+  - Updated Bootstrap classes from `col-6 col-md-4 col-lg-3` to `col-lg-4 col-md-3 col-6`
+  - File: [tp/content-product.php](tp/content-product.php)
+
+- **Product Card Styling** - Removed default box-shadow
+  - Removed `box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)` from default state
+  - Box-shadow now only appears on hover for cleaner look
+  - File: [scss/_product.scss](scss/_product.scss)
+
+- **Category-Title Spacing** - Optimized spacing for better visual hierarchy
+  - Reduced gap between category and product title
+  - Added negative margin (`margin-bottom: -1rem`) to category
+  - Reduces default 1.5rem gap to 0.5rem for better visual grouping
+  - File: [scss/_product.scss](scss/_product.scss)
+
+- **Author Box Display** - Excluded from product post type
+  - Author box no longer displays on single product pages
+  - Added post type check in `ane_author_info_box()` function
+  - Author box still appears on regular posts and other content types
+  - File: [inc/elemenane.php](inc/elemenane.php)
+
+
 
 ---
 
@@ -56,6 +116,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixed 3D rotateX animation with proper transform-origin
   - Prevented navigation to parent menu when hovering for submenu
   - File: [scss/_header.scss](scss/_header.scss)
+
+- **Text Domain Loading** - Fixed "text domain loaded too early" error
+  - Wrapped ACF field registration in `acf/init` hook
+  - Ensures translations load at proper time (WordPress 6.7+ compatibility)
+  - Prevents `_load_textdomain_just_in_time` notice
+  - File: [inc/header-acf.php](inc/header-acf.php)
 
 ---
 

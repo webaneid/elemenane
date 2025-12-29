@@ -85,14 +85,41 @@ ul {
     width: 100%;
     max-width: 100%;
 }
-.col-md-4,
-.col-lg-4,
-.col-xl-4 {
-    width: 33.333%;
+.col-lg-4 {
+    width: 25%;
+    @include tablet {
+        width: 33.333%;
+    }
     @include mobile {
         width: 100%;
     }
 }
+.col-md-3 {
+
+    @include tablet {
+        width: 33.333%;
+    }
+    @include mobile {
+        width: 100%;
+    }
+}
+
+.col-lg-4 {
+    width: 25%;
+    @include tablet {
+        width: 50%;
+    }
+    @include mobile {
+        width: 100%;
+    }
+}
+.col-6 {
+    
+    @include mobile {
+        width: 50%;
+    }
+}
+
 .col-12 {
     @include mobile {
         width: 100%;

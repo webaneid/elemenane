@@ -788,6 +788,11 @@ function ane_author_info_box( $content ) {
         return $content;
     }
 
+    // Skip for product post type
+    if ( 'product' === get_post_type( $post ) ) {
+        return $content;
+    }
+
     // Get author data
     $author_id = absint( $post->post_author );
     $author_data = array(

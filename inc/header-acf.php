@@ -7,10 +7,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Register ACF Fields for Header Settings
  *
  * @package elemenane
- * @since 1.0.1
+ * @since 1.0.2
  */
 
-if ( function_exists( 'acf_add_local_field_group' ) ) :
+/**
+ * Register Header ACF Fields
+ * Hooked to acf/init to ensure translations are loaded properly
+ */
+add_action( 'acf/init', 'ane_register_header_acf_fields' );
+
+function ane_register_header_acf_fields() {
+	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		return;
+	}
 
 	acf_add_local_field_group(
 		array(
@@ -72,5 +81,4 @@ if ( function_exists( 'acf_add_local_field_group' ) ) :
 			'description'           => '',
 		)
 	);
-
-endif;
+}
