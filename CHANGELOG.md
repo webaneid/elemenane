@@ -13,6 +13,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.7] - 2025-12-31
+
+### Added
+- **Floating Customer Care Widget** - WhatsApp chat widget with multi-admin support
+  - **ACF Integration** - Customizable via ACF Options Page
+    - `ane_cs_aktif` - Enable/disable customer care widget
+    - `ane_cs_label` - Widget button label text
+    - `ane_cs_welcome` - Welcome message in chat box
+    - `ane_cs` - Repeater field for multiple customer service contacts
+      - `ane_nama` - Admin name
+      - `ane_area` - Admin area/department
+      - `ane_whatsapp` - WhatsApp number
+      - `ane_image` - Admin profile photo
+  - **Smart Round-Robin System** - Distributes messages evenly across admins
+    - Uses localStorage to track last contacted admin
+    - Automatically cycles through all available admins
+    - Prevents single admin from being overwhelmed
+  - **Interactive Chat Interface** - Modern floating chat widget
+    - Collapsible chat box with close button
+    - Custom message input field
+    - Direct admin selection from list
+    - Profile photos for each admin
+    - Visual send button with SVG icon
+  - **Dual Contact Methods**
+    - Quick message input with automatic admin selection
+    - Direct contact list showing all available admins with photos
+  - **Mobile-Responsive Design** - Works seamlessly on all devices
+  - File: [footer.php](footer.php)
+
+### Fixed
+- **Mobile Admin Dashboard Layout** - Fixed height and tooltip issues
+  - Fixed unlimited height issue on mobile admin dashboard
+  - Added `max-height: 100vh` to `#wpwrap` to prevent infinite scrolling
+  - Added `overflow-y: auto` to ensure proper content scrolling
+  - Hidden desktop tooltips (`.ane-tooltip`, `.ane-tooltip-arrow`) on mobile devices
+  - Mobile admin now uses bottom navigation menu exclusively
+  - Improved mobile admin UX with cleaner interface
+  - File: [scss/_admin-footer-mobile-menu.scss](scss/_admin-footer-mobile-menu.scss)
+
+---
+
 ## [1.0.6] - 2025-12-31
 
 ### Added

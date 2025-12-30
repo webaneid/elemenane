@@ -4289,6 +4289,13 @@ select:focus {
   /* Add bottom padding to admin content to prevent overlap */
   #wpwrap {
     padding-bottom: 70px;
+    max-height: 100vh; /* Prevent unlimited height */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+  }
+  /* Hide tooltips on mobile - they're not needed with bottom menu */
+  .ane-tooltip,
+  .ane-tooltip-arrow {
+    display: none !important;
   }
   /* Animation */
   .ane-footer-mobile-menu {

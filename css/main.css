@@ -4587,6 +4587,273 @@ ul li {
   color: var(--ane-warna-putih);
 }
 
+.ane-close-x {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-6 -6 24 24'%3E%3Cpath fill='%23000' d='m7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485L2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535l3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.floating-chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: var(--ane-warna-gelap);
+  border-radius: 50%;
+  color: var(--ane-warna-terang);
+  cursor: pointer;
+  transition: all 0.9s;
+  z-index: 89;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media only screen and (min-width: 100px) and (max-width: 767px) {
+  .floating-chat {
+    right: 0;
+  }
+}
+.floating-chat::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M4 18h2v4.081L11.101 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2'/%3E%3Cpath fill='%23000' d='M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2'/%3E%3C/svg%3E");
+  background-color: var(--ane-warna-putih);
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.floating-chat.expand {
+  width: 400px;
+  height: -moz-max-content;
+  height: max-content;
+  border-radius: 10px;
+  z-index: 9999;
+  overflow: hidden;
+}
+@media only screen and (min-width: 100px) and (max-width: 767px) {
+  .floating-chat.expand {
+    width: 100%;
+  }
+}
+
+.chat {
+  display: none;
+}
+
+.expand::before {
+  content: "";
+}
+
+.floating-chat.expand .chat {
+  display: block;
+  width: 100%;
+  padding-right: 7px;
+}
+.floating-chat.expand .chat .header {
+  background-color: var(--ane-warna-utama);
+  padding: 10px 15px;
+  line-height: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.floating-chat.expand .chat .header span {
+  flex: 1;
+}
+.floating-chat.expand .chat .header .ane-tutupin {
+  background-color: rgba(var(--ane-warna-putih-rgb), 0.7);
+  border-radius: 50%;
+  font-size: 14px;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  text-align: center;
+  line-height: 33px;
+  color: var(--ane-warna-utama);
+}
+.floating-chat.expand .chat .mesej {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: var(--ane-warna-putih);
+  padding-bottom: 20px;
+}
+.floating-chat.expand .chat .mesej-header {
+  padding: 10px 15px;
+  background-color: var(--ane-warna-terang);
+  border-radius: 10px;
+  position: relative;
+  width: 92%;
+  text-align: left;
+  margin: 10px auto;
+  color: var(--ane-warna-text);
+}
+.floating-chat.expand .chat .mesej-header::before {
+  border-block-end-color: transparent;
+  border-block-end-width: 20px;
+  border-block-start-color: transparent;
+  border-block-start-width: 0;
+  border-inline-end-color: var(--ane-warna-terang);
+  border-inline-end-width: 20px;
+  border-inline-start-color: transparent;
+  border-inline-start-width: 0;
+  border-style: solid;
+  content: "";
+  height: 0;
+  inset-inline-start: -10px;
+  position: absolute;
+  top: 0;
+  width: 0;
+}
+.floating-chat.expand .chat .mesej-header p {
+  font-size: 16px;
+  line-height: 1.4;
+}
+.floating-chat.expand .chat .mesej-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 95%;
+  margin: 0 auto 15px auto;
+  border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+  border-radius: 10px;
+  position: relative;
+  padding: 10px 15px;
+  align-items: center;
+  background-color: var(--ane-warna-putih);
+  justify-content: space-between;
+}
+.floating-chat.expand .chat .mesej-box input {
+  width: 90%;
+  border: 0;
+  padding: 0;
+  height: inherit;
+  line-height: 1.2;
+  color: var(--ane-warna-gelap);
+}
+.floating-chat.expand .chat .mesej-box input:active {
+  border: 0;
+}
+.floating-chat.expand .chat .mesej-box input:focus {
+  border: 0;
+  outline: none;
+}
+.floating-chat.expand .chat .mesej-box button {
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+.floating-chat.expand .chat .mesej-box button svg {
+  fill: var(--ane-warna-utama);
+}
+.floating-chat.expand .chat .mesej ul {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 95%;
+  margin: 0 auto;
+}
+.floating-chat.expand .chat .mesej ul .body-pilihan {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.floating-chat.expand .chat .mesej ul .body-pilihan h4 {
+  font-size: 18px;
+  line-height: 1.3;
+  margin-bottom: 0;
+}
+.floating-chat.expand .chat .mesej ul li {
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1.3;
+  font-style: italic;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 10px;
+  align-items: center;
+  background-color: var(--ane-warna-terang);
+  border-radius: 5px;
+  padding: 8px;
+}
+.floating-chat.expand .chat .mesej ul li img {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+.floating-chat.expand .chat .mesej ul li p {
+  font-size: 15px;
+  font-weight: 600;
+  font-style: normal;
+  text-align: left;
+}
+.floating-chat.expand .chat .mesej ul li p span {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--ane-warna-utama);
+}
+.floating-chat.expand .chat .mesej ul li:last-child {
+  margin-bottom: 0;
+}
+.floating-chat.expand .chat .mesej ul li a {
+  color: var(--ane-warna-gelap);
+  text-align: left;
+}
+.floating-chat.expand .chat .mesej ul li a:hover {
+  color: var(--ane-warna-utama);
+}
+.floating-chat.expand .chat .mesej ul li:hover {
+  background: var(--ane-warna-terang);
+}
+
+.fa-arrow-down {
+  cursor: pointer;
+}
+
+@keyframes show-chat-even {
+  0% {
+    margin-left: -480px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+@keyframes show-chat-odd {
+  0% {
+    margin-right: -480px;
+  }
+  100% {
+    margin-right: 0;
+  }
+}
 /**
  * Branch Archive Styles
  *
