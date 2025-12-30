@@ -374,6 +374,15 @@ ul li {
 .ane-sosmed ul li.instagram {
   background: #d23095;
 }
+.ane-sosmed ul li.tiktok {
+  background: #000000;
+}
+.ane-sosmed ul li.telegram {
+  background: #0088cc;
+}
+.ane-sosmed ul li.threads {
+  background: #000000;
+}
 .ane-sosmed ul li.linkedin {
   background: #0077b0;
 }
@@ -3063,9 +3072,10 @@ ul li {
   display: block;
   width: 100%;
   height: auto;
-  width: 80%;
+  width: 100%;
+  max-width: 750px;
   margin: auto;
-  padding: 60px 0;
+  padding: 60px 15px;
 }
 .ane-linktree .linktree-content .entry-header {
   padding-bottom: 20px;
@@ -3103,6 +3113,9 @@ ul li {
   width: 100%;
   padding: 20px 0 10px 0;
 }
+.ane-linktree .linktree-content .entry-content a {
+  color: var(--ane-warna-putih);
+}
 .ane-linktree .linktree-content .entry-content .ane-links {
   width: 100%;
   display: flex;
@@ -3111,8 +3124,8 @@ ul li {
   flex-wrap: wrap;
   flex-direction: row;
   padding: 5px 20px;
-  border: 1px solid rgba(var(--ane-warna-putih), 0.06);
-  background: rgba(var(--ane-warna-putih), 0.04);
+  border: 1px solid rgba(var(--ane-warna-putih-rgb), 0.06);
+  background: rgba(var(--ane-warna-putih-rgb), 0.04);
   border-radius: 24px;
   margin-bottom: 10px;
 }
@@ -3223,6 +3236,40 @@ ul li {
 }
 .ane-linktree .linktree-content .entry-footer .ane-sosmed ul li i.ane-instagram {
   color: #d23095;
+}
+.ane-linktree .linktree-content .entry-footer .ane-sosmed ul li i.ane-tiktok {
+  color: #000000;
+}
+.ane-linktree .linktree-content .entry-footer .ane-sosmed ul li i.ane-telegram {
+  color: #0088cc;
+}
+.ane-linktree .linktree-content .entry-footer .ane-sosmed ul li i.ane-threads {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M16.705 11.108c-.162-2.987-1.794-4.697-4.534-4.714c-1.652-.01-3.033.69-3.879 1.973L9.8 9.4c.634-.961 1.635-1.16 2.36-1.153c.903.006 1.583.268 2.024.78c.32.372.535.887.642 1.536q-1.202-.204-2.59-.125c-2.606.15-4.28 1.67-4.168 3.781c.057 1.071.59 1.993 1.502 2.595c.77.509 1.764.757 2.795.701c1.363-.075 2.432-.594 3.178-1.545c.566-.722.924-1.658 1.082-2.836c.65.392 1.13.907 1.397 1.527c.452 1.054.478 2.786-.935 4.198c-1.238 1.236-2.726 1.772-4.975 1.788c-2.495-.018-4.382-.819-5.608-2.378c-1.15-1.46-1.743-3.57-1.765-6.269c.022-2.7.616-4.809 1.765-6.27c1.226-1.559 3.113-2.359 5.608-2.377c2.513.019 4.432.822 5.706 2.39c.625.768 1.095 1.734 1.406 2.86l1.766-.47c-.377-1.387-.969-2.582-1.774-3.573c-1.633-2.01-4.033-3.039-7.11-3.06c-3.071.021-5.432 1.055-7.019 3.071c-1.411 1.795-2.14 4.306-2.164 7.436c.024 3.13.753 5.627 2.164 7.422c1.587 2.016 3.96 3.05 7.03 3.071c2.731-.019 4.655-.734 6.24-2.317c2.075-2.073 2.012-4.67 1.329-6.264c-.525-1.225-1.57-2.206-2.98-2.81m-4.438 4.557c-1.142.064-2.328-.448-2.387-1.546c-.043-.814.58-1.722 2.457-1.83a9.4 9.4 0 0 1 2.533.174c-.216 2.702-1.485 3.14-2.603 3.202'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  color: #000000;
+}
+.ane-linktree .linktree-content .entry-footer .ane-sosmed ul li i.ane-linkedin {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M6.94 5a2 2 0 1 1-4-.002a2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z'/%3E%3C/svg%3E");
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  color: #0077b5;
 }
 .ane-linktree .linktree-content .entry-footer .ane-sosmed ul li span {
   font-size: 14px;
@@ -5371,7 +5418,7 @@ ul li {
    ============================================ */
 .ane-product-single {
   padding: 2rem 0 4rem;
-  background: #fafaf8;
+  background: var(--ane-warna-terang);
 }
 @media (max-width: 768px) {
   .ane-product-single {
@@ -5392,24 +5439,24 @@ ul li {
   gap: 0.5rem;
   margin-bottom: 2rem;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--ane-warna-text);
 }
 .ane-breadcrumb a {
-  color: #6b7280;
+  color: var(--ane-warna-gelap);
   text-decoration: none;
   transition: color 0.2s;
 }
 .ane-breadcrumb a:hover {
-  color: #2d232e;
+  color: var(--ane-warna-utama);
 }
 .ane-breadcrumb .separator {
-  color: #d1d5db;
+  color: var(--ane-warna-terang);
 }
 .ane-breadcrumb .current {
-  color: #2d232e;
+  color: var(--ane-warna-gelap);
   font-weight: 500;
 }
-@media (max-width: 768px) {
+@media only screen and (min-width: 100px) and (max-width: 767px) {
   .ane-breadcrumb {
     font-size: 0.75rem;
     margin-bottom: 1rem;
@@ -5422,19 +5469,19 @@ ul li {
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   margin-bottom: 3rem;
-  background: #fff;
+  background: var(--ane-warna-putih);
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(var(--ane-warna-gelap-rgb), 0.05);
 }
-@media (max-width: 968px) {
+@media only screen and (min-width: 768px) and (max-width: 992px) {
   .ane-product-main {
     grid-template-columns: 1fr;
     gap: 2rem;
     padding: 1.5rem;
   }
 }
-@media (max-width: 768px) {
+@media only screen and (min-width: 100px) and (max-width: 767px) {
   .ane-product-main {
     padding: 1rem;
     gap: 1.5rem;
@@ -5494,7 +5541,7 @@ ul li {
   cursor: pointer;
   border: 2px solid transparent;
   transition: border-color 0.2s, transform 0.2s;
-  background: #fafaf8;
+  background: var(--ane-warna-putih);
 }
 .ane-gallery-thumb img {
   width: 100%;
@@ -5502,11 +5549,11 @@ ul li {
   display: block;
 }
 .ane-gallery-thumb:hover {
-  border-color: #d1d5db;
+  border-color: var(--ane-warna-terang);
   transform: scale(1.05);
 }
 .ane-gallery-thumb.active {
-  border-color: #2d232e;
+  border-color: var(--ane-warna-utama);
 }
 
 .ane-gallery-placeholder {
@@ -5582,18 +5629,18 @@ ul li {
 
 .ane-sku {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--ane-warna-text);
   padding: 0.25rem 0.75rem;
-  background: #f3f4f6;
+  background: rgba(var(--ane-warna-gelap-rgb), 0.05);
   border-radius: 6px;
 }
 
 /* Price */
 .ane-product-price-wrap {
   padding: 1.5rem;
-  background: #fef3e2;
+  background: var(--ane-warna-terang);
   border-radius: 12px;
-  border: 1px solid #fde68a;
+  border: 1px solid rgba(var(--ane-warna-utama-rgb), 0.1);
 }
 
 .ane-price-main {
@@ -5649,16 +5696,16 @@ ul li {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem;
   border-radius: 8px;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   width: -moz-fit-content;
   width: fit-content;
 }
 .ane-stock-status.in-stock {
-  background: #d1fae5;
-  color: #065f46;
+  background: rgba(var(--ane-warna-utama-rgb), 0.1);
+  color: var(--ane-warna-utama);
 }
 .ane-stock-status.out-of-stock {
   background: #fee2e2;
@@ -6653,7 +6700,7 @@ body.ane-modal-open {
 .ane-product-category a {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #014C78;
+  color: var(--ane-warna-utama);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   text-decoration: none;

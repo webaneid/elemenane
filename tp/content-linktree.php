@@ -85,79 +85,75 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<!-- Social Media Section -->
 	<footer class="entry-footer">
 		<h2><?php esc_html_e( 'Our Social Media', 'elemenane' ); ?></h2>
-		<?php if ( have_rows( 'ane_sosmed', 'option' ) ) : ?>
-			<div class="ane-sosmed">
-				<ul>
-					<?php
-					while ( have_rows( 'ane_sosmed', 'option' ) ) :
-						the_row();
+		<div class="ane-sosmed">
+			<ul>
+				<?php
+				// Define social media platforms with their data from ACF options
+				$social_platforms = array(
+					'whatsapp'  => array(
+						'url'   => get_field( 'ane_whatsapp', 'option' ),
+						'label' => 'WhatsApp',
+						'icon'  => 'ane-whatsapp',
+					),
+					'facebook'  => array(
+						'url'   => get_field( 'ane_facebook', 'option' ),
+						'label' => 'Facebook',
+						'icon'  => 'ane-facebook',
+					),
+					'twitter'   => array(
+						'url'   => get_field( 'ane_twitter', 'option' ),
+						'label' => 'Twitter',
+						'icon'  => 'ane-twitter',
+					),
+					'youtube'   => array(
+						'url'   => get_field( 'ane_youtube', 'option' ),
+						'label' => 'Youtube',
+						'icon'  => 'ane-youtube',
+					),
+					'instagram' => array(
+						'url'   => get_field( 'ane_instagram', 'option' ),
+						'label' => 'Instagram',
+						'icon'  => 'ane-instagram',
+					),
+					'tiktok'    => array(
+						'url'   => get_field( 'ane_tiktok', 'option' ),
+						'label' => 'TikTok',
+						'icon'  => 'ane-tiktok',
+					),
+					'telegram'  => array(
+						'url'   => get_field( 'ane_telegram', 'option' ),
+						'label' => 'Telegram',
+						'icon'  => 'ane-telegram',
+					),
+					'threads'   => array(
+						'url'   => get_field( 'ane_threads', 'option' ),
+						'label' => 'Threads',
+						'icon'  => 'ane-threads',
+					),
+					'linkedin'  => array(
+						'url'   => get_field( 'ane_linkedin', 'option' ),
+						'label' => 'LinkedIn',
+						'icon'  => 'ane-linkedin',
+					),
+				);
 
-						// Define social media platforms with their data
-						$social_platforms = array(
-							'whatsapp'  => array(
-								'value'  => get_sub_field( 'ane_whatsapp' ),
-								'url'    => 'https://wa.me/' . get_sub_field( 'ane_whatsapp' ),
-								'label'  => 'WhatsApp',
-								'icon'   => 'ane-whatsapp',
-								'target' => true,
-							),
-							'facebook'  => array(
-								'value'  => get_sub_field( 'ane_facebook' ),
-								'url'    => get_sub_field( 'ane_facebook' ),
-								'label'  => 'Facebook',
-								'icon'   => 'ane-facebook',
-								'target' => true,
-							),
-							'twitter'   => array(
-								'value'  => get_sub_field( 'ane_twitter' ),
-								'url'    => 'https://twitter.com/' . get_sub_field( 'ane_twitter' ),
-								'label'  => 'Twitter',
-								'icon'   => 'ane-twitter',
-								'target' => true,
-							),
-							'youtube'   => array(
-								'value'  => get_sub_field( 'ane_youtube' ),
-								'url'    => get_sub_field( 'ane_youtube' ),
-								'label'  => 'Youtube',
-								'icon'   => 'ane-youtube',
-								'target' => true,
-							),
-							'instagram' => array(
-								'value'  => get_sub_field( 'ane_instagram' ),
-								'url'    => 'https://www.instagram.com/' . get_sub_field( 'ane_instagram' ),
-								'label'  => 'Instagram',
-								'icon'   => 'ane-instagram',
-								'target' => true,
-							),
-							'linkedin'  => array(
-								'value'  => get_sub_field( 'ane_linkedin' ),
-								'url'    => get_sub_field( 'ane_linkedin' ),
-								'label'  => 'LinkedIn',
-								'icon'   => 'ane-linkedin',
-								'target' => true,
-							),
-						);
-
-						// Loop through platforms and render links
-						foreach ( $social_platforms as $platform => $data ) :
-							if ( ! empty( $data['value'] ) ) :
-								?>
-								<a href="<?php echo esc_url( $data['url'] ); ?>"
-								   <?php echo $data['target'] ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>
-								   aria-label="<?php echo esc_attr( sprintf( __( 'Follow us on %s', 'elemenane' ), $data['label'] ) ); ?>">
-									<li class="<?php echo esc_attr( $platform ); ?>">
-										<i class="<?php echo esc_attr( $data['icon'] ); ?>"></i>
-										<span><?php echo esc_html( $data['label'] ); ?></span>
-									</li>
-								</a>
-								<?php
-							endif;
-						endforeach;
-
-					endwhile;
-					?>
-				</ul>
-			</div>
-		<?php endif; ?>
+				// Loop through platforms and render links
+				foreach ( $social_platforms as $platform => $data ) :
+					if ( ! empty( $data['url'] ) ) :
+						?>
+						<a href="<?php echo esc_url( $data['url'] ); ?>"
+						   target="_blank" rel="noopener noreferrer"
+						   aria-label="<?php echo esc_attr( sprintf( __( 'Follow us on %s', 'elemenane' ), $data['label'] ) ); ?>">
+							<li class="<?php echo esc_attr( $platform ); ?>">
+								<i class="<?php echo esc_attr( $data['icon'] ); ?>"></i>
+								<span><?php echo esc_html( $data['label'] ); ?></span>
+							</li>
+						</a>
+						<?php
+					endif;
+				endforeach;
+				?>
+			</ul>
+		</div>
 	</footer>
 </article>

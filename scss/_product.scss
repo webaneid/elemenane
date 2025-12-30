@@ -4,7 +4,7 @@
 
 .ane-product-single {
 	padding: 2rem 0 4rem;
-	background: #fafaf8;
+	background: var(--ane-warna-terang);
 
 	@media (max-width: 768px) {
 		padding: 1rem 0 2rem;
@@ -24,28 +24,28 @@
 	gap: 0.5rem;
 	margin-bottom: 2rem;
 	font-size: 0.875rem;
-	color: #6b7280;
+	color: var(--ane-warna-text);
 
 	a {
-		color: #6b7280;
+		color: var(--ane-warna-gelap);
 		text-decoration: none;
 		transition: color 0.2s;
 
 		&:hover {
-			color: #2d232e;
+			color: var(--ane-warna-utama);
 		}
 	}
 
 	.separator {
-		color: #d1d5db;
+		color:var(--ane-warna-terang);
 	}
 
 	.current {
-		color: #2d232e;
+		color:var(--ane-warna-gelap);
 		font-weight: 500;
 	}
 
-	@media (max-width: 768px) {
+	@include mobile {
 		font-size: 0.75rem;
 		margin-bottom: 1rem;
 	}
@@ -57,18 +57,18 @@
 	grid-template-columns: 1fr 1fr;
 	gap: 3rem;
 	margin-bottom: 3rem;
-	background: #fff;
+	background: var(--ane-warna-putih);
 	padding: 2rem;
 	border-radius: 16px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 1px 3px rgba(var(--ane-warna-gelap-rgb), 0.05);
 
-	@media (max-width: 968px) {
+	@include tablet{
 		grid-template-columns: 1fr;
 		gap: 2rem;
 		padding: 1.5rem;
 	}
 
-	@media (max-width: 768px) {
+	@include mobile {
 		padding: 1rem;
 		gap: 1.5rem;
 	}
@@ -127,7 +127,7 @@
 	cursor: pointer;
 	border: 2px solid transparent;
 	transition: border-color 0.2s, transform 0.2s;
-	background: #fafaf8;
+	background: var(--ane-warna-putih);
 
 	img {
 		width: 100%;
@@ -136,12 +136,12 @@
 	}
 
 	&:hover {
-		border-color: #d1d5db;
+		border-color: var(--ane-warna-terang);
 		transform: scale(1.05);
 	}
 
 	&.active {
-		border-color: #2d232e;
+		border-color: var(--ane-warna-utama);
 	}
 }
 
@@ -220,18 +220,18 @@
 
 .ane-sku {
 	font-size: 0.875rem;
-	color: #6b7280;
+	color: var(--ane-warna-text);
 	padding: 0.25rem 0.75rem;
-	background: #f3f4f6;
+	background: rgba(var(--ane-warna-gelap-rgb), 0.05);
 	border-radius: 6px;
 }
 
 /* Price */
 .ane-product-price-wrap {
 	padding: 1.5rem;
-	background: #fef3e2;
+	background: var(--ane-warna-terang);
 	border-radius: 12px;
-	border: 1px solid #fde68a;
+	border: 1px solid rgba(var(--ane-warna-utama-rgb), 0.1);
 }
 
 .ane-price-main {
@@ -284,15 +284,15 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
-	padding: 0.5rem 1rem;
+	padding: 0.3rem 1rem;
 	border-radius: 8px;
-	font-size: 0.875rem;
+	font-size: 0.75rem;
 	font-weight: 600;
 	width: fit-content;
 
 	&.in-stock {
-		background: #d1fae5;
-		color: #065f46;
+		background: rgba(var(--ane-warna-utama-rgb), 0.1);
+		color: var(--ane-warna-utama);
 	}
 
 	&.out-of-stock {
@@ -1327,7 +1327,7 @@ body.ane-modal-open {
 	a {
 		font-size: 0.75rem;
 		font-weight: 500;
-		color: $warna-utama;
+		color: var(--ane-warna-utama);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		text-decoration: none;

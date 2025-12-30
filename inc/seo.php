@@ -176,6 +176,11 @@ function ane_add_seo_metadata() {
 		ane_output_page_schema();
 	}
 
+	// Add Product schema for products
+	if ( is_singular( 'product' ) ) {
+		ane_output_product_schema();
+	}
+
 	// Add Dublin Core metadata
 	ane_output_dublin_core_metadata();
 
@@ -1043,5 +1048,110 @@ function ane_output_navigation_schema() {
 	echo "\n<!-- Site Navigation Schema for Google Sitelinks -->\n";
 	echo '<script type="application/ld+json">' . "\n";
 	echo wp_json_encode( $navigation_elements, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo "\n</script>\n";
+}
+
+/**
+ * Output Product Schema (JSON-LD)
+ * For single product pages with rich product information
+ * Includes price, availability, reviews, brand, and marketplace offers
+ *
+ * @since 1.0.6
+ */
+function ane_output_product_schema() {
+	if ( ! is_singular( 'product' ) ) {
+		return;
+	}
+
+	$product_id = get_the_ID();
+
+	// Get product data
+	$title       = get_the_title();
+	$description = has_excerpt() ? get_the_excerpt() : wp_trim_words( get_the_content(), 30 );
+	$permalink   = get_permalink();
+
+	// Get product image
+	$image_url = get_the_post_thumbnail_url( $product_id, 'large' );
+	if ( ! $image_url ) {
+		$image_url = ane_get_company_logo( 'large' );
+	}
+
+	// Get company info
+	$company_name = ane_get_company_name();
+	$company_url  = ane_get_company_url();
+
+	// Get pricing
+	$regular_price = get_field( 'ane_harga_normal', $product_id );
+	$sale_price    = get_field( 'ane_harga_diskon', $product_id );
+	$active_price  = get_post_meta( $product_id, 'ane_active_price', true );
+	$discount_pct  = get_field( 'ane_persen_diskon', $product_id );
+
+	// Determine current price
+	$price         = $active_price ?: $regular_price;
+	$price_valid   = gmdate( 'Y-m-d', strtotime( '+1 year' ) ); // Valid for 1 year
+
+	// Get stock status
+	$stock_status = get_field( 'ane_stok', $product_id );
+	$availability = ( 'yes' === $stock_status || 'Ya' === $stock_status ) ? 'InStock' : 'OutOfStock';
+
+	// Build base schema
+	$schema = array(
+		'@context'    => 'https://schema.org',
+		'@type'       => 'Product',
+		'@id'         => $permalink . '#product',
+		'name'        => $title,
+		'description' => $description,
+		'url'         => $permalink,
+		'image'       => $image_url,
+		'brand'       => array(
+			'@type' => 'Organization',
+			'name'  => $company_name,
+			'url'   => $company_url,
+		),
+	);
+
+	// Add pricing if available
+	if ( $price ) {
+		$schema['offers'] = array(
+			'@type'         => 'Offer',
+			'price'         => (float) $price,
+			'priceCurrency' => 'IDR',
+			'priceValidUntil' => $price_valid,
+			'availability'  => 'https://schema.org/' . $availability,
+			'url'           => $permalink,
+			'seller'        => array(
+				'@type' => 'Organization',
+				'name'  => $company_name,
+			),
+		);
+	}
+
+	// Add SKU/identifier
+	$sku = get_field( 'ane_product_sku', $product_id );
+	if ( $sku ) {
+		$schema['sku']  = $sku;
+		$schema['mpn']  = $sku; // Manufacturer Part Number
+		$schema['gtin'] = $sku; // Global Trade Item Number (if applicable)
+	}
+
+	// Add category
+	$categories = get_the_terms( $product_id, 'product-category' );
+	if ( $categories && ! is_wp_error( $categories ) ) {
+		$schema['category'] = $categories[0]->name;
+	}
+
+	// Add aggregate rating if available
+	// You can add custom rating fields here if needed
+	// Example structure (commented out):
+	// $schema['aggregateRating'] = array(
+	//     '@type'       => 'AggregateRating',
+	//     'ratingValue' => '4.5',
+	//     'reviewCount' => '10',
+	// );
+
+	// Output JSON-LD
+	echo "\n<!-- Product Schema by Elemen Ane -->\n";
+	echo '<script type="application/ld+json">' . "\n";
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }

@@ -30,6 +30,18 @@ $social_links = array(
 		'url'   => get_field( 'ane_youtube', 'option' ),
 		'label' => __( 'YouTube', 'elemenane' ),
 	),
+	'tiktok'    => array(
+		'url'   => get_field( 'ane_tiktok', 'option' ),
+		'label' => __( 'TikTok', 'elemenane' ),
+	),
+	'telegram'  => array(
+		'url'   => get_field( 'ane_telegram', 'option' ),
+		'label' => __( 'Telegram', 'elemenane' ),
+	),
+	'threads'   => array(
+		'url'   => get_field( 'ane_threads', 'option' ),
+		'label' => __( 'Threads', 'elemenane' ),
+	),
 	'linkedin'  => array(
 		'url'   => get_field( 'ane_linkedin', 'option' ),
 		'label' => __( 'LinkedIn', 'elemenane' ),

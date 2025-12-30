@@ -13,6 +13,112 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.6] - 2025-12-31
+
+### Added
+- **Linktree Analytics** - Complete analytics system for linktree pages
+  - **Database Table** - Custom table `{prefix}ane_linktree_clicks` with auto-migration system
+    - Tracks link type, label, URL, timestamp, referrer, platform, device, user agent
+    - Supports custom database prefixes via `$wpdb->prefix`
+    - Database versioning system for safe schema updates
+    - Auto-migration on admin load and theme activation
+    - Uses WordPress `dbDelta()` for safe table creation/updates
+    - File: [inc/linktree-analytics.php](inc/linktree-analytics.php)
+  - **Click Tracking** - AJAX-based tracking for all linktree links
+    - Tracks custom links (WhatsApp, Website, TikTok, Telegram)
+    - Tracks social media links (Facebook, Instagram, Twitter, YouTube, etc.)
+    - Silent tracking (no user interruption)
+    - Nonce-based security
+    - Files: [inc/linktree-analytics.php](inc/linktree-analytics.php), [js/linktree-tracking.js](js/linktree-tracking.js)
+  - **Referrer Detection** - Identifies traffic sources
+    - Detects 15+ platforms: Facebook, Instagram, TikTok, Twitter, YouTube, LinkedIn, Telegram, Threads, WhatsApp, Google, Bing, Yahoo, DuckDuckGo
+    - Fallback to domain parsing for unknown referrers
+    - "Direct" classification for no-referrer traffic
+    - Function: `ane_detect_referrer_platform()` in [inc/linktree-analytics.php](inc/linktree-analytics.php)
+  - **Device Detection** - Mobile/Tablet/Desktop classification
+    - Uses Mobile_Detect library if available
+    - Fallback to regex-based detection
+    - User agent analysis for accurate categorization
+    - Function: `ane_detect_device_type()` in [inc/linktree-analytics.php](inc/linktree-analytics.php)
+  - **Admin Dashboard** - Professional analytics interface
+    - Submenu under "Elemen Ane" → "Linktree Analytics"
+    - **Stats Cards**: Total Clicks, Clicks This Month, Unique Links
+    - **Chart**: Clicks Last 12 Months (line chart with Chart.js)
+    - **3-Column Layout**: Device Breakdown (doughnut chart), Top Links (table), Top Traffic Sources (table with percentage)
+    - Consistent design with main dashboard (uses `ane-dashboard-grid`, `postbox`, etc.)
+    - Real-time data from database
+    - Files: [inc/admin/linktree-analytics.php](inc/admin/linktree-analytics.php), [js/admin-linktree-analytics.js](js/admin-linktree-analytics.js)
+  - **Database Migration System** - Safe schema updates for future versions
+    - Version tracking in `wp_options` table (`ane_linktree_db_version`)
+    - Incremental migration support (1.0 → 1.1 → 1.2)
+    - Lightweight version check on every admin page load
+    - Example migration structure for future updates
+    - Functions: `ane_get_linktree_db_version()`, `ane_update_linktree_db_version()`, `ane_check_linktree_db_migration()`
+    - File: [inc/linktree-analytics.php](inc/linktree-analytics.php)
+
+- **Social Media Platform Expansion** - Added 3 new platforms
+  - **TikTok Support** - Added to linktree and general social media templates
+    - ACF field: `ane_tiktok` (Option Page)
+    - Icon background: `#000000` (black)
+    - Files: [tp/content-linktree.php](tp/content-linktree.php), [tp/content-sosmed.php](tp/content-sosmed.php), [scss/_global.scss](scss/_global.scss), [scss/_linktree.scss](scss/_linktree.scss)
+  - **Telegram Support** - Full integration
+    - ACF field: `ane_telegram` (Option Page)
+    - Icon background: `#0088cc` (telegram blue)
+    - Files: [tp/content-linktree.php](tp/content-linktree.php), [tp/content-sosmed.php](tp/content-sosmed.php), [scss/_global.scss](scss/_global.scss), [scss/_linktree.scss](scss/_linktree.scss)
+  - **Threads Support** - Meta's new platform
+    - ACF field: `ane_threads` (Option Page)
+    - SVG mask icon technique for scalability
+    - Icon background: `#000000` (black)
+    - Files: [tp/content-linktree.php](tp/content-linktree.php), [tp/content-sosmed.php](tp/content-sosmed.php), [scss/_global.scss](scss/_global.scss), [scss/_linktree.scss](scss/_linktree.scss)
+  - **LinkedIn Enhancement** - Added SVG mask icon
+    - Replaced font icon with SVG mask for better rendering
+    - Icon background: `#0077b5` (LinkedIn blue)
+    - Files: [scss/_linktree.scss](scss/_linktree.scss)
+
+- **Product Schema.org Markup** - SEO enhancement for Product CPT
+  - Added complete Product schema with pricing, availability, brand, SKU
+  - Supports regular price and sale price with automatic price selection
+  - Stock status mapped to schema.org availability (InStock/OutOfStock)
+  - Brand information from company settings
+  - SKU, MPN, and GTIN fields for better product identification
+  - Price valid until date set to 1 year from current date
+  - Seller organization information
+  - Integrated into main SEO system via `ane_output_product_schema()`
+  - File: [inc/seo.php](inc/seo.php)
+
+### Fixed
+- **Linktree Social Media Function** - Fixed incorrect ACF field access pattern
+  - Removed nested `have_rows()` loop for non-repeater fields
+  - Changed from `get_sub_field()` to direct `get_field()` calls
+  - Removed hardcoded URL prefixes (e.g., `https://wa.me/`, `https://twitter.com/`)
+  - ACF fields now contain full URLs as user input
+  - Social media links now display correctly on linktree pages
+  - File: [tp/content-linktree.php](tp/content-linktree.php)
+
+### Changed
+- **Linktree Analytics Chart Period** - Changed from 7 days to 12 months
+  - Chart now shows monthly data instead of daily
+  - Label format: "Jan 2025", "Feb 2025", etc.
+  - Better long-term trend visualization
+  - Query optimized for monthly aggregation
+  - Function: `ane_get_linktree_analytics_data()` in [inc/admin/linktree-analytics.php](inc/admin/linktree-analytics.php)
+
+- **Product Template Layout** - Improved metadata presentation
+  - Stock status moved from standalone block to inline with SKU
+  - SKU and stock status now displayed side-by-side in single meta line
+  - More compact and cleaner product information layout
+  - Conditional display: only shows meta section if SKU or stock status exists
+  - File: [single-product.php](single-product.php)
+
+### Removed
+- **Hardcoded Product Reviews** - Removed placeholder review elements
+  - Removed fake 4-star rating display (★★★★☆)
+  - Removed hardcoded "84 Reviews" text
+  - Cleaner product presentation without misleading review data
+  - File: [single-product.php](single-product.php)
+
+---
+
 ## [1.0.5] - 2025-12-30
 
 ### Fixed

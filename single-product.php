@@ -121,16 +121,31 @@ while ( have_posts() ) :
 					<!-- Title -->
 					<h1 class="ane-product-title"><?php the_title(); ?></h1>
 
-					<!-- Rating & Reviews (placeholder) -->
-					<div class="ane-product-meta">
-						<div class="ane-rating">
-							<span class="stars">★★★★☆</span>
-							<span class="rating-text">84 Reviews</span>
+					<!-- SKU & Stock Status -->
+					<?php if ( $sku || $stock_status ) : ?>
+						<div class="ane-product-meta">
+							<?php if ( $sku ) : ?>
+								<span class="ane-sku">SKU: <?php echo esc_html( $sku ); ?></span>
+							<?php endif; ?>
+							<?php if ( $stock_status ) : ?>
+								<span class="ane-stock-status <?php echo $stock_status === 'instock' ? 'in-stock' : 'out-of-stock'; ?>">
+									<?php if ( $stock_status === 'instock' ) : ?>
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+											<circle cx="8" cy="8" r="8" fill="#10b981"/>
+											<path d="M11 6L7 10L5 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+										<span><?php esc_html_e( 'In Stock', 'elemenane' ); ?></span>
+									<?php else : ?>
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+											<circle cx="8" cy="8" r="8" fill="#ef4444"/>
+											<path d="M10 6L6 10M6 6L10 10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+										</svg>
+										<span><?php esc_html_e( 'Out of Stock', 'elemenane' ); ?></span>
+									<?php endif; ?>
+								</span>
+							<?php endif; ?>
 						</div>
-						<?php if ( $sku ) : ?>
-							<span class="ane-sku">SKU: <?php echo esc_html( $sku ); ?></span>
-						<?php endif; ?>
-					</div>
+					<?php endif; ?>
 
 					<!-- Price -->
 					<div class="ane-product-price-wrap">
@@ -156,23 +171,6 @@ while ( have_posts() ) :
 							<?php the_excerpt(); ?>
 						</div>
 					<?php endif; ?>
-
-					<!-- Stock Status -->
-					<div class="ane-stock-status <?php echo $stock_status === 'instock' ? 'in-stock' : 'out-of-stock'; ?>">
-						<?php if ( $stock_status === 'instock' ) : ?>
-							<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-								<circle cx="8" cy="8" r="8" fill="#10b981"/>
-								<path d="M11 6L7 10L5 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-							</svg>
-							<span><?php esc_html_e( 'In Stock', 'elemenane' ); ?></span>
-						<?php else : ?>
-							<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-								<circle cx="8" cy="8" r="8" fill="#ef4444"/>
-								<path d="M10 6L6 10M6 6L10 10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-							</svg>
-							<span><?php esc_html_e( 'Out of Stock', 'elemenane' ); ?></span>
-						<?php endif; ?>
-					</div>
 
 					<!-- Purchase Options -->
 					<div class="ane-purchase-options">
