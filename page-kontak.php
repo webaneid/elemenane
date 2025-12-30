@@ -11,20 +11,16 @@ get_header();
 	<?php get_template_part( 'breadcrumbs' ); ?>
 
 	<div class="container">
-		<div class="ane-col-64">
-			<div class="ane-kiri">
-				<?php
-				if ( have_posts() ) :
-					while ( have_posts() ) :
-						the_post();
-						get_template_part( 'tp/content', 'page-kontak' );
-					endwhile;
-				else :
-					get_template_part( 'tp/content', 'none' );
-				endif;
-				?>
-			</div>
-		</div>
+		<?php
+		if ( have_posts() ) :
+			while ( have_posts() ) :
+				the_post();
+				get_template_part( 'tp/content', 'page-kontak' );
+			endwhile;
+		else :
+			get_template_part( 'tp/content', 'none' );
+		endif;
+		?>
 	</div>
 </main>
 <?php get_footer();

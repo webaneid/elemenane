@@ -22,8 +22,18 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) {
  * @since 1.0.0
  */
 function elemenane_theme_setup() {
-	// Translation support
-	load_theme_textdomain( 'elemenane', get_template_directory() . '/languages' );
+	/**
+	 * Load theme translations.
+	 * Using load_textdomain() instead of load_theme_textdomain() to bypass WordPress
+	 * translation caching mechanism that can prevent new translations from loading.
+	 * determine_locale() gets fresh locale without cache interference.
+	 */
+	$locale = determine_locale();
+	$mofile = get_template_directory() . "/languages/elemenane-{$locale}.mo";
+
+	if ( file_exists( $mofile ) ) {
+		load_textdomain( 'elemenane', $mofile );
+	}
 
 	// Core theme supports
 	add_theme_support( 'title-tag' );

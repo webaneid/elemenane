@@ -347,6 +347,21 @@ function ane_render_admin_intro() : void {
 add_action( 'admin_notices', 'ane_render_admin_intro' );
 
 /**
+ * Get Google News Sitemap URL.
+ *
+ * @return string News sitemap URL.
+ */
+function ane_get_news_sitemap_url() : string {
+	// Check if Yoast SEO is active and has news sitemap
+	if ( defined( 'WPSEO_VERSION' ) && class_exists( 'WPSEO_News_Sitemap' ) ) {
+		return home_url( '/news-sitemap.xml' );
+	}
+
+	// Fallback to standard WordPress sitemap for posts
+	return home_url( '/wp-sitemap-posts-post-1.xml' );
+}
+
+/**
  * Render SEO & News Setup page content.
  */
 function ane_render_seo_news_page() {

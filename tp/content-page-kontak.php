@@ -106,38 +106,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</header>
 
-	<div class="row">
+	<div class="ane-col-64">
 		<!-- Page Content -->
-		<div class="col-md-7">
+		<div class="ane-kiri">
 			<div class="entry-content">
 				<?php the_content(); ?>
 			</div>
 		</div>
 
 		<!-- Google Maps -->
-		<?php
-		$location = get_field( 'ane_gmap', 'option' );
-		if ( ! empty( $location ) && isset( $location['lat'], $location['lng'] ) ) :
+			<?php
+				$location = get_field('ane_gmap', 'option');
+				if( !empty($location) ):
 			?>
-			<div class="col-md-5">
+			<div class="ane-kanan">
 				<div class="kontak-map">
-					<div class="acf-map">
-						<div class="marker" data-lat="<?php echo esc_attr( $location['lat'] ); ?>" data-lng="<?php echo esc_attr( $location['lng'] ); ?>">
-							<a class="directions"
-							   href="https://www.google.com/maps?saddr=My+Location&daddr=<?php echo esc_attr( $location['lat'] . ',' . $location['lng'] ); ?>"
-							   target="_blank"
-							   rel="noopener noreferrer">
-								<?php
-								printf(
-									/* translators: %s: location address */
-									esc_html__( 'Get Directions to %s', 'elemenane' ),
-									esc_html( $location['address'] )
-								);
-								?>
-							</a>
-						</div>
-					</div>
-				</div>
+                    <div class="acf-map">
+                        <div class="marker" data-lat="<?php echo $location['lat']; ?>" data-lng="<?php echo $location['lng']; ?>">
+                        <a class="directions" href="https://www.google.com/maps?saddr=My+Location&daddr=<?php echo $location['lat'] . ',' . $location['lng']; ?>"><?php _e('Get Directions to','roots'); ?> <?php echo $location['address']; ?></a> <!-- Output the title -->
+                        </div>
+                    </div>
+            	</div>
 			</div>
 		<?php endif; ?>
 	</div>

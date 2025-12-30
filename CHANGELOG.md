@@ -14,6 +14,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.4] - 2025-12-30
+
+### Fixed
+- **SEO & News Admin Page** - Fixed fatal error on admin page
+  - Added missing `ane_get_news_sitemap_url()` function in [inc/admin.php](inc/admin.php)
+  - Function checks for Yoast SEO News sitemap, fallback to WordPress core sitemap
+  - Admin page now loads without errors at `/wp-admin/admin.php?page=ane-seo-news`
+  - File: [inc/admin.php](inc/admin.php)
+
+### Changed
+- **Google Maps JavaScript** - Removed debugging code
+  - Cleaned up console.log debugging statements from [js/gmap.js](js/gmap.js)
+  - Kept essential error handler for production use
+  - Production-ready code without debugging clutter
+  - File: [js/gmap.js](js/gmap.js)
+
+---
+
 ## [1.0.3] - 2025-12-29
 
 ### Added
@@ -71,7 +89,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Author box still appears on regular posts and other content types
   - File: [inc/elemenane.php](inc/elemenane.php)
 
+- **Related Products Display** - Refactored to use template parts
+  - Changed from custom loop to WP_Query with proper template part
+  - Now uses `get_template_part('tp/content', 'product')` for consistency
+  - Ensures images and styling match archive display
+  - Uses 'kotak' image size (394×394) for square thumbnails
+  - File: [single-product.php](single-product.php)
 
+- **Translation Loading** - Force load mechanism
+  - Changed from `load_theme_textdomain()` to `load_textdomain()`
+  - Uses `determine_locale()` to bypass WordPress translation cache
+  - Prevents cached translations from blocking new translations
+  - File: [functions.php](functions.php)
+
+### Fixed
+- **Google Maps Display** - Fixed conflict preventing maps from rendering
+  - Resolved duplicate Google Maps initialization in `newsane.js` and `gmap.js`
+  - Disabled conflicting code in `newsane.js` to prevent double rendering
+  - Fixed Google Maps API loading with proper `callback=Function.prototype`
+  - Removed beta version API (`v=beta`) for compatibility with older map code
+  - Updated script dependency: `gmap.js` now depends on `googlemap` for proper load order
+  - Fixed CSS for map container: added `position: relative`, `overflow: hidden`
+  - Fixed image max-width issue that prevented tiles from displaying
+  - Map now renders correctly on contact page with custom styled map
+  - Files: [inc/acf.php](inc/acf.php), [js/newsane.js](js/newsane.js), [js/gmap.js](js/gmap.js), [scss/_global.scss](scss/_global.scss)
 
 ---
 

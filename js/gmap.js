@@ -16,8 +16,13 @@
 	function render_map( $el ) {
 
 		// var
-
 		var $markers = $el.find('.marker');
+
+		// Verify element is valid
+		if (!$el[0]) {
+			console.error('Map container element not found');
+			return;
+		}
 
 		// Custom map styles
 
@@ -305,9 +310,7 @@
 $(document).ready(function(){
 
 	$('.acf-map').each(function(){
-
 		render_map( $(this) );
-
 	});
 
 });

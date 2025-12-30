@@ -35,7 +35,6 @@ function ane_enqueue_scripts(){
 	wp_enqueue_style( 'FontAne', get_base_url_assets() . '/css/FontAne.css', array(), '1.0.0');
 	wp_enqueue_style( 'magnific-popup','https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css' );
 	wp_enqueue_style( 'OwlCarouse','https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css' );
-    //wp_enqueue_style( 'bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
 
 	wp_enqueue_style( 'main-css', get_base_url_assets() . '/css/main.min.css', array(), '1.3.6');
 
@@ -45,7 +44,6 @@ function ane_enqueue_scripts(){
 
 	wp_enqueue_script( 'magnific', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js' );
 	wp_enqueue_script( 'OwlCarousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js' );
-	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');
 
 	wp_enqueue_script( 'main-js', get_base_url_assets() . '/js/newsane.js', array(), '1.0.0');
 }

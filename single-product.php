@@ -290,42 +290,46 @@ while ( have_posts() ) :
 
 			<!-- Related Products -->
 			<?php
-			$related_ids = ane_get_related_products( $product_id, 4 );
-			if ( ! empty( $related_ids ) ) :
+			// Get products from same category
+			$categories = wp_get_post_terms( $product_id, 'product_cat', array( 'fields' => 'ids' ) );
+
+			if ( ! empty( $categories ) ) :
+				$related_args = array(
+					'post_type'      => 'product',
+					'posts_per_page' => 4,
+					'post__not_in'   => array( $product_id ),
+					'tax_query'      => array(
+						array(
+							'taxonomy' => 'product_cat',
+							'field'    => 'term_id',
+							'terms'    => $categories,
+						),
+					),
+					'orderby'        => 'rand',
+				);
+
+				$related_query = new WP_Query( $related_args );
+
+				if ( $related_query->have_posts() ) :
 				?>
 				<div class="ane-related-products">
-					<h2>Produk Terkait</h2>
-					<div class="ane-products-grid">
-						<?php
-						foreach ( $related_ids as $related_id ) :
-							$related_price     = get_field( '_regular_price', $related_id );
-							$related_sale      = get_field( '_sale_price', $related_id );
-							$related_thumbnail = get_post_thumbnail_id( $related_id );
+					<h2><?php esc_html_e( 'Related Products', 'elemenane' ); ?></h2>
+					<div class="ane-products-wrap">
+						<div class="row">
+							<?php
+							while ( $related_query->have_posts() ) :
+								$related_query->the_post();
+								get_template_part( 'tp/content', 'product' );
+							endwhile;
+							wp_reset_postdata();
 							?>
-							<article class="ane-product-card">
-								<a href="<?php echo esc_url( get_permalink( $related_id ) ); ?>" class="ane-product-card-link">
-									<?php if ( $related_thumbnail ) : ?>
-										<div class="ane-product-card-image">
-											<?php echo wp_get_attachment_image( $related_thumbnail, 'medium' ); ?>
-										</div>
-									<?php endif; ?>
-									<div class="ane-product-card-content">
-										<h3 class="ane-product-card-title"><?php echo esc_html( get_the_title( $related_id ) ); ?></h3>
-										<div class="ane-product-card-price">
-											<?php if ( ! empty( $related_sale ) && $related_sale > 0 && $related_sale < $related_price ) : ?>
-												<span class="price-sale">Rp <?php echo number_format( $related_sale, 0, ',', '.' ); ?></span>
-												<span class="price-regular">Rp <?php echo number_format( $related_price, 0, ',', '.' ); ?></span>
-											<?php else : ?>
-												<span class="price-current">Rp <?php echo number_format( $related_price, 0, ',', '.' ); ?></span>
-											<?php endif; ?>
-										</div>
-									</div>
-								</a>
-							</article>
-						<?php endforeach; ?>
+						</div>
 					</div>
 				</div>
-			<?php endif; ?>
+				<?php
+				endif;
+			endif;
+			?>
 
 		</div>
 	</div>

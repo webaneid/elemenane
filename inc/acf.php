@@ -23,8 +23,8 @@ function my_acf_google_map_api( $args ) {
 }
 
 function ane_load_gmap_script (){
-    wp_enqueue_script( 'map', get_base_url_assets() . '/js/gmap.js', array('jquery'), true );
-    wp_enqueue_script( 'googlemap', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCa5iaW5vvMX2d4Ul4vC88Y6BhYFP5YCtM&callback=console.debug&libraries=maps,marker&v=beta', array('jquery'), true );
+    wp_enqueue_script( 'googlemap', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCa5iaW5vvMX2d4Ul4vC88Y6BhYFP5YCtM&callback=Function.prototype', array('jquery'), true );
+    wp_enqueue_script( 'map', get_base_url_assets() . '/js/gmap.js', array('googlemap'), true );
 }
 add_action( 'wp_enqueue_scripts', 'ane_load_gmap_script' );
 

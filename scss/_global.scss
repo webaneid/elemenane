@@ -341,23 +341,26 @@ ul {
     width: 100%;
     height: 636px;
     margin: 20px 0;
+    position: relative !important;
+    overflow: hidden !important;
+
+    * {
+        box-sizing: border-box;
+    }
 
     img {
-        max-width: inherit !important;
-        float: left;
-        margin-right: 10px;
+        max-width: none !important;
+        float: none !important;
     }
-    .marker {
-        width: 100%;
-        display: block;
-        height: auto;
 
-        img {
-            width: 100px;
-            height: auto;
-            display: block;
-            float: left;
-        }
+    // Google Maps tiles container
+    > div {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .marker {
+        display: none; // Hide marker div, let Google Maps handle markers
     }
 }
 
