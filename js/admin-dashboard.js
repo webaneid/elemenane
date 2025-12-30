@@ -113,7 +113,7 @@
 							drawBorder: false
 						},
 						ticks: {
-							color: colors.secondary,
+							color: colors.body,
 							font: {
 								size: 11
 							}
@@ -126,7 +126,7 @@
 							drawBorder: false
 						},
 						ticks: {
-							color: colors.secondary,
+							color: colors.body,
 							font: {
 								size: 11
 							},

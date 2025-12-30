@@ -6,8 +6,11 @@
 
 // User profile page styling
 .ane-user-profile {
-	max-width: 1400px;
+	max-width: 100vw;
 	margin: 2rem 0;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
 
 	&__title {
 		margin: 0 0 1.5rem;

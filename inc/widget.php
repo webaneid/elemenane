@@ -34,7 +34,7 @@ class Webane_Posts_Widget extends WP_Widget {
 			$args['meta_query'] = null;
 		elseif($type == 'Popular Post' ) :
 			$args['orderby'] = 'meta_value_num';
-			$args['meta_key'] = 'post_views_count';
+			$args['meta_key'] = 'musi_views';
 		elseif($type == 'Post Format: Gallery') :
 			$args['post_format'] = $args2['post_format'] = 'post-format-gallery';
 		elseif($type == 'Post Format: Video') :

@@ -333,7 +333,7 @@ function ane_get_user_stats( int $user_id ) : array {
 			"SELECT SUM(pm.meta_value)
 			FROM {$wpdb->postmeta} pm
 			INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-			WHERE pm.meta_key = 'ane_views'
+			WHERE pm.meta_key = 'musi_views'
 			AND p.post_author = %d
 			AND p.post_type = 'post'
 			AND p.post_status = 'publish'",
@@ -430,7 +430,7 @@ function ane_get_user_posts_data( int $user_id ) : array {
 				"SELECT SUM(pm.meta_value)
 				FROM {$wpdb->postmeta} pm
 				INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-				WHERE pm.meta_key = 'ane_views'
+				WHERE pm.meta_key = 'musi_views'
 				AND p.post_author = %d
 				AND p.post_type = 'post'
 				AND p.post_status = 'publish'

@@ -7,14 +7,174 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Planned Features
-- Enhanced SEO features
 - Additional custom widgets
 - Performance optimization improvements
 - More template variations
 
 ---
 
+## [1.0.5] - 2025-12-30
+
+### Fixed
+- **Dashboard View Count Accuracy** - Fixed incorrect visitor statistics
+  - All view count queries now use correct meta key `musi_views`
+  - Previously dashboard used inconsistent meta keys (`ane_views`, `post_views_count`)
+  - Fixed in dashboard statistics, popular posts list, author stats, and monthly views chart
+  - Fixed widget "Popular Post" to use correct meta key
+  - Files: [inc/admin/dashboard.php](inc/admin/dashboard.php), [inc/widget.php](inc/widget.php)
+- **User Profile View Count Accuracy** - Fixed incorrect view statistics on user profile page
+  - User profile total views now use correct meta key `musi_views`
+  - User profile monthly views chart now use correct meta key `musi_views`
+  - Previously user profile used wrong meta key `ane_views`
+  - Fixed at `/wp-admin/profile.php` and `/wp-admin/user-edit.php`
+  - File: [inc/admin/user.php](inc/admin/user.php)
+- **Dashboard Growth Percentage Display** - Fixed visitor growth percentage showing correctly
+  - Now displays dynamic sign: `+` for positive growth, `-` for negative, `+0.0%` for no change
+  - CSS class changes dynamically: `--up` (green), `--down` (red), `--neutral` (gray)
+  - Uses `abs()` to prevent double negative signs (e.g., `--5%` instead of `-5%`)
+  - Previously always showed `+` sign regardless of actual growth direction
+  - File: [inc/admin/dashboard.php](inc/admin/dashboard.php)
+- **Dashboard Chart Tooltips** - Fixed chart tooltips not displaying
+  - Added missing `body` color definition (`#3c434a`) to chart colors
+  - Tooltips now show correctly when hovering over chart data points
+  - Displays "Published Posts" and "Total Views" with formatted numbers
+  - Previously tooltips were invisible due to undefined color variable
+  - File: [inc/admin/dashboard.php](inc/admin/dashboard.php)
+- **Dashboard Chart Colors** - Improved chart line visibility with distinct colors
+  - Published Posts line: Red (`#dc3545`) - matches "Published Posts" legend
+  - Total Views line: Orange (`#ff6b35`) - matches "Total Views" legend
+  - Lines now clearly distinguishable with high contrast colors
+  - Previously both lines used dark gray colors that were hard to differentiate
+  - File: [inc/admin/dashboard.php](inc/admin/dashboard.php)
+- **Dashboard Chart Axis Labels** - Fixed chart axis labels for better readability
+  - X-axis labels (months) now use dark color (`#3c434a`) instead of orange
+  - Y-axis labels (numbers) now use dark color (`#3c434a`) instead of orange
+  - Improved visibility and contrast while keeping chart lines red and orange
+  - Previously axis labels used orange color which reduced readability
+  - File: [js/admin-dashboard.js](js/admin-dashboard.js)
+
+---
+
 ## [1.0.4] - 2025-12-30
+
+### Added
+- **Company Information Helper Functions** - Centralized ACF data access
+  - `ane_get_company_name()` - Get company name from ACF (ane_com_nama)
+  - `ane_get_company_description()` - Get company description (ane_com_des)
+  - `ane_get_company_url()` - Get company URL (ane_com_link)
+  - `ane_get_company_address()` - Get company address (ane_com_alamat)
+  - `ane_get_company_phone()` - Get company phone (ane_telepon)
+  - `ane_get_company_mobile()` - Get company mobile (ane_kontak->ane_handphone)
+  - `ane_get_company_email()` - Get company email (ane_kontak->ane_email)
+  - `ane_get_company_website()` - Get company website (ane_kontak->ane_website)
+  - `ane_get_company_location()` - Get Google Maps data (ane_gmap)
+  - `ane_get_company_logo($size)` - Get company logo URL
+  - `ane_get_company_info()` - Get all company info as array
+  - All functions have smart fallbacks to WordPress defaults
+  - File: [inc/seo.php](inc/seo.php)
+
+- **Premium SEO Features** - Comprehensive SEO enhancement module
+  - **NewsArticle Schema (JSON-LD)** - Rich snippets for Google News
+    - Complete structured data with headline, description, author, publisher
+    - Uses company info from ACF options (name, URL, logo)
+    - Image metadata with dimensions for rich results
+    - Article section (category) and keywords (tags)
+    - Published and modified dates for freshness signals
+  - **CollectionPage Schema (JSON-LD)** - Archive pages optimization
+    - Automatic schema for category, tag, author, date archives, and homepage
+    - ItemList with all articles on current page as NewsArticle items
+    - Each item includes position, headline, dates, author, image
+    - Publisher info from ACF company data
+    - Optimized for Google News article discovery
+  - **Dublin Core Metadata** - Academic/news citations and AI crawler optimization
+    - DC.title, DC.creator, DC.date, DC.description
+    - DC.identifier (permalink), DC.publisher (from ACF company name), DC.subject (category)
+    - Optimized for ChatGPT, Claude, Perplexity citations
+  - **Citation Metadata** - Proper attribution in AI models
+    - citation_title, citation_author, citation_publication_date
+    - citation_journal_title (from ACF company name), citation_public_url
+    - Support for citation_pdf_url (custom field)
+  - **Enhanced Open Graph Tags** - Facebook, LinkedIn optimization
+    - Intelligent fallback: uses Yoast if active, otherwise theme provides
+    - Article-specific tags: published_time, modified_time, author, section
+    - Tag meta for each post tag
+    - Archive support (category, tag, author pages)
+  - **Twitter Card Tags** - Twitter sharing optimization
+    - summary_large_image card type
+    - Intelligent fallback: uses Yoast if active, otherwise theme provides
+    - Featured image or logo fallback
+  - **Enhanced Robots Meta** - Max snippet and preview settings
+    - index, follow, max-snippet:-1 (unlimited)
+    - max-image-preview:large, max-video-preview:-1
+  - **Enhanced RSS Feed** - Full content with featured images
+    - Featured image embedded in RSS
+    - Full post content instead of excerpt
+  - **Page Schema Support** - Advanced schema.org types for pages
+    - ACF select field for choosing schema type per page
+    - **8 schema types supported**:
+      - `WebPage` (default) - Standard pages
+      - `AboutPage` - About/profile pages with organization info
+      - `ContactPage` - Contact pages with full contact details (phone, email, address)
+      - `FAQPage` - FAQ pages (ready for Q&A structured data)
+      - `ProfilePage` - Organization/company profile pages
+      - `CollectionPage` - Collection/grouped content pages
+      - `ItemPage` - Individual item pages
+      - `SearchResultsPage` - Search results pages
+    - All types include company data from ACF (name, logo, URL)
+    - ContactPage schema automatically includes company contact info (phone, mobile, email, address)
+    - AboutPage schema includes organization description
+    - ACF field appears in sidebar on page edit screen
+    - Smart fallback: defaults to WebPage if no selection
+    - Function: `ane_output_page_schema()` in [inc/seo.php](inc/seo.php)
+    - ACF field group: `ane_register_page_schema_field()` in [inc/acf.php](inc/acf.php)
+  - **Google Sitelinks Optimization** - Enhanced structured data for Google enhanced sitelinks
+    - **Breadcrumb Schema (BreadcrumbList)** - Shows hierarchy in Google search
+      - Automatic breadcrumb generation for all pages
+      - Home → Category → Post structure
+      - Supports posts, pages, categories, tags, author archives
+      - Critical for Google Sitelinks appearance
+      - Function: `ane_output_breadcrumb_schema()` in [inc/seo.php](inc/seo.php)
+    - **WebSite Schema with SearchAction** - Enables Google Search Box in SERP
+      - Site-wide search functionality in Google results
+      - Search box appears like NU Online screenshot
+      - Uses WordPress native search (?s=query)
+      - Only outputs on homepage
+      - Function: `ane_output_website_schema()` in [inc/seo.php](inc/seo.php)
+    - **Navigation Schema (SiteNavigationElement)** - Main menu structure
+      - Top-level menu items marked for Google
+      - Helps Google identify important pages
+      - Auto-reads from 'menuutama' menu location
+      - Outputs in [tp/header-asli.php](tp/header-asli.php)
+      - Function: `ane_output_navigation_schema()` in [inc/seo.php](inc/seo.php)
+    - **How to get sitelinks like NU Online**:
+      1. Keep consistent site structure (clear categories/pages)
+      2. Build internal linking between important pages
+      3. Set up main navigation menu properly
+      4. Wait 2-4 weeks for Google to crawl and index
+      5. Sitelinks appear automatically when Google trusts your site structure
+    - **Note**: Sitelinks cannot be forced - Google decides based on site authority, structure, and user behavior
+  - **Yoast SEO Compatibility** - Zero conflicts with Yoast SEO
+    - Detects Yoast Open Graph and Twitter settings
+    - Only outputs tags when Yoast is disabled or not handling
+    - Skips robots meta if Yoast is active (prevents duplication)
+    - Adds premium features (NewsArticle, Dublin Core, Citation, Page Schema, Sitelinks) that Yoast Free doesn't provide
+    - **Verified working**: NewsArticle schema + Dublin Core + Citation metadata appear alongside Yoast
+  - File: [inc/seo.php](inc/seo.php), [inc/acf.php](inc/acf.php), [tp/header-asli.php](tp/header-asli.php)
+- **SEO Action Plan Dashboard** - Interactive 30-day SEO guide for users
+  - Added comprehensive SEO checklist in admin page `/wp-admin/admin.php?page=ane-seo-news`
+  - **6-step action plan** with daily tasks for 30 days
+  - Step 1-3: Google Search Console setup and sitemap submission
+  - Step 4-7: Structured data validation with Rich Results Test
+  - Step 8-14: Website structure optimization (categories, menus, important pages)
+  - Step 15-21: Internal linking strategy and anchor text optimization
+  - Step 22-28: Content quality guidelines and publishing consistency
+  - Step 29-30: Performance monitoring and optimization
+  - **Bonus section**: Google Sitelinks explanation and tips
+  - **Timeline expectations**: Realistic 2-6 month timeline for SEO results
+  - **Tools dashboard**: Quick access to Search Console, Rich Results Test, PageSpeed Insights
+  - **Warning notices**: Black-hat SEO risks and best practices
+  - Written in Indonesian for better user understanding
+  - File: [inc/admin.php](inc/admin.php)
 
 ### Fixed
 - **SEO & News Admin Page** - Fixed fatal error on admin page

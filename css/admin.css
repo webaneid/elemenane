@@ -970,8 +970,11 @@
 }
 
 .ane-user-profile {
-  max-width: 1400px;
+  max-width: 100vw;
   margin: 2rem 0;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 .ane-user-profile__title {
   margin: 0 0 1.5rem;
@@ -2742,6 +2745,7 @@ body.has-open-submenu #wpcontent {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  max-width: 100vw;
   /* Top-level menu items - dark text */
   /* Menu item hover */
 }
@@ -2950,6 +2954,7 @@ body.admin-bar {
 }
 #wpadminbar #wp-admin-bar-top-secondary {
   float: right !important;
+  padding-right: 1rem;
 }
 #wpadminbar #wp-admin-bar-ane-new-post,
 #wpadminbar #wp-admin-bar-ane-new-page {

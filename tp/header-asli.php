@@ -178,3 +178,9 @@
     </div>
 
 </div>
+<?php
+// Output navigation schema for Google Sitelinks
+if ( function_exists( 'ane_output_navigation_schema' ) ) {
+	ane_output_navigation_schema();
+}
+?>

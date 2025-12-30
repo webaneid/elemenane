@@ -656,6 +656,145 @@ function ane_render_seo_news_page() {
 				</li>
 			</ul>
 		</div>
+
+		<!-- SEO Action Plan for Google Enhanced Results -->
+		<div class="ane-seo-panel">
+			<h3>🎯 SEO Action Plan - Optimasi untuk Hasil Pencarian Google yang Lebih Baik</h3>
+
+			<div class="ane-seo-success">
+				<strong>✅ Fitur SEO Premium Sudah Aktif!</strong>
+				<p>Theme Anda sudah dilengkapi dengan structured data lengkap untuk meningkatkan visibilitas di Google.</p>
+			</div>
+
+			<h4>📊 Apa yang Sudah Otomatis Berjalan:</h4>
+			<ul class="ane-seo-checklist">
+				<li><strong>NewsArticle Schema</strong> - Setiap artikel memiliki rich snippets untuk Google News</li>
+				<li><strong>Breadcrumb Schema</strong> - Google memahami struktur hierarki website Anda</li>
+				<li><strong>WebSite Schema + SearchAction</strong> - Search box bisa muncul di hasil Google</li>
+				<li><strong>Navigation Schema</strong> - Menu utama ditandai untuk Google Sitelinks</li>
+				<li><strong>Dublin Core & Citation</strong> - Optimasi untuk AI crawlers (ChatGPT, Claude, Perplexity)</li>
+				<li><strong>Open Graph & Twitter Cards</strong> - Preview cantik saat share di sosial media</li>
+			</ul>
+
+			<h4 style="margin-top: 30px;">📝 Action Plan Anda (Checklist 30 Hari):</h4>
+
+			<ol class="ane-seo-steps">
+				<li>
+					<strong>Hari 1-3: Setup Google Search Console</strong>
+					<ul style="margin-top: 8px; margin-left: 20px;">
+						<li>Daftar website di <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a></li>
+						<li>Verifikasi kepemilikan website (gunakan meta tag atau DNS)</li>
+						<li>Submit sitemap.xml: <code><?php echo esc_url( $news_sitemap_url ); ?></code></li>
+						<li>Request indexing untuk 5-10 halaman penting</li>
+					</ul>
+				</li>
+
+				<li>
+					<strong>Hari 4-7: Validasi Structured Data</strong>
+					<ul style="margin-top: 8px; margin-left: 20px;">
+						<li>Buka <a href="https://search.google.com/test/rich-results" target="_blank">Rich Results Test</a></li>
+						<li>Test homepage Anda - pastikan WebSite schema terdeteksi</li>
+						<li>Test 2-3 artikel - pastikan NewsArticle schema terdeteksi</li>
+						<li>Test halaman category - pastikan CollectionPage schema terdeteksi</li>
+						<li>Screenshot hasil test untuk dokumentasi</li>
+					</ul>
+				</li>
+
+				<li>
+					<strong>Hari 8-14: Optimasi Struktur Website</strong>
+					<ul style="margin-top: 8px; margin-left: 20px;">
+						<li>Buat 5-8 kategori utama yang fokus (jangan terlalu banyak)</li>
+						<li>Setiap kategori minimal punya 10-15 artikel berkualitas</li>
+						<li>Setup menu utama (<strong>Appearance → Menus</strong>) dengan kategori penting</li>
+						<li>Pastikan menu di-assign ke location <strong>"menuutama"</strong></li>
+						<li>Buat halaman penting: About, Contact, Privacy Policy</li>
+					</ul>
+				</li>
+
+				<li>
+					<strong>Hari 15-21: Internal Linking Strategy</strong>
+					<ul style="margin-top: 8px; margin-left: 20px;">
+						<li>Di setiap artikel baru, link ke 2-3 artikel terkait yang sudah ada</li>
+						<li>Update artikel lama: tambahkan link ke artikel baru yang relevan</li>
+						<li>Link dari homepage ke kategori/halaman penting</li>
+						<li>Gunakan anchor text yang natural dan deskriptif</li>
+						<li>Hindari link berlebihan (3-5 internal links per artikel sudah cukup)</li>
+					</ul>
+				</li>
+
+				<li>
+					<strong>Hari 22-28: Content Quality & Consistency</strong>
+					<ul style="margin-top: 8px; margin-left: 20px;">
+						<li>Publish artikel minimal 2-3x per minggu (consistency is key!)</li>
+						<li>Setiap artikel minimal 300-500 kata (lebih panjang lebih baik)</li>
+						<li>Gunakan heading (H2, H3) untuk struktur artikel</li>
+						<li>Selalu upload featured image berkualitas (min 1200x675px)</li>
+						<li>Tulis excerpt/ringkasan untuk setiap artikel</li>
+						<li>Pilih 1 kategori utama per artikel (jangan multi-kategori)</li>
+					</ul>
+				</li>
+
+				<li>
+					<strong>Hari 29-30: Monitor & Optimize</strong>
+					<ul style="margin-top: 8px; margin-left: 20px;">
+						<li>Cek Google Search Console → Performance → lihat impressions & clicks</li>
+						<li>Identifikasi artikel dengan impressions tinggi tapi clicks rendah</li>
+						<li>Improve title & meta description artikel tersebut (make it clickable!)</li>
+						<li>Cek Coverage → fix halaman yang error atau excluded</li>
+						<li>Monitor Core Web Vitals → pastikan website loading cepat</li>
+					</ul>
+				</li>
+			</ol>
+
+			<h4 style="margin-top: 30px;">🎁 Bonus Tips - Mempercepat Google Sitelinks:</h4>
+			<div style="background: #f0f6fc; border-left: 4px solid #2271b1; padding: 15px; margin: 15px 0;">
+				<p><strong>Google Sitelinks</strong> adalah sub-link yang muncul di bawah hasil pencarian website Anda (seperti menu mini). Sitelinks muncul otomatis ketika:</p>
+				<ul style="margin-left: 20px;">
+					<li>Website punya traffic organik yang stabil</li>
+					<li>Struktur navigasi jelas dan konsisten</li>
+					<li>User sering search brand name Anda di Google</li>
+					<li>Website punya authority (backlinks, umur domain, trust)</li>
+				</ul>
+				<p><strong>Timeline realistis:</strong> 2-6 bulan setelah optimasi di atas (tergantung kompetisi niche Anda)</p>
+				<p><strong>Cara mempercepat:</strong></p>
+				<ul style="margin-left: 20px;">
+					<li>Brand building (social media, PR, backlinks berkualitas)</li>
+					<li>Konsisten publish konten berkualitas</li>
+					<li>Encourage user search brand name Anda (bukan generic keywords)</li>
+					<li>Pastikan bounce rate rendah (konten engaging, loading cepat)</li>
+				</ul>
+			</div>
+
+			<h4 style="margin-top: 30px;">🔍 Tools untuk Monitor SEO:</h4>
+			<div class="ane-seo-grid">
+				<div style="background: white; border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+					<strong>📊 Google Search Console</strong>
+					<p>Monitor traffic, indexing, dan performance</p>
+					<a href="https://search.google.com/search-console" target="_blank" class="button button-secondary">Open Console →</a>
+				</div>
+				<div style="background: white; border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+					<strong>✅ Rich Results Test</strong>
+					<p>Validasi structured data Anda</p>
+					<a href="https://search.google.com/test/rich-results" target="_blank" class="button button-secondary">Test Now →</a>
+				</div>
+				<div style="background: white; border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+					<strong>⚡ PageSpeed Insights</strong>
+					<p>Cek kecepatan loading website</p>
+					<a href="https://pagespeed.web.dev/" target="_blank" class="button button-secondary">Check Speed →</a>
+				</div>
+			</div>
+
+			<div class="ane-seo-warning" style="margin-top: 20px;">
+				<strong>⚠️ Penting untuk Diingat:</strong>
+				<ul style="margin: 10px 0 0 20px;">
+					<li>SEO adalah marathon, bukan sprint (butuh waktu 2-6 bulan untuk hasil signifikan)</li>
+					<li>Google Sitelinks <strong>TIDAK bisa dipaksa</strong> - Google yang memutuskan berdasarkan site authority</li>
+					<li>Focus on quality content & user experience - ranking akan follow naturally</li>
+					<li>Jangan gunakan black-hat SEO (keyword stuffing, paid links, cloaking) - bisa kena penalty!</li>
+					<li>Monitor terus Google Search Console untuk early detection masalah indexing</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 	<?php
 }

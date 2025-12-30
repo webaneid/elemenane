@@ -17,6 +17,8 @@
   	backdrop-filter: blur(20px);
 	-webkit-backdrop-filter: blur(20px);
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	max-width: 100vw;
+	
 
 	.ab-item {
 		height: 48px !important;
@@ -251,6 +253,7 @@ body.admin-bar {
 	/* Position buttons on right */
 	#wp-admin-bar-top-secondary {
 		float: right !important;
+		padding-right: 1rem;
 	}
 
 	/* Container untuk buttons */
@@ -484,6 +487,7 @@ body.admin-bar {
 			justify-content: center !important;
 			align-items: center;
 			height: auto !important;
+			
 
 			/* User avatar button */
 			#wp-admin-bar-my-account {

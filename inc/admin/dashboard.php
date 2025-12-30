@@ -90,9 +90,10 @@ function ane_dashboard_assets( $hook ) {
 		array(
 			'postsData' => $chart_data,
 			'colors'    => array(
-				'primary'   => '#2d232e',
-				'secondary' => '#474448',
+				'primary'   => '#dc3545',
+				'secondary' => '#ff6b35',
 				'accent'    => '#e0ddcf',
+				'body'      => '#3c434a',
 			),
 		)
 	);
@@ -194,13 +195,30 @@ function ane_dashboard_stats_cards() {
 				<div class="ane-stat-card__content">
 					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Visitors', 'newsane' ); ?></div>
 					<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['total_views'] ) ); ?></div>
-					<div class="ane-stat-card__change ane-stat-card__change--up">
+					<?php
+					$growth_value = $stats['views_growth'];
+					$growth_class = 'ane-stat-card__change';
+					$growth_sign  = '';
+
+					if ( $growth_value > 0 ) {
+						$growth_class .= ' ane-stat-card__change--up';
+						$growth_sign   = '+';
+					} elseif ( $growth_value < 0 ) {
+						$growth_class .= ' ane-stat-card__change--down';
+						$growth_sign   = '';
+					} else {
+						$growth_class .= ' ane-stat-card__change--neutral';
+						$growth_sign   = '+';
+					}
+					?>
+					<div class="<?php echo esc_attr( $growth_class ); ?>">
 						<?php
 						echo esc_html(
 							sprintf(
-								/* translators: %s: percentage */
-								__( '+%s%% this month', 'newsane' ),
-								number_format_i18n( $stats['views_growth'], 1 )
+								/* translators: %s: percentage with sign */
+								__( '%s%s%% this month', 'newsane' ),
+								$growth_sign,
+								number_format_i18n( abs( $growth_value ), 1 )
 							)
 						);
 						?>
@@ -378,7 +396,7 @@ function ane_dashboard_recent_posts() {
 			<?php
 			$rank = 1;
 			foreach ( $recent_posts as $post ) :
-				$views = (int) get_post_meta( $post->ID, 'ane_views', true );
+				$views = (int) get_post_meta( $post->ID, 'musi_views', true );
 				?>
 				<li class="ane-post-list__item">
 					<div class="ane-post-list__rank"><?php echo esc_html( $rank++ ); ?></div>
@@ -490,7 +508,7 @@ function ane_get_dashboard_stats() {
 	$total_views = (int) $wpdb->get_var(
 		"SELECT SUM(meta_value)
 		FROM {$wpdb->postmeta}
-		WHERE meta_key = 'ane_views'"
+		WHERE meta_key = 'musi_views'"
 	);
 
 	// Views this month.
@@ -499,7 +517,7 @@ function ane_get_dashboard_stats() {
 			"SELECT SUM(pm.meta_value)
 			FROM {$wpdb->postmeta} pm
 			INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-			WHERE pm.meta_key = 'ane_views'
+			WHERE pm.meta_key = 'musi_views'
 			AND p.post_type = 'post'
 			AND p.post_status = 'publish'
 			AND MONTH(p.post_date) = %d
@@ -515,7 +533,7 @@ function ane_get_dashboard_stats() {
 			"SELECT SUM(pm.meta_value)
 			FROM {$wpdb->postmeta} pm
 			INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-			WHERE pm.meta_key = 'ane_views'
+			WHERE pm.meta_key = 'musi_views'
 			AND p.post_type = 'post'
 			AND p.post_status = 'publish'
 			AND MONTH(p.post_date) = %d
@@ -640,7 +658,7 @@ function ane_get_posts_per_month_data() {
 				"SELECT SUM(pm.meta_value)
 				FROM {$wpdb->postmeta} pm
 				INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
-				WHERE pm.meta_key = 'ane_views'
+				WHERE pm.meta_key = 'musi_views'
 				AND p.post_type = 'post'
 				AND p.post_status = 'publish'
 				AND MONTH(p.post_date) = %d
@@ -664,7 +682,7 @@ function ane_get_popular_posts_dashboard( $limit = 5 ) {
 			'post_type'      => 'post',
 			'post_status'    => 'publish',
 			'posts_per_page' => $limit,
-			'meta_key'       => 'ane_views',
+			'meta_key'       => 'musi_views',
 			'orderby'        => 'meta_value_num',
 			'order'          => 'DESC',
 		)
@@ -680,7 +698,7 @@ function ane_get_popular_posts_dashboard( $limit = 5 ) {
 				'id'    => get_the_ID(),
 				'rank'  => $rank++,
 				'title' => get_the_title(),
-				'views' => (int) get_post_meta( get_the_ID(), 'ane_views', true ),
+				'views' => (int) get_post_meta( get_the_ID(), 'musi_views', true ),
 				'date'  => human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'newsane' ),
 			);
 		}
@@ -704,7 +722,7 @@ function ane_get_top_authors_dashboard( $limit = 5 ) {
 				COUNT(DISTINCT p.ID) as post_count,
 				SUM(CAST(pm.meta_value AS UNSIGNED)) as total_views
 			FROM {$wpdb->posts} p
-			LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = 'ane_views'
+			LEFT JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id AND pm.meta_key = 'musi_views'
 			WHERE p.post_type = 'post'
 			AND p.post_status = 'publish'
 			GROUP BY p.post_author
