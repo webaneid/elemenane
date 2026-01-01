@@ -13,6 +13,70 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.8] - 2026-01-02
+
+### Fixed
+- **Product Branch System** - Fixed latitude/longitude data retrieval
+  - **Map Integration Issue** - "Petunjuk Arah" button now displays correctly
+    - Changed from non-existent `ane_branch_latitude` and `ane_branch_longitude` fields
+    - Now correctly retrieves lat/lng from `ane_branch_map` ACF google_map field
+    - File: [inc/product-acf.php](inc/product-acf.php:626-639)
+
+  - **Independent Action Buttons** - WhatsApp and Map buttons now work independently
+    - Previously "Petunjuk Arah" was nested inside WhatsApp conditional
+    - Now each button has its own independent condition
+    - WhatsApp button shows only if `branch.whatsapp` exists
+    - Map button shows only if `branch.lat` and `branch.lng` exist
+    - File: [js/single-product.js](js/single-product.js:284-312)
+
+  - **Branch Archive Address Display** - Fixed HTML entities appearing in truncated addresses
+    - Addresses now display correctly without `&#8211;` artifacts
+    - Example: "Nagrak – Gunung Putri" displays correctly (not "Nagrak &#8211; Gunung Putri")
+    - Replaced `wp_trim_words()` with custom word truncation using `explode()` and `array_slice()`
+    - WordPress `wp_trim_words()` converts dashes to HTML entities, then `esc_html()` escapes them again
+    - Custom truncation prevents double-encoding while maintaining security
+    - Consistent with JavaScript `trimWords()` function in branch-archive.js
+    - File: [archive-branch.php](archive-branch.php:99-107)
+
+### Added
+- **Branch Archive Pagination** - Client-side Load More functionality
+  - **Initial Load** - Shows first 12 branches on page load
+  - **Load More Button** - Appends 12 additional branches per click
+    - Counter display: "(12 / 30)" updates dynamically
+    - Auto-hides when all branches are loaded
+    - File: [archive-branch.php](archive-branch.php:84-131)
+
+  - **Filter Integration** - Pagination resets when filters change
+    - Province/City filters reset pagination to first 12 results
+    - Filtered results maintain Load More functionality
+    - Map displays all markers regardless of pagination
+    - File: [js/branch-archive.js](js/branch-archive.js:166-284)
+
+  - **JavaScript Functions** - Complete pagination system
+    - `renderBranchCards()` - Replace cards on filter change
+    - `appendBranchCards()` - Append next batch on Load More
+    - `buildBranchCard()` - Build branch card HTML
+    - `loadMoreBranches()` - Load 12 more branches
+    - `updateLoadMoreButton()` - Update counter and visibility
+    - `trimWords()` - Truncate address text
+    - `escapeHtml()` - Sanitize output
+
+  - **Styling** - Modern Load More button design
+    - Primary color with hover effects
+    - Mobile-responsive (full-width on mobile)
+    - Disabled state styling
+    - Smooth transitions and shadows
+    - File: [scss/_branch.scss](scss/_branch.scss:41-95)
+
+### Changed
+- **Branch Display** - Optimized for better performance
+  - PHP renders only 12 branches initially (was: all branches)
+  - JavaScript handles pagination client-side
+  - No page reload required for loading more branches
+  - Map markers remain visible for all branches
+
+---
+
 ## [1.0.7] - 2025-12-31
 
 ### Added
@@ -41,6 +105,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Direct contact list showing all available admins with photos
   - **Mobile-Responsive Design** - Works seamlessly on all devices
   - File: [footer.php](footer.php)
+
+- **Admin Dashboard Migration Guide** - Complete documentation for duplicating admin system
+  - **Comprehensive Guide** - Step-by-step migration documentation
+    - File listing with required/optional modules
+    - Dependency tree visualization
+    - Configuration instructions
+    - Troubleshooting section with 10+ common issues
+  - **File Structure Documentation**
+    - 10 PHP admin modules in `inc/admin/`
+    - 13 SCSS partials for styling
+    - 6 JavaScript files for interactivity
+  - **Migration Checklist** - Quick start guide for experienced developers
+  - **Customization Points** - Text domain, function prefixes, colors, breakpoints
+  - **Debug Instructions** - Enable debug mode, common error solutions
+  - **Feature Coverage**
+    - Icon-only sidebar menu with tooltips
+    - Mobile bottom navigation (≤782px)
+    - Custom dashboard with Chart.js analytics
+    - User profile enhancements
+    - Design token system
+  - File: [ADMIN-DASHBOARD-GUIDE.md](ADMIN-DASHBOARD-GUIDE.md)
 
 ### Fixed
 - **Mobile Admin Dashboard Layout** - Fixed height and tooltip issues

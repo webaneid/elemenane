@@ -40,50 +40,6 @@ wp_deregister_script('heartbeat');
 
 }
 
-// SCRIPTs
-// Disabled: Tracking scripts managed in inc/acf-layouts.php
-/*
-function ane_gtm_header_content($isi) {
-    $isi = get_field('ane_ga_header','option');
-    if(!empty($isi)) {
-        echo $isi;
-    }
-}
-add_action('wp_head','ane_gtm_header_content');
-
-function ane_sc_header_content($isi) {
-    $isi = get_field('ane_sc_header','option');
-    if(!empty($isi)) {
-        echo $isi;
-    }
-}
-add_action('wp_head','ane_sc_header_content');
-
-function ane_metapixel_header_content($isi) {
-    $isi = get_field('ane_metapixel_header','option');
-    if(!empty($isi)) {
-        echo $isi;
-    }
-}
-add_action('wp_head','ane_metapixel_header_content');
-
-function ane_meta_sdk_script($isi) {
-    $isi = get_field('ane_metasdk_body','option');
-    if(!empty($isi)) {
-        echo $isi;
-    }
-}
-add_action( 'wp_body_open', 'ane_meta_sdk_script' );
-
-function ane_gtm_footer_content($isi) {
-    $isi = get_field('ane_ga_footer','option');
-    if(!empty($isi)) {
-        echo $isi;
-    }
-}
-add_action('wp_footer','ane_gtm_footer_content');
-*/
-
 /**
  * Register ACF Field Group for Page Schema Type
  * Allows selecting schema.org type for each page

@@ -14,6 +14,105 @@
 	@media (max-width: 768px) {
 		padding: 20px 0;
 	}
+
+	// Branch Card List
+	.ane-branch-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 25px;
+		max-height: none;
+		padding: 0;
+
+		@include mobile {
+			grid-template-columns: 1fr 1fr;
+			gap: 7px;
+		}
+	}
+
+	.ane-branch-list__empty,
+	.ane-branch-list__empty-filter {
+		text-align: center;
+		padding: 60px 20px;
+		color: #999;
+		font-size: 1.1rem;
+		grid-column: 1 / -1;
+	}
+
+	// Load More Button
+	.ane-branch-load-more-wrap {
+		grid-column: 1 / -1;
+		text-align: center;
+		margin-top: 20px;
+		padding: 20px 0;
+	}
+
+	.ane-branch-load-more {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 14px 32px;
+		background-color: var(--ane-warna-utama);
+		color: var(--ane-warna-putih);
+		border: none;
+		border-radius: 8px;
+		font-size: 1rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+
+		&:hover {
+			background-color: var(--ane-warna-utama);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+		}
+
+		&:active {
+			transform: translateY(0);
+		}
+
+		&:disabled {
+			background-color: #6c757d;
+			cursor: not-allowed;
+			opacity: 0.6;
+
+			&:hover {
+				transform: none;
+				box-shadow: none;
+			}
+		}
+
+		@media (max-width: 768px) {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+
+	.ane-branch-load-more__count {
+		font-size: 0.9rem;
+		opacity: 0.9;
+		font-weight: 400;
+	}
+
+	// Branch Card
+	.ane-branch-card {
+		background: var(--ane-warna-putih);
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+		&:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+		}
+
+		&--active {
+			border: 3px solid var(--ane-warna-utama);
+			transform: translateY(-5px);
+			box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
+		}
+	}
 }
 
 .ane-container {
@@ -30,7 +129,7 @@
 	h1 {
 		font-size: 2.5rem;
 		margin-bottom: 10px;
-		color: #333;
+		color: var(--ane-warna-text);
 
 		@media (max-width: 768px) {
 			font-size: 2rem;
@@ -64,12 +163,12 @@
 	border: 2px solid #e0e0e0;
 	border-radius: 8px;
 	font-size: 1rem;
-	background-color: #fff;
+	background-color: var(--ane-warna-putih);
 	transition: border-color 0.3s ease;
 
 	&:focus {
 		outline: none;
-		border-color: #007bff;
+		border-color: var(--ane-warna-utama);
 	}
 
 	&:disabled {
@@ -85,7 +184,7 @@
 .ane-branch-filter__reset {
 	padding: 12px 24px;
 	background-color: #6c757d;
-	color: #fff;
+	color: var(--ane-warna-putih);
 	border: none;
 	border-radius: 8px;
 	font-size: 1rem;
@@ -124,7 +223,7 @@
 	h4 {
 		margin: 0 0 8px 0;
 		font-size: 1.1rem;
-		color: #333;
+		color: var(--ane-warna-text);
 	}
 
 	p {
@@ -138,64 +237,25 @@
 	display: inline-block;
 	margin-top: 10px;
 	padding: 6px 12px;
-	background-color: #007bff;
-	color: #fff !important;
+	background-color: var(--ane-warna-utama);
+	color: var(--ane-warna-putih) !important;
 	text-decoration: none;
 	border-radius: 4px;
 	font-size: 0.9rem;
 	transition: background-color 0.3s ease;
 
 	&:hover {
-		background-color: #0056b3;
+		background-color: var(--ane-warna-utama);
 	}
 }
 
-// Branch Card List
-.ane-branch-list {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	gap: 25px;
 
-	@media (max-width: 768px) {
-		grid-template-columns: 1fr;
-		gap: 20px;
-	}
-}
-
-.ane-branch-list__empty,
-.ane-branch-list__empty-filter {
-	text-align: center;
-	padding: 60px 20px;
-	color: #999;
-	font-size: 1.1rem;
-	grid-column: 1 / -1;
-}
-
-// Branch Card
-.ane-branch-card {
-	background: #fff;
-	border-radius: 12px;
-	overflow: hidden;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-	&:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-	}
-
-	&--active {
-		border: 3px solid #007bff;
-		transform: translateY(-5px);
-		box-shadow: 0 4px 16px rgba(0, 123, 255, 0.3);
-	}
-}
 
 .ane-branch-card__image {
 	width: 100%;
 	height: 200px;
 	overflow: hidden;
-	background-color: #f0f0f0;
+	background-color: var(--ane-warna-terang);
 
 	img {
 		width: 100%;
@@ -211,13 +271,21 @@
 
 .ane-branch-card__content {
 	padding: 20px;
+	@include mobile {
+		padding: 10px;
+	}	
 }
 
 .ane-branch-card__title {
 	font-size: 1.25rem;
 	margin: 0 0 10px 0;
-	color: #333;
+	color: var(--ane-warna-text);
 	font-weight: 600;
+
+	@include mobile {
+		font-size: 1.1rem;
+		line-height: 1.3;
+	}	
 }
 
 .ane-branch-card__address,
@@ -233,7 +301,7 @@
 	.dashicons {
 		flex-shrink: 0;
 		margin-top: 2px;
-		color: #007bff;
+		color: var(--ane-warna-utama);
 	}
 }
 
@@ -257,25 +325,30 @@
 	font-weight: 500;
 	text-decoration: none;
 	transition: all 0.3s ease;
+	@include mobile {
+		padding: 8px 12px;
+		font-size: 0.85rem;
+		line-height: 1;
+	}
 }
 
 .ane-branch-card__detail {
-	background-color: #007bff;
-	color: #fff !important;
+	background-color: var(--ane-warna-utama);
+	color: var(--ane-warna-putih) !important;
 
 	&:hover {
-		background-color: #0056b3;
+		background-color: var(--ane-warna-utama);
 	}
 }
 
 .ane-branch-card__directions {
-	background-color: #fff;
-	color: #007bff !important;
-	border: 2px solid #007bff;
+	background-color: var(--ane-warna-putih);
+	color: var(--ane-warna-utama) !important;
+	border: 2px solid var(--ane-warna-utama);
 
 	&:hover {
-		background-color: #007bff;
-		color: #fff !important;
+		background-color: var(--ane-warna-utama);
+		color: var(--ane-warna-putih) !important;
 	}
 }
 
@@ -303,7 +376,7 @@
 	position: relative;
 	max-width: 600px;
 	margin: 50px auto;
-	background: #fff;
+	background: var(--ane-warna-putih);
 	border-radius: 12px;
 	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 	z-index: 10000;
@@ -332,7 +405,7 @@
 	right: 15px;
 	width: 36px;
 	height: 36px;
-	background: #f0f0f0;
+	background: var(--ane-warna-terang);
 	border: none;
 	border-radius: 50%;
 	font-size: 24px;
@@ -358,7 +431,7 @@
 	h2 {
 		margin: 0 0 20px 0;
 		font-size: 1.8rem;
-		color: #333;
+		color: var(--ane-warna-text);
 
 		@media (max-width: 768px) {
 			font-size: 1.5rem;
@@ -372,16 +445,16 @@
 	p {
 		margin: 12px 0;
 		line-height: 1.6;
-		color: #555;
+		color: var(--ane-warna-text);
 
 		strong {
-			color: #333;
+			color: var(--ane-warna-text);
 			display: inline-block;
 			min-width: 120px;
 		}
 
 		a {
-			color: #007bff;
+			color: var(--ane-warna-utama);
 			text-decoration: none;
 
 			&:hover {
@@ -415,24 +488,24 @@
 }
 
 .ane-btn--primary {
-	background-color: #007bff;
-	color: #fff !important;
+	background-color: var(--ane-warna-utama);
+	color: var(--ane-warna-putih) !important;
 
 	&:hover {
-		background-color: #0056b3;
+		background-color: var(--ane-warna-utama);
 		transform: translateY(-2px);
 		box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 	}
 }
 
 .ane-btn--secondary {
-	background-color: #fff;
-	color: #007bff !important;
-	border: 2px solid #007bff;
+	background-color: var(--ane-warna-putih);
+	color: var(--ane-warna-utama) !important;
+	border: 2px solid var(--ane-warna-utama);
 
 	&:hover {
-		background-color: #007bff;
-		color: #fff !important;
+		background-color: var(--ane-warna-utama);
+		color: var(--ane-warna-putih) !important;
 		transform: translateY(-2px);
 		box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 	}
@@ -449,7 +522,7 @@
 
 // Header
 .ane-single-branch__header {
-	background: #fff;
+	background: var(--ane-warna-putih);
 	margin-bottom: 40px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
@@ -462,7 +535,7 @@
 	width: 100%;
 	height: 400px;
 	overflow: hidden;
-	background-color: #f0f0f0;
+	background-color: var(--ane-warna-terang);
 
 	@media (max-width: 768px) {
 		height: 250px;
@@ -486,7 +559,7 @@
 .ane-single-branch__title {
 	font-size: 2.5rem;
 	margin: 0 0 15px 0;
-	color: #333;
+	color: var(--ane-warna-text);
 	font-weight: 700;
 
 	@media (max-width: 768px) {
@@ -499,8 +572,8 @@
 	align-items: center;
 	gap: 8px;
 	padding: 8px 16px;
-	background-color: #e8f4ff;
-	color: #007bff;
+	background-color: var(--ane-warna-terang);
+	color: var(--ane-warna-utama);
 	border-radius: 20px;
 	font-size: 0.95rem;
 	font-weight: 500;
@@ -533,7 +606,7 @@
 }
 
 .ane-single-branch__section {
-	background: #fff;
+	background: var(--ane-warna-putih);
 	border-radius: 12px;
 	padding: 30px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -549,21 +622,21 @@
 	gap: 10px;
 	font-size: 1.5rem;
 	margin: 0 0 20px 0;
-	color: #333;
+	color: var(--ane-warna-text);
 	font-weight: 600;
 	padding-bottom: 15px;
-	border-bottom: 2px solid #f0f0f0;
+	border-bottom: 2px solid var(--ane-warna-terang);
 
 	.dashicons {
 		width: 24px;
 		height: 24px;
 		font-size: 24px;
-		color: #007bff;
+		color: var(--ane-warna-utama);
 	}
 }
 
 .ane-single-branch__section-content {
-	color: #555;
+	color: var(--ane-warna-text);
 	line-height: 1.8;
 
 	p {
@@ -571,7 +644,7 @@
 	}
 
 	strong {
-		color: #333;
+		color: var(--ane-warna-text);
 	}
 }
 
@@ -598,8 +671,8 @@
 	align-items: center;
 	gap: 8px;
 	padding: 12px 24px;
-	background-color: #28a745;
-	color: #fff !important;
+	background-color: var(--ane-warna-alternatif);
+	color: var(--ane-warna-putih) !important;
 	text-decoration: none;
 	border-radius: 8px;
 	font-weight: 500;
@@ -657,7 +730,7 @@
 }
 
 .ane-single-branch__card {
-	background: #fff;
+	background: var(--ane-warna-putih);
 	border-radius: 12px;
 	padding: 25px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -669,16 +742,16 @@
 	gap: 10px;
 	font-size: 1.25rem;
 	margin: 0 0 20px 0;
-	color: #333;
+	color: var(--ane-warna-text);
 	font-weight: 600;
 	padding-bottom: 15px;
-	border-bottom: 2px solid #f0f0f0;
+	border-bottom: 2px solid var(--ane-warna-terang);
 
 	.dashicons {
 		width: 22px;
 		height: 22px;
 		font-size: 22px;
-		color: #007bff;
+		color: var(--ane-warna-utama);
 	}
 }
 
@@ -698,7 +771,7 @@
 		width: 24px;
 		height: 24px;
 		font-size: 24px;
-		color: #007bff;
+		color: var(--ane-warna-utama);
 		margin-top: 2px;
 	}
 
@@ -717,27 +790,27 @@
 	}
 
 	a {
-		color: #333;
+		color: var(--ane-warna-text);
 		text-decoration: none;
 		font-weight: 500;
 		transition: color 0.3s ease;
 
 		&:hover {
-			color: #007bff;
+			color: var(--ane-warna-utama);
 		}
 	}
 }
 
 // Hours
 .ane-single-branch__hours {
-	color: #555;
+	color: var(--ane-warna-text);
 	line-height: 1.8;
 	font-size: 0.95rem;
 }
 
 // Related Branches
 .ane-single-branch__related {
-	background: #fff;
+	background: var(--ane-warna-putih);
 	border-radius: 12px;
 	padding: 40px 30px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -751,7 +824,7 @@
 .ane-single-branch__related-title {
 	font-size: 1.8rem;
 	margin: 0 0 30px 0;
-	color: #333;
+	color: var(--ane-warna-text);
 	font-weight: 600;
 	text-align: center;
 
@@ -774,7 +847,7 @@
 
 // Related Branch Card (Mini)
 .ane-branch-card-mini {
-	background: #fff;
+	background: var(--ane-warna-putih);
 	border: 1px solid #e0e0e0;
 	border-radius: 12px;
 	overflow: hidden;
@@ -783,7 +856,7 @@
 	&:hover {
 		transform: translateY(-5px);
 		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-		border-color: #007bff;
+		border-color: var(--ane-warna-utama);
 	}
 }
 
@@ -791,7 +864,7 @@
 	width: 100%;
 	height: 160px;
 	overflow: hidden;
-	background-color: #f0f0f0;
+	background-color: var(--ane-warna-terang);
 
 	img {
 		width: 100%;
@@ -815,12 +888,12 @@
 	font-weight: 600;
 
 	a {
-		color: #333;
+		color: var(--ane-warna-text);
 		text-decoration: none;
 		transition: color 0.3s ease;
 
 		&:hover {
-			color: #007bff;
+			color: var(--ane-warna-utama);
 		}
 	}
 }
@@ -839,7 +912,7 @@
 		width: 18px;
 		height: 18px;
 		font-size: 18px;
-		color: #007bff;
+		color: var(--ane-warna-utama);
 	}
 }
 
@@ -847,8 +920,8 @@
 	display: inline-block;
 	margin-top: 15px;
 	padding: 8px 16px;
-	background-color: #007bff;
-	color: #fff !important;
+	background-color: var(--ane-warna-utama);
+	color: var(--ane-warna-putih) !important;
 	text-decoration: none;
 	border-radius: 6px;
 	font-size: 0.9rem;
@@ -856,7 +929,7 @@
 	transition: all 0.3s ease;
 
 	&:hover {
-		background-color: #0056b3;
+		background-color: var(--ane-warna-utama);
 		transform: translateY(-2px);
 		box-shadow: 0 3px 6px rgba(0, 123, 255, 0.3);
 	}

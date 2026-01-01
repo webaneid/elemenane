@@ -623,6 +623,9 @@ function ane_get_product_branches() {
 			$province_id = get_field( 'ane_branch_province' );
 			$city_name   = ane_get_city_name( $city_id, $province_id );
 
+			// Get Google Maps data (ACF google_map field returns array with lat/lng).
+			$map_data = get_field( 'ane_branch_map' );
+
 			$branches[] = array(
 				'id'       => get_the_ID(),
 				'title'    => get_the_title(),
@@ -632,8 +635,8 @@ function ane_get_product_branches() {
 				'phone'    => get_field( 'ane_branch_phone' ),
 				'whatsapp' => get_field( 'ane_branch_whatsapp' ),
 				'email'    => get_field( 'ane_branch_email' ),
-				'lat'      => get_field( 'ane_branch_latitude' ),
-				'lng'      => get_field( 'ane_branch_longitude' ),
+				'lat'      => isset( $map_data['lat'] ) ? $map_data['lat'] : '',
+				'lng'      => isset( $map_data['lng'] ) ? $map_data['lng'] : '',
 			);
 		}
 		wp_reset_postdata();

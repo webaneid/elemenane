@@ -13,6 +13,8 @@
 	var map;
 	var markers = [];
 	var infoWindow;
+	var currentlyLoaded = 12; // Number of branches currently displayed
+	var filteredBranches = []; // Store filtered branches for pagination
 
 	/**
 	 * Initialize Google Maps with all branch markers.
@@ -167,7 +169,7 @@
 		var selectedProvince = $('#ane-filter-province').val();
 		var selectedCity = $('#ane-filter-city').val();
 
-		var filteredBranches = aneBranchesData.filter(function(branch) {
+		filteredBranches = aneBranchesData.filter(function(branch) {
 			var matchProvince = !selectedProvince || branch.province === selectedProvince;
 			var matchCity = !selectedCity || branch.city === selectedCity;
 			return matchProvince && matchCity;
@@ -176,25 +178,140 @@
 		// Update map markers
 		updateMapMarkers(filteredBranches);
 
-		// Update card visibility
-		$('.ane-branch-card').each(function() {
-			var $card = $(this);
-			var branchId = $card.data('branch-id');
-			var isVisible = filteredBranches.some(function(b) {
-				return b.id === branchId;
-			});
+		// Reset pagination and show first 12 branches
+		currentlyLoaded = 12;
+		renderBranchCards(filteredBranches.slice(0, currentlyLoaded));
 
-			$card.toggle(isVisible);
-		});
+		// Update Load More button
+		updateLoadMoreButton();
+	}
 
-		// Show empty message if no results
-		if (filteredBranches.length === 0) {
-			if (!$('.ane-branch-list__empty-filter').length) {
-				$('#ane-branch-list').append('<p class="ane-branch-list__empty-filter">Tidak ada cabang di lokasi yang dipilih.</p>');
-			}
-		} else {
-			$('.ane-branch-list__empty-filter').remove();
+	/**
+	 * Render branch cards (replace existing cards).
+	 */
+	function renderBranchCards(branches) {
+		var $list = $('#ane-branch-list');
+
+		// Remove existing cards and empty messages
+		$('.ane-branch-card').remove();
+		$('.ane-branch-list__empty-filter').remove();
+
+		if (branches.length === 0) {
+			$list.append('<p class="ane-branch-list__empty-filter">Tidak ada cabang di lokasi yang dipilih.</p>');
+			return;
 		}
+
+		// Render cards
+		branches.forEach(function(branch) {
+			var card = buildBranchCard(branch);
+			$list.append(card);
+		});
+	}
+
+	/**
+	 * Append more branch cards (for Load More).
+	 */
+	function appendBranchCards(branches) {
+		var $list = $('#ane-branch-list');
+
+		branches.forEach(function(branch) {
+			var card = buildBranchCard(branch);
+			$list.append(card);
+		});
+	}
+
+	/**
+	 * Build branch card HTML.
+	 */
+	function buildBranchCard(branch) {
+		var card = '<article class="ane-branch-card" data-branch-id="' + branch.id + '" data-province="' + branch.province + '" data-city="' + branch.city + '">';
+
+		if (branch.thumbnail) {
+			card += '<div class="ane-branch-card__image">';
+			card += '<img src="' + branch.thumbnail + '" alt="' + escapeHtml(branch.title) + '">';
+			card += '</div>';
+		}
+
+		card += '<div class="ane-branch-card__content">';
+		card += '<h3 class="ane-branch-card__title">' + escapeHtml(branch.title) + '</h3>';
+		card += '<p class="ane-branch-card__address">';
+		card += '<span class="dashicons dashicons-location"></span>';
+		card += escapeHtml(trimWords(branch.address, 10));
+		card += '</p>';
+
+		if (branch.phone) {
+			card += '<p class="ane-branch-card__phone">';
+			card += '<span class="dashicons dashicons-phone"></span>';
+			card += escapeHtml(branch.phone);
+			card += '</p>';
+		}
+
+		card += '<div class="ane-branch-card__actions">';
+		card += '<a href="#" class="ane-branch-card__detail" data-branch-id="' + branch.id + '">Detail</a>';
+		card += '<a href="https://www.google.com/maps/dir/?api=1&destination=' + branch.lat + ',' + branch.lng + '" target="_blank" class="ane-branch-card__directions">Petunjuk Arah</a>';
+		card += '</div>';
+		card += '</div>';
+		card += '</article>';
+
+		return card;
+	}
+
+	/**
+	 * Update Load More button state.
+	 */
+	function updateLoadMoreButton() {
+		var $btn = $('#ane-branch-load-more');
+		var $wrap = $('.ane-branch-load-more-wrap');
+		var total = filteredBranches.length;
+
+		if (currentlyLoaded >= total) {
+			$wrap.hide();
+		} else {
+			$wrap.show();
+			$btn.find('.ane-branch-load-more__count').text('(' + currentlyLoaded + ' / ' + total + ')');
+		}
+	}
+
+	/**
+	 * Load more branches.
+	 */
+	function loadMoreBranches() {
+		var nextBatch = filteredBranches.slice(currentlyLoaded, currentlyLoaded + 12);
+
+		if (nextBatch.length > 0) {
+			appendBranchCards(nextBatch);
+			currentlyLoaded += nextBatch.length;
+			updateLoadMoreButton();
+		}
+	}
+
+	/**
+	 * Trim words (simple implementation).
+	 */
+	function trimWords(text, limit) {
+		if (!text) return '';
+		var words = text.split(' ');
+		if (words.length > limit) {
+			return words.slice(0, limit).join(' ') + '...';
+		}
+		return text;
+	}
+
+	/**
+	 * Escape HTML.
+	 */
+	function escapeHtml(text) {
+		if (!text) return '';
+		var map = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#039;'
+		};
+		return String(text).replace(/[&<>"']/g, function(m) {
+			return map[m];
+		});
 	}
 
 	/**
@@ -314,6 +431,9 @@
 			initMap();
 		}
 
+		// Initialize filtered branches with all branches
+		filteredBranches = aneBranchesData;
+
 		// Populate filters
 		populateFilters();
 
@@ -331,6 +451,12 @@
 			$('#ane-filter-province').val('');
 			$('#ane-filter-city').html('<option value="">Semua Kota</option>').prop('disabled', true);
 			filterBranches();
+		});
+
+		// Load More button
+		$('#ane-branch-load-more').on('click', function(e) {
+			e.preventDefault();
+			loadMoreBranches();
 		});
 
 		// Card detail button

@@ -81,7 +81,11 @@ if ( $branches_query->have_posts() ) {
 		<!-- Branch Cards -->
 		<div id="ane-branch-list" class="ane-branch-list">
 			<?php if ( ! empty( $branches_data ) ) : ?>
-				<?php foreach ( $branches_data as $branch ) : ?>
+				<?php
+				// Show only first 12 branches initially
+				$initial_branches = array_slice( $branches_data, 0, 12 );
+				foreach ( $initial_branches as $branch ) :
+				?>
 					<article class="ane-branch-card" data-branch-id="<?php echo esc_attr( $branch['id'] ); ?>" data-province="<?php echo esc_attr( $branch['province'] ); ?>" data-city="<?php echo esc_attr( $branch['city'] ); ?>">
 						<?php if ( $branch['thumbnail'] ) : ?>
 							<div class="ane-branch-card__image">
@@ -92,7 +96,15 @@ if ( $branches_query->have_posts() ) {
 							<h3 class="ane-branch-card__title"><?php echo esc_html( $branch['title'] ); ?></h3>
 							<p class="ane-branch-card__address">
 								<span class="dashicons dashicons-location"></span>
-								<?php echo esc_html( wp_trim_words( $branch['address'], 10 ) ); ?>
+								<?php
+								// Simple word truncate without HTML entities
+								$words = explode( ' ', $branch['address'] );
+								if ( count( $words ) > 10 ) {
+									echo esc_html( implode( ' ', array_slice( $words, 0, 10 ) ) . '...' );
+								} else {
+									echo esc_html( $branch['address'] );
+								}
+								?>
 							</p>
 							<?php if ( $branch['phone'] ) : ?>
 								<p class="ane-branch-card__phone">
@@ -115,6 +127,16 @@ if ( $branches_query->have_posts() ) {
 				<p class="ane-branch-list__empty"><?php esc_html_e( 'Belum ada cabang yang terdaftar.', 'elemenane' ); ?></p>
 			<?php endif; ?>
 		</div>
+
+		<!-- Load More Button -->
+		<?php if ( count( $branches_data ) > 12 ) : ?>
+			<div class="ane-branch-load-more-wrap">
+				<button id="ane-branch-load-more" class="ane-branch-load-more" data-loaded="12" data-total="<?php echo esc_attr( count( $branches_data ) ); ?>">
+					<?php esc_html_e( 'Tampilkan Lebih Banyak', 'elemenane' ); ?>
+					<span class="ane-branch-load-more__count">(12 / <?php echo count( $branches_data ); ?>)</span>
+				</button>
+			</div>
+		<?php endif; ?>
 	</div>
 </div>
 

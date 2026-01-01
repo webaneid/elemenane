@@ -281,20 +281,29 @@
 			html += '<p><strong>' + emailLabel + ':</strong> ' + escapeHtml(branch.email) + '</p>';
 		}
 
-		if (branch.whatsapp) {
-			const cleanNumber = branch.whatsapp.replace(/[^0-9]/g, '');
-			const productTitle = $('.ane-product-title').text();
-			const productUrl = window.location.href;
-			const messageTemplate = typeof aneProductStrings !== 'undefined'
-				? aneProductStrings.whatsappMessage
-				: 'Hi, I am interested in the product *%s*. Can you help me with more information? %s';
-			const message = messageTemplate.replace('%s', productTitle).replace('%s', productUrl);
-			const waUrl = `https://wa.me/${cleanNumber.charAt(0) === '0' ? '62' + cleanNumber.substring(1) : cleanNumber}?text=${encodeURIComponent(message)}`;
+		// Check if we have any actions to display
+		const hasWhatsApp = branch.whatsapp && branch.whatsapp.trim() !== '';
+		const hasMapLocation = branch.lat && branch.lng;
 
+		if (hasWhatsApp || hasMapLocation) {
 			html += '<div class="ane-branch-actions">';
-			html += '<a href="' + waUrl + '" target="_blank" class="ane-btn ane-btn-whatsapp">Chat WhatsApp</a>';
 
-			if (branch.lat && branch.lng) {
+			// WhatsApp button - independent condition
+			if (hasWhatsApp) {
+				const cleanNumber = branch.whatsapp.replace(/[^0-9]/g, '');
+				const productTitle = $('.ane-product-title').text();
+				const productUrl = window.location.href;
+				const messageTemplate = typeof aneProductStrings !== 'undefined'
+					? aneProductStrings.whatsappMessage
+					: 'Hi, I am interested in the product *%s*. Can you help me with more information? %s';
+				const message = messageTemplate.replace('%s', productTitle).replace('%s', productUrl);
+				const waUrl = `https://wa.me/${cleanNumber.charAt(0) === '0' ? '62' + cleanNumber.substring(1) : cleanNumber}?text=${encodeURIComponent(message)}`;
+
+				html += '<a href="' + waUrl + '" target="_blank" class="ane-btn ane-btn-whatsapp">Chat WhatsApp</a>';
+			}
+
+			// Petunjuk Arah button - independent condition
+			if (hasMapLocation) {
 				const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${branch.lat},${branch.lng}`;
 				html += '<a href="' + mapsUrl + '" target="_blank" class="ane-btn ane-btn-outline">Petunjuk Arah</a>';
 			}
