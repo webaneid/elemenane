@@ -12,6 +12,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.1] - 2026-01-02
+### Fixed
+- **Theme Updater Cache Issue** - Fixed version display not updating after theme upgrade
+
+## [1.1.0] - 2026-01-02
+
+### Fixed
+- **Theme Updater Cache Issue** - Fixed version display not updating after theme upgrade
+  - Added `clear_theme_cache_after_upgrade()` method to auto-clear WordPress theme cache
+  - Clears `wp_cache`, calls `wp_clean_themes_cache()` after successful update
+  - Deletes update transients to force fresh version check
+  - Previously: Version stayed cached in database even after successful ZIP install
+  - Now: Version updates immediately after upgrade completes
+  - File: [inc/updater.php](inc/updater.php:291-311)
 
 ## [1.0.9] - 2026-01-02
 

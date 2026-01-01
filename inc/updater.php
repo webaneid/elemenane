@@ -66,6 +66,9 @@ class Elemenane_Updater {
 		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_update' ) );
 		add_filter( 'upgrader_source_selection', array( $this, 'fix_source_folder' ), 10, 3 );
 
+		// Clear theme cache after upgrade.
+		add_action( 'upgrader_process_complete', array( $this, 'clear_theme_cache_after_upgrade' ), 10, 2 );
+
 		// Add update checker to admin footer.
 		add_action( 'admin_footer', array( $this, 'add_update_checker_notice' ) );
 
@@ -274,6 +277,37 @@ class Elemenane_Updater {
 		}
 
 		return $actions;
+	}
+
+	/**
+	 * Clear theme cache after upgrade.
+	 *
+	 * Forces WordPress to refresh theme metadata from style.css
+	 * to display correct version after update.
+	 *
+	 * @param object $upgrader WP_Upgrader instance.
+	 * @param array  $options  Upgrade options.
+	 */
+	public function clear_theme_cache_after_upgrade( $upgrader, $options ) {
+		// Only clear cache for theme updates.
+		if ( 'theme' !== $options['type'] ) {
+			return;
+		}
+
+		// Check if our theme was updated.
+		if ( isset( $options['themes'] ) && in_array( $this->theme_slug, $options['themes'], true ) ) {
+			// Clear theme cache.
+			wp_cache_delete( $this->theme_slug, 'themes' );
+
+			// Force refresh theme data.
+			wp_clean_themes_cache();
+
+			// Delete our update check transient to force new check.
+			delete_transient( 'elemenane_update_check' );
+
+			// Clear update themes transient.
+			delete_site_transient( 'update_themes' );
+		}
 	}
 
 	/**
