@@ -13,6 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.9] - 2026-01-02
+
+### Changed
+- **Product Single Page Mobile Layout** - Improved mobile responsiveness
+  - `.ane-product-main` mobile styling optimization
+  - Added `display: flex` with `flex-direction: column` for better content flow
+  - Reduced padding to `1rem` for compact mobile view
+  - Adjusted gap to `1.5rem` between elements
+  - Added `margin-bottom: 30px` for proper spacing
+  - File: [scss/_product.scss](scss/_product.scss:71-77)
+
+---
+
 ## [1.0.8] - 2026-01-02
 
 ### Fixed
