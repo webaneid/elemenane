@@ -106,9 +106,12 @@
         }
 
         .alamat {
+            @include DisplayBlock;
+
             h3 {
                 font-size: 20px;
                 text-transform: uppercase;
+                margin-bottom: 0;
             }
             p {
                 font-size: 16px;
@@ -116,9 +119,10 @@
             }
         }
         .kontak{
+            @include DisplayBlock;
             p {
                 font-size: 16px;
-                margin-bottom: 10px;
+                margin-bottom: 0;
             }
         }
     }

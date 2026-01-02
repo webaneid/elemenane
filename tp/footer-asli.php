@@ -80,6 +80,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 									<li><i class="ane-telepon"></i> <?= $Phone; ?></li>
 									<?php
 										endif;
+										if( !empty( $fax ) ):
+									?>
+									<li><i class="ane-fax"></i> <?= $fax; ?></li>
+									<?php
+										endif;
 										if( !empty( $mobile ) ):
 									?>
 									<li><i class="ane-handphone"></i> <?= $mobile; ?></li>

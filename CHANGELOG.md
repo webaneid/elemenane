@@ -12,6 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.2] - 2026-01-02
+### Added
+- **Add Fax Number** - added fax number in acf
+  - added fax number to footer
+  - added fax number in to contact page
+  - fixed contact form input css in contact page
+
 ## [1.1.1] - 2026-01-02
 ### Fixed
 - **Theme Updater Cache Issue** - Fixed version display not updating after theme upgrade

@@ -21,9 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="kontak-konten">
-			<div class="row">
+			<div class="ane-col-64">
 				<!-- Company Name & Address -->
-				<div class="col-md-6 post-tengah">
+				<div class="ane-kiri post-tengah">
 					<div class="alamat">
 						<?php
 						$company_name    = get_field( 'ane_com_nama', 'option' );
@@ -41,13 +41,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 
 				<!-- Contact Information -->
-				<div class="col-md-6 post-tengah">
+				<div class="ane-kanan post-tengah">
 					<?php if ( have_rows( 'ane_kontak', 'option' ) ) : ?>
 						<div class="kontak text-right">
 							<?php
 							while ( have_rows( 'ane_kontak', 'option' ) ) :
 								the_row();
 
+								$fax    = get_sub_field( 'ane_fax' );
 								$phone    = get_sub_field( 'ane_telepon' );
 								$mobile   = get_sub_field( 'ane_handphone' );
 								$email    = get_sub_field( 'ane_email' );
@@ -59,6 +60,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php esc_html_e( 'Phone:', 'elemenane' ); ?>
 										<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>">
 											<?php echo esc_html( $phone ); ?>
+										</a>
+									</p>
+									<?php
+								endif;
+								if ( ! empty( $fax ) ) :
+									?>
+									<p>
+										<?php esc_html_e( 'Fax:', 'elemenane' ); ?>
+										<a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $fax ) ); ?>">
+											<?php echo esc_html( $fax ); ?>
 										</a>
 									</p>
 									<?php
@@ -81,17 +92,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php esc_html_e( 'Email:', 'elemenane' ); ?>
 										<a href="mailto:<?php echo esc_attr( antispambot( $email ) ); ?>">
 											<?php echo esc_html( antispambot( $email ) ); ?>
-										</a>
-									</p>
-									<?php
-								endif;
-
-								if ( ! empty( $website ) ) :
-									?>
-									<p>
-										<?php esc_html_e( 'Website:', 'elemenane' ); ?>
-										<a href="<?php echo esc_url( $website ); ?>" target="_blank" rel="noopener noreferrer">
-											<?php echo esc_html( $website ); ?>
 										</a>
 									</p>
 									<?php
