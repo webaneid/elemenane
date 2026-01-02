@@ -45,11 +45,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php if ( have_rows( 'ane_kontak', 'option' ) ) : ?>
 						<div class="kontak text-right">
 							<?php
+							$phone    = get_field( 'ane_telepon','option' );
 							while ( have_rows( 'ane_kontak', 'option' ) ) :
 								the_row();
 
 								$fax    = get_sub_field( 'ane_fax' );
-								$phone    = get_sub_field( 'ane_telepon' );
 								$mobile   = get_sub_field( 'ane_handphone' );
 								$email    = get_sub_field( 'ane_email' );
 								$website  = get_sub_field( 'ane_website' );
