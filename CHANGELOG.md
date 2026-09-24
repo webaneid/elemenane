@@ -12,6 +12,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.5] - 2026-09-24
+### Security
+- **Stored XSS in branch map** - Branch title, address, phone, email, WhatsApp and hours were inserted into the map popup and detail modal without escaping. Any user able to publish branches (Author role and up) could run scripts in visitors' and admins' browsers
+  - All branch fields are now escaped; WhatsApp links only accept digits
+  - Single branch map popup title is escaped too
+  - Files: [js/branch-archive.js](js/branch-archive.js), [js/single-branch.js](js/single-branch.js), [archive-branch.php](archive-branch.php), [single-branch.php](single-branch.php)
+- **Linktree click endpoint abuse** - The public endpoint accepted any URL, label and type, with no limit
+  - Only links actually shown on the linktree page are accepted; type and label come from the server
+  - Rate limited to 60 clicks per IP per 10 minutes (filter `ane_linktree_rate_limit`)
+  - File: [inc/admin/linktree-core.php](inc/admin/linktree-core.php)
+- **Post views endpoint** - Only counts published, publicly viewable posts (previously wrote meta for any ID) ([inc/elemenane.php](inc/elemenane.php))
+- **JSON-LD schema** - Encoded with `JSON_HEX_TAG` so data can never close the `<script>` tag ([inc/seo.php](inc/seo.php))
+- **Posts widget** - Settings validated against allowed values; title and form values escaped ([inc/widget.php](inc/widget.php))
+- **Direct file access** - Added `ABSPATH` guard to `inc/admin.php` and `inc/admin/user.php`
+
+### Changed
+- **Asset cache busting** - Only the WordPress core version is stripped from asset URLs; theme asset versions are kept so updated files reach browsers ([functions.php](functions.php))
+- **Linktree data retention** - Click records older than 12 months are deleted daily (filter `ane_linktree_retention_months`, 0 = keep forever)
+- Fixed branch titles showing HTML entities (e.g. `&#8211;`) in the map tooltip and cards
+- Fixed PHP 8.4 deprecation notice in `ane_post_pagination()`
+
 ## [1.1.4] - 2026-09-24
 ### Fixed
 - **Fatal error (HTTP 500) when ACF Pro is not active** - Activating the theme on a site without ACF Pro crashed every page, including wp-admin (`Call to undefined function get_field()`)

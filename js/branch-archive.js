@@ -105,12 +105,12 @@
 	function showInfoWindow(marker) {
 		var branch = marker.branchData;
 		var content = '<div class="ane-map-info">';
-		content += '<h4>' + branch.title + '</h4>';
-		content += '<p>' + branch.address + '</p>';
+		content += '<h4>' + escapeHtml(branch.title) + '</h4>';
+		content += '<p>' + escapeHtml(branch.address) + '</p>';
 		if (branch.phone) {
-			content += '<p><strong>Telepon:</strong> ' + branch.phone + '</p>';
+			content += '<p><strong>Telepon:</strong> ' + escapeHtml(branch.phone) + '</p>';
 		}
-		content += '<a href="#" class="ane-map-info__detail" data-branch-id="' + branch.id + '">Lihat Detail</a>';
+		content += '<a href="#" class="ane-map-info__detail" data-branch-id="' + escapeHtml(branch.id) + '">Lihat Detail</a>';
 		content += '</div>';
 
 		infoWindow.setContent(content);
@@ -224,11 +224,11 @@
 	 * Build branch card HTML.
 	 */
 	function buildBranchCard(branch) {
-		var card = '<article class="ane-branch-card" data-branch-id="' + branch.id + '" data-province="' + branch.province + '" data-city="' + branch.city + '">';
+		var card = '<article class="ane-branch-card" data-branch-id="' + escapeHtml(branch.id) + '" data-province="' + escapeHtml(branch.province) + '" data-city="' + escapeHtml(branch.city) + '">';
 
 		if (branch.thumbnail) {
 			card += '<div class="ane-branch-card__image">';
-			card += '<img src="' + branch.thumbnail + '" alt="' + escapeHtml(branch.title) + '">';
+			card += '<img src="' + escapeHtml(branch.thumbnail) + '" alt="' + escapeHtml(branch.title) + '">';
 			card += '</div>';
 		}
 
@@ -247,8 +247,8 @@
 		}
 
 		card += '<div class="ane-branch-card__actions">';
-		card += '<a href="#" class="ane-branch-card__detail" data-branch-id="' + branch.id + '">Detail</a>';
-		card += '<a href="https://www.google.com/maps/dir/?api=1&destination=' + branch.lat + ',' + branch.lng + '" target="_blank" class="ane-branch-card__directions">Petunjuk Arah</a>';
+		card += '<a href="#" class="ane-branch-card__detail" data-branch-id="' + escapeHtml(branch.id) + '">Detail</a>';
+		card += '<a href="https://www.google.com/maps/dir/?api=1&destination=' + Number(branch.lat) + ',' + Number(branch.lng) + '" target="_blank" rel="noopener" class="ane-branch-card__directions">Petunjuk Arah</a>';
 		card += '</div>';
 		card += '</div>';
 		card += '</article>';
@@ -389,25 +389,27 @@
 		if (!branch) return;
 
 		var content = '<div class="ane-branch-modal__inner">';
-		content += '<h2>' + branch.title + '</h2>';
+		content += '<h2>' + escapeHtml(branch.title) + '</h2>';
 		content += '<div class="ane-branch-modal__info">';
-		content += '<p><strong>Alamat:</strong><br>' + branch.address + '</p>';
+		content += '<p><strong>Alamat:</strong><br>' + escapeHtml(branch.address) + '</p>';
 		if (branch.phone) {
-			content += '<p><strong>Telepon:</strong> ' + branch.phone + '</p>';
+			content += '<p><strong>Telepon:</strong> ' + escapeHtml(branch.phone) + '</p>';
 		}
 		if (branch.email) {
-			content += '<p><strong>Email:</strong> ' + branch.email + '</p>';
+			content += '<p><strong>Email:</strong> ' + escapeHtml(branch.email) + '</p>';
 		}
 		if (branch.whatsapp) {
-			content += '<p><strong>WhatsApp:</strong> <a href="https://wa.me/' + branch.whatsapp + '" target="_blank">' + branch.whatsapp + '</a></p>';
+			// wa.me only accepts digits.
+			var waNumber = String(branch.whatsapp).replace(/\D/g, '');
+			content += '<p><strong>WhatsApp:</strong> <a href="https://wa.me/' + waNumber + '" target="_blank" rel="noopener">' + escapeHtml(branch.whatsapp) + '</a></p>';
 		}
 		if (branch.hours) {
-			content += '<p><strong>Jam Operasional:</strong><br>' + branch.hours.replace(/\n/g, '<br>') + '</p>';
+			content += '<p><strong>Jam Operasional:</strong><br>' + escapeHtml(branch.hours).replace(/\n/g, '<br>') + '</p>';
 		}
 		content += '</div>';
 		content += '<div class="ane-branch-modal__actions">';
-		content += '<a href="https://www.google.com/maps/dir/?api=1&destination=' + branch.lat + ',' + branch.lng + '" target="_blank" class="ane-btn ane-btn--primary">Petunjuk Arah</a>';
-		content += '<a href="' + branch.permalink + '" class="ane-btn ane-btn--secondary">Halaman Detail</a>';
+		content += '<a href="https://www.google.com/maps/dir/?api=1&destination=' + Number(branch.lat) + ',' + Number(branch.lng) + '" target="_blank" rel="noopener" class="ane-btn ane-btn--primary">Petunjuk Arah</a>';
+		content += '<a href="' + escapeHtml(branch.permalink) + '" class="ane-btn ane-btn--secondary">Halaman Detail</a>';
 		content += '</div>';
 		content += '</div>';
 

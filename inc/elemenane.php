@@ -381,7 +381,7 @@ function ane_reading_time() {
  * @param bool         $echo     Whether to echo or return the pagination
  * @return string|null           Pagination HTML or null if no pages
  */
-function ane_post_pagination( \WP_Query $wp_query = null, bool $echo = true ) {
+function ane_post_pagination( ?\WP_Query $wp_query = null, bool $echo = true ) {
     // Use global query if no query object provided
     if ( null === $wp_query ) {
         global $wp_query;
@@ -1227,7 +1227,13 @@ function ane_increment_views() {
 	// Get and validate post ID
 	$post_id = isset( $_GET['postviews_id'] ) ? absint( $_GET['postviews_id'] ) : 0;
 
-	if ( $post_id > 0 ) {
+	// Only count published, publicly viewable posts. Prevents writing meta for
+	// arbitrary IDs (non-existent, drafts, private) through this public endpoint.
+	$is_countable = $post_id > 0
+		&& 'publish' === get_post_status( $post_id )
+		&& is_post_type_viewable( get_post_type( $post_id ) );
+
+	if ( $is_countable ) {
 		ane_set_views( $post_id );
 		wp_send_json_success( array( 'views' => ane_get_views( $post_id ) ) );
 	} else {

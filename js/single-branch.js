@@ -50,7 +50,7 @@
 
 		// Add info window.
 		var infoWindow = new google.maps.InfoWindow({
-			content: '<div class="ane-map-info"><h4>' + title + '</h4></div>'
+			content: '<div class="ane-map-info"><h4>' + $('<div>').text(title).html() + '</h4></div>'
 		});
 
 		// Show info window on marker click.

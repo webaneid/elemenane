@@ -182,6 +182,111 @@ function ane_detect_device_type( $user_agent ) {
 }
 
 /**
+ * Social media platforms shown on the linktree page, from ACF options.
+ *
+ * @return array Platform key => array( url, label, icon ).
+ */
+function ane_get_linktree_social_platforms() {
+	$platforms = array(
+		'whatsapp'  => 'WhatsApp',
+		'facebook'  => 'Facebook',
+		'twitter'   => 'Twitter',
+		'youtube'   => 'Youtube',
+		'instagram' => 'Instagram',
+		'tiktok'    => 'TikTok',
+		'telegram'  => 'Telegram',
+		'threads'   => 'Threads',
+		'linkedin'  => 'LinkedIn',
+	);
+
+	$social = array();
+	foreach ( $platforms as $key => $label ) {
+		$social[ $key ] = array(
+			'url'   => get_field( 'ane_' . $key, 'option' ),
+			'label' => $label,
+			'icon'  => 'ane-' . $key,
+		);
+	}
+
+	return $social;
+}
+
+/**
+ * Links that can be tracked on a linktree page.
+ *
+ * The click endpoint is public, so only URLs actually rendered on the page are
+ * accepted, and type/label come from here rather than from the request.
+ *
+ * @param int $page_id Linktree page ID.
+ * @return array Normalized URL => array( type, label ). Empty if not a linktree page.
+ */
+function ane_get_linktree_trackable_links( $page_id ) {
+	if ( ! $page_id || 'page-linktree.php' !== get_page_template_slug( $page_id ) || 'publish' !== get_post_status( $page_id ) ) {
+		return array();
+	}
+
+	$links = array();
+
+	// Custom links (same type mapping as js/linktree-tracking.js).
+	$rows = get_field( 'ane_linktree', $page_id );
+	if ( is_array( $rows ) ) {
+		foreach ( $rows as $row ) {
+			if ( empty( $row['ane_url'] ) || empty( $row['ane_label'] ) ) {
+				continue;
+			}
+			$type = isset( $row['ane_jenislink'] ) && in_array( $row['ane_jenislink'], array( 'whatsapp', 'website', 'tiktok', 'telegram' ), true ) ? $row['ane_jenislink'] : 'custom';
+
+			$links[ esc_url_raw( $row['ane_url'] ) ] = array(
+				'type'  => $type,
+				'label' => sanitize_text_field( $row['ane_label'] ),
+			);
+		}
+	}
+
+	// Social links. Custom links take precedence when a URL appears in both.
+	foreach ( ane_get_linktree_social_platforms() as $platform => $data ) {
+		$url = esc_url_raw( (string) $data['url'] );
+		if ( $url && ! isset( $links[ $url ] ) ) {
+			$links[ $url ] = array(
+				'type'  => $platform,
+				'label' => $data['label'],
+			);
+		}
+	}
+
+	return $links;
+}
+
+/**
+ * Basic per-IP rate limit for the public click endpoint.
+ *
+ * @return bool True if the request is within the limit.
+ */
+function ane_linktree_within_rate_limit() {
+	$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+	if ( ! $ip ) {
+		return true;
+	}
+
+	/**
+	 * Filter the maximum tracked clicks per IP per 10 minutes.
+	 *
+	 * @param int $limit Default 60.
+	 */
+	$limit = (int) apply_filters( 'ane_linktree_rate_limit', 60 );
+	$key   = 'ane_lt_rl_' . md5( $ip );
+	$count = (int) get_transient( $key );
+
+	if ( $count >= $limit ) {
+		return false;
+	}
+
+	set_transient( $key, $count + 1, 10 * MINUTE_IN_SECONDS );
+
+	return true;
+}
+
+/**
  * AJAX handler to track linktree link clicks.
  */
 function ane_track_linktree_click() {
@@ -191,12 +296,27 @@ function ane_track_linktree_click() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'ane_linktree_clicks';
 
-	// Get data from AJAX request
-	$link_type  = isset( $_POST['link_type'] ) ? sanitize_text_field( wp_unslash( $_POST['link_type'] ) ) : '';
-	$link_label = isset( $_POST['link_label'] ) ? sanitize_text_field( wp_unslash( $_POST['link_label'] ) ) : '';
-	$link_url   = isset( $_POST['link_url'] ) ? esc_url_raw( wp_unslash( $_POST['link_url'] ) ) : '';
+	// Only accept links that exist on the linktree page.
+	$page_id  = isset( $_POST['page_id'] ) ? absint( $_POST['page_id'] ) : 0;
+	$link_url = isset( $_POST['link_url'] ) ? esc_url_raw( wp_unslash( $_POST['link_url'] ) ) : '';
+	$links    = ane_get_linktree_trackable_links( $page_id );
+
+	if ( ! $link_url || ! isset( $links[ $link_url ] ) ) {
+		wp_send_json_error( array( 'message' => 'Unknown link' ), 400 );
+	}
+
+	if ( ! ane_linktree_within_rate_limit() ) {
+		wp_send_json_error( array( 'message' => 'Too many requests' ), 429 );
+	}
+
+	$link_type  = $links[ $link_url ]['type'];
+	$link_label = $links[ $link_url ]['label'];
 	$referrer   = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 	$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+
+	// Keep stored values within column sizes.
+	$referrer   = substr( $referrer, 0, 500 );
+	$user_agent = substr( $user_agent, 0, 500 );
 
 	// Detect platform and device
 	$referrer_platform = ane_detect_referrer_platform( $referrer );
@@ -240,7 +360,7 @@ function ane_enqueue_linktree_tracking_script() {
 		'ane-linktree-tracking',
 		get_template_directory_uri() . '/js/linktree-tracking.js',
 		array( 'jquery' ),
-		'1.0.6',
+		'1.0.7',
 		true
 	);
 
@@ -250,7 +370,51 @@ function ane_enqueue_linktree_tracking_script() {
 		array(
 			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 			'nonce'   => wp_create_nonce( 'ane-linktree-track' ),
+			'pageId'  => get_queried_object_id(),
 		)
 	);
 }
 add_action( 'wp_enqueue_scripts', 'ane_enqueue_linktree_tracking_script' );
+
+/**
+ * Delete old click records (data retention).
+ *
+ * Click rows store referrer and user agent, so they are not kept forever.
+ */
+function ane_cleanup_linktree_clicks() {
+	global $wpdb;
+
+	/**
+	 * Filter how many months of linktree click data to keep.
+	 *
+	 * @param int $months Default 12. Return 0 to keep data forever.
+	 */
+	$months = (int) apply_filters( 'ane_linktree_retention_months', 12 );
+	if ( $months <= 0 ) {
+		return;
+	}
+
+	$table_name = $wpdb->prefix . 'ane_linktree_clicks';
+	$cutoff     = gmdate( 'Y-m-d H:i:s', strtotime( "-{$months} months", current_time( 'timestamp' ) ) );
+
+	$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE clicked_at < %s", $cutoff ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+}
+add_action( 'ane_linktree_cleanup', 'ane_cleanup_linktree_clicks' );
+
+/**
+ * Schedule the daily cleanup.
+ */
+function ane_schedule_linktree_cleanup() {
+	if ( ! wp_next_scheduled( 'ane_linktree_cleanup' ) ) {
+		wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', 'ane_linktree_cleanup' );
+	}
+}
+add_action( 'init', 'ane_schedule_linktree_cleanup' );
+
+/**
+ * Unschedule the cleanup when switching away from the theme.
+ */
+function ane_unschedule_linktree_cleanup() {
+	wp_clear_scheduled_hook( 'ane_linktree_cleanup' );
+}
+add_action( 'switch_theme', 'ane_unschedule_linktree_cleanup' );

@@ -35,7 +35,8 @@ if ( $branches_query->have_posts() ) {
 		if ( $map_data ) {
 			$branches_data[] = array(
 				'id'        => get_the_ID(),
-				'title'     => get_the_title(),
+				// Plain text: escaped at output (esc_html in PHP, escapeHtml in JS).
+				'title'     => html_entity_decode( get_the_title(), ENT_QUOTES, get_bloginfo( 'charset' ) ),
 				'permalink' => get_permalink(),
 				'province'  => get_field( 'ane_branch_province' ),
 				'city'      => get_field( 'ane_branch_city' ),

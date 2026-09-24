@@ -5,6 +5,10 @@
  * @package elemenane
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Return all Ane admin sections.
  */

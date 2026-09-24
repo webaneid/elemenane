@@ -141,8 +141,14 @@ function elemenane_remove_wp_version_strings( $src ) {
 		return $src;
 	}
 
-	if ( strpos( $src, 'ver=' ) !== false ) {
-		$src = remove_query_arg( 'ver', $src );
+	// Only strip the WordPress version. Theme/plugin asset versions are kept so
+	// updated files (including security fixes) bypass browser and CDN caches.
+	$query = wp_parse_url( $src, PHP_URL_QUERY );
+	if ( $query ) {
+		parse_str( $query, $params );
+		if ( isset( $params['ver'] ) && $params['ver'] === $GLOBALS['wp_version'] ) {
+			$src = remove_query_arg( 'ver', $src );
+		}
 	}
 
 	return esc_url( $src );

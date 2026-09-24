@@ -318,7 +318,7 @@ while ( have_posts() ) :
 			var aneSingleBranchMap = {
 				lat: <?php echo floatval( $map_data['lat'] ); ?>,
 				lng: <?php echo floatval( $map_data['lng'] ); ?>,
-				title: <?php echo wp_json_encode( get_the_title() ); ?>
+				title: <?php echo wp_json_encode( html_entity_decode( get_the_title(), ENT_QUOTES, get_bloginfo( 'charset' ) ) ); ?>
 			};
 		</script>
 		<?php

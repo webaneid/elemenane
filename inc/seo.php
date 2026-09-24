@@ -335,7 +335,7 @@ function ane_output_newsarticle_schema() {
 	// Output JSON-LD
 	echo "\n<!-- NewsArticle Schema by Elemen Ane -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }
 
@@ -463,7 +463,7 @@ function ane_output_collectionpage_schema() {
 	// Output JSON-LD
 	echo "\n<!-- CollectionPage Schema by Elemen Ane -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }
 
@@ -636,7 +636,7 @@ function ane_output_page_schema() {
 	// Output JSON-LD
 	echo "\n<!-- Page Schema ({$schema_type}) by Elemen Ane -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }
 
@@ -951,7 +951,7 @@ function ane_output_breadcrumb_schema() {
 	// Output JSON-LD
 	echo "\n<!-- Breadcrumb Schema for Google Sitelinks -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }
 
@@ -1000,7 +1000,7 @@ function ane_output_website_schema() {
 	// Output JSON-LD
 	echo "\n<!-- WebSite Schema with SearchAction for Google Search Box -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }
 
@@ -1047,7 +1047,7 @@ function ane_output_navigation_schema() {
 	// Output JSON-LD
 	echo "\n<!-- Site Navigation Schema for Google Sitelinks -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $navigation_elements, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $navigation_elements, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }
 
@@ -1152,6 +1152,6 @@ function ane_output_product_schema() {
 	// Output JSON-LD
 	echo "\n<!-- Product Schema by Elemen Ane -->\n";
 	echo '<script type="application/ld+json">' . "\n";
-	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+	echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_PRETTY_PRINT );
 	echo "\n</script>\n";
 }

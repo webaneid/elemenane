@@ -72,6 +72,7 @@
 				data: {
 					action: 'ane_track_linktree_click',
 					nonce: aneLinktreeTracking.nonce,
+					page_id: aneLinktreeTracking.pageId,
 					link_type: linkType,
 					link_label: linkLabel,
 					link_url: linkUrl

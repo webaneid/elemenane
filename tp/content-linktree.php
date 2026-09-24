@@ -88,54 +88,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="ane-sosmed">
 			<ul>
 				<?php
-				// Define social media platforms with their data from ACF options
-				$social_platforms = array(
-					'whatsapp'  => array(
-						'url'   => get_field( 'ane_whatsapp', 'option' ),
-						'label' => 'WhatsApp',
-						'icon'  => 'ane-whatsapp',
-					),
-					'facebook'  => array(
-						'url'   => get_field( 'ane_facebook', 'option' ),
-						'label' => 'Facebook',
-						'icon'  => 'ane-facebook',
-					),
-					'twitter'   => array(
-						'url'   => get_field( 'ane_twitter', 'option' ),
-						'label' => 'Twitter',
-						'icon'  => 'ane-twitter',
-					),
-					'youtube'   => array(
-						'url'   => get_field( 'ane_youtube', 'option' ),
-						'label' => 'Youtube',
-						'icon'  => 'ane-youtube',
-					),
-					'instagram' => array(
-						'url'   => get_field( 'ane_instagram', 'option' ),
-						'label' => 'Instagram',
-						'icon'  => 'ane-instagram',
-					),
-					'tiktok'    => array(
-						'url'   => get_field( 'ane_tiktok', 'option' ),
-						'label' => 'TikTok',
-						'icon'  => 'ane-tiktok',
-					),
-					'telegram'  => array(
-						'url'   => get_field( 'ane_telegram', 'option' ),
-						'label' => 'Telegram',
-						'icon'  => 'ane-telegram',
-					),
-					'threads'   => array(
-						'url'   => get_field( 'ane_threads', 'option' ),
-						'label' => 'Threads',
-						'icon'  => 'ane-threads',
-					),
-					'linkedin'  => array(
-						'url'   => get_field( 'ane_linkedin', 'option' ),
-						'label' => 'LinkedIn',
-						'icon'  => 'ane-linkedin',
-					),
-				);
+				// Social media platforms from ACF options (shared with click tracking validation).
+				$social_platforms = ane_get_linktree_social_platforms();
 
 				// Loop through platforms and render links
 				foreach ( $social_platforms as $platform => $data ) :

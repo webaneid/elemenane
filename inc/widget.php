@@ -8,6 +8,10 @@ function ane_posts_widgets_init() {
 add_action( 'widgets_init', 'ane_posts_widgets_init' );
 
 class Webane_Posts_Widget extends WP_Widget {
+	private static $types    = array( 'Recent Post', 'Popular Post', 'Most Comments', 'Post Format: Gallery', 'Post Format: Video' );
+	private static $orderbys = array( 'ID', 'title', 'date', 'rand' );
+	private static $orders   = array( 'ASC', 'DESC' );
+
 	public function __construct() {
 		parent::__construct(
 	 		'post-widget', // Base ID
@@ -24,9 +28,9 @@ class Webane_Posts_Widget extends WP_Widget {
 		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
 		$args = array();
 		$args['post_status'] = array('publish', 'inherit');
-		$args['orderby'] = $orderby;
-		$args['order'] = $order;
-		$args['posts_per_page'] = $number;
+		$args['orderby'] = in_array( $orderby, self::$orderbys, true ) ? $orderby : 'date';
+		$args['order'] = in_array( $order, self::$orders, true ) ? $order : 'DESC';
+		$args['posts_per_page'] = absint( $number ) ?: 5;
 
 		if($type == "Most Comments") :
 			$args['orderby'] = 'comment_count';
@@ -55,7 +59,7 @@ class Webane_Posts_Widget extends WP_Widget {
 			die('-1');
 
 		echo $before_widget;
-		if ( !empty($title) ) echo "<h2 class='widget-title general-title'>".$title."</h2>";
+		if ( !empty($title) ) echo "<h2 class='widget-title general-title'>" . esc_html( $title ) . "</h2>";
 			echo "<div class='post-widget'>";
 			$count = 1;
 			if( $r->have_posts() ):
@@ -101,14 +105,15 @@ class Webane_Posts_Widget extends WP_Widget {
 	 */
     function update($new_instance, $old_instance) {
 		$instance 				= $old_instance;
-		$instance['title']		= strip_tags( $new_instance['title'] );
-		$instance['type']		= $new_instance['type'];
-		$instance['category']	= $new_instance['category'];
-		$instance['post_tag']	= strip_tags( $new_instance['post_tag'] );
-		$instance['number']		= strip_tags( $new_instance['number'] );
-		$instance['offset']		= strip_tags( $new_instance['offset'] );
-		$instance['orderby']	= $new_instance['orderby'];
-		$instance['order']		= $new_instance['order'];
+		$new_instance			= wp_parse_args( (array) $new_instance, array( 'title' => '', 'type' => '', 'category' => '', 'post_tag' => '', 'number' => 5, 'offset' => 0, 'orderby' => '', 'order' => '' ) );
+		$instance['title']		= sanitize_text_field( $new_instance['title'] );
+		$instance['type']		= in_array( $new_instance['type'], self::$types, true ) ? $new_instance['type'] : 'Recent Post';
+		$instance['category']	= sanitize_title( $new_instance['category'] );
+		$instance['post_tag']	= sanitize_text_field( $new_instance['post_tag'] );
+		$instance['number']		= absint( $new_instance['number'] ) ?: 5;
+		$instance['offset']		= absint( $new_instance['offset'] );
+		$instance['orderby']	= in_array( $new_instance['orderby'], self::$orderbys, true ) ? $new_instance['orderby'] : 'date';
+		$instance['order']		= in_array( $new_instance['order'], self::$orders, true ) ? $new_instance['order'] : 'DESC';
         return $instance;
     }
 
@@ -121,9 +126,9 @@ class Webane_Posts_Widget extends WP_Widget {
 	 */
     function form($instance) {
 
-		$types = array( 'Recent Post', 'Popular Post','Most Comments','Post Format: Gallery','Post Format: Video');
-		$orderbys = array( 'ID', 'title', 'date', 'rand');
-		$orders = array( 'ASC', 'DESC', );
+		$types = self::$types;
+		$orderbys = self::$orderbys;
+		$orders = self::$orders;
 
 		$instance = wp_parse_args( (array) $instance, array(
 			'title'		=> '',
@@ -144,7 +149,7 @@ class Webane_Posts_Widget extends WP_Widget {
         ?>
             <p>
                 <label for="<?php echo $this->get_field_id('title'); ?>"><?php echo ('Widget Title'); ?></label>
-                <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+                <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
             </p>
 			<p>
 				<label for="<?php echo $this->get_field_id('type'); ?>"><?php echo ('Select a type'); ?></label>
@@ -169,7 +174,7 @@ class Webane_Posts_Widget extends WP_Widget {
 							if( !empty($category_get) ) :
 								$output = '';
 								foreach ( $category_get as $option ) :
-									$output .= '<option value="' . $option->slug . '"' . ( $category == $option->slug ? ' selected="selected"' : '' ) . '>' . $option->name . '</option>';
+									$output .= '<option value="' . esc_attr( $option->slug ) . '"' . ( $category == $option->slug ? ' selected="selected"' : '' ) . '>' . esc_html( $option->name ) . '</option>';
 								endforeach;
 								echo( $output );
 							endif;
@@ -179,7 +184,7 @@ class Webane_Posts_Widget extends WP_Widget {
             <hr />
             <p id="tag<?php echo $this->get_field_id('post_tag'); ?>">
 			<label for="<?php echo $this->get_field_id('post_tag'); ?>"><?php echo ('Type tag'); ?></label>
-			<input id="<?php echo $this->get_field_id('post_tag'); ?>" name="<?php echo $this->get_field_name('post_tag'); ?>" type="text" value="<?php echo $post_tag; ?>" />
+			<input id="<?php echo $this->get_field_id('post_tag'); ?>" name="<?php echo $this->get_field_name('post_tag'); ?>" type="text" value="<?php echo esc_attr( $post_tag ); ?>" />
             separate by comma
             </p>
             <hr />
@@ -187,7 +192,7 @@ class Webane_Posts_Widget extends WP_Widget {
             <h4 style="">Display options</h4>
             <p>
               <label for="<?php echo $this->get_field_id('number'); ?>"><?php echo ('Number of posts to show:'); ?></label>
-              <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" style="width:40px; margin-left:.2em; text-align:right;" />
+              <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo esc_attr( $number ); ?>" style="width:40px; margin-left:.2em; text-align:right;" />
             </p>
             <p id="orderby<?php echo $this->get_field_id('orderby'); ?>" style="<?php if($type == 'Most Comments' or $type == 'Popular Post') echo "display:none"; else echo "display:block";?>">
                 <label for="<?php echo $this->get_field_id('orderby'); ?>"><?php echo ('Order post by:'); ?></label>

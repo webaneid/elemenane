@@ -391,7 +391,7 @@ function ane_enqueue_branch_frontend_scripts() {
 			'ane-branch-archive',
 			get_template_directory_uri() . '/js/branch-archive.js',
 			array( 'jquery' ),
-			'1.0.1',
+			'1.0.2',
 			true
 		);
 
@@ -423,7 +423,7 @@ function ane_enqueue_branch_frontend_scripts() {
 			'ane-single-branch',
 			get_template_directory_uri() . '/js/single-branch.js',
 			array( 'jquery' ),
-			'1.0.0',
+			'1.0.1',
 			true
 		);
 	}
