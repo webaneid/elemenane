@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.4] - 2026-09-24
+### Fixed
+- **Fatal error (HTTP 500) when ACF Pro is not active** - Activating the theme on a site without ACF Pro crashed every page, including wp-admin (`Call to undefined function get_field()`)
+  - Theme now runs in safe mode when ACF is missing: modules in `inc/` are not loaded
+  - wp-admin shows a notice with a link to upload ACF Pro
+  - Frontend shows a "site is being set up" page (HTTP 503)
+  - Theme activation setup (Elementor defaults) is deferred until ACF is active
+  - Added Indonesian translations for the new messages
+  - File: [functions.php](functions.php)
+
 ## [1.1.3] - 2026-01-02
 ### Fixed
 - **Fixed Phone Number** in contact page

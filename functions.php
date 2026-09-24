@@ -162,6 +162,53 @@ function elemenane_remove_meta_version() {
 add_filter( 'the_generator', 'elemenane_remove_meta_version' );
 
 /**
+ * Admin notice shown when ACF is not active
+ *
+ * @since 1.1.4
+ */
+function elemenane_acf_missing_notice() {
+	if ( ! current_user_can( 'install_plugins' ) ) {
+		return;
+	}
+
+	printf(
+		'<div class="notice notice-error"><p><strong>%1$s</strong> %2$s <a href="%3$s">%4$s</a></p></div>',
+		esc_html__( 'Elemen Ane:', 'elemenane' ),
+		esc_html__( 'this theme requires the Advanced Custom Fields Pro plugin. Theme features are disabled until it is installed and activated.', 'elemenane' ),
+		esc_url( admin_url( 'plugin-install.php?tab=upload' ) ),
+		esc_html__( 'Upload ACF Pro', 'elemenane' )
+	);
+}
+
+/**
+ * Frontend placeholder shown when ACF is not active
+ *
+ * @since 1.1.4
+ */
+function elemenane_acf_missing_frontend() {
+	wp_die(
+		esc_html__( 'This site is being set up. Please check back soon.', 'elemenane' ),
+		esc_html( get_bloginfo( 'name' ) ),
+		array( 'response' => 503 )
+	);
+}
+
+/**
+ * ACF Pro is required: modules and templates call get_field() directly.
+ * Without it, skip loading the theme modules so the site does not fatal
+ * and an admin can still reach wp-admin to install ACF.
+ *
+ * @since 1.1.4
+ */
+if ( ! class_exists( 'ACF' ) ) {
+	// Defer after_switch_theme until ACF is active so theme setup (Elementor defaults) still runs.
+	remove_action( 'init', 'check_theme_switched', 99 );
+	add_action( 'admin_notices', 'elemenane_acf_missing_notice' );
+	add_action( 'template_redirect', 'elemenane_acf_missing_frontend' );
+	return;
+}
+
+/**
  * Auto-load all PHP files from /inc directory and subdirectories
  *
  * @since 1.0.0

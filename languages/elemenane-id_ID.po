@@ -152,3 +152,19 @@ msgstr "Gambar Produk"
 #: inc/product-acf.php:164
 msgid "Upload product images (recommended: 1000x1000px)"
 msgstr "Upload gambar produk (direkomendasikan: 1000x1000px)"
+
+#: functions.php
+msgid "Elemen Ane:"
+msgstr "Elemen Ane:"
+
+#: functions.php
+msgid "this theme requires the Advanced Custom Fields Pro plugin. Theme features are disabled until it is installed and activated."
+msgstr "theme ini membutuhkan plugin Advanced Custom Fields Pro. Fitur theme dinonaktifkan sampai plugin tersebut diinstal dan diaktifkan."
+
+#: functions.php
+msgid "Upload ACF Pro"
+msgstr "Upload ACF Pro"
+
+#: functions.php
+msgid "This site is being set up. Please check back soon."
+msgstr "Situs ini sedang disiapkan. Silakan kembali lagi nanti."
