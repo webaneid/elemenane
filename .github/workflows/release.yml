@@ -25,9 +25,12 @@ jobs:
         run: npm install -g sass
 
       - name: Compile SCSS
+        # Every non-partial scss/*.scss is an entry point (main, admin, and the
+        # page-specific catalog/landing/linktree-page stylesheets).
         run: |
-          sass scss/main.scss css/main.min.css --style=compressed
-          sass scss/admin.scss css/admin.min.css --style=compressed
+          for f in scss/[!_]*.scss; do
+            sass "$f" "css/$(basename "$f" .scss).min.css" --style=compressed --silence-deprecation=import
+          done
 
       - name: Get version from tag
         id: get_version

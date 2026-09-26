@@ -12,6 +12,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.6] - 2026-09-26
+### Performance
+Theme assets on a typical post page dropped from about 290 KB to 130 KB (without images), and no theme JavaScript blocks rendering anymore.
+- **Google Maps** loads only on the contact page and branch pages (it loaded on every page, ~100–210 KB)
+- **Owl Carousel** loads only on the Landing Page template; **Magnific Popup** only on product pages and content with image links
+- **Icon font** served as WOFF2 (18 KB instead of a 38 KB TTF), with fixed font paths and a preload; old EOT/SVG/TTF files removed
+- **Google Fonts** loaded in one request with a preconnect, skipping families Elementor already loads on the page
+- **CSS split by page**: `main.min.css` went from 20.6 KB to 12.2 KB (gzip). Product/branch styles moved to `catalog.min.css`, Landing Page styles to `landing.min.css`, Linktree styles to `linktree-page.min.css`, each loaded only on its pages (filter `ane_load_all_page_styles` loads all of them everywhere)
+- **jQuery no longer loads on plain pages** (posts, archives, home, linktree). `js/newsane.js` (search, mobile menu, floating chat) is rewritten without jQuery and moved to the footer; post views and linktree tracking use `fetch`
+- Carousel and lightbox setup moved to `js/carousel-init.js` / `js/lightbox-init.js`, loaded with their libraries
+
+### Security
+- **jQuery 3.3.1 (CDN) replaced by WordPress's bundled jQuery 3.7.1**, fixing CVE-2020-11022 / CVE-2020-11023
+- **Lightbox title XSS** - Image alt text was inserted into the lightbox as HTML; it is now escaped
+
+### Fixed
+- **Landing Page on phones** - The mobile menu and the popular news carousel did not work: Owl Carousel 2.2.1 crashes on fractional `items` (2.2) and the crash stopped the menu code too. Small screens now show 2 whole items
+- **Product gallery** - Clicking a thumbnail did not change the main image on sites where images have `srcset` (e.g. square product photos), and elsewhere switched to a non-square image. The lightbox always opened the first image with a "NaN of 5" counter; it now opens the selected image
+- **Branch maps** - The Google Maps key setting read by branch pages was never registered, so branch maps only worked because Maps loaded on every page. Added one key helper and a "Google Maps API Key" field in General Settings (the shared key stays as a fallback)
+- **Branch map callbacks** - Maps now loads after the branch scripts, fixing "initAneBranchMap is not a function"
+- **Google Fonts** - Named weights (`normal`, `bold`) in the Elementor Kit no longer produce an invalid Fonts API URL
+- Admin header width
+
+### Changed
+- Release workflow compiles every non-partial `scss/*.scss` entry
+- Shared SCSS variables and mixins moved to `scss/_mixins.scss`
+
 ## [1.1.5] - 2026-09-24
 ### Security
 - **Stored XSS in branch map** - Branch title, address, phone, email, WhatsApp and hours were inserted into the map popup and detail modal without escaping. Any user able to publish branches (Author role and up) could run scripts in visitors' and admins' browsers

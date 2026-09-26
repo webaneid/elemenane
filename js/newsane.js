@@ -1,436 +1,324 @@
-jQuery(document).ready(function($) {
+/**
+ * Theme front-end scripts (no jQuery).
+ *
+ * Carousel and lightbox setup live in carousel-init.js / lightbox-init.js and
+ * load only with their libraries.
+ *
+ * @package elemenane
+ */
+(function () {
+	'use strict';
 
-    $('body').on('click', '.search-button', function(e){
-        e.preventDefault();
-        $('.search-bar').css({'max-width':'100%', 'opacity': '1'});
-        $('.search-bar input').focus();
-    });
-    $('body').on('click', '.search-back', function(e){
-        e.preventDefault();
-        $('.search-bar').css({'max-width':'0px', 'opacity': '0'});
-    });
-
-    $('.search-button').click(function(){
-      $(this).parent().toggleClass('open');
-    });
-
-    /*Search Icon working*/
-        $(document).on('click','#search-icon',function(e){
-            e.preventDefault();
-           $('.search-box').addClass('active');
-        });
-        $(document).on('click','#serach-close-btn',function(e){
-            e.preventDefault();
-           $('.search-box').removeClass('active');
-        });
-
-        // one Item Carousel
-        if ($('.one-item-carousel').length) {
-            $('.one-item-carousel').owlCarousel({
-                loop:true,
-                margin:15,
-                nav:true,
-                smartSpeed: 500,
-                autoplay: 5000,
-                navText: [ '<i class="ane-circle-left"></i>', '<i class="ane-circle-right"></i>' ],
-                responsive:{
-                    0:{
-                        items:1
-                    },
-                    600:{
-                        items:1
-                    },
-                    800:{
-                        items:1
-                    },
-                    1024:{
-                        items:1
-                    },
-                    1200:{
-                        items:1
-                    },
-                    1400:{
-                        items:1
-                    }
-                }
-            });
-        }
-        /*========================
-        trending topics
-        ==========================*/
-		if ($('#home-sliding').length > 0) {
-		$('#home-sliding').owlCarousel({
-				nav: false,
-				items: 4,
-				autoplay: true,
-				margin: 15,
-				reponsiveClass: true,
-				dots: false,
-				autoplayHoverPause: true,
-				loop:true,
-				responsive: {
-					// breakpoint from 0 up
-					0: {
-						items: 2.2,
-					},
-					// breakpoint from 480 up
-					480: {
-						items: 2.2,
-					},
-					// breakpoint from 768 up
-					768: {
-						items: 3,
-					},
-					// breakpoint from 768 up
-					1200: {
-						items: 4,
-					}
-				}
-			});
+	/**
+	 * Slide an element open or closed, like jQuery's slideDown()/slideUp().
+	 *
+	 * @param {HTMLElement} el       Element.
+	 * @param {boolean}     open     True to open, false to close.
+	 * @param {number}      duration Milliseconds.
+	 */
+	function slide(el, open, duration) {
+		if (!el) {
+			return;
 		}
-	/* -------------- */
-	/*  All image Popup
-	/* ---------------------- */
+		if (el._aneSlide) {
+			el._aneSlide.cancel();
+		}
 
-    if ($('.gallery-popup').length > 0) {
-        $('.gallery-popup').magnificPopup({
-            type: 'image',
-            image: {
-			markup: '<div class="mfp-figure">'+
-			'<div class="mfp-close"></div>'+
-			'<div class="mfp-img"></div>'+
-			'<div class="mfp-bottom-bar">'+
-			'<div class="mfp-title"></div>'+
-			'<div class="mfp-description" style="text-align: left;font-size: 12px;line-height: 16px;color: #f3f3f3;word-break: break-word;padding-right: 36px;"></div>'+
-			'<div class="mfp-counter"></div>'+
-			'</div>'+
-			'</div>',
-			titleSrc: function(item) {
-				return '<strong>' + item.el.find('img').attr('alt') + '</strong>';
+		var isHidden = getComputedStyle(el).display === 'none';
+		if (open === !isHidden && !el._aneSlide) {
+			return;
+		}
+
+		if (open) {
+			el.style.display = '';
+			if (getComputedStyle(el).display === 'none') {
+				el.style.display = 'block';
 			}
-		},
-            gallery:{enabled:true},
-            mainClass: 'mfp-with-zoom',
+		}
 
-            zoom: {
-                enabled: true, // By default it's false, so don't forget to enable it
-
-                duration: 300, // duration of the effect, in milliseconds
-                easing: 'ease-in-out', // CSS transition easing function
-
-                opener: function (openerElement) {
-                    return openerElement.is('img') ? openerElement : openerElement.find('img');
-                }
-            }
-        });
-    }
-
-   /* jQuery MeanMenu */
-    $('#mobile-menu-active').meanmenu({
-        meanScreenWidth: "991",
-        meanMenuContainer: ".mobile-menu-area .mobile-menu",
-    });
-
-    $('.commrnt-toggle a').on('click', function(e) {
-        e.preventDefault();
-        $('.blog-comment-content-wrap').slideToggle(1000);
-    });
-
-		// Floating Chat - Vanilla JS
-	const floatingChat = document.querySelector('.floating-chat');
-
-	if (floatingChat) {
-		const chatBox = floatingChat.querySelector('.chat');
-		const closeButton = floatingChat.querySelector('.ane-tutupin');
-
-		// Tampilkan chat setelah 1 detik
-		setTimeout(() => {
-			floatingChat.classList.add('enter');
-		}, 1000);
-
-		// Klik floating chat untuk membuka chat
-		floatingChat.addEventListener('click', () => {
-			floatingChat.classList.add('expand');
-			if (chatBox) {
-				chatBox.classList.add('enter');
+		// Jump straight to the end state when animating isn't possible or wanted
+		// (hidden tab, no Web Animations support, or reduced motion preference).
+		var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (document.hidden || typeof el.animate !== 'function' || reduceMotion) {
+			if (!open) {
+				el.style.display = 'none';
 			}
-		});
+			return;
+		}
 
-		// Klik close button untuk menutup chat
-		if (closeButton) {
-			closeButton.addEventListener('click', (event) => {
-				event.stopPropagation(); // Mencegah event klik dari bubble ke parent
-				floatingChat.classList.remove('expand');
-				if (chatBox) {
-					chatBox.classList.remove('enter');
-				}
-			});
+		var cs = getComputedStyle(el);
+		var full = {
+			height: el.scrollHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) + 'px',
+			paddingTop: cs.paddingTop,
+			paddingBottom: cs.paddingBottom,
+			marginTop: cs.marginTop,
+			marginBottom: cs.marginBottom
+		};
+		var zero = { height: '0px', paddingTop: '0px', paddingBottom: '0px', marginTop: '0px', marginBottom: '0px' };
+
+		var overflow = el.style.overflow;
+		el.style.overflow = 'hidden';
+
+		var anim = el.animate(open ? [zero, full] : [full, zero], { duration: duration, easing: 'ease-in-out' });
+		el._aneSlide = anim;
+
+		anim.onfinish = function () {
+			el._aneSlide = null;
+			el.style.overflow = overflow;
+			if (!open) {
+				el.style.display = 'none';
+			}
+		};
+		anim.oncancel = function () {
+			el._aneSlide = null;
+			el.style.overflow = overflow;
+		};
+	}
+
+	/**
+	 * Make an element visible the way jQuery's show() does.
+	 *
+	 * @param {HTMLElement} el Element.
+	 * @param {string}      fallbackDisplay Display value if CSS keeps it hidden.
+	 */
+	function show(el, fallbackDisplay) {
+		el.style.display = '';
+		if (getComputedStyle(el).display === 'none') {
+			el.style.display = fallbackDisplay;
 		}
 	}
 
-});
+	/**
+	 * Mobile menu. Same markup and behaviour as jQuery meanMenu 2.0.8, which the
+	 * header styles are written for.
+	 *
+	 * @param {Object} opts Options.
+	 */
+	function mobileMenu(opts) {
+		var menu = document.querySelector(opts.target);
+		if (!menu) {
+			return;
+		}
 
-/*!
-* jQuery meanMenu v2.0.8
-* @Copyright (C) 2012-2014 Chris Wharton @ MeanThemes (https://github.com/meanthemes/meanMenu)
-*
-*/
-(function ($) {
-	"use strict";
-		$.fn.meanmenu = function (options) {
-				var defaults = {
-						meanMenuTarget: jQuery(this), // Target the current HTML markup you wish to replace
-						meanMenuContainer: 'body', // Choose where meanmenu will be placed within the HTML
-						meanMenuClose: "X", // single character you want to represent the close menu button
-						meanMenuCloseSize: "18px", // set font size of close button
-						meanMenuOpen: "<span /><span /><span />", // text/markup you want when menu is closed
-						meanRevealPosition: "", // left right or center positions
-						meanRevealPositionDistance: "0", // Tweak the position of the menu
-						meanRevealColour: "", // override CSS colours for the reveal background
-						meanScreenWidth: "480", // set the screen width you want meanmenu to kick in at
-						meanNavPush: "", // set a height here in px, em or % if you want to budge your layout now the navigation is missing.
-						meanShowChildren: true, // true to show children in the menu, false to hide them
-						meanExpandableChildren: true, // true to allow expand/collapse children
-						meanExpand: "+", // single character you want to represent the expand for ULs
-						meanContract: "-", // single character you want to represent the contract for ULs
-						meanRemoveAttrs: false, // true to remove classes and IDs, false to keep them
-						onePage: false, // set to true for one page sites
-						meanDisplay: "block", // override display method for table cell based layouts e.g. table-cell
-						removeElements: "" // set to hide page elements
-				};
-				options = $.extend(defaults, options);
+		var screenWidth = opts.screenWidth;
+		var containerSelector = opts.container;
+		var closeText = 'X';
+		var closeSize = '18px';
+		var openMarkup = '<span></span><span></span><span></span>';
+		var expandText = '+';
+		var contractText = '-';
 
-				// get browser width
-				var currentWidth = window.innerWidth || document.documentElement.clientWidth;
+		var isMobile = /iPhone|iPod|iPad|Android|Blackberry|Windows Phone/i.test(navigator.userAgent);
+		var menuOn = false;
+		var menuExist = false;
+		var reveal = null;
 
-				return this.each(function () {
-						var meanMenu = options.meanMenuTarget;
-						var meanContainer = options.meanMenuContainer;
-						var meanMenuClose = options.meanMenuClose;
-						var meanMenuCloseSize = options.meanMenuCloseSize;
-						var meanMenuOpen = options.meanMenuOpen;
-						var meanRevealPosition = options.meanRevealPosition;
-						var meanRevealPositionDistance = options.meanRevealPositionDistance;
-						var meanRevealColour = options.meanRevealColour;
-						var meanScreenWidth = options.meanScreenWidth;
-						var meanNavPush = options.meanNavPush;
-						var meanRevealClass = ".meanmenu-reveal";
-						var meanShowChildren = options.meanShowChildren;
-						var meanExpandableChildren = options.meanExpandableChildren;
-						var meanExpand = options.meanExpand;
-						var meanContract = options.meanContract;
-						var meanRemoveAttrs = options.meanRemoveAttrs;
-						var onePage = options.onePage;
-						var meanDisplay = options.meanDisplay;
-						var removeElements = options.removeElements;
+		function currentWidth() {
+			return window.innerWidth || document.documentElement.clientWidth;
+		}
 
-						//detect known mobile/tablet usage
-						var isMobile = false;
-						if ( (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/Blackberry/i)) || (navigator.userAgent.match(/Windows Phone/i)) ) {
-								isMobile = true;
-						}
+		function revealInner() {
+			reveal.innerHTML = reveal.classList.contains('meanclose') ? closeText : openMarkup;
+		}
 
-						if ( (navigator.userAgent.match(/MSIE 8/i)) || (navigator.userAgent.match(/MSIE 7/i)) ) {
-							// add scrollbar for IE7 & 8 to stop breaking resize function on small content sites
-								jQuery('html').css("overflow-y" , "scroll");
-						}
+		// Restore the original navigation.
+		function original() {
+			document.querySelectorAll('.mean-bar, .mean-push').forEach(function (el) {
+				el.remove();
+			});
+			document.querySelectorAll(containerSelector).forEach(function (el) {
+				el.classList.remove('mean-container');
+			});
+			menu.style.display = 'block';
+			menuOn = false;
+			menuExist = false;
+		}
 
-						var meanRevealPos = "";
-						var meanCentered = function() {
-							if (meanRevealPosition === "center") {
-								var newWidth = window.innerWidth || document.documentElement.clientWidth;
-								var meanCenter = ( (newWidth/2)-22 )+"px";
-								meanRevealPos = "left:" + meanCenter + ";right:auto;";
+		function build() {
+			if (currentWidth() > screenWidth) {
+				original();
+				return;
+			}
 
-								if (!isMobile) {
-									jQuery('.meanmenu-reveal').css("left",meanCenter);
-								} else {
-									jQuery('.meanmenu-reveal').animate({
-											left: meanCenter
-									});
-								}
-							}
-						};
+			menuExist = true;
+			document.querySelectorAll(containerSelector).forEach(function (el) {
+				el.classList.add('mean-container');
+			});
 
-						var menuOn = false;
-						var meanMenuExist = false;
+			document.querySelectorAll('.mean-container').forEach(function (container) {
+				container.insertAdjacentHTML('afterbegin', '<div class="mean-bar"><a href="#nav" class="meanmenu-reveal" style="background:;color:;">Show Navigation</a><nav class="mean-nav"></nav></div>');
+			});
 
+			// Copy the menu into the mobile nav.
+			document.querySelectorAll('.mean-nav').forEach(function (nav) {
+				nav.innerHTML = menu.innerHTML;
+			});
 
-						if (meanRevealPosition === "right") {
-								meanRevealPos = "right:" + meanRevealPositionDistance + ";left:auto;";
-						}
-						if (meanRevealPosition === "left") {
-								meanRevealPos = "left:" + meanRevealPositionDistance + ";right:auto;";
-						}
-						// run center function
-						meanCentered();
+			var push = document.createElement('div');
+			push.className = 'mean-push';
+			menu.parentNode.insertBefore(push, menu);
 
-						// set all styles for mean-reveal
-						var $navreveal = "";
+			menu.style.display = 'none';
+			reveal = document.querySelector('.meanmenu-reveal');
+			show(reveal, 'inline');
+			reveal.innerHTML = openMarkup;
 
-						var meanInner = function() {
-								// get last class name
-								if (jQuery($navreveal).is(".meanmenu-reveal.meanclose")) {
-										$navreveal.html(meanMenuClose);
-								} else {
-										$navreveal.html(meanMenuOpen);
-								}
-						};
+			document.querySelectorAll('.mean-nav ul').forEach(function (ul) {
+				ul.style.display = 'none';
+			});
 
-						// re-instate original nav (and call this on window.width functions)
-						var meanOriginal = function() {
-							jQuery('.mean-bar,.mean-push').remove();
-							jQuery(meanContainer).removeClass("mean-container");
-							jQuery(meanMenu).css('display', meanDisplay);
-							menuOn = false;
-							meanMenuExist = false;
-							jQuery(removeElements).removeClass('mean-remove');
-						};
-
-						// navigation reveal
-						var showMeanMenu = function() {
-								var meanStyles = "background:"+meanRevealColour+";color:"+meanRevealColour+";"+meanRevealPos;
-								if (currentWidth <= meanScreenWidth) {
-								jQuery(removeElements).addClass('mean-remove');
-									meanMenuExist = true;
-									// add class to body so we don't need to worry about media queries here, all CSS is wrapped in '.mean-container'
-									jQuery(meanContainer).addClass("mean-container");
-									jQuery('.mean-container').prepend('<div class="mean-bar"><a href="#nav" class="meanmenu-reveal" style="'+meanStyles+'">Show Navigation</a><nav class="mean-nav"></nav></div>');
-
-									//push meanMenu navigation into .mean-nav
-									var meanMenuContents = jQuery(meanMenu).html();
-									jQuery('.mean-nav').html(meanMenuContents);
-
-									// remove all classes from EVERYTHING inside meanmenu nav
-									if(meanRemoveAttrs) {
-										jQuery('nav.mean-nav ul, nav.mean-nav ul *').each(function() {
-											// First check if this has mean-remove class
-											if (jQuery(this).is('.mean-remove')) {
-												jQuery(this).attr('class', 'mean-remove');
-											} else {
-												jQuery(this).removeAttr("class");
-											}
-											jQuery(this).removeAttr("id");
-										});
-									}
-
-									// push in a holder div (this can be used if removal of nav is causing layout issues)
-									jQuery(meanMenu).before('<div class="mean-push" />');
-									jQuery('.mean-push').css("margin-top",meanNavPush);
-
-									// hide current navigation and reveal mean nav link
-									jQuery(meanMenu).hide();
-									jQuery(".meanmenu-reveal").show();
-
-									// turn 'X' on or off
-									jQuery(meanRevealClass).html(meanMenuOpen);
-									$navreveal = jQuery(meanRevealClass);
-
-									//hide mean-nav ul
-									jQuery('.mean-nav ul').hide();
-
-									// hide sub nav
-									if(meanShowChildren) {
-											// allow expandable sub nav(s)
-											if(meanExpandableChildren){
-												jQuery('.mean-nav ul ul').each(function() {
-														if(jQuery(this).children().length){
-																jQuery(this,'li:first').parent().append('<a class="mean-expand" href="#" style="font-size: '+ meanMenuCloseSize +'">'+ meanExpand +'</a>');
-														}
-												});
-												jQuery('.mean-expand').on("click",function(e){
-														e.preventDefault();
-															if (jQuery(this).hasClass("mean-clicked")) {
-																	jQuery(this).text(meanExpand);
-																jQuery(this).prev('ul').slideUp(300, function(){});
-														} else {
-																jQuery(this).text(meanContract);
-																jQuery(this).prev('ul').slideDown(300, function(){});
-														}
-														jQuery(this).toggleClass("mean-clicked");
-												});
-											} else {
-													jQuery('.mean-nav ul ul').show();
-											}
-									} else {
-											jQuery('.mean-nav ul ul').hide();
-									}
-
-									// add last class to tidy up borders
-									jQuery('.mean-nav ul li').last().addClass('mean-last');
-									$navreveal.removeClass("meanclose");
-									jQuery($navreveal).click(function(e){
-										e.preventDefault();
-								if( menuOn === false ) {
-												$navreveal.css("text-align", "center");
-												$navreveal.css("text-indent", "0");
-												$navreveal.css("font-size", meanMenuCloseSize);
-												jQuery('.mean-nav ul:first').slideDown();
-												menuOn = true;
-										} else {
-											jQuery('.mean-nav ul:first').slideUp();
-											menuOn = false;
-										}
-											$navreveal.toggleClass("meanclose");
-											meanInner();
-											jQuery(removeElements).addClass('mean-remove');
-									});
-
-									// for one page websites, reset all variables...
-									if ( onePage ) {
-										jQuery('.mean-nav ul > li > a:first-child').on( "click" , function () {
-											jQuery('.mean-nav ul:first').slideUp();
-											menuOn = false;
-											jQuery($navreveal).toggleClass("meanclose").html(meanMenuOpen);
-										});
-									}
-							} else {
-								meanOriginal();
-							}
-						};
-
-						if (!isMobile) {
-								// reset menu on resize above meanScreenWidth
-								jQuery(window).resize(function () {
-										currentWidth = window.innerWidth || document.documentElement.clientWidth;
-										if (currentWidth > meanScreenWidth) {
-												meanOriginal();
-										} else {
-											meanOriginal();
-										}
-										if (currentWidth <= meanScreenWidth) {
-												showMeanMenu();
-												meanCentered();
-										} else {
-											meanOriginal();
-										}
-								});
-						}
-
-					jQuery(window).resize(function () {
-								// get browser width
-								currentWidth = window.innerWidth || document.documentElement.clientWidth;
-
-								if (!isMobile) {
-										meanOriginal();
-										if (currentWidth <= meanScreenWidth) {
-												showMeanMenu();
-												meanCentered();
-										}
-								} else {
-										meanCentered();
-										if (currentWidth <= meanScreenWidth) {
-												if (meanMenuExist === false) {
-														showMeanMenu();
-												}
-										} else {
-												meanOriginal();
-										}
-								}
-						});
-
-					// run main menuMenu function on load
-					showMeanMenu();
+			// Expand/collapse buttons for sub menus.
+			document.querySelectorAll('.mean-nav ul ul').forEach(function (sub) {
+				if (!sub.children.length) {
+					return;
+				}
+				sub.parentNode.insertAdjacentHTML('beforeend', '<a class="mean-expand" href="#" style="font-size: ' + closeSize + '">' + expandText + '</a>');
+			});
+			document.querySelectorAll('.mean-expand').forEach(function (btn) {
+				btn.addEventListener('click', function (e) {
+					e.preventDefault();
+					var sub = btn.previousElementSibling && btn.previousElementSibling.matches('ul') ? btn.previousElementSibling : null;
+					var clicked = btn.classList.contains('mean-clicked');
+					btn.textContent = clicked ? expandText : contractText;
+					slide(sub, !clicked, 300);
+					btn.classList.toggle('mean-clicked');
 				});
-		};
-})(jQuery);
+			});
+
+			var items = document.querySelectorAll('.mean-nav ul li');
+			if (items.length) {
+				items[items.length - 1].classList.add('mean-last');
+			}
+
+			reveal.classList.remove('meanclose');
+			reveal.addEventListener('click', function (e) {
+				e.preventDefault();
+				var firstUl = document.querySelector('.mean-nav ul');
+				if (!menuOn) {
+					reveal.style.textAlign = 'center';
+					reveal.style.textIndent = '0';
+					reveal.style.fontSize = closeSize;
+					slide(firstUl, true, 400);
+					menuOn = true;
+				} else {
+					slide(firstUl, false, 400);
+					menuOn = false;
+				}
+				reveal.classList.toggle('meanclose');
+				revealInner();
+			});
+		}
+
+		window.addEventListener('resize', function () {
+			if (!isMobile) {
+				original();
+				if (currentWidth() <= screenWidth) {
+					build();
+				}
+			} else if (currentWidth() <= screenWidth) {
+				if (!menuExist) {
+					build();
+				}
+			} else {
+				original();
+			}
+		});
+
+		build();
+	}
+
+	function init() {
+		// Search bar
+		document.body.addEventListener('click', function (e) {
+			var button = e.target.closest('.search-button');
+			var back = e.target.closest('.search-back');
+			var bar = document.querySelector('.search-bar');
+
+			if (button) {
+				e.preventDefault();
+				button.parentElement.classList.toggle('open');
+				if (bar) {
+					bar.style.maxWidth = '100%';
+					bar.style.opacity = '1';
+					var input = bar.querySelector('input');
+					if (input) {
+						input.focus();
+					}
+				}
+			} else if (back) {
+				e.preventDefault();
+				if (bar) {
+					bar.style.maxWidth = '0px';
+					bar.style.opacity = '0';
+				}
+			}
+		});
+
+		// Search box
+		document.addEventListener('click', function (e) {
+			var box = document.querySelector('.search-box');
+			if (e.target.closest('#search-icon')) {
+				e.preventDefault();
+				if (box) {
+					box.classList.add('active');
+				}
+			} else if (e.target.closest('#serach-close-btn')) {
+				e.preventDefault();
+				if (box) {
+					box.classList.remove('active');
+				}
+			}
+		});
+
+		mobileMenu({
+			target: '#mobile-menu-active',
+			screenWidth: 991,
+			container: '.mobile-menu-area .mobile-menu'
+		});
+
+		// Comment toggle
+		document.querySelectorAll('.commrnt-toggle a').forEach(function (link) {
+			link.addEventListener('click', function (e) {
+				e.preventDefault();
+				document.querySelectorAll('.blog-comment-content-wrap').forEach(function (wrap) {
+					slide(wrap, getComputedStyle(wrap).display === 'none', 1000);
+				});
+			});
+		});
+
+		// Floating chat
+		var floatingChat = document.querySelector('.floating-chat');
+		if (floatingChat) {
+			var chatBox = floatingChat.querySelector('.chat');
+			var closeButton = floatingChat.querySelector('.ane-tutupin');
+
+			// Show the chat button after 1 second.
+			setTimeout(function () {
+				floatingChat.classList.add('enter');
+			}, 1000);
+
+			floatingChat.addEventListener('click', function () {
+				floatingChat.classList.add('expand');
+				if (chatBox) {
+					chatBox.classList.add('enter');
+				}
+			});
+
+			if (closeButton) {
+				closeButton.addEventListener('click', function (event) {
+					event.stopPropagation();
+					floatingChat.classList.remove('expand');
+					if (chatBox) {
+						chatBox.classList.remove('enter');
+					}
+				});
+			}
+		}
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
+	}
+})();

@@ -32,22 +32,95 @@ function ane_get_asset_url( $path ) {
 }
 
 function ane_enqueue_scripts(){
-	wp_enqueue_style( 'FontAne', get_base_url_assets() . '/css/FontAne.css', array(), '1.0.0');
-	wp_enqueue_style( 'magnific-popup','https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css' );
-	wp_enqueue_style( 'OwlCarouse','https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css' );
+	wp_enqueue_style( 'FontAne', get_base_url_assets() . '/css/FontAne.css', array(), '1.1.0');
+	wp_enqueue_style( 'main-css', get_base_url_assets() . '/css/main.min.css', array(), '1.4.0');
+	ane_enqueue_page_styles();
 
-	wp_enqueue_style( 'main-css', get_base_url_assets() . '/css/main.min.css', array(), '1.3.6');
-
+	// WordPress's bundled jQuery (same-origin, kept up to date by core). The
+	// `jquery` handle normally adds jQuery Migrate; the theme never shipped it on
+	// the front-end, so point `jquery` at jquery-core only. It is not enqueued
+	// here: it loads only when a script that needs it (carousel, lightbox, maps,
+	// product/branch pages, Elementor, plugins) declares it as a dependency.
 	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery' ,'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js');
-	wp_enqueue_script( 'jquery' );
+	wp_register_script( 'jquery', false, array( 'jquery-core' ), null );
 
-	wp_enqueue_script( 'magnific', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js' );
-	wp_enqueue_script( 'OwlCarousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js' );
+	// Carousel and lightbox are only registered here; pages that use them load
+	// them via ane_enqueue_carousel() / ane_enqueue_lightbox().
+	wp_register_style( 'magnific-popup', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css', array(), null );
+	wp_register_script( 'magnific', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js', array( 'jquery' ), null, true );
+	wp_register_script( 'ane-lightbox-init', get_base_url_assets() . '/js/lightbox-init.js', array( 'magnific' ), '1.0.0', true );
+	wp_register_style( 'OwlCarouse', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css', array(), null );
+	wp_register_script( 'OwlCarousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js', array( 'jquery' ), null, true );
+	wp_register_script( 'ane-carousel-init', get_base_url_assets() . '/js/carousel-init.js', array( 'OwlCarousel' ), '1.0.1', true );
 
-	wp_enqueue_script( 'main-js', get_base_url_assets() . '/js/newsane.js', array(), '1.0.0');
+	// Only the Landing Page template renders carousels (tp/news-featured*, tp/news-sliding).
+	if ( is_page_template( 'page-home.php' ) ) {
+		ane_enqueue_carousel();
+	}
+
+	// Vanilla JS, no jQuery needed.
+	wp_enqueue_script( 'main-js', get_base_url_assets() . '/js/newsane.js', array(), '2.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'ane_enqueue_scripts' );
+
+/**
+ * Page-specific stylesheets, split out of main.min.css so other pages don't
+ * download them. Each is compiled from scss/{name}.scss.
+ *
+ * @since 1.1.6
+ */
+function ane_enqueue_page_styles() {
+	$styles = array(
+		'catalog'       => is_singular( array( 'product', 'branch' ) )
+			|| is_post_type_archive( array( 'product', 'branch' ) )
+			|| is_tax( array( 'product_cat', 'product_tag' ) ),
+		'landing'       => is_page_template( 'page-home.php' ),
+		'linktree-page' => is_page_template( 'page-linktree.php' ),
+	);
+
+	/**
+	 * Filter to load every page stylesheet on all pages, e.g. when theme
+	 * classes are reused inside Elementor or custom templates.
+	 *
+	 * @param bool $load_all Default false.
+	 */
+	$load_all = apply_filters( 'ane_load_all_page_styles', false );
+
+	foreach ( $styles as $name => $needed ) {
+		if ( $needed || $load_all ) {
+			wp_enqueue_style( 'ane-' . $name, get_base_url_assets() . '/css/' . $name . '.min.css', array( 'main-css' ), '1.0.0' );
+		}
+	}
+}
+
+/**
+ * Preload the icon font so icons don't wait for FontAne.css to be parsed.
+ * The URL must match the one in css/FontAne.css to reuse the download.
+ */
+function ane_preload_icon_font() {
+	printf(
+		'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+		esc_url( get_base_url_assets() . '/fonts/FontAne.woff2?w73ff' )
+	);
+}
+add_action( 'wp_head', 'ane_preload_icon_font', 1 );
+
+/**
+ * Load Owl Carousel. Safe to call from templates: if called after the head,
+ * WordPress prints the files in the footer.
+ */
+function ane_enqueue_carousel() {
+	wp_enqueue_style( 'OwlCarouse' );
+	wp_enqueue_script( 'ane-carousel-init' );
+}
+
+/**
+ * Load Magnific Popup (image lightbox). Safe to call from templates.
+ */
+function ane_enqueue_lightbox() {
+	wp_enqueue_style( 'magnific-popup' );
+	wp_enqueue_script( 'ane-lightbox-init' );
+}
 
 /**
  * Filters the excerpt length
@@ -150,7 +223,12 @@ function ane_popup_gallery( $content ) {
     );
 
     // Perform the replacement
-    $content = preg_replace( $pattern, $replacement, $content );
+    $content = preg_replace( $pattern, $replacement, $content, -1, $count );
+
+    // Load the lightbox only when the content has image links.
+    if ( $count > 0 ) {
+        ane_enqueue_lightbox();
+    }
 
     return $content;
 }
@@ -1194,8 +1272,8 @@ add_action( 'wp_enqueue_scripts', function() {
 		wp_enqueue_script(
 			'ane-postviews-cache',
 			get_base_url_assets() . '/js/postviews-cache.js',
-			array( 'jquery' ),
-			'1.0.0',
+			array(),
+			'1.1.0',
 			true
 		);
 

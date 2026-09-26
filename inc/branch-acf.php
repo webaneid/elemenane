@@ -371,7 +371,7 @@ add_action( 'admin_enqueue_scripts', 'ane_enqueue_branch_admin_scripts' );
  */
 function ane_enqueue_branch_frontend_scripts() {
 	// Get Google Maps API key from ACF settings.
-	$google_api_key = get_field( 'google_api_key', 'option' );
+	$google_api_key = ane_get_google_maps_api_key();
 
 	// Archive page.
 	if ( is_post_type_archive( 'branch' ) ) {
@@ -380,7 +380,8 @@ function ane_enqueue_branch_frontend_scripts() {
 			wp_enqueue_script(
 				'google-maps',
 				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $google_api_key ) . '&callback=initAneBranchMap',
-				array(),
+				// Load after the page script so the callback it defines exists.
+				array( 'ane-branch-archive' ),
 				null,
 				true
 			);
@@ -412,7 +413,8 @@ function ane_enqueue_branch_frontend_scripts() {
 			wp_enqueue_script(
 				'google-maps',
 				'https://maps.googleapis.com/maps/api/js?key=' . esc_attr( $google_api_key ) . '&callback=initAneSingleBranchMap',
-				array(),
+				// Load after the page script so the callback it defines exists.
+				array( 'ane-single-branch' ),
 				null,
 				true
 			);

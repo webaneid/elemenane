@@ -362,46 +362,40 @@ function ane_add_elementor_typography_to_root() {
 add_action( 'wp_head', 'ane_add_elementor_typography_to_root' );
 
 /**
- * Enqueue Google Fonts from Elementor Kit typography settings for front-end.
- *
- * Note: Elementor's Google Fonts are only loaded in the editor/dashboard.
- * This function ensures the same fonts are available on the front-end by reading
- * the Elementor Kit typography settings and loading the fonts from Google Fonts API.
- *
- * The function collects all unique Google Fonts with their weights and loads them
- * efficiently using Google Fonts API v2 with font-display: swap for performance.
+ * Google Fonts used by the Elementor Kit typography settings.
  *
  * @since 1.0.0
- * @return void
+ * @return array Font family => list of numeric weights.
  */
-function ane_enqueue_google_fonts() {
-	// Only load on front-end, not in admin/editor
-	if ( is_admin() ) {
-		return;
-	}
-
+function ane_get_kit_google_fonts() {
 	$default_post_id = get_option( 'elementor_active_kit' );
 	$meta = get_post_meta( $default_post_id, '_elementor_page_settings', true );
 
 	if ( ! is_array( $meta ) || empty( $meta['system_typography'] ) ) {
-		return;
+		return array();
 	}
 
+	$system_fonts = array( 'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Verdana', 'Courier New' );
 	$google_fonts = array();
 
 	foreach ( $meta['system_typography'] as $typography ) {
-		if ( ! isset( $typography['typography_typography'] ) || ! isset( $typography['typography_font_family'] ) ) {
+		if ( ! isset( $typography['typography_typography'] ) || empty( $typography['typography_font_family'] ) ) {
 			continue;
 		}
 
 		$font_family = $typography['typography_font_family'];
-		$system_fonts = array( 'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Verdana', 'Courier New' );
 
 		if ( in_array( $font_family, $system_fonts, true ) ) {
 			continue;
 		}
 
-		$font_weight = isset( $typography['typography_font_weight'] ) ? $typography['typography_font_weight'] : '400';
+		// The Fonts API only accepts numeric weights.
+		$font_weight = isset( $typography['typography_font_weight'] ) ? (string) $typography['typography_font_weight'] : '';
+		$named       = array( 'normal' => '400', 'bold' => '700' );
+		$font_weight = isset( $named[ $font_weight ] ) ? $named[ $font_weight ] : $font_weight;
+		if ( ! preg_match( '/^[1-9]00$/', $font_weight ) ) {
+			$font_weight = '400';
+		}
 
 		if ( ! isset( $google_fonts[ $font_family ] ) ) {
 			$google_fonts[ $font_family ] = array();
@@ -412,24 +406,62 @@ function ane_enqueue_google_fonts() {
 		}
 	}
 
-	// If no Google Fonts found, exit early
-	if ( empty( $google_fonts ) ) {
+	return $google_fonts;
+}
+
+/**
+ * Load the Kit's Google Fonts on the front-end in a single request.
+ *
+ * Runs on `wp_print_styles`, after Elementor has enqueued the fonts used by
+ * the page (wp_head priority 7), so families Elementor already loads are
+ * skipped instead of being downloaded twice.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ane_enqueue_google_fonts() {
+	if ( is_admin() ) {
 		return;
 	}
 
-	foreach ( $google_fonts as $font_family => $weights ) {
-		sort( $weights );
-		$weights_string = implode( ';', $weights );
-		$font_url = add_query_arg(
-			array(
-				'family' => urlencode( $font_family . ':wght@' . $weights_string ),
-				'display' => 'swap',
-			),
-			'https://fonts.googleapis.com/css2'
-		);
+	$families = array();
 
-		$handle = 'ane-gfont-' . sanitize_title( $font_family );
-		wp_enqueue_style( $handle, $font_url, array(), null );
+	foreach ( ane_get_kit_google_fonts() as $font_family => $weights ) {
+		$key = sanitize_key( $font_family );
+		if ( wp_style_is( 'elementor-gf-' . $key ) || wp_style_is( 'elementor-gf-local-' . $key ) ) {
+			continue;
+		}
+
+		sort( $weights, SORT_NUMERIC );
+		$families[] = 'family=' . rawurlencode( $font_family ) . ':wght@' . implode( ';', $weights );
 	}
+
+	if ( empty( $families ) ) {
+		return;
+	}
+
+	// Build the URL by hand: css2 uses a repeated `family` parameter.
+	$font_url = 'https://fonts.googleapis.com/css2?' . implode( '&', $families ) . '&display=swap';
+
+	wp_enqueue_style( 'ane-google-fonts', $font_url, array(), null );
 }
-add_action( 'wp_enqueue_scripts', 'ane_enqueue_google_fonts' );
+add_action( 'wp_print_styles', 'ane_enqueue_google_fonts' );
+
+/**
+ * Preconnect to the Google Fonts file host so font downloads start sooner.
+ *
+ * @param array  $urls          URLs to print for resource hints.
+ * @param string $relation_type The relation type the URLs are printed for.
+ * @return array
+ */
+function ane_google_fonts_preconnect( $urls, $relation_type ) {
+	if ( 'preconnect' === $relation_type && ! is_admin() && ane_get_kit_google_fonts() ) {
+		$urls[] = array(
+			'href'        => 'https://fonts.gstatic.com',
+			'crossorigin' => 'anonymous',
+		);
+	}
+
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'ane_google_fonts_preconnect', 10, 2 );

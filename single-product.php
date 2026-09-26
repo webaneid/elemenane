@@ -92,8 +92,7 @@ while ( have_posts() ) :
 							<div class="ane-gallery-thumbs">
 								<?php foreach ( $images as $index => $image_id ) : ?>
 									<div class="ane-gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>"
-									     data-full="<?php echo esc_url( wp_get_attachment_image_url( $image_id, 'full' ) ); ?>"
-									     data-large="<?php echo esc_url( wp_get_attachment_image_url( $image_id, 'large' ) ); ?>">
+									     data-full="<?php echo esc_url( wp_get_attachment_image_url( $image_id, 'full' ) ); ?>">
 										<?php echo wp_get_attachment_image( $image_id, 'kotak' ); ?>
 									</div>
 								<?php endforeach; ?>

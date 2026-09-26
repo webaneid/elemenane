@@ -11,6 +11,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+ane_enqueue_carousel();
 ?>
 <section class="news-featured">
 	<div class="container">

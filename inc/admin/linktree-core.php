@@ -227,7 +227,7 @@ function ane_get_linktree_trackable_links( $page_id ) {
 
 	$links = array();
 
-	// Custom links (same type mapping as js/linktree-tracking.js).
+	// Custom links. Only a few link types are tracked by name; the rest count as "custom".
 	$rows = get_field( 'ane_linktree', $page_id );
 	if ( is_array( $rows ) ) {
 		foreach ( $rows as $row ) {
@@ -359,8 +359,8 @@ function ane_enqueue_linktree_tracking_script() {
 	wp_enqueue_script(
 		'ane-linktree-tracking',
 		get_template_directory_uri() . '/js/linktree-tracking.js',
-		array( 'jquery' ),
-		'1.0.7',
+		array(),
+		'1.1.0',
 		true
 	);
 

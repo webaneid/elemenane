@@ -1,89 +1,48 @@
 /**
  * Linktree Click Tracking
  *
+ * The server only accepts links shown on the page and derives the link type
+ * and label itself (see ane_track_linktree_click()), so only the URL is sent.
+ *
  * @package elemenane
  * @since 1.0.6
  */
-
-(function($) {
+(function () {
 	'use strict';
 
-	$(document).ready(function() {
-		// Track custom link clicks
-		$('.entry-content .ane-links').parent('a').on('click', function(e) {
-			var $link = $(this);
-			var linkType = 'custom';
-			var linkLabel = $link.find('.ane-label').text().trim();
-			var linkUrl = $link.attr('href');
+	if (typeof aneLinktreeTracking === 'undefined') {
+		return;
+	}
 
-			// Determine link type from classes
-			if ($link.find('.ane-links').hasClass('whatsapp')) {
-				linkType = 'whatsapp';
-			} else if ($link.find('.ane-links').hasClass('website')) {
-				linkType = 'website';
-			} else if ($link.find('.ane-links').hasClass('tiktok')) {
-				linkType = 'tiktok';
-			} else if ($link.find('.ane-links').hasClass('telegram')) {
-				linkType = 'telegram';
-			}
-
-			trackClick(linkType, linkLabel, linkUrl);
+	function trackClick(linkUrl) {
+		var body = new URLSearchParams({
+			action: 'ane_track_linktree_click',
+			nonce: aneLinktreeTracking.nonce,
+			page_id: aneLinktreeTracking.pageId,
+			link_url: linkUrl
 		});
 
-		// Track social media link clicks
-		$('.entry-footer .ane-sosmed a').on('click', function(e) {
-			var $link = $(this);
-			var $li = $link.find('li');
-			var linkType = 'social';
-			var linkLabel = $li.find('span').text().trim();
-			var linkUrl = $link.attr('href');
+		// keepalive lets the request finish even if the browser leaves the page.
+		fetch(aneLinktreeTracking.ajaxUrl, {
+			method: 'POST',
+			body: body,
+			credentials: 'same-origin',
+			keepalive: true
+		}).catch(function () {});
+	}
 
-			// Determine platform from li class
-			if ($li.hasClass('whatsapp')) {
-				linkType = 'whatsapp';
-			} else if ($li.hasClass('facebook')) {
-				linkType = 'facebook';
-			} else if ($li.hasClass('twitter')) {
-				linkType = 'twitter';
-			} else if ($li.hasClass('youtube')) {
-				linkType = 'youtube';
-			} else if ($li.hasClass('instagram')) {
-				linkType = 'instagram';
-			} else if ($li.hasClass('tiktok')) {
-				linkType = 'tiktok';
-			} else if ($li.hasClass('telegram')) {
-				linkType = 'telegram';
-			} else if ($li.hasClass('threads')) {
-				linkType = 'threads';
-			} else if ($li.hasClass('linkedin')) {
-				linkType = 'linkedin';
-			}
+	document.addEventListener('click', function (e) {
+		var link = e.target.closest('a');
+		if (!link) {
+			return;
+		}
 
-			trackClick(linkType, linkLabel, linkUrl);
-		});
+		// Custom links and social media links.
+		var isCustom = link.querySelector('.ane-links') && link.closest('.entry-content');
+		var isSocial = link.closest('.entry-footer .ane-sosmed');
 
-		/**
-		 * Track click via AJAX
-		 */
-		function trackClick(linkType, linkLabel, linkUrl) {
-			$.ajax({
-				url: aneLinktreeTracking.ajaxUrl,
-				type: 'POST',
-				data: {
-					action: 'ane_track_linktree_click',
-					nonce: aneLinktreeTracking.nonce,
-					page_id: aneLinktreeTracking.pageId,
-					link_type: linkType,
-					link_label: linkLabel,
-					link_url: linkUrl
-				},
-				success: function(response) {
-					// Silent success
-				},
-				error: function(xhr, status, error) {
-					// Silent error - don't interrupt user experience
-				}
-			});
+		if (isCustom || isSocial) {
+			trackClick(link.getAttribute('href'));
 		}
 	});
-})(jQuery);
+})();

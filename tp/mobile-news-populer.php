@@ -11,6 +11,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+ane_enqueue_carousel();
 ?>
 <div class="mobile-populer">
 	<div class="section-title">

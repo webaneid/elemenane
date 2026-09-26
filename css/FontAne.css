@@ -1,10 +1,7 @@
 @font-face {
     font-family: 'FontAne';
-    src: url('../fonts/FontAne.eot?w73ff');
-    src: url('fonts/FontAne.eot?w73ff#iefix') format('embedded-opentype'),
-        url('../fonts/FontAne.ttf?w73ff') format('truetype'),
-        url('fonts/FontAne.woff?w73ff') format('woff'),
-        url('fonts/FontAne.svg?w73ff#FontAne') format('svg');
+    src: url('../fonts/FontAne.woff2?w73ff') format('woff2'),
+        url('../fonts/FontAne.woff?w73ff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: block;

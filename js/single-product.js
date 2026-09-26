@@ -16,68 +16,70 @@
 	function initGalleryThumbs() {
 		$('.ane-gallery-thumb').on('click', function () {
 			const $thumb = $(this);
-			const fullUrl = $thumb.data('full');
-			const largeUrl = $thumb.data('large');
+			const thumbImg = $thumb.find('img').get(0);
+			const mainImg = $('.ane-gallery-main-img').get(0);
 
 			// Update active state
 			$('.ane-gallery-thumb').removeClass('active');
 			$thumb.addClass('active');
 
-			// Update main image
-			const $mainLink = $('.ane-gallery-popup');
-			const $mainImg = $('.ane-gallery-main-img');
+			$('.ane-gallery-popup').attr('href', $thumb.data('full'));
 
-			$mainLink.attr('href', fullUrl);
-			$mainImg.attr('src', largeUrl);
+			if (!thumbImg || !mainImg) {
+				return;
+			}
+
+			// The thumbnail uses the same image size as the main image, so copy
+			// its attributes. srcset must change too: when present, browsers
+			// ignore a new src.
+			['src', 'srcset', 'sizes', 'alt', 'width', 'height'].forEach(function (attr) {
+				if (thumbImg.hasAttribute(attr)) {
+					mainImg.setAttribute(attr, thumbImg.getAttribute(attr));
+				} else {
+					mainImg.removeAttribute(attr);
+				}
+			});
 		});
 	}
 
 	/**
 	 * Gallery Lightbox (Magnific Popup)
+	 *
+	 * Opens at the image currently shown in the main slot, with all gallery
+	 * images available as next/previous.
 	 */
 	function initGalleryLightbox() {
 		if (typeof $.fn.magnificPopup === 'undefined') {
 			return;
 		}
 
-		// Single image popup
-		$('.ane-gallery-popup').magnificPopup({
-			type: 'image',
-			closeOnContentClick: true,
-			closeBtnInside: false,
-			fixedContentPos: true,
-			mainClass: 'mfp-with-zoom',
-			image: {
-				verticalFit: true
-			},
-			zoom: {
-				enabled: true,
-				duration: 300
-			}
-		});
+		$('.ane-gallery-popup').on('click', function (e) {
+			e.preventDefault();
 
-		// Gallery popup (if multiple images)
-		if ($('.ane-gallery-thumb').length > 1) {
-			$('.ane-gallery-popup').magnificPopup({
+			const $thumbs = $('.ane-gallery-thumb');
+			let items;
+			let index = 0;
+
+			if ($thumbs.length > 1) {
+				items = $thumbs.map(function () {
+					return { src: $(this).data('full') };
+				}).get();
+				index = Math.max(0, $thumbs.index($thumbs.filter('.active')));
+			} else {
+				items = [{ src: $(this).attr('href') }];
+			}
+
+			$.magnificPopup.open({
+				items: items,
 				type: 'image',
-				gallery: {
-					enabled: true
-				},
-				callbacks: {
-					elementParse: function (item) {
-						// Build gallery from all thumbnails
-						const items = [];
-						$('.ane-gallery-thumb').each(function () {
-							items.push({
-								src: $(this).data('full'),
-								type: 'image'
-							});
-						});
-						this.items = items;
-					}
-				}
-			});
-		}
+				gallery: { enabled: items.length > 1 },
+				closeOnContentClick: items.length === 1,
+				closeBtnInside: false,
+				fixedContentPos: true,
+				mainClass: 'mfp-with-zoom',
+				image: { verticalFit: true }
+			}, index);
+		});
 	}
 
 	/**

@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+ane_enqueue_carousel();
+
 // Get ACF fields
 $category      = get_sub_field( 'ane_category' );
 $custom_title  = get_sub_field( 'ane_judul' );

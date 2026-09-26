@@ -706,12 +706,15 @@ add_action( 'wp_enqueue_scripts', 'ane_product_archive_enqueue_scripts' );
  */
 function ane_product_single_enqueue_scripts() {
 	if ( is_singular( 'product' ) ) {
+		// Gallery lightbox (the script is pulled in as a dependency below).
+		wp_enqueue_style( 'magnific-popup' );
+
 		// Enqueue single product JavaScript.
 		wp_enqueue_script(
 			'ane-single-product',
 			get_template_directory_uri() . '/js/single-product.js',
 			array( 'jquery', 'magnific' ),
-			'1.0.0',
+			'1.1.0',
 			true
 		);
 

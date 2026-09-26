@@ -11,17 +11,21 @@ There is no test suite, linter config, or package.json. The only build step is c
 ## Commands
 
 ```bash
-# Compile SCSS (same commands CI runs on release)
-sass scss/main.scss css/main.min.css --style=compressed
-sass scss/admin.scss css/admin.min.css --style=compressed
+# Compile SCSS: every non-partial scss/*.scss is an entry (same loop CI runs on release)
+for f in scss/[!_]*.scss; do sass "$f" "css/$(basename "$f" .scss).min.css" --style=compressed --silence-deprecation=import; done
 
 # Compile translations (.po → .mo)
 php languages/compile-mo.php
 ```
 
-The repo also commits the unminified `css/main.css`, `css/admin.css` and `.map` files, so recompile those too when you change SCSS. After changing the front-end CSS, bump the `main-css` version in `ane_enqueue_scripts()` ([inc/elemenane.php](inc/elemenane.php)) to bust the cache.
+The repo also commits the unminified `css/*.css` and `.map` files, so recompile those too when you change SCSS. After changing front-end CSS, bump the matching version in [inc/elemenane.php](inc/elemenane.php) (`main-css` in `ane_enqueue_scripts()`, page styles in `ane_enqueue_page_styles()`) to bust the cache.
 
-Main styles live in `scss/main.scss`, which uses `@import` partials. Admin styles live in `scss/admin.scss`, which uses `@use` and shares `_tokens.scss`.
+Front-end CSS is split by page:
+- `scss/main.scss` → `main.min.css`, loaded everywhere. It uses `@import` partials.
+- `scss/catalog.scss` (`_branch` + `_product`), `scss/landing.scss` (`_landingpage`) and `scss/linktree-page.scss` (`_linktree`) are loaded only on their pages by `ane_enqueue_page_styles()`. The `ane_load_all_page_styles` filter loads all of them everywhere.
+- Shared variables and mixins live in `_mixins.scss` (no CSS output); each entry imports it. Don't give an entry the same name as a partial (`linktree.scss` next to `_linktree.scss` makes `@import` ambiguous).
+
+Admin styles live in `scss/admin.scss`, which uses `@use` and shares `_tokens.scss`.
 
 ## Release & Auto-Update
 
@@ -67,7 +71,15 @@ Server-side switching uses `wp_is_mobile()` (in `page-home.php`, `tp/content-arc
 
 ### Assets
 
-All theme assets load locally. The old CDN constants (`WP_ANE_CDN`, `WEBANE_DISABLE_CDN`) are **no longer used**. `get_base_url_assets()` returns the theme URI, filterable via `ane_assets_base_url`, and `ane_get_asset_url($path)` builds full URLs from it. jQuery 3.3.1, Owl Carousel 2.2.1 and Magnific Popup 1.1.0 come from cdnjs; WordPress's own jQuery is deregistered.
+All theme assets load locally. The old CDN constants (`WP_ANE_CDN`, `WEBANE_DISABLE_CDN`) are **no longer used**. `get_base_url_assets()` returns the theme URI, filterable via `ane_assets_base_url`, and `ane_get_asset_url($path)` builds full URLs from it.
+
+**jQuery is not loaded globally.** The `jquery` handle points at WordPress's bundled `jquery-core` (no jQuery Migrate) and loads only when an enqueued script lists it as a dependency. `js/newsane.js` (search, mobile menu, floating chat) is vanilla JS in the footer, and its mobile menu reproduces meanMenu 2.0.8's markup, which the header styles target. Always declare `array( 'jquery' )` on scripts that use jQuery; never rely on it being present. On plain pages (posts, archives, home, linktree) no jQuery loads at all; Elementor pages load it for Elementor itself.
+
+Assets load only where needed, so keep new features on the same pattern:
+- Owl Carousel and Magnific Popup (cdnjs) are only registered. Call `ane_enqueue_carousel()` / `ane_enqueue_lightbox()` from the template or filter that needs them; calling after the head prints them in the footer. Their setup code is `js/carousel-init.js` / `js/lightbox-init.js`. Owl 2.2.1 crashes on fractional `items` with `loop`, so use whole numbers.
+- Google Maps loads only on the contact page and branch pages. Get the key from `ane_get_google_maps_api_key()` (per-site `ane_gmap_api_key` option, then legacy `google_api_key`, then the shared default).
+- The icon font is `fonts/FontAne.woff2` (+ `.woff`), preloaded in the head.
+- Kit Google Fonts load in one request on `wp_print_styles`, skipping families Elementor already enqueued for the page.
 
 ### Elementor design tokens
 
