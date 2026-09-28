@@ -12,6 +12,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.7] - 2026-09-28
+### Added
+- **Product archive filters** on the product archive, product category and product tag pages ([inc/product-filter.php](inc/product-filter.php))
+  - Category dropdown with autocomplete (type to search, accent-insensitive, keyboard and screen reader support), shown only when the page has more than one category. On category pages it goes to the chosen category's URL; on tag pages it narrows the tag listing
+  - Sort by newest, oldest, name A–Z / Z–A, and price low/high (price sorting only when products have prices; products without a price sort last)
+  - Price range (min–max), shown only when products on the page have prices
+  - Filtering runs server-side from the URL (`kategori`, `urutkan`, `harga_min`, `harga_max`): works without JavaScript, filtered links can be shared, pagination keeps the filters
+  - Filtered pages are marked `noindex, follow` (WordPress and Yoast) to avoid duplicate content
+  - Lightweight: `js/product-filter.js` is 2.1 KB gzip without jQuery and loads only with the filter bar; styles add 0.8 KB gzip to `catalog.min.css`
+  - Indonesian translations for all filter labels
+
+### Fixed
+- **"Rp 0" no longer shown** - Products with an empty or zero price (including `0.00`) hide the price on product cards and on the product page, where the whole price box (with the tax note) is hidden
+- A sale price set without a regular price is now shown instead of "Rp 0"
+
+### Changed
+- Product prices shown everywhere come from one helper, `ane_get_product_price_data()`, with `ane_format_rupiah()` for formatting
+- The saved active price (`_price`) uses the same rules as the displayed price. A one-time update fills in `_price` for existing and imported products on the next admin visit
+- Page stylesheets (`catalog`, `landing`, `linktree-page`) are versioned by file modification time, so browsers always get updated CSS
+
 ## [1.1.6] - 2026-09-26
 ### Performance
 Theme assets on a typical post page dropped from about 290 KB to 130 KB (without images), and no theme JavaScript blocks rendering anymore.

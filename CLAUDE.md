@@ -49,6 +49,8 @@ Main modules:
 - [inc/elemenane.php](inc/elemenane.php) is the core: asset enqueueing, helpers, pagination, related posts, and post views (meta `musi_views`, AJAX action `postviews` for cached pages).
 - [inc/elementor.php](inc/elementor.php) and [inc/elementor-defaults.php](inc/elementor-defaults.php) sync the Elementor Kit to CSS variables, Google Fonts and the Gutenberg palette.
 - [inc/custompost.php](inc/custompost.php) registers the CPTs `product` (taxonomies `product_cat`, `product_tag`), `service` and `branch`.
+- Product prices: always go through `ane_get_product_price_data()` / `ane_format_rupiah()` in [inc/product-acf.php](inc/product-acf.php); a price of 0 means "no price" and is never shown. The active price is stored in `_price` on save (sorting and filtering read it).
+- [inc/product-filter.php](inc/product-filter.php) adds the archive filter bar (`ane_product_filters()` in the product archive/taxonomy templates): server-side GET filters `kategori`, `urutkan`, `harga_min`, `harga_max`, plus `js/product-filter.js` for the autocomplete. Use `kategori`, not `product_cat`, as the parameter: `product_cat` would override the category from the permalink.
 - `inc/*-acf.php` (`product-acf.php`, `branch-acf.php`, `header-acf.php`) and [inc/feature-toggles.php](inc/feature-toggles.php) define ACF field groups **in code** with `acf_add_local_field_group`. There is no acf-json.
 - [inc/seo.php](inc/seo.php) adds NewsArticle schema, Open Graph, Dublin Core and citation meta on top of Yoast Free. See [SEO-IMPLEMENTATION-GUIDE.md](SEO-IMPLEMENTATION-GUIDE.md).
 - [inc/tracking-scripts.php](inc/tracking-scripts.php) injects GA, Meta Pixel and schema scripts from ACF option fields (`ane_ga_header`, `ane_metapixel_header`, …).

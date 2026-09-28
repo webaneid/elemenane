@@ -20,8 +20,7 @@ while ( have_posts() ) :
 	$product_id = get_the_ID();
 
 	// Get product data.
-	$regular_price = get_field( '_regular_price', $product_id );
-	$sale_price    = get_field( '_sale_price', $product_id );
+	$prices        = ane_get_product_price_data( $product_id );
 	$sku           = get_field( '_sku', $product_id );
 	$stock_status  = ane_get_product_stock_status( $product_id );
 	$gallery       = get_field( 'ane_product_gallery', $product_id );
@@ -32,11 +31,6 @@ while ( have_posts() ) :
 	$whatsapp_url  = ane_get_product_whatsapp_url( $product_id, 'admin' );
 	$categories    = get_the_terms( $product_id, 'product_cat' );
 
-	// Calculate discount percentage.
-	$discount_percent = 0;
-	if ( ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price ) {
-		$discount_percent = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
-	}
 
 	// Prepare gallery images.
 	$thumbnail = get_post_thumbnail_id( $product_id );
@@ -146,23 +140,23 @@ while ( have_posts() ) :
 						</div>
 					<?php endif; ?>
 
-					<!-- Price -->
+					<!-- Price (hidden when the product has no price) -->
+					<?php if ( $prices['price'] > 0 ) : ?>
 					<div class="ane-product-price-wrap">
-						<?php if ( ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price ) : ?>
+						<?php if ( $prices['on_sale'] ) : ?>
 							<div class="ane-price-main">
-								<span class="ane-price-sale">Rp <?php echo number_format( $sale_price, 0, ',', '.' ); ?></span>
-								<span class="ane-price-regular-strike">Rp <?php echo number_format( $regular_price, 0, ',', '.' ); ?></span>
+								<span class="ane-price-sale"><?php echo esc_html( ane_format_rupiah( $prices['sale'] ) ); ?></span>
+								<span class="ane-price-regular-strike"><?php echo esc_html( ane_format_rupiah( $prices['regular'] ) ); ?></span>
 							</div>
-							<?php if ( $discount_percent > 0 ) : ?>
-								<span class="ane-price-badge">-<?php echo $discount_percent; ?>%</span>
-							<?php endif; ?>
+							<span class="ane-price-badge">-<?php echo esc_html( $prices['discount'] ); ?>%</span>
 						<?php else : ?>
 							<div class="ane-price-main">
-								<span class="ane-price-current">Rp <?php echo number_format( $regular_price, 0, ',', '.' ); ?></span>
+								<span class="ane-price-current"><?php echo esc_html( ane_format_rupiah( $prices['price'] ) ); ?></span>
 							</div>
 						<?php endif; ?>
 						<p class="ane-price-note">(MRP inclusive of all taxes)</p>
 					</div>
+					<?php endif; ?>
 
 					<!-- Short Description -->
 					<?php if ( has_excerpt() ) : ?>

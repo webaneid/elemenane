@@ -45,6 +45,8 @@ $term = get_queried_object();
 			<?php endif; ?>
 		</div>
 
+		<?php ane_product_filters(); ?>
+
 		<?php if ( have_posts() ) : ?>
 			<!-- Product Grid -->
 			<div class="ane-products-wrap">

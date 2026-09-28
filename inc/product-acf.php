@@ -366,8 +366,8 @@ add_action( 'acf/init', 'ane_register_product_acf_fields' );
 /**
  * Auto-calculate and save active price (_price).
  *
- * Sets _price to the lower value between _regular_price and _sale_price.
- * This matches WooCommerce behavior.
+ * Sets _price to the price shown on the site (see ane_get_product_price_data()):
+ * the sale price when on sale, otherwise the regular price.
  *
  * @param int $post_id Post ID being saved.
  * @since 1.0.0
@@ -378,49 +378,119 @@ function ane_product_save_active_price( $post_id ) {
 		return;
 	}
 
-	// Get prices.
-	$regular_price = get_field( '_regular_price', $post_id );
-	$sale_price    = get_field( '_sale_price', $post_id );
+	// Same price the templates show; 0 when the product has no price.
+	$prices = ane_get_product_price_data( $post_id );
 
-	// Calculate active price.
-	if ( ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price ) {
-		$active_price = $sale_price;
-	} else {
-		$active_price = $regular_price;
-	}
-
-	// Save active price.
-	update_post_meta( $post_id, '_price', $active_price );
+	update_post_meta( $post_id, '_price', $prices['price'] );
 }
 add_action( 'acf/save_post', 'ane_product_save_active_price', 20 );
+
+/**
+ * One-time backfill of _price for products saved before it existed or
+ * imported without it. The archive price filter and sorting read _price.
+ *
+ * @since 1.1.7
+ */
+function ane_product_backfill_active_price() {
+	if ( get_option( 'ane_product_price_backfilled' ) ) {
+		return;
+	}
+
+	$ids = get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+		)
+	);
+
+	foreach ( $ids as $id ) {
+		$price = ane_get_product_price_data( $id )['price'];
+		if ( (float) get_post_meta( $id, '_price', true ) !== (float) $price ) {
+			update_post_meta( $id, '_price', $price );
+		}
+	}
+
+	update_option( 'ane_product_price_backfilled', 1, false );
+}
+add_action( 'admin_init', 'ane_product_backfill_active_price' );
+
+/**
+ * Product price data for display.
+ *
+ * Prices are read as numbers, so empty values and "0"/"0.00" all count as no
+ * price. Templates show nothing when `price` is 0.
+ *
+ * @param int $product_id Product post ID.
+ * @return array {
+ *     @type float $regular  Regular price (0 if not set).
+ *     @type float $sale     Sale price (0 if not set).
+ *     @type float $price    Price to show: the sale price when on sale, else the
+ *                           regular price, else a sale price set without a
+ *                           regular price. 0 when there is nothing to show.
+ *     @type bool  $on_sale  True when a valid sale price is below the regular price.
+ *     @type int   $discount Discount percentage when on sale, else 0.
+ * }
+ * @since 1.1.7
+ */
+function ane_get_product_price_data( $product_id ) {
+	$regular = max( 0, (float) get_field( '_regular_price', $product_id ) );
+	$sale    = max( 0, (float) get_field( '_sale_price', $product_id ) );
+	$on_sale = $regular > 0 && $sale > 0 && $sale < $regular;
+
+	if ( $on_sale ) {
+		$price = $sale;
+	} elseif ( $regular > 0 ) {
+		$price = $regular;
+	} else {
+		$price = $sale;
+	}
+
+	return array(
+		'regular'  => $regular,
+		'sale'     => $sale,
+		'price'    => $price,
+		'on_sale'  => $on_sale,
+		'discount' => $on_sale ? (int) round( ( ( $regular - $sale ) / $regular ) * 100 ) : 0,
+	);
+}
+
+/**
+ * Format an amount as Rupiah, e.g. "Rp 230.000".
+ *
+ * @param float $amount Amount.
+ * @return string
+ * @since 1.1.7
+ */
+function ane_format_rupiah( $amount ) {
+	return 'Rp ' . number_format( (float) $amount, 0, ',', '.' );
+}
 
 /**
  * Get formatted product price with currency.
  *
  * @param int  $product_id Product post ID.
  * @param bool $show_sale  Whether to show sale price separately.
- * @return string Formatted price HTML.
+ * @return string Formatted price HTML, or '' when the product has no price.
  * @since 1.0.0
  */
 function ane_get_product_price( $product_id, $show_sale = true ) {
-	$regular_price = get_field( '_regular_price', $product_id );
-	$sale_price    = get_field( '_sale_price', $product_id );
+	$prices = ane_get_product_price_data( $product_id );
 
-	if ( empty( $regular_price ) ) {
+	if ( $prices['price'] <= 0 ) {
 		return '';
 	}
 
 	$html = '<div class="ane-product-price">';
 
-	if ( $show_sale && ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price ) {
-		$html .= '<span class="ane-price-sale">Rp ' . number_format( $sale_price, 0, ',', '.' ) . '</span>';
-		$html .= '<span class="ane-price-regular ane-price-strikethrough">Rp ' . number_format( $regular_price, 0, ',', '.' ) . '</span>';
-
-		// Calculate discount percentage.
-		$discount = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
-		$html    .= '<span class="ane-price-discount">-' . $discount . '%</span>';
+	if ( $show_sale && $prices['on_sale'] ) {
+		$html .= '<span class="ane-price-sale">' . esc_html( ane_format_rupiah( $prices['sale'] ) ) . '</span>';
+		$html .= '<span class="ane-price-regular ane-price-strikethrough">' . esc_html( ane_format_rupiah( $prices['regular'] ) ) . '</span>';
+		$html .= '<span class="ane-price-discount">-' . esc_html( $prices['discount'] ) . '%</span>';
 	} else {
-		$html .= '<span class="ane-price-regular">Rp ' . number_format( $regular_price, 0, ',', '.' ) . '</span>';
+		$html .= '<span class="ane-price-regular">' . esc_html( ane_format_rupiah( $show_sale ? $prices['price'] : ( $prices['regular'] ?: $prices['price'] ) ) ) . '</span>';
 	}
 
 	$html .= '</div>';

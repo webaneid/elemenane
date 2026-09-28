@@ -88,7 +88,9 @@ function ane_enqueue_page_styles() {
 
 	foreach ( $styles as $name => $needed ) {
 		if ( $needed || $load_all ) {
-			wp_enqueue_style( 'ane-' . $name, get_base_url_assets() . '/css/' . $name . '.min.css', array( 'main-css' ), '1.0.0' );
+			// Version from the file's modification time, so edits always bust the cache.
+			$file = get_template_directory() . '/css/' . $name . '.min.css';
+			wp_enqueue_style( 'ane-' . $name, get_base_url_assets() . '/css/' . $name . '.min.css', array( 'main-css' ), file_exists( $file ) ? (string) filemtime( $file ) : null );
 		}
 	}
 }

@@ -15,20 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_id = get_the_ID();
 
 // Get product data.
-$regular_price = get_field( '_regular_price', $product_id );
-$sale_price    = get_field( '_sale_price', $product_id );
+$prices        = ane_get_product_price_data( $product_id );
 $stock_status  = function_exists( 'ane_get_product_stock_status' )
 	? ane_get_product_stock_status( $product_id )
 	: 'instock';
 
-// Calculate active price and discount.
-$active_price = $regular_price;
-$discount_percent = 0;
-
-if ( ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price ) {
-	$active_price = $sale_price;
-	$discount_percent = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
-}
+$discount_percent = $prices['discount'];
 
 // Get thumbnail.
 $thumbnail_id = get_post_thumbnail_id( $product_id );
@@ -98,15 +90,17 @@ $thumbnail_id = get_post_thumbnail_id( $product_id );
 				</a>
 			</h3>
 
-			<!-- Price -->
+			<!-- Price (hidden when the product has no price) -->
+			<?php if ( $prices['price'] > 0 ) : ?>
 			<div class="ane-product-card-price">
-				<?php if ( ! empty( $sale_price ) && $sale_price > 0 && $sale_price < $regular_price ) : ?>
-					<span class="price-sale">Rp <?php echo number_format( $sale_price, 0, ',', '.' ); ?></span>
-					<span class="price-regular">Rp <?php echo number_format( $regular_price, 0, ',', '.' ); ?></span>
+				<?php if ( $prices['on_sale'] ) : ?>
+					<span class="price-sale"><?php echo esc_html( ane_format_rupiah( $prices['sale'] ) ); ?></span>
+					<span class="price-regular"><?php echo esc_html( ane_format_rupiah( $prices['regular'] ) ); ?></span>
 				<?php else : ?>
-					<span class="price-current">Rp <?php echo number_format( $regular_price, 0, ',', '.' ); ?></span>
+					<span class="price-current"><?php echo esc_html( ane_format_rupiah( $prices['price'] ) ); ?></span>
 				<?php endif; ?>
 			</div>
+			<?php endif; ?>
 
 			<!-- Stock Status -->
 			<?php if ( $stock_status === 'instock' ) : ?>

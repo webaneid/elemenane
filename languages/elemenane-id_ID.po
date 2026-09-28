@@ -168,3 +168,71 @@ msgstr "Upload ACF Pro"
 #: functions.php
 msgid "This site is being set up. Please check back soon."
 msgstr "Situs ini sedang disiapkan. Silakan kembali lagi nanti."
+
+#: inc/product-filter.php
+msgid "Newest"
+msgstr "Terbaru"
+
+#: inc/product-filter.php
+msgid "Oldest"
+msgstr "Terlama"
+
+#: inc/product-filter.php
+msgid "Name: A to Z"
+msgstr "Nama: A–Z"
+
+#: inc/product-filter.php
+msgid "Name: Z to A"
+msgstr "Nama: Z–A"
+
+#: inc/product-filter.php
+msgid "Price: low to high"
+msgstr "Harga: terendah"
+
+#: inc/product-filter.php
+msgid "Price: high to low"
+msgstr "Harga: tertinggi"
+
+#: inc/product-filter.php
+msgid "Filter products"
+msgstr "Filter produk"
+
+#: inc/product-filter.php
+msgid "Category"
+msgstr "Kategori"
+
+#: inc/product-filter.php
+msgid "Search category…"
+msgstr "Cari kategori…"
+
+#: inc/product-filter.php
+msgid "No matching category"
+msgstr "Kategori tidak ditemukan"
+
+#: inc/product-filter.php
+msgid "All categories"
+msgstr "Semua kategori"
+
+#: inc/product-filter.php
+msgid "Sort by"
+msgstr "Urutkan"
+
+#: inc/product-filter.php
+msgid "Price (Rp)"
+msgstr "Harga (Rp)"
+
+#: inc/product-filter.php
+msgid "Minimum price"
+msgstr "Harga minimum"
+
+#: inc/product-filter.php
+msgid "Maximum price"
+msgstr "Harga maksimum"
+
+#: inc/product-filter.php
+msgid "Apply"
+msgstr "Terapkan"
+
+#: inc/product-filter.php
+msgid "Reset"
+msgstr "Reset"
