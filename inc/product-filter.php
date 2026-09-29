@@ -268,8 +268,11 @@ function ane_product_filter_clauses( $clauses, $query ) {
 
 	global $wpdb;
 
-	$clauses['join'] .= " LEFT JOIN {$wpdb->postmeta} AS ane_price ON ( ane_price.post_id = {$wpdb->posts}.ID AND ane_price.meta_key = '_price' )";
-	$price            = 'CAST( ane_price.meta_value AS DECIMAL(15,2) )';
+	// One row per product with its lowest price: WooCommerce variable products
+	// store one _price row per variation price, which a plain join would
+	// turn into duplicate listings.
+	$clauses['join'] .= " LEFT JOIN ( SELECT post_id, MIN( CAST( meta_value AS DECIMAL(15,2) ) ) AS price FROM {$wpdb->postmeta} WHERE meta_key = '_price' AND meta_value <> '' GROUP BY post_id ) AS ane_price ON ane_price.post_id = {$wpdb->posts}.ID";
+	$price            = 'ane_price.price';
 
 	if ( $min > 0 ) {
 		$clauses['where'] .= $wpdb->prepare( " AND {$price} >= %f", $min ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -280,7 +283,7 @@ function ane_product_filter_clauses( $clauses, $query ) {
 
 	if ( $sort ) {
 		$direction          = 'harga-tertinggi' === $sort ? 'DESC' : 'ASC';
-		$clauses['orderby'] = "( ane_price.meta_value IS NULL OR {$price} <= 0 ) ASC, {$price} {$direction}, {$wpdb->posts}.post_date DESC";
+		$clauses['orderby'] = "( {$price} IS NULL OR {$price} <= 0 ) ASC, {$price} {$direction}, {$wpdb->posts}.post_date DESC";
 	}
 
 	return $clauses;

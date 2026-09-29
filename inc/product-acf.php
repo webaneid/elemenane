@@ -22,8 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * - _price: Active price (automatically set to lowest)
  * - _sku: Product SKU
  * - _stock_status: Stock status (instock/outofstock)
- * - _manage_stock: Whether to manage stock
+ * - _manage_stock: Whether to manage stock ("yes"/"no")
  * - _stock: Stock quantity
+ * - _product_image_gallery: Gallery image IDs ("12,34,56")
+ *
+ * These are WooCommerce's meta keys and formats, so the data carries over when
+ * WooCommerce is installed (see inc/product-woocommerce.php).
  *
  * @since 1.0.0
  */
@@ -32,163 +36,171 @@ function ane_register_product_acf_fields() {
 		return;
 	}
 
+	// With WooCommerce active, price, stock and gallery are edited in its
+	// Product data and Product gallery boxes (same meta keys).
+	$woocommerce = ane_is_woocommerce_active();
+
 	// Product Pricing & Basic Info.
-	acf_add_local_field_group(
-		array(
-			'key'                   => 'group_product_pricing',
-			'title'                 => __( 'Product Information', 'elemenane' ),
-			'fields'                => array(
-				// SKU.
-				array(
-					'key'               => 'field_product_sku',
-					'label'             => __( 'SKU', 'elemenane' ),
-					'name'              => '_sku',
-					'type'              => 'text',
-					'instructions'      => __( 'Product SKU (Stock Keeping Unit)', 'elemenane' ),
-					'required'          => 0,
-					'wrapper'           => array(
-						'width' => '50',
-					),
-				),
-				// Regular Price.
-				array(
-					'key'               => 'field_product_regular_price',
-					'label'             => __( 'Regular Price', 'elemenane' ),
-					'name'              => '_regular_price',
-					'type'              => 'number',
-					'instructions'      => __( 'Regular price in rupiah (without Rp and thousand separator)', 'elemenane' ),
-					'required'          => 1,
-					'min'               => 0,
-					'step'              => 1,
-					'wrapper'           => array(
-						'width' => '50',
-					),
-				),
-				// Sale Price.
-				array(
-					'key'               => 'field_product_sale_price',
-					'label'             => __( 'Sale Price', 'elemenane' ),
-					'name'              => '_sale_price',
-					'type'              => 'number',
-					'instructions'      => __( 'Sale/discount price in rupiah (leave empty if no discount)', 'elemenane' ),
-					'required'          => 0,
-					'min'               => 0,
-					'step'              => 1,
-					'wrapper'           => array(
-						'width' => '50',
-					),
-				),
-				// Stock Status.
-				array(
-					'key'               => 'field_product_stock_status',
-					'label'             => __( 'Stock Status', 'elemenane' ),
-					'name'              => '_stock_status',
-					'type'              => 'select',
-					'instructions'      => __( 'Product stock availability', 'elemenane' ),
-					'required'          => 1,
-					'choices'           => array(
-						'instock'    => __( 'In Stock', 'elemenane' ),
-						'outofstock' => __( 'Out of Stock', 'elemenane' ),
-					),
-					'default_value'     => 'instock',
-					'wrapper'           => array(
-						'width' => '50',
-					),
-				),
-				// Manage Stock.
-				array(
-					'key'               => 'field_product_manage_stock',
-					'label'             => __( 'Manage Stock', 'elemenane' ),
-					'name'              => '_manage_stock',
-					'type'              => 'true_false',
-					'instructions'      => __( 'Enable stock quantity management', 'elemenane' ),
-					'required'          => 0,
-					'default_value'     => 0,
-					'ui'                => 1,
-					'wrapper'           => array(
-						'width' => '50',
-					),
-				),
-				// Stock Quantity.
-				array(
-					'key'               => 'field_product_stock',
-					'label'             => __( 'Stock Quantity', 'elemenane' ),
-					'name'              => '_stock',
-					'type'              => 'number',
-					'instructions'      => __( 'Stock quantity (only if manage stock is enabled)', 'elemenane' ),
-					'required'          => 0,
-					'conditional_logic' => array(
-						array(
-							array(
-								'field'    => 'field_product_manage_stock',
-								'operator' => '==',
-								'value'    => '1',
-							),
+	if ( ! $woocommerce ) {
+		acf_add_local_field_group(
+			array(
+				'key'                   => 'group_product_pricing',
+				'title'                 => __( 'Product Information', 'elemenane' ),
+				'fields'                => array(
+					// SKU.
+					array(
+						'key'               => 'field_product_sku',
+						'label'             => __( 'SKU', 'elemenane' ),
+						'name'              => '_sku',
+						'type'              => 'text',
+						'instructions'      => __( 'Product SKU (Stock Keeping Unit)', 'elemenane' ),
+						'required'          => 0,
+						'wrapper'           => array(
+							'width' => '50',
 						),
 					),
-					'min'               => 0,
-					'step'              => 1,
-					'wrapper'           => array(
-						'width' => '50',
-					),
-				),
-			),
-			'location'              => array(
-				array(
+					// Regular Price.
 					array(
-						'param'    => 'post_type',
-						'operator' => '==',
-						'value'    => 'product',
+						'key'               => 'field_product_regular_price',
+						'label'             => __( 'Regular Price', 'elemenane' ),
+						'name'              => '_regular_price',
+						'type'              => 'number',
+						'instructions'      => __( 'Regular price in rupiah (without Rp and thousand separator)', 'elemenane' ),
+						'required'          => 1,
+						'min'               => 0,
+						'step'              => 1,
+						'wrapper'           => array(
+							'width' => '50',
+						),
+					),
+					// Sale Price.
+					array(
+						'key'               => 'field_product_sale_price',
+						'label'             => __( 'Sale Price', 'elemenane' ),
+						'name'              => '_sale_price',
+						'type'              => 'number',
+						'instructions'      => __( 'Sale/discount price in rupiah (leave empty if no discount)', 'elemenane' ),
+						'required'          => 0,
+						'min'               => 0,
+						'step'              => 1,
+						'wrapper'           => array(
+							'width' => '50',
+						),
+					),
+					// Stock Status.
+					array(
+						'key'               => 'field_product_stock_status',
+						'label'             => __( 'Stock Status', 'elemenane' ),
+						'name'              => '_stock_status',
+						'type'              => 'select',
+						'instructions'      => __( 'Product stock availability', 'elemenane' ),
+						'required'          => 1,
+						'choices'           => array(
+							'instock'    => __( 'In Stock', 'elemenane' ),
+							'outofstock' => __( 'Out of Stock', 'elemenane' ),
+						),
+						'default_value'     => 'instock',
+						'wrapper'           => array(
+							'width' => '50',
+						),
+					),
+					// Manage Stock.
+					array(
+						'key'               => 'field_product_manage_stock',
+						'label'             => __( 'Manage Stock', 'elemenane' ),
+						'name'              => '_manage_stock',
+						'type'              => 'true_false',
+						'instructions'      => __( 'Enable stock quantity management', 'elemenane' ),
+						'required'          => 0,
+						'default_value'     => 0,
+						'ui'                => 1,
+						'wrapper'           => array(
+							'width' => '50',
+						),
+					),
+					// Stock Quantity.
+					array(
+						'key'               => 'field_product_stock',
+						'label'             => __( 'Stock Quantity', 'elemenane' ),
+						'name'              => '_stock',
+						'type'              => 'number',
+						'instructions'      => __( 'Stock quantity (only if manage stock is enabled)', 'elemenane' ),
+						'required'          => 0,
+						'conditional_logic' => array(
+							array(
+								array(
+									'field'    => 'field_product_manage_stock',
+									'operator' => '==',
+									'value'    => '1',
+								),
+							),
+						),
+						'min'               => 0,
+						'step'              => 1,
+						'wrapper'           => array(
+							'width' => '50',
+						),
 					),
 				),
-			),
-			'menu_order'            => 0,
-			'position'              => 'normal',
-			'style'                 => 'seamless',
-			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
-		)
-	);
+				'location'              => array(
+					array(
+						array(
+							'param'    => 'post_type',
+							'operator' => '==',
+							'value'    => 'product',
+						),
+					),
+				),
+				'menu_order'            => 0,
+				'position'              => 'normal',
+				'style'                 => 'seamless',
+				'label_placement'       => 'top',
+				'instruction_placement' => 'label',
+			)
+		);
+	}
 
 	// Product Gallery.
-	acf_add_local_field_group(
-		array(
-			'key'                   => 'group_product_gallery',
-			'title'                 => __( 'Product Gallery', 'elemenane' ),
-			'fields'                => array(
-				array(
-					'key'           => 'field_product_gallery',
-					'label'         => __( 'Product Images', 'elemenane' ),
-					'name'          => 'ane_product_gallery',
-					'type'          => 'gallery',
-					'instructions'  => __( 'Upload product images (recommended: 1000x1000px)', 'elemenane' ),
-					'required'      => 0,
-					'return_format' => 'id',
-					'min'           => 0,
-					'max'           => 20,
-					'insert'        => 'append',
-					'library'       => 'all',
-					'min_width'     => 500,
-					'min_height'    => 500,
-					'mime_types'    => 'jpg,jpeg,png,webp',
-				),
-			),
-			'location'              => array(
-				array(
+	if ( ! $woocommerce ) {
+		acf_add_local_field_group(
+			array(
+				'key'                   => 'group_product_gallery',
+				'title'                 => __( 'Product Gallery', 'elemenane' ),
+				'fields'                => array(
 					array(
-						'param'    => 'post_type',
-						'operator' => '==',
-						'value'    => 'product',
+						'key'           => 'field_product_gallery',
+						'label'         => __( 'Product Images', 'elemenane' ),
+						'name'          => '_product_image_gallery', // WooCommerce's key; stored as "12,34" (inc/product-woocommerce.php).
+						'type'          => 'gallery',
+						'instructions'  => __( 'Upload product images (recommended: 1000x1000px)', 'elemenane' ),
+						'required'      => 0,
+						'return_format' => 'id',
+						'min'           => 0,
+						'max'           => 20,
+						'insert'        => 'append',
+						'library'       => 'all',
+						'min_width'     => 500,
+						'min_height'    => 500,
+						'mime_types'    => 'jpg,jpeg,png,webp',
 					),
 				),
-			),
-			'menu_order'            => 1,
-			'position'              => 'normal',
-			'style'                 => 'seamless',
-			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
-		)
-	);
+				'location'              => array(
+					array(
+						array(
+							'param'    => 'post_type',
+							'operator' => '==',
+							'value'    => 'product',
+						),
+					),
+				),
+				'menu_order'            => 1,
+				'position'              => 'normal',
+				'style'                 => 'seamless',
+				'label_placement'       => 'top',
+				'instruction_placement' => 'label',
+			)
+		);
+	}
 
 	// Product Specifications.
 	acf_add_local_field_group(
@@ -373,8 +385,9 @@ add_action( 'acf/init', 'ane_register_product_acf_fields' );
  * @since 1.0.0
  */
 function ane_product_save_active_price( $post_id ) {
-	// Check if this is a product post type.
-	if ( get_post_type( $post_id ) !== 'product' ) {
+	// Check if this is a product post type. WooCommerce maintains _price
+	// itself (sale schedules, several rows for variable products).
+	if ( get_post_type( $post_id ) !== 'product' || ane_is_woocommerce_active() ) {
 		return;
 	}
 
@@ -392,7 +405,7 @@ add_action( 'acf/save_post', 'ane_product_save_active_price', 20 );
  * @since 1.1.7
  */
 function ane_product_backfill_active_price() {
-	if ( get_option( 'ane_product_price_backfilled' ) ) {
+	if ( get_option( 'ane_product_price_backfilled' ) || ane_is_woocommerce_active() ) {
 		return;
 	}
 
@@ -436,8 +449,19 @@ add_action( 'admin_init', 'ane_product_backfill_active_price' );
  * @since 1.1.7
  */
 function ane_get_product_price_data( $product_id ) {
-	$regular = max( 0, (float) get_field( '_regular_price', $product_id ) );
-	$sale    = max( 0, (float) get_field( '_sale_price', $product_id ) );
+	$product = ane_is_woocommerce_active() && function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
+
+	if ( $product ) {
+		// WooCommerce knows about sale schedules and variable products (where
+		// these are the lowest variation prices).
+		$regular = max( 0, (float) $product->get_regular_price() );
+		$sale    = $product->is_on_sale() ? max( 0, (float) $product->get_sale_price() ) : 0;
+	} else {
+		// Same meta keys and format as WooCommerce.
+		$regular = max( 0, (float) get_post_meta( $product_id, '_regular_price', true ) );
+		$sale    = max( 0, (float) get_post_meta( $product_id, '_sale_price', true ) );
+	}
+
 	$on_sale = $regular > 0 && $sale > 0 && $sale < $regular;
 
 	if ( $on_sale ) {
@@ -506,15 +530,23 @@ function ane_get_product_price( $product_id, $show_sale = true ) {
  * @since 1.0.0
  */
 function ane_get_product_stock_status( $product_id ) {
-	$stock_status = get_field( '_stock_status', $product_id );
-	$manage_stock = get_field( '_manage_stock', $product_id );
+	$product = ane_is_woocommerce_active() && function_exists( 'wc_get_product' ) ? wc_get_product( $product_id ) : null;
 
-	// If managing stock, check quantity.
-	if ( $manage_stock ) {
-		$stock_qty = get_field( '_stock', $product_id );
-		if ( $stock_qty <= 0 ) {
+	if ( $product ) {
+		$stock_status = $product->get_stock_status();
+	} else {
+		$stock_status = get_post_meta( $product_id, '_stock_status', true );
+
+		// If managing stock, check quantity. "_manage_stock" is "yes"/"no" like
+		// WooCommerce ("1"/"0" before 1.1.8).
+		if ( ane_wc_bool( get_post_meta( $product_id, '_manage_stock', true ) ) && (float) get_post_meta( $product_id, '_stock', true ) <= 0 ) {
 			return 'outofstock';
 		}
+	}
+
+	// Backorders can still be ordered, so the theme shows them as available.
+	if ( 'onbackorder' === $stock_status ) {
+		return 'instock';
 	}
 
 	return $stock_status ? $stock_status : 'instock';

@@ -12,6 +12,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - More template variations
 
 ---
+## [1.1.8] - 2026-09-29
+### Added
+- **WooCommerce-compatible product data** ([inc/product-woocommerce.php](inc/product-woocommerce.php)). Products already used WooCommerce's post type, taxonomies, slugs and most meta keys; now the stored formats match too, so installing WooCommerce later keeps the whole catalog. WooCommerce stays optional: without it, products work exactly as before
+  - Gallery stored in WooCommerce's `_product_image_gallery` (`"12,34,56"`)
+  - "Manage stock" stored as `yes`/`no`
+  - One-time migration of existing products on the next admin visit (the old `ane_product_gallery` meta is kept as a backup)
+- **When WooCommerce is active**
+  - The theme no longer registers `product`, `product_cat` and `product_tag` (it used to overwrite WooCommerce's registration and its Shop Manager capabilities)
+  - Declares WooCommerce support, so WooCommerce renders products with the theme's templates instead of adding its own product page inside the description
+  - Hides the theme's price, stock and gallery fields (edited in WooCommerce's Product data and Product gallery boxes) and stops writing `_price`
+  - Prices and stock are read through WooCommerce, so sale schedules and variable products are respected
+  - The old `/product/` archive redirects (301) to the Shop page, keeping pagination and filter parameters
+
+### Fixed
+- **Stock status** - A "Manage stock" value of "no" was read as enabled, which could show products as out of stock
+- **Price filter and sorting** - Products with several `_price` rows (WooCommerce variable products) are listed once, filtered by their lowest price
+
+### Notes
+- Tested with WooCommerce 11.0.1 (WooCommerce 11.1+ requires WordPress 7.0)
+- After activating WooCommerce on a site, run WooCommerce → Status → Tools → "Regenerate product lookup tables" for WooCommerce's own price features
+
 ## [1.1.7] - 2026-09-28
 ### Added
 - **Product archive filters** on the product archive, product category and product tag pages ([inc/product-filter.php](inc/product-filter.php))

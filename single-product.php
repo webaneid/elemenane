@@ -23,7 +23,7 @@ while ( have_posts() ) :
 	$prices        = ane_get_product_price_data( $product_id );
 	$sku           = get_field( '_sku', $product_id );
 	$stock_status  = ane_get_product_stock_status( $product_id );
-	$gallery       = get_field( 'ane_product_gallery', $product_id );
+	$gallery       = ane_get_product_gallery_ids( $product_id );
 	$specs         = get_field( 'ane_product_specs', $product_id );
 	$features      = get_field( 'ane_product_features', $product_id );
 	$marketplaces  = ane_get_product_marketplaces( $product_id );
@@ -41,10 +41,10 @@ while ( have_posts() ) :
 		$images[] = $thumbnail;
 	}
 
-	// Add gallery images (ACF returns array of IDs with return_format='id').
-	if ( ! empty( $gallery ) && is_array( $gallery ) ) {
+	// Add gallery images (WooCommerce's _product_image_gallery IDs).
+	if ( ! empty( $gallery ) ) {
 		foreach ( $gallery as $image_id ) {
-			if ( $image_id != $thumbnail ) {
+			if ( (int) $image_id !== (int) $thumbnail ) {
 				$images[] = $image_id;
 			}
 		}

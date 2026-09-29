@@ -19,6 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 function ane_register_product_cpt() {
+	// WooCommerce registers `product`, `product_cat` and `product_tag` earlier
+	// (init priority 5) with its own capabilities. Registering them again would
+	// overwrite those, so leave them to WooCommerce. The data is shared.
+	if ( post_type_exists( 'product' ) ) {
+		return;
+	}
+
 	// Check if Product CPT is enabled.
 	if ( function_exists( 'ane_is_product_cpt_enabled' ) && ! ane_is_product_cpt_enabled() ) {
 		return;
