@@ -1,43 +1,41 @@
-# WordPress
-.DS_Store
-Thumbs.db
-
-# Node modules
-node_modules/
-package-lock.json
-
-# Editor files
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# Temporary files
-*.tmp
-*.bak
-*.swp
-*~
-
-# OS files
+# WordPress & OS
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+Thumbs.db
 ehthumbs.db
 desktop.ini
 
-# Logs
+# Dependencies & Build Artifacts
+/vendor/
+/node_modules/
+/dist/
+.sass-cache/
+
+# Logs & Temporary Files
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.tmp
+*.bak
+*.swp
+*~
 
-# SCSS source maps (optional - uncomment if you don't want to track them)
-# *.css.map
+# Quality Tooling Caches
+.phpcs-cache
+.phpstan-cache/
 
-# Compiled MO files (optional - we track them for distribution)
-# *.mo
+# Editor & Local AI Configs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.claude/settings.local.json
 
-# Distribution folder
-dist/
+# Secrets & Environment
+.env
+.env.*
+auth.json

@@ -1,3 +1,6 @@
+<?php
+defined( 'ABSPATH' ) || exit;
+?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -23,4 +26,3 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 }
 // If elementor_theme_do_location() returns true, Elementor already rendered the header
 ?>
-

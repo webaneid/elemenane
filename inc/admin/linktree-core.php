@@ -204,7 +204,7 @@ function ane_get_linktree_social_platforms() {
 		$social[ $key ] = array(
 			'url'   => get_field( 'ane_' . $key, 'option' ),
 			'label' => $label,
-			'icon'  => 'ane-' . $key,
+			'icon'  => $key,
 		);
 	}
 

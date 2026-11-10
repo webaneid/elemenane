@@ -26,7 +26,7 @@
       z-index: 3;
       border: 0;
 
-              i {
+              i, .ane-icon {
          color: var(--ane-warna-utama);
          font-size: 15px;
          line-height: 35px;
@@ -57,7 +57,7 @@
              width: 100%;
              right: auto;
         }
-        i {
+        i, .ane-icon {
             transform: rotateY(180deg);
         }
     }
@@ -79,7 +79,7 @@
     background: var(--ane-warna-utama-2);
 
     span {
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-utama-2);
         }
     }
@@ -88,7 +88,7 @@
         &:before {
             background: var(--ane-warna-utama);
         }
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-utama);
         }
     }
@@ -101,7 +101,7 @@
 
     span {
         background: var(--ane-warna-utama);
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-putih);
 
         }
@@ -113,7 +113,7 @@
         }
         span {
             background: var(--ane-warna-putih);
-            i {
+            i, .ane-icon {
                 color: var(--ane-warna-utama);
             }
         }
@@ -125,7 +125,7 @@
     color: var(--ane-warna-putih);
 
     span {
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-alternatif);
         }
     }
@@ -134,7 +134,7 @@
         &:before {
             background: var(--ane-warna-utama);
         }
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-utama);
         }
     }
@@ -144,7 +144,7 @@
     color: var(--ane-warna-utama);
 
     span {
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-utama);
         }
     }
@@ -153,7 +153,7 @@
         &:before {
             background: var(--ane-warna-utama-2);
         }
-        i {
+        i, .ane-icon {
             color: var(--ane-warna-utama);
         }
     }
@@ -187,7 +187,7 @@
             height: 30px;
             line-height: 30px;
             top: 7px;
-            i {
+            i, .ane-icon {
                 line-height: 30px;
             }
         }

@@ -37,7 +37,7 @@ function ane_render_breadcrumbs( array $breadcrumbs ) {
 	$count = 0;
 
 	foreach ( $breadcrumbs as $title => $url ) {
-		$count++;
+		++$count;
 
 		if ( $count === $total ) {
 			// Last item (current page) - no link.
@@ -67,9 +67,9 @@ function ane_admin_breadcrumbs() {
 	// Example: Add breadcrumbs to edit post screen.
 	if ( 'post' === $screen->id ) {
 		$breadcrumbs = array(
-			__( 'Dashboard', 'newsane' ) => admin_url(),
-			__( 'Posts', 'newsane' )     => admin_url( 'edit.php' ),
-			__( 'Edit Post', 'newsane' ) => '',
+			__( 'Dashboard', 'elemenane' ) => admin_url(),
+			__( 'Posts', 'elemenane' )     => admin_url( 'edit.php' ),
+			__( 'Edit Post', 'elemenane' ) => '',
 		);
 
 		ane_render_breadcrumbs( $breadcrumbs );

@@ -1,0 +1,33 @@
+# Lessons Learned & Catatan Teknis — Elemen Ane (`elemenane`)
+
+Dokumen ini mencatat temuan penting dan jebakan teknis (pitfalls) yang ditemukan selama audit dan pengembangan tema **Elemen Ane** agar tidak terulang di masa depan.
+
+---
+
+## 1. Keamanan & WordPress Core Filters
+- **Jangan pernah menghapus `wp_filter_kses` dari `pre_user_description`**:
+  - Di versi warisan (`inc/elemenane.php:948`), terdapat `remove_filter( 'pre_user_description', 'wp_filter_kses' );`. Hal ini membuka celah **Stored XSS** karena user dengan role rendah (Contributor/Author/Subscriber) dapat menyuntikkan `<script>` berbahaya pada kolom Biographical Info profil mereka. Jika ingin mengizinkan HTML aman pada bio, gunakan `wp_filter_post_kses` atau biarkan default `wp_filter_kses`.
+- **Hati-hati memfilter `upload_mimes` secara global**:
+  - Di versi warisan (`inc/elemenane.php:1123`), filter `upload_mimes` mengganti seluruh array `$mimes` hanya dengan 6 tipe gambar (`jpg`, `gif`, `png`, `bmp`, `tiff`, `svg`). Akibatnya, upload file PDF, DOCX, XLSX, MP4, atau ZIP di Media Library WordPress gagal total! Selain itu, mengizinkan `image/svg+xml` tanpa sanitasi XML membuka celah Stored XSS via file SVG.
+  - **Solusi**: Jangan menimpa array `$mimes` bawaan WordPress; tambahkan `image/webp` ke dalam `$mimes` yang sudah ada, batasi upload SVG hanya untuk `current_user_can( 'manage_options' )`, dan sanitasi konten SVG di `wp_handle_upload_prefilter`.
+
+## 2. Jebakan Redirect & Komentar (`inc/handle.php`)
+- Di versi warisan (`inc/handle.php:16-24`), fungsi `codesnippets_disable_comments_redirect()` melakukan `wp_redirect( home_url() )` setiap kali `is_singular() && ( have_comments() || comments_open() )`.
+- Akibatnya, postingan lama yang terlanjur memiliki status `comment_status = 'open'` di database atau memiliki komentar lama akan **mental (redirect) ke halaman depan** dan tidak bisa dibaca pengunjung!
+- **Solusi**: Penonaktifan komentar cukup melalui filter `comments_open` (`__return_false`), `pings_open` (`__return_false`), dan `comments_array` (`__return_empty_array`). Redirect hanya boleh dilakukan jika request adalah halaman comment feed (`is_comment_feed()`).
+
+## 3. Performa Database pada Hook `after_setup_theme`
+- Memanggil `get_option()` dan `update_option()` di dalam `after_setup_theme` (seperti `elemenane_set_default_image_sizes` di `functions.php`) untuk mengatur ukuran thumbnail default dieksekusi pada setiap siklus hidup tema jika opsi belum terset.
+- **Solusi Standar Webane**: Jalankan pengaturan ukuran gambar default pada hook `after_switch_theme` dan satu kali saat versi tema berubah di `admin_init` (membandingkan `get_option( 'elemenane_image_sizes_version' ) !== ELEMENANE_VERSION`).
+
+## 3b. Ikon Inline SVG & `wp_kses_post()`
+- `wp_kses_post()` membuang `<svg>`/`<path>`. String yang memuat `elemenane_get_icon_svg()` harus difilter dengan `wp_kses( $html, elemenane_kses_post_with_svg() )`; kalau tidak, ikon hilang diam-diam.
+- Di macOS, `sed -i -E ...` memperlakukan `-E` sebagai suffix backup dan membuat file `*-E`. Gunakan `sed -i '' -E` atau skrip Python untuk edit massal.
+
+## 4. Core Web Vitals (LCP & Zero-CLS) pada Slider Berita & Hero
+- Menggunakan `style="background-image: url(...)"` pada kartu berita overlay (`tp/content-overlay.php`) membuat browser **tidak bisa** mem-preload gambar LCP, tidak bisa memilih resolusi `srcset`/`sizes` sesuai DPR layar mobile, dan menyembunyikan gambar dari scanner preload HTML awal.
+- **Solusi Standar Webane (`webane-pagespeed-cwv`)**:
+  - Ganti `background-image` dengan elemen `<img class="ane-overlay-bg">` (`position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;`).
+  - Berikan `fetchpriority="high"` dan jangan pasang `loading="lazy"` pada item pertama (index `0`) di slider/featured section; pasang `loading="lazy"` dan `decoding="async"` pada item ke-2 dst.
+  - Preload gambar LCP di `wp_head` prioritas `1` lengkap dengan `imagesrcset` dan `imagesizes`.
+  - Cegah layout shift (CLS) sebelum `owl.carousel.min.js` dieksekusi (karena JS di-`defer`) dengan menyuntikkan CSS pre-init `:not(.owl-loaded)` yang menyembunyikan slide ke-2 dst (`> *:not(:first-child) { display: none; }`).

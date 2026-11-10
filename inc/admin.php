@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Return all Ane admin sections.
  */
-function ane_get_admin_sections() : array {
+function ane_get_admin_sections(): array {
 	$sections = array(
-		'ane-setup'          => array(
+		'ane-setup'           => array(
 			'title'      => __( 'Elemen Ane', 'elemenane' ),
 			'menu_title' => __( 'Elemen Ane', 'elemenane' ),
 			'badge'      => __( 'Control Center', 'elemenane' ),
@@ -39,7 +39,7 @@ function ane_get_admin_sections() : array {
 					'label'       => __( 'Theme Updates', 'elemenane' ),
 					'title'       => __( 'Check for Updates', 'elemenane' ),
 					'description' => __( 'Check GitHub for latest Elemen Ane theme version and update automatically.', 'elemenane' ),
-					'link'        => add_query_arg( 'ane_force_check', '1', admin_url( 'themes.php' ) ),
+					'link'        => wp_nonce_url( add_query_arg( 'ane_force_check', '1', admin_url( 'themes.php' ) ), 'elemenane_force_check' ),
 					'link_label'  => __( 'Check Updates Now', 'elemenane' ),
 				),
 				array(
@@ -53,7 +53,7 @@ function ane_get_admin_sections() : array {
 				),
 			),
 		),
-		'ane-seo-news'       => array(
+		'ane-seo-news'        => array(
 			'title'      => __( 'SEO & News Setup', 'elemenane' ),
 			'menu_title' => __( 'SEO & News', 'elemenane' ),
 			'badge'      => __( 'Google News Ready', 'elemenane' ),
@@ -66,7 +66,7 @@ function ane_get_admin_sections() : array {
 			'badge'      => __( 'Brand Identity', 'elemenane' ),
 			'tagline'    => __( 'Configure brand identity, logo, tagline, and fallback content for hero blocks.', 'elemenane' ),
 		),
-		'ane-customer-care'    => array(
+		'ane-customer-care'   => array(
 			'title'      => __( 'Customer Care', 'elemenane' ),
 			'menu_title' => __( 'Customer Care', 'elemenane' ),
 			'badge'      => __( 'Support Channel', 'elemenane' ),
@@ -80,7 +80,7 @@ function ane_get_admin_sections() : array {
 /**
  * Register options pages via ACF.
  */
-function ane_register_acf_options_pages() : void {
+function ane_register_acf_options_pages(): void {
 	if ( ! function_exists( 'acf_add_options_page' ) ) {
 		return;
 	}
@@ -145,7 +145,7 @@ add_action( 'admin_menu', 'ane_register_seo_news_page', 999 );
 /**
  * Register fallback menu when ACF Options is not available.
  */
-function ane_register_admin_menu_fallback() : void {
+function ane_register_admin_menu_fallback(): void {
 	if ( function_exists( 'acf_add_options_page' ) ) {
 		return;
 	}
@@ -162,7 +162,7 @@ function ane_register_admin_menu_fallback() : void {
 
 	$sections = ane_get_admin_sections();
 	// Note: ane-seo-news is registered separately via ane_register_seo_news_page().
-	$slugs    = array( 'ane-general-setting', 'ane-customer-care' );
+	$slugs = array( 'ane-general-setting', 'ane-customer-care' );
 
 	foreach ( $slugs as $slug ) {
 		if ( empty( $sections[ $slug ] ) ) {
@@ -184,7 +184,7 @@ add_action( 'admin_menu', 'ane_register_admin_menu_fallback' );
 /**
  * Render fallback notice.
  */
-function ane_render_acf_missing_notice() : void {
+function ane_render_acf_missing_notice(): void {
 	echo '<div class="wrap">';
 	echo '<h1>' . esc_html__( 'Elemen Ane', 'elemenane' ) . '</h1>';
 	echo '<p>' . esc_html__( 'Activate Advanced Custom Fields Pro to start using this options page.', 'elemenane' ) . '</p>';
@@ -194,7 +194,7 @@ function ane_render_acf_missing_notice() : void {
 /**
  * Determine current Ane admin slug.
  */
-function ane_get_current_admin_page_slug() : ?string {
+function ane_get_current_admin_page_slug(): ?string {
 	if ( empty( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return null;
 	}
@@ -211,7 +211,7 @@ function ane_get_current_admin_page_slug() : ?string {
  * Loads admin.min.css globally to ensure consistent styling across
  * all WordPress admin pages (dashboard, posts, media, users, etc).
  */
-function ane_enqueue_admin_assets( string $hook ) : void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+function ane_enqueue_admin_assets( string $hook ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	$theme_version = wp_get_theme()->get( 'Version' );
 
 	wp_enqueue_style(
@@ -226,7 +226,7 @@ add_action( 'admin_enqueue_scripts', 'ane_enqueue_admin_assets' );
 /**
  * Register custom meta boxes for Ane admin pages.
  */
-function ane_register_admin_meta_boxes() : void {
+function ane_register_admin_meta_boxes(): void {
 	$sections = ane_get_admin_sections();
 
 	foreach ( array_keys( $sections ) as $slug ) {
@@ -239,7 +239,7 @@ add_action( 'admin_menu', 'ane_register_admin_meta_boxes', 20 );
 /**
  * Prepare metaboxes for the current screen.
  */
-function ane_prepare_admin_metaboxes() : void {
+function ane_prepare_admin_metaboxes(): void {
 	$screen = get_current_screen();
 	if ( ! $screen ) {
 		return;
@@ -259,7 +259,7 @@ function ane_prepare_admin_metaboxes() : void {
 /**
  * Render hero + cards before ACF form.
  */
-function ane_render_admin_intro() : void {
+function ane_render_admin_intro(): void {
 	$slug = ane_get_current_admin_page_slug();
 
 	if ( ! $slug ) {
@@ -339,9 +339,9 @@ function ane_render_admin_intro() : void {
 		echo '<div class="ane-admin__metaboxes">';
 		do_meta_boxes( $screen, 'ane-admin', null );
 		echo '</div>';
-		$metabox_markup = trim( ob_get_clean() );
+		$metabox_markup = trim( (string) ob_get_clean() );
 		if ( $metabox_markup ) {
-			echo $metabox_markup;
+			echo $metabox_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -355,7 +355,7 @@ add_action( 'admin_notices', 'ane_render_admin_intro' );
  *
  * @return string News sitemap URL.
  */
-function ane_get_news_sitemap_url() : string {
+function ane_get_news_sitemap_url(): string {
 	// Check if Yoast SEO is active and has news sitemap
 	if ( defined( 'WPSEO_VERSION' ) && class_exists( 'WPSEO_News_Sitemap' ) ) {
 		return home_url( '/news-sitemap.xml' );
@@ -811,7 +811,7 @@ function ane_render_seo_news_page() {
  *
  * @since 1.0.0
  */
-function ane_admin_bar_logo() : void {
+function ane_admin_bar_logo(): void {
 	// Get custom logo ID from theme customizer.
 	$custom_logo_id = get_theme_mod( 'custom_logo' );
 
@@ -841,7 +841,7 @@ add_action( 'wp_head', 'ane_admin_bar_logo' );
  *
  * @since 1.0.0
  */
-function ane_handle_regenerate_elementor_kit() : void {
+function ane_handle_regenerate_elementor_kit(): void {
 	// Check if action is triggered.
 	if ( empty( $_GET['action'] ) || 'regenerate_elementor_kit' !== $_GET['action'] ) {
 		return;
@@ -893,7 +893,7 @@ add_action( 'admin_init', 'ane_handle_regenerate_elementor_kit' );
  *
  * @since 1.0.0
  */
-function ane_elementor_kit_success_notice() : void {
+function ane_elementor_kit_success_notice(): void {
 	if ( empty( $_GET['elementor_kit_imported'] ) || '1' !== $_GET['elementor_kit_imported'] ) {
 		return;
 	}

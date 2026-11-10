@@ -1,0 +1,37 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "sed -i.bak 's/^Version: .*/Version: ${nextRelease.version}/' style.css && rm -f style.css.bak && bash bin/check-dist.sh && mkdir -p dist && rsync -rc --exclude-from=.distignore ./ dist/elemenane/ && (cd dist && zip -rq elemenane-${nextRelease.version}.zip elemenane/)"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["style.css", "CHANGELOG.md"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "dist/elemenane-*.zip",
+            "label": "elemenane-${nextRelease.version}.zip (WordPress Theme Package)"
+          }
+        ]
+      }
+    ]
+  ]
+}

@@ -5,6 +5,8 @@
  * Supports Elementor Theme Builder for 404 page templates.
  * Falls back to native theme template if no Elementor template is set.
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 ?>
 <style>
@@ -103,11 +105,13 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 
 				<?php
 				// Show recent posts if available
-				$recent_posts = new WP_Query( array(
-					'posts_per_page' => 3,
-					'post_status'    => 'publish',
-					'ignore_sticky_posts' => true,
-				) );
+				$recent_posts = new WP_Query(
+					array(
+						'posts_per_page'      => 3,
+						'post_status'         => 'publish',
+						'ignore_sticky_posts' => true,
+					)
+				);
 
 				if ( $recent_posts->have_posts() ) :
 					?>

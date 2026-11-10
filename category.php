@@ -6,6 +6,8 @@
  * Supports Elementor Theme Builder for category archive templates.
  * Falls back to native theme template if no Elementor template is set.
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 
 // Check if Elementor has a custom category archive template

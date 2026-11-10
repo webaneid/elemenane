@@ -32,31 +32,31 @@ function ane_setup_elementor_defaults() {
 	// Elementor Settings
 	$elementor_settings = array(
 		// Page Settings
-		'page_title_selector'              => 'h1.post-title',
-		'default_generic_fonts'            => 'Sans-serif',
+		'page_title_selector'            => 'h1.post-title',
+		'default_generic_fonts'          => 'Sans-serif',
 
 		// Style Settings
-		'container_width'                  => '1200',
-		'space_between_widgets'            => '20',
-		'stretched_section_container'      => '',
-		'viewport_lg'                      => '1025',
-		'viewport_md'                      => '768',
+		'container_width'                => '1200',
+		'space_between_widgets'          => '20',
+		'stretched_section_container'    => '',
+		'viewport_lg'                    => '1025',
+		'viewport_md'                    => '768',
 
 		// Lightbox
-		'global_image_lightbox'            => 'yes',
+		'global_image_lightbox'          => 'yes',
 
 		// Advanced
-		'css_print_method'                 => 'internal',
-		'exclude_user_roles'               => array(),
-		'enable_unfiltered_files_upload'   => '',
+		'css_print_method'               => 'internal',
+		'exclude_user_roles'             => array(),
+		'enable_unfiltered_files_upload' => '',
 
 		// Integrations
-		'google_maps_api_key'              => get_field( 'ane_gmap_api_key', 'option' ) ?: '',
+		'google_maps_api_key'            => get_field( 'ane_gmap_api_key', 'option' ) ?: '',
 
 		// Performance
-		'optimized_dom_output'             => 'enabled',
-		'lazyload'                         => 'yes',
-		'font_display'                     => 'swap',
+		'optimized_dom_output'           => 'enabled',
+		'lazyload'                       => 'yes',
+		'font_display'                   => 'swap',
 	);
 
 	foreach ( $elementor_settings as $key => $value ) {
@@ -65,17 +65,17 @@ function ane_setup_elementor_defaults() {
 
 	// Enable Elementor experiments
 	$experiments = array(
-		'container'                         => 'active',
-		'e_optimized_assets_loading'        => 'active',
-		'e_optimized_css_loading'           => 'active',
-		'additional_custom_breakpoints'     => 'active',
-		'theme_builder_v2'                  => 'active',
-		'landing-pages'                     => 'active',
-		'nested-elements'                   => 'active',
-		'e_font_icon_svg'                   => 'active',
-		'e_optimized_markup'                => 'active',
-		'import-export-customization'       => 'active',
-		'mega-menu'                         => 'active',
+		'container'                     => 'active',
+		'e_optimized_assets_loading'    => 'active',
+		'e_optimized_css_loading'       => 'active',
+		'additional_custom_breakpoints' => 'active',
+		'theme_builder_v2'              => 'active',
+		'landing-pages'                 => 'active',
+		'nested-elements'               => 'active',
+		'e_font_icon_svg'               => 'active',
+		'e_optimized_markup'            => 'active',
+		'import-export-customization'   => 'active',
+		'mega-menu'                     => 'active',
 	);
 
 	update_option( 'elementor_experiment', $experiments );

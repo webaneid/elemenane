@@ -46,7 +46,7 @@ $term = get_queried_object();
 					printf(
 						/* translators: %s: number of products */
 						esc_html( _n( '%s Product', '%s Products', $total, 'elemenane' ) ),
-						'<span class="count">' . number_format_i18n( $total ) . '</span>'
+						'<span class="count">' . esc_html( number_format_i18n( $total ) ) . '</span>'
 					);
 					?>
 				</div>

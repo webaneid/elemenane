@@ -49,72 +49,72 @@ function ane_register_product_acf_fields() {
 				'fields'                => array(
 					// SKU.
 					array(
-						'key'               => 'field_product_sku',
-						'label'             => __( 'SKU', 'elemenane' ),
-						'name'              => '_sku',
-						'type'              => 'text',
-						'instructions'      => __( 'Product SKU (Stock Keeping Unit)', 'elemenane' ),
-						'required'          => 0,
-						'wrapper'           => array(
+						'key'          => 'field_product_sku',
+						'label'        => __( 'SKU', 'elemenane' ),
+						'name'         => '_sku',
+						'type'         => 'text',
+						'instructions' => __( 'Product SKU (Stock Keeping Unit)', 'elemenane' ),
+						'required'     => 0,
+						'wrapper'      => array(
 							'width' => '50',
 						),
 					),
 					// Regular Price.
 					array(
-						'key'               => 'field_product_regular_price',
-						'label'             => __( 'Regular Price', 'elemenane' ),
-						'name'              => '_regular_price',
-						'type'              => 'number',
-						'instructions'      => __( 'Regular price in rupiah (without Rp and thousand separator)', 'elemenane' ),
-						'required'          => 1,
-						'min'               => 0,
-						'step'              => 1,
-						'wrapper'           => array(
+						'key'          => 'field_product_regular_price',
+						'label'        => __( 'Regular Price', 'elemenane' ),
+						'name'         => '_regular_price',
+						'type'         => 'number',
+						'instructions' => __( 'Regular price in rupiah (without Rp and thousand separator)', 'elemenane' ),
+						'required'     => 1,
+						'min'          => 0,
+						'step'         => 1,
+						'wrapper'      => array(
 							'width' => '50',
 						),
 					),
 					// Sale Price.
 					array(
-						'key'               => 'field_product_sale_price',
-						'label'             => __( 'Sale Price', 'elemenane' ),
-						'name'              => '_sale_price',
-						'type'              => 'number',
-						'instructions'      => __( 'Sale/discount price in rupiah (leave empty if no discount)', 'elemenane' ),
-						'required'          => 0,
-						'min'               => 0,
-						'step'              => 1,
-						'wrapper'           => array(
+						'key'          => 'field_product_sale_price',
+						'label'        => __( 'Sale Price', 'elemenane' ),
+						'name'         => '_sale_price',
+						'type'         => 'number',
+						'instructions' => __( 'Sale/discount price in rupiah (leave empty if no discount)', 'elemenane' ),
+						'required'     => 0,
+						'min'          => 0,
+						'step'         => 1,
+						'wrapper'      => array(
 							'width' => '50',
 						),
 					),
 					// Stock Status.
 					array(
-						'key'               => 'field_product_stock_status',
-						'label'             => __( 'Stock Status', 'elemenane' ),
-						'name'              => '_stock_status',
-						'type'              => 'select',
-						'instructions'      => __( 'Product stock availability', 'elemenane' ),
-						'required'          => 1,
-						'choices'           => array(
+						'key'           => 'field_product_stock_status',
+						'label'         => __( 'Stock Status', 'elemenane' ),
+						'name'          => '_stock_status',
+						'type'          => 'select',
+						'instructions'  => __( 'Product stock availability', 'elemenane' ),
+						'required'      => 1,
+						'choices'       => array(
 							'instock'    => __( 'In Stock', 'elemenane' ),
 							'outofstock' => __( 'Out of Stock', 'elemenane' ),
 						),
-						'default_value'     => 'instock',
-						'wrapper'           => array(
+						'default_value' => 'instock',
+						'wrapper'       => array(
 							'width' => '50',
 						),
 					),
 					// Manage Stock.
 					array(
-						'key'               => 'field_product_manage_stock',
-						'label'             => __( 'Manage Stock', 'elemenane' ),
-						'name'              => '_manage_stock',
-						'type'              => 'true_false',
-						'instructions'      => __( 'Enable stock quantity management', 'elemenane' ),
-						'required'          => 0,
-						'default_value'     => 0,
-						'ui'                => 1,
-						'wrapper'           => array(
+						'key'           => 'field_product_manage_stock',
+						'label'         => __( 'Manage Stock', 'elemenane' ),
+						'name'          => '_manage_stock',
+						'type'          => 'true_false',
+						'instructions'  => __( 'Enable stock quantity management', 'elemenane' ),
+						'required'      => 0,
+						'default_value' => 0,
+						'ui'            => 1,
+						'wrapper'       => array(
 							'width' => '50',
 						),
 					),
@@ -635,7 +635,7 @@ function ane_get_product_marketplaces( $product_id ) {
 	// Filter out empty URLs.
 	return array_filter(
 		$marketplaces,
-		function( $marketplace ) {
+		function ( $marketplace ) {
 			return ! empty( $marketplace['url'] );
 		}
 	);
@@ -826,7 +826,7 @@ function ane_product_single_enqueue_scripts() {
 			'aneProductStrings',
 			array(
 				'noBranchFound'   => __( 'No branches found for search', 'elemenane' ),
-				'whatsappMessage' => __( 'Hi, I am interested in the product *%s*. Can you help me with more information? %s', 'elemenane' ),
+				'whatsappMessage' => __( 'Hi, I am interested in the product *%1$s*. Can you help me with more information? %2$s', 'elemenane' ),
 				'address'         => __( 'Address', 'elemenane' ),
 				'phone'           => __( 'Phone', 'elemenane' ),
 				'email'           => __( 'Email', 'elemenane' ),

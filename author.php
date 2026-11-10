@@ -6,6 +6,8 @@
  * Supports Elementor Theme Builder for author archive templates.
  * Falls back to native theme template if no Elementor template is set.
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 
 // Check if Elementor has a custom author archive template
@@ -23,7 +25,7 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 							<div class="author_bio_section">
 								<?php
 								// Get author information
-								$author_id = get_queried_object_id();
+								$author_id    = get_queried_object_id();
 								$display_name = get_the_author_meta( 'display_name', $author_id );
 
 								if ( empty( $display_name ) ) {
@@ -31,7 +33,7 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 								}
 
 								$user_description = get_the_author_meta( 'user_description', $author_id );
-								$user_email = get_the_author_meta( 'user_email', $author_id );
+								$user_email       = get_the_author_meta( 'user_email', $author_id );
 								?>
 
 								<h1 class="author_name">

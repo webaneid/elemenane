@@ -49,7 +49,7 @@ $section_title = ! empty( $custom_title ) ? $custom_title : __( 'Popular', 'elem
 			</div>
 
 			<div class="kanan">
-				<?php
+					<?php
 					while ( $popular_query->have_posts() ) :
 						$popular_query->the_post();
 						get_template_part( 'tp/content', 'list' );

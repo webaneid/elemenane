@@ -50,14 +50,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 								printf(
 									'<a class="post-cat" href="%s">%s</a>',
 									esc_url( get_category_link( $category->term_id ) ),
-									esc_html( $category->cat_name )
+									esc_html( $category->name )
 								);
 							}
 						}
 						?>
 					</div>
 				</li>
-				<li><?php echo ane_load_times_ago(); ?></li>
+				<li><?php echo esc_html( ane_load_times_ago() ); ?></li>
 			</ul>
 		</div>
 

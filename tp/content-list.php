@@ -18,7 +18,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php if ( has_post_thumbnail() ) : ?>
 			<a href="<?php echo esc_url( get_permalink() ); ?>">
 				<div class="ane-image">
-					<?php the_post_thumbnail( 'kotak', array( 'alt' => esc_attr( get_the_title() ), 'title' => esc_attr( get_the_title() ) ) ); ?>
+					<?php
+					the_post_thumbnail(
+						'kotak',
+						array(
+							'alt'   => esc_attr( get_the_title() ),
+							'title' => esc_attr( get_the_title() ),
+						)
+					);
+					?>
 				</div>
 			</a>
 		<?php else : ?>
@@ -58,14 +66,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 								printf(
 									'<a href="%s">%s</a>',
 									esc_url( get_category_link( $category->term_id ) ),
-									esc_html( $category->cat_name )
+									esc_html( $category->name )
 								);
 							}
 						}
 						?>
 					</div>
 				</li>
-				<li><?php echo ane_load_times_ago(); ?></li>
+				<li><?php echo esc_html( ane_load_times_ago() ); ?></li>
 			</ul>
 		</div>
 	</div>

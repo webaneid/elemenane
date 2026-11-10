@@ -7,11 +7,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function ane_header_footer_experiment_active() {
 	// If Elementor is not active, return false
-	if ( ! did_action( 'elementor/loaded' ) ) {
+	if ( ! did_action( 'elementor/loaded' ) || ! class_exists( '\Elementor\Plugin' ) ) {
 		return false;
 	}
 	// Backwards compat.
-	if ( ! method_exists( \Elementor\Plugin::$instance->experiments, 'is_feature_active' ) ) {
+	if ( ! isset( \Elementor\Plugin::$instance->experiments ) || ! method_exists( \Elementor\Plugin::$instance->experiments, 'is_feature_active' ) ) {
 		return false;
 	}
 
@@ -24,9 +24,13 @@ function ane_header_footer_experiment_active() {
  * @return string
  */
 function ane_get_footer_layout_class() {
+	if ( ! function_exists( 'hello_elementor_get_setting' ) ) {
+		return '';
+	}
+
 	$footer_layout = hello_elementor_get_setting( 'hello_footer_layout' );
 
-	$layout_classes = [];
+	$layout_classes = array();
 
 	if ( 'inverted' === $footer_layout ) {
 		$layout_classes[] = 'footer-inverted';
@@ -49,64 +53,69 @@ function ane_get_footer_layout_class() {
 
 // Function to get Elementor colors
 function get_elementor_colors() {
-    // For exporting global settings
-    $default_post_id = get_option('elementor_active_kit');
-    $global_data = get_post_meta($default_post_id, '_elementor_page_settings', true);
+	// For exporting global settings
+	$default_post_id = get_option( 'elementor_active_kit' );
+	$global_data     = get_post_meta( $default_post_id, '_elementor_page_settings', true );
 
-    $colors = [];
+	$colors = array();
 
-    // Check if global_data is valid
-    if (!is_array($global_data)) {
-        return $colors;
-    }
+	// Check if global_data is valid
+	if ( ! is_array( $global_data ) ) {
+		return $colors;
+	}
 
-    // Adding system colors
-    if (!empty($global_data['system_colors']) && is_array($global_data['system_colors'])) {
-        foreach ($global_data['system_colors'] as $color) {
-            $colors[] = [
-                'name'  => $color['title'],
-                'slug'  => sanitize_title($color['title']),
-                'color' => $color['color'],
-            ];
-        }
-    }
+	// Adding system colors
+	if ( ! empty( $global_data['system_colors'] ) && is_array( $global_data['system_colors'] ) ) {
+		foreach ( $global_data['system_colors'] as $color ) {
+			$colors[] = array(
+				'name'  => $color['title'],
+				'slug'  => sanitize_title( $color['title'] ),
+				'color' => $color['color'],
+			);
+		}
+	}
 
-    // Adding custom colors
-    if (!empty($global_data['custom_colors']) && is_array($global_data['custom_colors'])) {
-        foreach ($global_data['custom_colors'] as $color) {
-            $colors[] = [
-                'name'  => $color['title'],
-                'slug'  => sanitize_title($color['title']),
-                'color' => $color['color'],
-            ];
-        }
-    }
+	// Adding custom colors
+	if ( ! empty( $global_data['custom_colors'] ) && is_array( $global_data['custom_colors'] ) ) {
+		foreach ( $global_data['custom_colors'] as $color ) {
+			$colors[] = array(
+				'name'  => $color['title'],
+				'slug'  => sanitize_title( $color['title'] ),
+				'color' => $color['color'],
+			);
+		}
+	}
 
-    return $colors;
+	return $colors;
 }
 // Add custom colors to Gutenberg
 function add_elementor_colors_to_gutenberg() {
-    add_theme_support('editor-color-palette', get_elementor_colors());
+	add_theme_support( 'editor-color-palette', get_elementor_colors() );
 }
-add_action('after_setup_theme', 'add_elementor_colors_to_gutenberg');
+add_action( 'after_setup_theme', 'add_elementor_colors_to_gutenberg' );
 
-add_action('save_post', function ($post_id, $post, $update) {
-    // Check if the post is an instance of Elementor's Kit
-    if ('elementor_library' === get_post_type($post_id) && 'kit' === get_post_meta($post_id, '_elementor_template_type', true)) {
-        $meta = get_post_meta($post_id, '_elementor_page_settings', true);
+add_action(
+	'save_post',
+	function ( $post_id, $post, $update ) {
+		// Check if the post is an instance of Elementor's Kit
+		if ( 'elementor_library' === get_post_type( $post_id ) && 'kit' === get_post_meta( $post_id, '_elementor_template_type', true ) ) {
+			$meta = get_post_meta( $post_id, '_elementor_page_settings', true );
 
-        // Handle custom colors
-        if (!empty($meta['custom_colors'])) {
-            foreach ($meta['custom_colors'] as &$custom_color) {
-                // Replace the hyphens inside of titles with underscores to ensure consistency
-                $custom_color['_id'] = str_replace('-', '_', sanitize_title($custom_color['title']));
-            }
-        }
+			// Handle custom colors
+			if ( ! empty( $meta['custom_colors'] ) ) {
+				foreach ( $meta['custom_colors'] as &$custom_color ) {
+					// Replace the hyphens inside of titles with underscores to ensure consistency
+					$custom_color['_id'] = str_replace( '-', '_', sanitize_title( $custom_color['title'] ) );
+				}
+			}
 
-        // Update post meta
-        update_post_meta($post_id, '_elementor_page_settings', $meta);
-    }
-}, 10, 3);
+			// Update post meta
+			update_post_meta( $post_id, '_elementor_page_settings', $meta );
+		}
+	},
+	10,
+	3
+);
 
 /**
  * Convert hex color to RGB values.
@@ -154,7 +163,7 @@ function ane_hex2rgb( $colour ) {
 function ane_add_elementor_colors_to_root() {
 	// Define the default Elementor global color keys
 	$default_post_id = get_option( 'elementor_active_kit' );
-	$global_data = get_post_meta( $default_post_id, '_elementor_page_settings', true );
+	$global_data     = get_post_meta( $default_post_id, '_elementor_page_settings', true );
 
 	// Check if global_data is valid
 	if ( ! is_array( $global_data ) ) {
@@ -165,7 +174,7 @@ function ane_add_elementor_colors_to_root() {
 
 	if ( ! empty( $global_data['system_colors'] ) && is_array( $global_data['system_colors'] ) ) {
 		foreach ( $global_data['system_colors'] as $color ) {
-			$colors[] = array(
+			$colors[]  = array(
 				'name'  => $color['title'],
 				'slug'  => sanitize_title( $color['title'] ),
 				'color' => $color['color'],
@@ -214,7 +223,7 @@ add_action( 'wp_head', 'ane_add_elementor_colors_to_root' );
 function ane_add_elementor_colors_to_admin() {
 	// Get Elementor Kit settings
 	$default_post_id = get_option( 'elementor_active_kit' );
-	$global_data = get_post_meta( $default_post_id, '_elementor_page_settings', true );
+	$global_data     = get_post_meta( $default_post_id, '_elementor_page_settings', true );
 
 	// Check if global_data is valid
 	if ( ! is_array( $global_data ) ) {
@@ -280,7 +289,7 @@ add_action( 'admin_head', 'ane_add_elementor_colors_to_admin' );
 function ane_add_elementor_typography_to_root() {
 	// Get the default post ID for the active Elementor kit
 	$default_post_id = get_option( 'elementor_active_kit' );
-	$meta = get_post_meta( $default_post_id, '_elementor_page_settings', true );
+	$meta            = get_post_meta( $default_post_id, '_elementor_page_settings', true );
 
 	// Check if meta is valid
 	if ( ! is_array( $meta ) ) {
@@ -297,17 +306,18 @@ function ane_add_elementor_typography_to_root() {
 
 	foreach ( $meta['system_typography'] as $index => $typography ) {
 		$css_variable_name = '--ane-typography-';
-		$title_slug = sanitize_title( $typography['title'] );
+		$title_slug        = sanitize_title( $typography['title'] );
+		$var_prefix        = esc_attr( $css_variable_name . $title_slug );
 
 		if ( isset( $typography['typography_typography'] ) ) {
 			if ( isset( $typography['typography_font_family'] ) ) {
-				echo $css_variable_name . $title_slug . "-font-family:'" . esc_attr( $typography['typography_font_family'] ) . "';";
+				echo $var_prefix . "-font-family:'" . esc_attr( $typography['typography_font_family'] ) . "';"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			if ( isset( $typography['typography_font_weight'] ) ) {
-				echo $css_variable_name . $title_slug . '-font-weight:' . esc_attr( $typography['typography_font_weight'] ) . ';';
+				echo $var_prefix . '-font-weight:' . esc_attr( $typography['typography_font_weight'] ) . ';'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			if ( isset( $typography['typography_text_font_size'] ) ) {
-				echo $css_variable_name . $title_slug . '-font-size:' . esc_attr( $typography['typography_text_font_size'] ) . ';';
+				echo $var_prefix . '-font-size:' . esc_attr( $typography['typography_text_font_size'] ) . ';'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -320,7 +330,7 @@ function ane_add_elementor_typography_to_root() {
 				$size = floatval( $spacing_data['size'] ); // Ensure the size is a valid number
 				$unit = sanitize_text_field( $spacing_data['unit'] ); // Sanitize the unit
 
-				echo $css_variable_name . $title_slug . '-letter-spacing:' . $size . $unit . ';';
+				echo $var_prefix . '-letter-spacing:' . esc_attr( $size . $unit ) . ';'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -333,7 +343,7 @@ function ane_add_elementor_typography_to_root() {
 				$size = floatval( $font_size['size'] ); // Ensure the size is a valid number
 				$unit = sanitize_text_field( $font_size['unit'] ); // Sanitize the unit
 
-				echo $css_variable_name . $title_slug . '-font-size:' . $size . $unit . ';';
+				echo $var_prefix . '-font-size:' . esc_attr( $size . $unit ) . ';'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -351,7 +361,7 @@ function ane_add_elementor_typography_to_root() {
 					$unitnya = $unit;
 				}
 
-				echo $css_variable_name . $title_slug . '-line-height:' . $size . $unitnya . ';';
+				echo $var_prefix . '-line-height:' . esc_attr( $size . $unitnya ) . ';'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}
@@ -369,7 +379,7 @@ add_action( 'wp_head', 'ane_add_elementor_typography_to_root' );
  */
 function ane_get_kit_google_fonts() {
 	$default_post_id = get_option( 'elementor_active_kit' );
-	$meta = get_post_meta( $default_post_id, '_elementor_page_settings', true );
+	$meta            = get_post_meta( $default_post_id, '_elementor_page_settings', true );
 
 	if ( ! is_array( $meta ) || empty( $meta['system_typography'] ) ) {
 		return array();
@@ -391,7 +401,10 @@ function ane_get_kit_google_fonts() {
 
 		// The Fonts API only accepts numeric weights.
 		$font_weight = isset( $typography['typography_font_weight'] ) ? (string) $typography['typography_font_weight'] : '';
-		$named       = array( 'normal' => '400', 'bold' => '700' );
+		$named       = array(
+			'normal' => '400',
+			'bold'   => '700',
+		);
 		$font_weight = isset( $named[ $font_weight ] ) ? $named[ $font_weight ] : $font_weight;
 		if ( ! preg_match( '/^[1-9]00$/', $font_weight ) ) {
 			$font_weight = '400';

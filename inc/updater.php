@@ -1,21 +1,18 @@
 <?php
 /**
- * Theme Auto-Updater
+ * Theme Auto-Updater from GitHub Releases.
  *
- * Checks for theme updates from GitHub releases and provides
- * automatic update functionality for premium theme distribution.
+ * Checks for theme updates from GitHub releases (supports public and private
+ * repositories via ELEMENANE_UPDATER_TOKEN or ACF/option `ane_updater_token`).
  *
  * @package elemenane
  * @since 1.0.0
  */
 
-// Prevent direct access.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
- * Elemen Ane Theme Updater Class
+ * Elemen Ane Theme Updater Class.
  */
 class Elemenane_Updater {
 
@@ -55,25 +52,59 @@ class Elemenane_Updater {
 	private $github_api_url;
 
 	/**
+	 * Transient cache key.
+	 *
+	 * @var string
+	 */
+	const CACHE_KEY = 'elemenane_update_check';
+
+	/**
+	 * Last error transient key.
+	 *
+	 * @var string
+	 */
+	const ERROR_KEY = 'elemenane_updater_last_error';
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
-		$theme = wp_get_theme();
-		$this->current_version = $theme->get( 'Version' );
-		$this->github_api_url = "https://api.github.com/repos/{$this->github_owner}/{$this->github_repo}/releases/latest";
+		$theme                 = wp_get_theme( $this->theme_slug );
+		$this->current_version = (string) $theme->get( 'Version' );
+		$this->github_api_url  = "https://api.github.com/repos/{$this->github_owner}/{$this->github_repo}/releases/latest";
 
-		// Hook into WordPress update system.
 		add_filter( 'pre_set_site_transient_update_themes', array( $this, 'check_for_update' ) );
+		add_filter( 'themes_api', array( $this, 'theme_info_modal' ), 10, 3 );
+		add_filter( 'http_request_args', array( $this, 'authenticate_github_download' ), 10, 2 );
 		add_filter( 'upgrader_source_selection', array( $this, 'fix_source_folder' ), 10, 3 );
-
-		// Clear theme cache after upgrade.
 		add_action( 'upgrader_process_complete', array( $this, 'clear_theme_cache_after_upgrade' ), 10, 2 );
-
-		// Add update checker to admin footer.
 		add_action( 'admin_footer', array( $this, 'add_update_checker_notice' ) );
-
-		// Add custom update link to theme actions.
 		add_filter( 'theme_action_links_' . $this->theme_slug, array( $this, 'add_update_action_link' ), 10, 2 );
+	}
+
+	/**
+	 * Retrieve GitHub Personal Access Token if configured.
+	 *
+	 * Priority:
+	 * 1. ELEMENANE_UPDATER_TOKEN constant in wp-config.php
+	 * 2. ACF field / option `ane_updater_token`
+	 *
+	 * @return string
+	 */
+	private function get_github_token() {
+		if ( defined( 'ELEMENANE_UPDATER_TOKEN' ) && is_string( ELEMENANE_UPDATER_TOKEN ) && '' !== trim( ELEMENANE_UPDATER_TOKEN ) ) {
+			return trim( ELEMENANE_UPDATER_TOKEN );
+		}
+
+		if ( function_exists( 'get_field' ) ) {
+			$acf_token = get_field( 'ane_updater_token', 'option' );
+			if ( is_string( $acf_token ) && '' !== trim( $acf_token ) ) {
+				return trim( $acf_token );
+			}
+		}
+
+		$opt_token = get_option( 'ane_updater_token', '' );
+		return is_string( $opt_token ) ? trim( $opt_token ) : '';
 	}
 
 	/**
@@ -83,28 +114,23 @@ class Elemenane_Updater {
 	 * @return object Modified transient.
 	 */
 	public function check_for_update( $transient ) {
-		if ( empty( $transient->checked ) ) {
+		if ( ! is_object( $transient ) || empty( $transient->checked ) ) {
 			return $transient;
 		}
 
-		// Get latest release from GitHub.
 		$remote_version = $this->get_remote_version();
-
 		if ( ! $remote_version ) {
 			return $transient;
 		}
 
-		// Compare versions.
 		if ( version_compare( $this->current_version, $remote_version['version'], '<' ) ) {
-			$theme_data = wp_get_theme( $this->theme_slug );
-
 			$transient->response[ $this->theme_slug ] = array(
 				'theme'        => $this->theme_slug,
 				'new_version'  => $remote_version['version'],
 				'url'          => $remote_version['url'],
 				'package'      => $remote_version['package'],
-				'requires'     => '5.0',
-				'requires_php' => '7.4',
+				'requires'     => '6.4',
+				'requires_php' => '8.0',
 			);
 		}
 
@@ -112,76 +138,163 @@ class Elemenane_Updater {
 	}
 
 	/**
+	 * Provide release changelog details for the WordPress theme details modal.
+	 *
+	 * @param false|object|array $result The result object or array.
+	 * @param string             $action The type of information being requested.
+	 * @param object             $args   Theme API arguments.
+	 * @return false|object|array
+	 */
+	public function theme_info_modal( $result, $action, $args ) {
+		if ( 'theme_information' !== $action || ! isset( $args->slug ) || $this->theme_slug !== $args->slug ) {
+			return $result;
+		}
+
+		$remote = $this->get_remote_version();
+		if ( ! $remote ) {
+			return $result;
+		}
+
+		$theme = wp_get_theme( $this->theme_slug );
+
+		return (object) array(
+			'name'          => $theme->get( 'Name' ),
+			'slug'          => $this->theme_slug,
+			'version'       => $remote['version'],
+			'author'        => $theme->get( 'Author' ),
+			'homepage'      => $theme->get( 'ThemeURI' ),
+			'requires'      => '6.4',
+			'requires_php'  => '8.0',
+			'last_updated'  => isset( $remote['published_at'] ) ? $remote['published_at'] : '',
+			'sections'      => array(
+				'description' => wp_kses_post( $theme->get( 'Description' ) ),
+				'changelog'   => ! empty( $remote['notes'] ) ? wp_kses_post( wpautop( $remote['notes'] ) ) : esc_html__( 'See GitHub release notes for full changelog.', 'elemenane' ),
+			),
+			'download_link' => $remote['package'],
+		);
+	}
+
+	/**
+	 * Inject Authorization header when downloading release package from GitHub.
+	 *
+	 * @param array<string, mixed> $args HTTP request arguments.
+	 * @param string               $url  Request URL.
+	 * @return array<string, mixed>
+	 */
+	public function authenticate_github_download( $args, $url ) {
+		if ( ! is_string( $url ) ) {
+			return $args;
+		}
+
+		$is_github_repo = false !== strpos( $url, "api.github.com/repos/{$this->github_owner}/{$this->github_repo}/" )
+			|| false !== strpos( $url, "github.com/{$this->github_owner}/{$this->github_repo}/releases/download/" );
+
+		if ( ! $is_github_repo ) {
+			return $args;
+		}
+
+		$token = $this->get_github_token();
+		if ( '' !== $token ) {
+			if ( ! isset( $args['headers'] ) || ! is_array( $args['headers'] ) ) {
+				$args['headers'] = array();
+			}
+			$args['headers']['Authorization'] = 'Bearer ' . $token;
+		}
+
+		return $args;
+	}
+
+	/**
 	 * Get remote version info from GitHub.
 	 *
-	 * @return array|false Version info or false on failure.
+	 * @return array<string, string>|false Version info or false on failure.
 	 */
 	private function get_remote_version() {
-		// Check cache first (24 hours).
-		$cache_key = 'elemenane_update_check';
-		$cached = get_transient( $cache_key );
-
-		if ( false !== $cached ) {
+		$cached = get_transient( self::CACHE_KEY );
+		if ( false !== $cached && is_array( $cached ) ) {
 			return $cached;
 		}
 
-		// Fetch from GitHub API.
+		$headers = array(
+			'Accept'     => 'application/vnd.github+json',
+			'User-Agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . home_url(),
+		);
+
+		$token = $this->get_github_token();
+		if ( '' !== $token ) {
+			$headers['Authorization'] = 'Bearer ' . $token;
+		}
+
 		$response = wp_remote_get(
 			$this->github_api_url,
 			array(
 				'timeout' => 10,
-				'headers' => array(
-					'Accept' => 'application/vnd.github.v3+json',
-				),
+				'headers' => $headers,
 			)
 		);
 
 		if ( is_wp_error( $response ) ) {
+			set_transient( self::ERROR_KEY, $response->get_error_message(), HOUR_IN_SECONDS );
+			return false;
+		}
+
+		$code = (int) wp_remote_retrieve_response_code( $response );
+		if ( 200 !== $code ) {
+			set_transient(
+				self::ERROR_KEY,
+				sprintf( 'HTTP %d from GitHub API.', $code ),
+				HOUR_IN_SECONDS
+			);
 			return false;
 		}
 
 		$body = wp_remote_retrieve_body( $response );
 		$data = json_decode( $body, true );
 
-		if ( empty( $data['tag_name'] ) ) {
+		if ( ! is_array( $data ) || empty( $data['tag_name'] ) ) {
 			return false;
 		}
 
-		// Remove 'v' prefix from version.
-		$version = ltrim( $data['tag_name'], 'v' );
-
-		// Get download URL from assets (elemenane-x.x.x.zip).
+		$version     = ltrim( (string) $data['tag_name'], 'v' );
 		$package_url = '';
+
 		if ( ! empty( $data['assets'] ) && is_array( $data['assets'] ) ) {
 			foreach ( $data['assets'] as $asset ) {
-				if ( isset( $asset['name'] ) && strpos( $asset['name'], 'elemenane-' ) === 0 && strpos( $asset['name'], '.zip' ) !== false ) {
-					$package_url = $asset['browser_download_url'];
+				if (
+					isset( $asset['name'], $asset['browser_download_url'] )
+					&& 0 === strpos( (string) $asset['name'], 'elemenane-' )
+					&& false !== strpos( (string) $asset['name'], '.zip' )
+				) {
+					$package_url = (string) $asset['browser_download_url'];
 					break;
 				}
 			}
 		}
 
-		// If no asset found, return false (don't use zipball as it creates wrong folder names).
-		if ( empty( $package_url ) ) {
+		if ( '' === $package_url && ! empty( $data['zipball_url'] ) ) {
+			$package_url = (string) $data['zipball_url'];
+		}
+
+		if ( '' === $package_url ) {
 			return false;
 		}
 
 		$version_info = array(
-			'version' => $version,
-			'url'     => $data['html_url'],
-			'package' => $package_url,
+			'version'      => $version,
+			'url'          => isset( $data['html_url'] ) ? (string) $data['html_url'] : '',
+			'package'      => $package_url,
+			'notes'        => isset( $data['body'] ) ? (string) $data['body'] : '',
+			'published_at' => isset( $data['published_at'] ) ? (string) $data['published_at'] : '',
 		);
 
-		// Cache for 24 hours.
-		set_transient( $cache_key, $version_info, DAY_IN_SECONDS );
+		delete_transient( self::ERROR_KEY );
+		set_transient( self::CACHE_KEY, $version_info, 6 * HOUR_IN_SECONDS );
 
 		return $version_info;
 	}
 
 	/**
 	 * Fix source folder name after update.
-	 *
-	 * GitHub downloads come with weird folder names, we need to rename to theme slug.
 	 *
 	 * @param string $source        Source folder.
 	 * @param string $remote_source Remote source.
@@ -191,15 +304,16 @@ class Elemenane_Updater {
 	public function fix_source_folder( $source, $remote_source, $upgrader ) {
 		global $wp_filesystem;
 
-		// Only for theme updates.
-		if ( ! isset( $upgrader->skin->theme ) || $upgrader->skin->theme !== $this->theme_slug ) {
+		if ( ! isset( $upgrader->skin->theme ) || $this->theme_slug !== $upgrader->skin->theme ) {
 			return $source;
 		}
 
-		// Fix the folder name.
 		$corrected_source = trailingslashit( $remote_source ) . $this->theme_slug . '/';
+		if ( untrailingslashit( $source ) === untrailingslashit( $corrected_source ) ) {
+			return $source;
+		}
 
-		if ( $wp_filesystem->move( $source, $corrected_source, true ) ) {
+		if ( $wp_filesystem && $wp_filesystem->move( $source, $corrected_source, true ) ) {
 			return $corrected_source;
 		}
 
@@ -208,17 +322,16 @@ class Elemenane_Updater {
 
 	/**
 	 * Add update checker notice in admin.
+	 *
+	 * @return void
 	 */
 	public function add_update_checker_notice() {
 		$screen = get_current_screen();
-
-		// Only show on themes page.
-		if ( 'themes' !== $screen->base ) {
+		if ( ! $screen || 'themes' !== $screen->base ) {
 			return;
 		}
 
 		$remote_version = $this->get_remote_version();
-
 		if ( ! $remote_version ) {
 			return;
 		}
@@ -250,11 +363,12 @@ class Elemenane_Updater {
 	/**
 	 * Add update link to theme action links.
 	 *
-	 * @param array  $actions Theme action links.
-	 * @param object $theme   Theme object.
-	 * @return array Modified action links.
+	 * @param array<string, string> $actions Theme action links.
+	 * @param WP_Theme              $theme   Theme object.
+	 * @return array<string, string> Modified action links.
 	 */
 	public function add_update_action_link( $actions, $theme ) {
+		unset( $theme );
 		$remote_version = $this->get_remote_version();
 
 		if ( ! $remote_version ) {
@@ -272,7 +386,7 @@ class Elemenane_Updater {
 				esc_url( $update_url ),
 				/* translators: %s: theme name */
 				esc_attr( sprintf( __( 'Update %s now', 'elemenane' ), 'Elemen Ane' ) ),
-				__( 'Update Available', 'elemenane' )
+				esc_html__( 'Update Available', 'elemenane' )
 			);
 		}
 
@@ -282,71 +396,66 @@ class Elemenane_Updater {
 	/**
 	 * Clear theme cache after upgrade.
 	 *
-	 * Forces WordPress to refresh theme metadata from style.css
-	 * to display correct version after update.
-	 *
-	 * @param object $upgrader WP_Upgrader instance.
-	 * @param array  $options  Upgrade options.
+	 * @param object               $upgrader WP_Upgrader instance.
+	 * @param array<string, mixed> $options  Upgrade options.
+	 * @return void
 	 */
 	public function clear_theme_cache_after_upgrade( $upgrader, $options ) {
-		// Only clear cache for theme updates.
-		if ( 'theme' !== $options['type'] ) {
+		unset( $upgrader );
+		if ( ! isset( $options['type'] ) || 'theme' !== $options['type'] ) {
 			return;
 		}
 
-		// Check if our theme was updated.
-		if ( isset( $options['themes'] ) && in_array( $this->theme_slug, $options['themes'], true ) ) {
-			// Clear theme cache.
+		if ( isset( $options['themes'] ) && is_array( $options['themes'] ) && in_array( $this->theme_slug, $options['themes'], true ) ) {
 			wp_cache_delete( $this->theme_slug, 'themes' );
-
-			// Force refresh theme data.
 			wp_clean_themes_cache();
-
-			// Delete our update check transient to force new check.
-			delete_transient( 'elemenane_update_check' );
-
-			// Clear update themes transient.
+			delete_transient( self::CACHE_KEY );
+			delete_transient( self::ERROR_KEY );
 			delete_site_transient( 'update_themes' );
 		}
 	}
 
 	/**
 	 * Force update check (for manual trigger).
+	 *
+	 * @return void
 	 */
 	public static function force_update_check() {
-		delete_transient( 'elemenane_update_check' );
+		delete_transient( self::CACHE_KEY );
+		delete_transient( self::ERROR_KEY );
 		delete_site_transient( 'update_themes' );
 	}
 }
 
-// Initialize updater.
 new Elemenane_Updater();
 
 /**
- * Add manual update check button to admin.
+ * Handle authenticated manual update check request in wp-admin/themes.php.
+ *
+ * @return void
  */
-function elemenane_add_manual_update_check() {
-	add_action( 'admin_notices', function() {
-		$screen = get_current_screen();
-		// Support both 'ane_force_check' (from admin dashboard) and 'elemenane_force_check'
-		if ( 'themes' === $screen->base && ( isset( $_GET['ane_force_check'] ) || isset( $_GET['elemenane_force_check'] ) ) ) {
-			Elemenane_Updater::force_update_check();
+function elemenane_handle_manual_update_check() {
+	if ( ! is_admin() || ! current_user_can( 'update_themes' ) ) {
+		return;
+	}
+
+	if ( ! isset( $_GET['ane_force_check'] ) && ! isset( $_GET['elemenane_force_check'] ) ) {
+		return;
+	}
+
+	check_admin_referer( 'elemenane_force_check' );
+
+	Elemenane_Updater::force_update_check();
+
+	add_action(
+		'admin_notices',
+		function () {
 			?>
 			<div class="notice notice-success is-dismissible">
 				<p><?php esc_html_e( 'Update check completed!', 'elemenane' ); ?></p>
 			</div>
 			<?php
 		}
-
-		// Debug: Show update transient data (remove after debugging).
-		if ( 'themes' === $screen->base && ( isset( $_GET['ane_debug'] ) || isset( $_GET['elemenane_debug'] ) ) ) {
-			$updates = get_site_transient( 'update_themes' );
-			echo '<div class="notice notice-info"><pre>';
-			echo 'Current version: ' . wp_get_theme()->get( 'Version' ) . "\n";
-			echo 'Update data: ';
-			print_r( isset( $updates->response['elemenane'] ) ? $updates->response['elemenane'] : 'No update data' );
-			echo '</pre></div>';
-		}
-	});
+	);
 }
-add_action( 'admin_init', 'elemenane_add_manual_update_check' );
+add_action( 'admin_init', 'elemenane_handle_manual_update_check' );

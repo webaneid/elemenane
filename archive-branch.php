@@ -86,7 +86,7 @@ if ( $branches_query->have_posts() ) {
 				// Show only first 12 branches initially
 				$initial_branches = array_slice( $branches_data, 0, 12 );
 				foreach ( $initial_branches as $branch ) :
-				?>
+					?>
 					<article class="ane-branch-card" data-branch-id="<?php echo esc_attr( $branch['id'] ); ?>" data-province="<?php echo esc_attr( $branch['province'] ); ?>" data-city="<?php echo esc_attr( $branch['city'] ); ?>">
 						<?php if ( $branch['thumbnail'] ) : ?>
 							<div class="ane-branch-card__image">

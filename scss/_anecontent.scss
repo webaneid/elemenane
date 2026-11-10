@@ -34,10 +34,9 @@
             &:before {
                 position: absolute;
                 left: 0;
-                bottom: 0;
-                top: 0;
-                content: '\e901';
-                font-family: FontAne;
+                top: 8.5px;
+                bottom: auto;
+                @include ane-glyph-mask(arrow-right);
                 font-size: 7px;
                 line-height: 24px;
                 color: var(--ane-warna-utama);
@@ -49,7 +48,7 @@
                 li {
                     margin-left: 0;
                     &:before {
-                        content: '\e911';
+                        @include ane-glyph-mask-image(chevron-right-box);
                         color: var(--ane-warna-alternatif);
                     }
                     ul {
@@ -58,7 +57,6 @@
                         li {
                             margin-left: 0;
                             &:before {
-                                content: '\e901';
                                 color: var(--ane-warna-gelap);
                             }
                         }
@@ -266,8 +264,7 @@
         float: left;
 
         &:after {
-            content: "\e916";
-            font-family: "FontAne";
+            @include ane-glyph-mask(dokumen);
             color: rgba(var(--ane-warna-gelap-rgb), 0.1);
             font-style: normal;
             font-size: 100px;
@@ -336,8 +333,7 @@
             line-height: 1.4;
         }
         &:before {
-            content:"\e945";
-            font-family:'FontAne';
+            @include ane-glyph-mask(quote-left);
             color: rgba(var(--ane-warna-gelap-rgb),0.1);
             font-style: normal;
             font-size: 100px;

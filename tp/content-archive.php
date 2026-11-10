@@ -19,32 +19,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	while ( have_posts() ) :
 		the_post();
-		$counter++;
+		++$counter;
 
-		// First post - overlay layout
+		// First post - overlay layout.
 		if ( 1 === $counter ) {
 			get_template_part( 'tp/content', 'overlay' );
-		}
-		// 4th post - content + banner
-		elseif ( 4 === $counter ) {
+		} elseif ( 4 === $counter ) {
+			// 4th post - content + banner.
 			if ( wp_is_mobile() ) {
 				get_template_part( 'tp/content', 'list' );
 			} else {
 				get_template_part( 'tp/content', get_post_format() );
 			}
 			get_template_part( 'tp/banner/header' );
-		}
-		// 7th post - content + banner
-		elseif ( 7 === $counter ) {
+		} elseif ( 7 === $counter ) {
+			// 7th post - content + banner.
 			if ( wp_is_mobile() ) {
 				get_template_part( 'tp/content', 'list' );
 			} else {
 				get_template_part( 'tp/content', get_post_format() );
 			}
 			get_template_part( 'tp/banner/header' );
-		}
-		// All other posts - standard layout
-		else {
+		} else {
+			// All other posts - standard layout.
 			if ( wp_is_mobile() ) {
 				get_template_part( 'tp/content', 'list' );
 			} else {
@@ -54,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	endwhile;
 
-	// Pagination
-	echo ane_post_pagination();
+	// Pagination.
+	echo wp_kses( ane_post_pagination(), elemenane_kses_post_with_svg() );
 	?>
 </div>

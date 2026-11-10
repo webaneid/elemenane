@@ -1,0 +1,38 @@
+# Dotfiles & Git/CI
+.*
+!.htaccess
+
+# Documentation & Blueprints
+*.md
+docs
+blueprints
+
+# Dev Tooling & Tests
+bin
+tests
+scss
+vendor
+node_modules
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpcs.xml
+phpcs.xml.dist
+phpstan.neon
+phpstan.neon.dist
+phpstan-baseline.neon
+phpstan-bootstrap.php
+phpunit.xml
+phpunit.xml.dist
+dist
+
+# Dev helper scripts in languages
+languages/compile-mo.php
+languages/test-translation.php
+
+# Source maps, logs, & archives
+*.map
+*.log
+*.zip
+*.tar.gz

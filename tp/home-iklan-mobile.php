@@ -1,5 +1,8 @@
+<?php
+defined( 'ABSPATH' ) || exit;
+?>
 <section class="ane-iklan-post">
-    <div class="isi">
-        Space For Your Ad
-    </div>
+	<div class="isi">
+		Space For Your Ad
+	</div>
 </section>

@@ -35,9 +35,9 @@ function ane_iklan_single_post_umum( $content ) {
 			$banner = esc_url( get_sub_field( 'ane_image' ) );
 			$url    = esc_url( get_sub_field( 'ane_url' ) );
 			$nama   = esc_attr( get_sub_field( 'ane_iklan_nama' ) );
-			$akhir  = ceil( ( strtotime( get_sub_field( 'ane_tanggal_akhir' ) ) - time() ) / ( 60 * 60 * 24 ) );
-			$mulai  = ceil( ( strtotime( get_sub_field( 'ane_tanggal_mulai' ) ) - time() ) / ( 60 * 60 * 24 ) );
-			$today  = ceil( ( strtotime( date( 'Y-m-d' ) ) - time() ) / ( 60 * 60 * 24 ) );
+			$akhir  = (int) ceil( ( strtotime( (string) get_sub_field( 'ane_tanggal_akhir' ) ) - time() ) / ( 60 * 60 * 24 ) );
+			$mulai  = (int) ceil( ( strtotime( (string) get_sub_field( 'ane_tanggal_mulai' ) ) - time() ) / ( 60 * 60 * 24 ) );
+			$today  = (int) ceil( ( strtotime( gmdate( 'Y-m-d' ) ) - time() ) / ( 60 * 60 * 24 ) );
 			$online = $akhir - $today;
 
 			// Check if ad should be displayed (start date is today or ad is still active)

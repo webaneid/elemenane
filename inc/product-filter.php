@@ -57,9 +57,11 @@ function ane_product_sort_options() {
  */
 function ane_product_filter_request() {
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only GET filters.
-	$sort = isset( $_GET['urutkan'] ) ? sanitize_key( wp_unslash( $_GET['urutkan'] ) ) : '';
-	$min  = isset( $_GET['harga_min'] ) ? (float) preg_replace( '/[^\d.]/', '', wp_unslash( $_GET['harga_min'] ) ) : 0;
-	$max  = isset( $_GET['harga_max'] ) ? (float) preg_replace( '/[^\d.]/', '', wp_unslash( $_GET['harga_max'] ) ) : 0;
+	$sort      = isset( $_GET['urutkan'] ) ? sanitize_key( wp_unslash( $_GET['urutkan'] ) ) : '';
+	$raw_min   = isset( $_GET['harga_min'] ) ? sanitize_text_field( wp_unslash( $_GET['harga_min'] ) ) : '';
+	$raw_max   = isset( $_GET['harga_max'] ) ? sanitize_text_field( wp_unslash( $_GET['harga_max'] ) ) : '';
+	$min       = '' !== $raw_min ? (float) preg_replace( '/[^\d.]/', '', $raw_min ) : 0;
+	$max       = '' !== $raw_max ? (float) preg_replace( '/[^\d.]/', '', $raw_max ) : 0;
 	// phpcs:enable
 
 	if ( ! array_key_exists( $sort, ane_product_sort_options() ) ) {
@@ -422,12 +424,12 @@ function ane_product_filters() {
 					<input type="number" name="harga_min" min="0" step="1" inputmode="numeric"
 						aria-label="<?php esc_attr_e( 'Minimum price', 'elemenane' ); ?>"
 						placeholder="<?php echo esc_attr( number_format_i18n( floor( $range['min'] ) ) ); ?>"
-						value="<?php echo $request['min'] > 0 ? esc_attr( (int) $request['min'] ) : ''; ?>">
+						value="<?php echo $request['min'] > 0 ? esc_attr( (string) (int) $request['min'] ) : ''; ?>">
 					<span aria-hidden="true">–</span>
 					<input type="number" name="harga_max" min="0" step="1" inputmode="numeric"
 						aria-label="<?php esc_attr_e( 'Maximum price', 'elemenane' ); ?>"
 						placeholder="<?php echo esc_attr( number_format_i18n( ceil( $range['max'] ) ) ); ?>"
-						value="<?php echo $request['max'] > 0 ? esc_attr( (int) $request['max'] ) : ''; ?>">
+						value="<?php echo $request['max'] > 0 ? esc_attr( (string) (int) $request['max'] ) : ''; ?>">
 				</div>
 			</fieldset>
 		<?php endif; ?>

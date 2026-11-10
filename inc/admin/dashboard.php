@@ -22,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function ane_add_dashboard_page() {
 	add_menu_page(
-		__( 'Dashboard', 'newsane' ),
-		__( 'Dashboard', 'newsane' ),
+		__( 'Dashboard', 'elemenane' ),
+		__( 'Dashboard', 'elemenane' ),
 		'read',
 		'ane-dashboard',
 		'ane_render_dashboard_page',
@@ -109,7 +109,7 @@ function ane_render_dashboard_page() {
 	$stats = ane_get_dashboard_stats();
 	?>
 	<div class="wrap ane-custom-dashboard">
-		<h1 class="wp-heading-inline"><?php esc_html_e( 'Dashboard', 'newsane' ); ?></h1>
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Dashboard', 'elemenane' ); ?></h1>
 
 		<div class="ane-dashboard-grid">
 			<!-- Stats Cards -->
@@ -120,7 +120,7 @@ function ane_render_dashboard_page() {
 			<!-- Chart -->
 			<div class="ane-dashboard-section ane-dashboard-section--full">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Content Analytics', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Content Analytics', 'elemenane' ); ?></h2>
 					<div class="inside">
 						<?php ane_dashboard_posts_chart(); ?>
 					</div>
@@ -130,7 +130,7 @@ function ane_render_dashboard_page() {
 			<!-- 3 Column Grid -->
 			<div class="ane-dashboard-section">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Popular Posts', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Popular Posts', 'elemenane' ); ?></h2>
 					<div class="inside">
 						<?php ane_dashboard_popular_posts(); ?>
 					</div>
@@ -140,9 +140,9 @@ function ane_render_dashboard_page() {
 			<div class="ane-dashboard-section">
 				<div class="postbox">
 					<div class="ane-section-header">
-						<h2 class="hndle"><?php esc_html_e( 'Recent Posts', 'newsane' ); ?></h2>
+						<h2 class="hndle"><?php esc_html_e( 'Recent Posts', 'elemenane' ); ?></h2>
 						<a href="<?php echo esc_url( admin_url( 'post-new.php' ) ); ?>" class="button button-primary">
-							<?php esc_html_e( 'Create New Post', 'newsane' ); ?>
+							<?php esc_html_e( 'Create New Post', 'elemenane' ); ?>
 						</a>
 					</div>
 					<div class="inside">
@@ -153,7 +153,7 @@ function ane_render_dashboard_page() {
 
 			<div class="ane-dashboard-section">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Author Performance', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Author Performance', 'elemenane' ); ?></h2>
 					<div class="inside">
 						<?php ane_dashboard_top_authors(); ?>
 					</div>
@@ -163,7 +163,7 @@ function ane_render_dashboard_page() {
 			<!-- Content Distribution (можно добавить или убрать) -->
 			<div class="ane-dashboard-section ane-dashboard-section--full">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Content Distribution', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Content Distribution', 'elemenane' ); ?></h2>
 					<div class="inside">
 						<?php ane_dashboard_content_breakdown(); ?>
 					</div>
@@ -193,7 +193,7 @@ function ane_dashboard_stats_cards() {
 					</svg>
 				</div>
 				<div class="ane-stat-card__content">
-					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Visitors', 'newsane' ); ?></div>
+					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Visitors', 'elemenane' ); ?></div>
 					<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['total_views'] ) ); ?></div>
 					<?php
 					$growth_value = $stats['views_growth'];
@@ -216,7 +216,7 @@ function ane_dashboard_stats_cards() {
 						echo esc_html(
 							sprintf(
 								/* translators: %s: percentage with sign */
-								__( '%s%s%% this month', 'newsane' ),
+								__( '%1$s%2$s%% this month', 'elemenane' ),
 								$growth_sign,
 								number_format_i18n( abs( $growth_value ), 1 )
 							)
@@ -238,14 +238,14 @@ function ane_dashboard_stats_cards() {
 					</svg>
 				</div>
 				<div class="ane-stat-card__content">
-					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Articles', 'newsane' ); ?></div>
+					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Articles', 'elemenane' ); ?></div>
 					<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['total_posts'] ) ); ?></div>
 					<div class="ane-stat-card__change ane-stat-card__change--up">
 						<?php
 						echo esc_html(
 							sprintf(
 								/* translators: %s: number of posts */
-								__( '+%s this month', 'newsane' ),
+								__( '+%s this month', 'elemenane' ),
 								number_format_i18n( $stats['posts_this_month'] )
 							)
 						);
@@ -262,14 +262,14 @@ function ane_dashboard_stats_cards() {
 					</svg>
 				</div>
 				<div class="ane-stat-card__content">
-					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Comments', 'newsane' ); ?></div>
+					<div class="ane-stat-card__label"><?php esc_html_e( 'Total Comments', 'elemenane' ); ?></div>
 					<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['total_comments'] ) ); ?></div>
 					<div class="ane-stat-card__change ane-stat-card__change--up">
 						<?php
 						echo esc_html(
 							sprintf(
 								/* translators: %s: number of comments */
-								__( '+%s this month', 'newsane' ),
+								__( '+%s this month', 'elemenane' ),
 								number_format_i18n( $stats['comments_this_month'] )
 							)
 						);
@@ -289,14 +289,14 @@ function ane_dashboard_stats_cards() {
 					</svg>
 				</div>
 				<div class="ane-stat-card__content">
-					<div class="ane-stat-card__label"><?php esc_html_e( 'Active Authors', 'newsane' ); ?></div>
+					<div class="ane-stat-card__label"><?php esc_html_e( 'Active Authors', 'elemenane' ); ?></div>
 					<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['active_authors'] ) ); ?></div>
 					<div class="ane-stat-card__change">
 						<?php
 						echo esc_html(
 							sprintf(
 								/* translators: %s: number of authors */
-								__( '%s authors this month', 'newsane' ),
+								__( '%s authors this month', 'elemenane' ),
 								number_format_i18n( $stats['authors_this_month'] )
 							)
 						);
@@ -321,11 +321,11 @@ function ane_dashboard_posts_chart() {
 		<div class="ane-chart-legend">
 			<div class="ane-chart-legend__item">
 				<span class="ane-chart-legend__dot ane-chart-legend__dot--posts"></span>
-				<span><?php esc_html_e( 'Published Posts', 'newsane' ); ?></span>
+				<span><?php esc_html_e( 'Published Posts', 'elemenane' ); ?></span>
 			</div>
 			<div class="ane-chart-legend__item">
 				<span class="ane-chart-legend__dot ane-chart-legend__dot--views"></span>
-				<span><?php esc_html_e( 'Total Views', 'newsane' ); ?></span>
+				<span><?php esc_html_e( 'Total Views', 'elemenane' ); ?></span>
 			</div>
 		</div>
 	</div>
@@ -339,7 +339,7 @@ function ane_dashboard_popular_posts() {
 	$popular = ane_get_popular_posts_dashboard( 5 );
 
 	if ( empty( $popular ) ) {
-		echo '<p>' . esc_html__( 'No posts found.', 'newsane' ) . '</p>';
+		echo '<p>' . esc_html__( 'No posts found.', 'elemenane' ) . '</p>';
 		return;
 	}
 	?>
@@ -387,7 +387,7 @@ function ane_dashboard_recent_posts() {
 	);
 
 	if ( empty( $recent_posts ) ) {
-		echo '<p>' . esc_html__( 'No posts found.', 'newsane' ) . '</p>';
+		echo '<p>' . esc_html__( 'No posts found.', 'elemenane' ) . '</p>';
 		return;
 	}
 	?>
@@ -399,7 +399,7 @@ function ane_dashboard_recent_posts() {
 				$views = (int) get_post_meta( $post->ID, 'musi_views', true );
 				?>
 				<li class="ane-post-list__item">
-					<div class="ane-post-list__rank"><?php echo esc_html( $rank++ ); ?></div>
+					<div class="ane-post-list__rank"><?php echo esc_html( (string) $rank++ ); ?></div>
 					<div class="ane-post-list__content">
 						<a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ); ?>" class="ane-post-list__title">
 							<?php echo esc_html( $post->post_title ); ?>
@@ -413,7 +413,7 @@ function ane_dashboard_recent_posts() {
 								<?php echo esc_html( number_format_i18n( $views ) ); ?>
 							</span>
 							<span class="ane-post-list__date">
-								<?php echo esc_html( human_time_diff( strtotime( $post->post_date ), current_time( 'timestamp' ) ) ); ?> <?php esc_html_e( 'ago', 'newsane' ); ?>
+								<?php echo esc_html( human_time_diff( strtotime( $post->post_date ), current_time( 'timestamp' ) ) ); ?> <?php esc_html_e( 'ago', 'elemenane' ); ?>
 							</span>
 						</div>
 					</div>
@@ -431,7 +431,7 @@ function ane_dashboard_top_authors() {
 	$authors = ane_get_top_authors_dashboard( 5 );
 
 	if ( empty( $authors ) ) {
-		echo '<p>' . esc_html__( 'No authors found.', 'newsane' ) . '</p>';
+		echo '<p>' . esc_html__( 'No authors found.', 'elemenane' ) . '</p>';
 		return;
 	}
 	?>
@@ -447,9 +447,9 @@ function ane_dashboard_top_authors() {
 							<?php echo esc_html( $author['name'] ); ?>
 						</a>
 						<div class="ane-author-list__stats">
-							<span><?php echo esc_html( number_format_i18n( $author['posts'] ) ); ?> <?php esc_html_e( 'posts', 'newsane' ); ?></span>
+							<span><?php echo esc_html( number_format_i18n( $author['posts'] ) ); ?> <?php esc_html_e( 'posts', 'elemenane' ); ?></span>
 							<span>•</span>
-							<span><?php echo esc_html( number_format_i18n( $author['views'] ) ); ?> <?php esc_html_e( 'views', 'newsane' ); ?></span>
+							<span><?php echo esc_html( number_format_i18n( $author['views'] ) ); ?> <?php esc_html_e( 'views', 'elemenane' ); ?></span>
 						</div>
 					</div>
 				</li>
@@ -468,26 +468,26 @@ function ane_dashboard_content_breakdown() {
 	<div class="ane-dashboard">
 		<div class="ane-breakdown-grid">
 			<div class="ane-breakdown-item">
-				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Categories', 'newsane' ); ?></div>
+				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Categories', 'elemenane' ); ?></div>
 				<div class="ane-breakdown-item__value"><?php echo esc_html( number_format_i18n( $breakdown['categories'] ) ); ?></div>
 			</div>
 			<div class="ane-breakdown-item">
-				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Tags', 'newsane' ); ?></div>
+				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Tags', 'elemenane' ); ?></div>
 				<div class="ane-breakdown-item__value"><?php echo esc_html( number_format_i18n( $breakdown['tags'] ) ); ?></div>
 			</div>
 			<div class="ane-breakdown-item">
-				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Draft Posts', 'newsane' ); ?></div>
+				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Draft Posts', 'elemenane' ); ?></div>
 				<div class="ane-breakdown-item__value"><?php echo esc_html( number_format_i18n( $breakdown['drafts'] ) ); ?></div>
 			</div>
 			<div class="ane-breakdown-item">
-				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Scheduled', 'newsane' ); ?></div>
+				<div class="ane-breakdown-item__label"><?php esc_html_e( 'Scheduled', 'elemenane' ); ?></div>
 				<div class="ane-breakdown-item__value"><?php echo esc_html( number_format_i18n( $breakdown['scheduled'] ) ); ?></div>
 			</div>
 		</div>
 
 		<div class="ane-breakdown-progress">
 			<div class="ane-breakdown-progress__label">
-				<?php esc_html_e( 'Content Goal This Month', 'newsane' ); ?>
+				<?php esc_html_e( 'Content Goal This Month', 'elemenane' ); ?>
 				<span><?php echo esc_html( $breakdown['posts_this_month'] ); ?> / <?php echo esc_html( $breakdown['goal'] ); ?></span>
 			</div>
 			<div class="ane-breakdown-progress__bar">
@@ -522,8 +522,8 @@ function ane_get_dashboard_stats() {
 			AND p.post_status = 'publish'
 			AND MONTH(p.post_date) = %d
 			AND YEAR(p.post_date) = %d",
-			date( 'n' ),
-			date( 'Y' )
+			gmdate( 'n' ),
+			gmdate( 'Y' )
 		)
 	);
 
@@ -538,8 +538,8 @@ function ane_get_dashboard_stats() {
 			AND p.post_status = 'publish'
 			AND MONTH(p.post_date) = %d
 			AND YEAR(p.post_date) = %d",
-			date( 'n', strtotime( '-1 month' ) ),
-			date( 'Y', strtotime( '-1 month' ) )
+			gmdate( 'n', strtotime( '-1 month' ) ),
+			gmdate( 'Y', strtotime( '-1 month' ) )
 		)
 	);
 
@@ -561,8 +561,8 @@ function ane_get_dashboard_stats() {
 			AND post_status = 'publish'
 			AND MONTH(post_date) = %d
 			AND YEAR(post_date) = %d",
-			date( 'n' ),
-			date( 'Y' )
+			gmdate( 'n' ),
+			gmdate( 'Y' )
 		)
 	);
 
@@ -577,8 +577,8 @@ function ane_get_dashboard_stats() {
 			WHERE comment_approved = '1'
 			AND MONTH(comment_date) = %d
 			AND YEAR(comment_date) = %d",
-			date( 'n' ),
-			date( 'Y' )
+			gmdate( 'n' ),
+			gmdate( 'Y' )
 		)
 	);
 
@@ -599,8 +599,8 @@ function ane_get_dashboard_stats() {
 			AND post_status = 'publish'
 			AND MONTH(post_date) = %d
 			AND YEAR(post_date) = %d",
-			date( 'n' ),
-			date( 'Y' )
+			gmdate( 'n' ),
+			gmdate( 'Y' )
 		)
 	);
 
@@ -630,15 +630,15 @@ function ane_get_posts_per_month_data() {
 
 	// Get data for last 12 months.
 	for ( $i = 11; $i >= 0; $i-- ) {
-		$date = strtotime( "-{$i} months" );
-		$month = date( 'n', $date );
-		$year = date( 'Y', $date );
+		$date  = strtotime( "-{$i} months" );
+		$month = gmdate( 'n', $date );
+		$year  = gmdate( 'Y', $date );
 
 		// Month label.
 		$data['labels'][] = date_i18n( 'M Y', $date );
 
 		// Posts count.
-		$posts_count = (int) $wpdb->get_var(
+		$posts_count     = (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*)
 				FROM {$wpdb->posts}
@@ -653,7 +653,7 @@ function ane_get_posts_per_month_data() {
 		$data['posts'][] = $posts_count;
 
 		// Views count.
-		$views_count = (int) $wpdb->get_var(
+		$views_count     = (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT SUM(pm.meta_value)
 				FROM {$wpdb->postmeta} pm
@@ -689,7 +689,7 @@ function ane_get_popular_posts_dashboard( $limit = 5 ) {
 	);
 
 	$posts = array();
-	$rank = 1;
+	$rank  = 1;
 
 	if ( $query->have_posts() ) {
 		while ( $query->have_posts() ) {
@@ -699,7 +699,7 @@ function ane_get_popular_posts_dashboard( $limit = 5 ) {
 				'rank'  => $rank++,
 				'title' => get_the_title(),
 				'views' => (int) get_post_meta( get_the_ID(), 'musi_views', true ),
-				'date'  => human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'newsane' ),
+				'date'  => human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'elemenane' ),
 			);
 		}
 		wp_reset_postdata();
@@ -755,10 +755,12 @@ function ane_get_top_authors_dashboard( $limit = 5 ) {
 function ane_get_content_breakdown() {
 	global $wpdb;
 
-	$categories = wp_count_terms( 'category' );
-	$tags = wp_count_terms( 'post_tag' );
+	$categories = wp_count_terms( array( 'taxonomy' => 'category' ) );
+	$tags       = wp_count_terms( array( 'taxonomy' => 'post_tag' ) );
+	$categories = is_wp_error( $categories ) ? 0 : (int) $categories;
+	$tags       = is_wp_error( $tags ) ? 0 : (int) $tags;
 
-	$drafts = (int) wp_count_posts()->draft;
+	$drafts    = (int) wp_count_posts()->draft;
 	$scheduled = (int) wp_count_posts()->future;
 
 	// Posts this month.
@@ -770,13 +772,13 @@ function ane_get_content_breakdown() {
 			AND post_status = 'publish'
 			AND MONTH(post_date) = %d
 			AND YEAR(post_date) = %d",
-			date( 'n' ),
-			date( 'Y' )
+			gmdate( 'n' ),
+			gmdate( 'Y' )
 		)
 	);
 
 	// Goal: 30 posts per month (customize as needed).
-	$goal = 30;
+	$goal            = 30;
 	$goal_percentage = min( 100, ( $posts_this_month / $goal ) * 100 );
 
 	return array(
@@ -798,8 +800,8 @@ function ane_get_content_breakdown() {
 function ane_remove_footer_admin() {
 	return sprintf(
 		/* translators: %s: link to Webane Indonesia website */
-		esc_html__( 'Designed with love by %s. Powered by WordPress.', 'newsane' ),
-		'<a href="' . esc_url( 'https://webane.com/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Webane Indonesia', 'newsane' ) . '</a>'
+		esc_html__( 'Designed with love by %s. Powered by WordPress.', 'elemenane' ),
+		'<a href="' . esc_url( 'https://webane.com/' ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Webane Indonesia', 'elemenane' ) . '</a>'
 	);
 }
 add_filter( 'admin_footer_text', 'ane_remove_footer_admin' );
@@ -812,7 +814,7 @@ add_filter( 'admin_footer_text', 'ane_remove_footer_admin' );
 function ane_load_designed_by() {
 	return sprintf(
 		/* translators: %s: link to Webane Indonesia website */
-		esc_html__( 'Designed with love by %s', 'newsane' ),
-		'<a href="' . esc_url( 'https://webane.com/' ) . '" target="_blank" rel="noopener noreferrer" title="' . esc_attr__( 'Web Design Webane Indonesia', 'newsane' ) . '">' . esc_html__( 'Webane Indonesia', 'newsane' ) . '</a>'
+		esc_html__( 'Designed with love by %s', 'elemenane' ),
+		'<a href="' . esc_url( 'https://webane.com/' ) . '" target="_blank" rel="noopener noreferrer" title="' . esc_attr__( 'Web Design Webane Indonesia', 'elemenane' ) . '">' . esc_html__( 'Webane Indonesia', 'elemenane' ) . '</a>'
 	);
 }

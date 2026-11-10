@@ -5,6 +5,8 @@
  * Supports Elementor Theme Builder for page templates.
  * Falls back to native theme template if no Elementor template is set.
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 
 // Track page views

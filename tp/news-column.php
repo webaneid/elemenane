@@ -24,8 +24,8 @@ if ( ! have_rows( 'ane_box_column_isi' ) ) {
 			while ( have_rows( 'ane_box_column_isi' ) ) :
 				the_row();
 
-				$category      = get_sub_field( 'ane_category' );
-				$custom_title  = get_sub_field( 'judul_custom' );
+				$category     = get_sub_field( 'ane_category' );
+				$custom_title = get_sub_field( 'judul_custom' );
 
 				if ( empty( $category ) ) {
 					continue;
@@ -44,7 +44,7 @@ if ( ! have_rows( 'ane_box_column_isi' ) ) {
 							</h2>
 						</div>
 						<a class="lainnya" href="<?php echo esc_url( $category_link ); ?>">
-							<?php esc_html_e( 'More', 'elemenane' ); ?> <i class="ane-chevron-right-alt-2"></i>
+							<?php esc_html_e( 'More', 'elemenane' ); ?> <?php elemenane_icon( 'chevron-right-alt-2' ); ?>
 						</a>
 					</div>
 
@@ -70,7 +70,7 @@ if ( ! have_rows( 'ane_box_column_isi' ) ) {
 					</div>
 
 					<div class="badannya">
-						<?php
+							<?php
 							while ( $column_query->have_posts() ) :
 								$column_query->the_post();
 								get_template_part( 'tp/content', 'list' );

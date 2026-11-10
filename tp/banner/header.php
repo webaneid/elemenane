@@ -23,9 +23,9 @@ while ( have_rows( 'ane_iklan_header', 'option' ) ) :
 	$title  = get_sub_field( 'ane_iklan_judul' );
 	$url    = get_sub_field( 'ane_url' );
 	$name   = get_sub_field( 'ane_iklan_nama' );
-	$end    = ceil( ( strtotime( get_sub_field( 'ane_tanggal_akhir' ) ) - time() ) / ( 60 * 60 * 24 ) );
-	$start  = ceil( ( strtotime( get_sub_field( 'ane_tanggal_mulai' ) ) - time() ) / ( 60 * 60 * 24 ) );
-	$today  = ceil( ( strtotime( gmdate( 'Y-m-d' ) ) - time() ) / ( 60 * 60 * 24 ) );
+	$end    = (int) ceil( ( strtotime( (string) get_sub_field( 'ane_tanggal_akhir' ) ) - time() ) / ( 60 * 60 * 24 ) );
+	$start  = (int) ceil( ( strtotime( (string) get_sub_field( 'ane_tanggal_mulai' ) ) - time() ) / ( 60 * 60 * 24 ) );
+	$today  = (int) ceil( ( strtotime( gmdate( 'Y-m-d' ) ) - time() ) / ( 60 * 60 * 24 ) );
 	$online = $end - $today;
 
 	// Show banner if started today or still active
@@ -33,13 +33,13 @@ while ( have_rows( 'ane_iklan_header', 'option' ) ) :
 		?>
 		<div class="ane-wide-banner" style="display: block">
 			<a href="<?php echo esc_url( $url ); ?>"
-			   target="_blank"
-			   rel="nofollow noopener"
-			   title="<?php echo esc_attr( $title ); ?>">
+				target="_blank"
+				rel="nofollow noopener"
+				title="<?php echo esc_attr( $title ); ?>">
 				<div class="ane-image">
 					<img src="<?php echo esc_url( $banner ); ?>"
-					     alt="<?php echo esc_attr( $title ); ?>"
-					     title="<?php echo esc_attr( $title ); ?>">
+						alt="<?php echo esc_attr( $title ); ?>"
+						title="<?php echo esc_attr( $title ); ?>">
 					<div class="banner-info"><?php echo esc_html( $name ); ?></div>
 				</div>
 			</a>

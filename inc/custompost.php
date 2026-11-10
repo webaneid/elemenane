@@ -160,7 +160,6 @@ function ane_register_branch_cpt() {
 			'rewrite'       => array( 'slug' => 'branch' ),
 		)
 	);
-
 }
 add_action( 'init', 'ane_register_branch_cpt' );
 

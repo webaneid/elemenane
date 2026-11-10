@@ -1,0 +1,41 @@
+// Inline SVG icons (replaces the FontAne icon font).
+// Markup: elemenane_icon( 'name' ) in PHP -> <svg class="ane-icon ane-icon--name">.
+// Pseudo-element decorations use the ane-glyph-mask() mixin with glyphs from _icon-glyphs.scss.
+@import 'icon-glyphs';
+
+.ane-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    fill: currentColor;
+    vertical-align: -0.125em;
+}
+
+.ane-sosmed ul li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+// Square 1em glyph painted with currentColor, for ::before / ::after.
+@mixin ane-glyph-mask-image($name) {
+    -webkit-mask-image: map-get($ane-glyphs, $name);
+    mask-image: map-get($ane-glyphs, $name);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+@mixin ane-glyph-mask($name) {
+    content: "";
+    display: block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    @include ane-glyph-mask-image($name);
+}

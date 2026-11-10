@@ -45,7 +45,7 @@
             }
 
             .meta-time {
-                i {
+                i, .ane-icon {
                     color: var(--ane-warna-utama);
                     margin-right: 2px;
                 }
@@ -238,16 +238,24 @@
         .ane-image {
             position: relative;
             overflow: hidden;
+            &:before {
+                @include ane-glyph-mask(play);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin: -15px 0 0 -15px;
+                font-size: 30px;
+                color: rgba(var(--ane-warna-putih-rgb), 0.5);
+                z-index: 1;
+                transition: 0.5s;
+            }
             &:after {
                 position: absolute;
                 left: 0;
                 bottom: 0;
                 height: 100%;
                 width: 100%;
-                content: "\e944";
-                font-family: 'FontAne';
-                font-size: 30px;
-                color: rgba(var(--ane-warna-putih-rgb), 0.5);
+                content: "";
                 background: rgba(var(--ane-warna-gelap-rgb), 0.2);
                 display: flex;
                 align-items: center;
@@ -262,7 +270,7 @@
     &:hover {
         .entry-header {
             .ane-image {
-                &:after {
+                &:before {
                     color: var(--ane-warna-putih);
                 }
             }
@@ -273,16 +281,24 @@
     .entry-header {
         .ane-image {
             position: relative;
+            &:before {
+                @include ane-glyph-mask(gallery);
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin: -15px 0 0 -15px;
+                font-size: 30px;
+                color: rgba(var(--ane-warna-putih-rgb), 0.5);
+                z-index: 1;
+                transition: 0.5s;
+            }
             &:after {
                 position: absolute;
                 left: 0;
                 bottom: 0;
                 height: 100%;
                 width: 100%;
-                content: "\e928";
-                font-family: 'FontAne';
-                font-size: 30px;
-                color: rgba(var(--ane-warna-putih-rgb), 0.5);
+                content: "";
                 background: rgba(var(--ane-warna-gelap-rgb), 0.3);
                 display: flex;
                 align-items: center;
@@ -297,7 +313,7 @@
     &:hover {
         .entry-header {
             .ane-image {
-                &:after {
+                &:before {
                     color: var(--ane-warna-putih);
                 }
             }
@@ -635,7 +651,7 @@
         margin-bottom: 15px;
         line-height: 1.2rem;
 
-        i {
+        i, .ane-icon {
             font-size: 12px;
             line-height: 1.2rem;
         }
@@ -747,8 +763,7 @@
     overflow: hidden;
 
     &:before {
-        content:"\e904";
-        font-family:'FontAne';
+        @include ane-glyph-mask(buku);
         color: rgba(var(--ane-warna-gelap-rgb),0.1);
         font-style: normal;
         font-size: 100px;

@@ -51,18 +51,16 @@ $section_title = ! empty( $custom_title ) ? $custom_title : __( 'Latest Content'
 					$counter = -1;
 					while ( $home_query->have_posts() ) :
 						$home_query->the_post();
-						$counter++;
+						++$counter;
 
-						// First post - overlay
+						// First post - overlay.
 						if ( 0 === $counter ) {
 							get_template_part( 'tp/content', 'overlay' );
-						}
-						// 6th post - overlay
-						elseif ( 5 === $counter ) {
+						} elseif ( 5 === $counter ) {
+							// 6th post - overlay.
 							get_template_part( 'tp/content', 'overlay' );
-						}
-						// Other posts - list or post format
-						else {
+						} else {
+							// Other posts - list or post format.
 							if ( wp_is_mobile() ) {
 								get_template_part( 'tp/content', 'list' );
 							} else {

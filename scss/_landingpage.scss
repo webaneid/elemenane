@@ -43,7 +43,7 @@
         line-height: 1;
         color: var(--ane-warna-alternatif);
 
-        i {
+        i, .ane-icon {
             font-size: 10px;
             font-weight: bold;
             margin-left: 8px;
@@ -398,7 +398,7 @@
                                     display: none;
                                 }
                                 .meta-time {
-                                    i {
+                                    i, .ane-icon {
                                         color: var(--ane-warna-putih);
                                     }
                                 }
@@ -564,7 +564,7 @@
                     }
                     .post-content {
                         .meta-time {
-                            i {
+                            i, .ane-icon {
                                 color: var(--ane-warna-putih);
                             }
                         }
@@ -605,7 +605,7 @@
                                         }
                                     }
                                     .meta-time {
-                                        i {
+                                        i, .ane-icon {
                                             color: var(--ane-warna-putih);
                                         }
                                     }

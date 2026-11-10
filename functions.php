@@ -6,58 +6,69 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+if ( ! defined( 'ELEMENANE_VERSION' ) ) {
+	define( 'ELEMENANE_VERSION', (string) wp_get_theme()->get( 'Version' ) );
 }
 
-// Check WordPress version compatibility
-if ( version_compare( $GLOBALS['wp_version'], '4.7', '<' ) ) {
-	require get_template_directory() . '/inc/back-compat.php';
-	return;
+if ( ! defined( 'ELEMENANE_DIR' ) ) {
+	define( 'ELEMENANE_DIR', get_template_directory() );
+}
+
+if ( ! defined( 'ELEMENANE_URI' ) ) {
+	define( 'ELEMENANE_URI', get_template_directory_uri() );
 }
 
 /**
- * Theme setup
+ * Configure default WordPress image sizes once per theme version or activation.
+ *
+ * @since 1.1.9
+ * @return void
+ */
+function elemenane_configure_image_sizes() {
+	if ( ELEMENANE_VERSION === get_option( 'elemenane_image_sizes_version' ) ) {
+		return;
+	}
+
+	update_option( 'medium_size_w', 700 );
+	update_option( 'medium_size_h', 394 );
+	update_option( 'medium_crop', 1 );
+	update_option( 'large_size_w', 1000 );
+	update_option( 'large_size_h', 563 );
+	update_option( 'large_crop', 1 );
+	update_option( 'thumbnail_size_w', 400 );
+	update_option( 'thumbnail_size_h', 225 );
+	update_option( 'thumbnail_crop', 1 );
+	update_option( 'elemenane_image_sizes_set', 'yes' );
+	update_option( 'elemenane_image_sizes_version', ELEMENANE_VERSION );
+}
+add_action( 'after_switch_theme', 'elemenane_configure_image_sizes' );
+add_action( 'admin_init', 'elemenane_configure_image_sizes' );
+
+/**
+ * Theme setup.
  *
  * @since 1.0.0
+ * @return void
  */
 function elemenane_theme_setup() {
-	/**
-	 * Load theme translations.
-	 * Using load_textdomain() instead of load_theme_textdomain() to bypass WordPress
-	 * translation caching mechanism that can prevent new translations from loading.
-	 * determine_locale() gets fresh locale without cache interference.
-	 */
 	$locale = determine_locale();
-	$mofile = get_template_directory() . "/languages/elemenane-{$locale}.mo";
+	$mofile = ELEMENANE_DIR . "/languages/elemenane-{$locale}.mo";
 
 	if ( file_exists( $mofile ) ) {
 		load_textdomain( 'elemenane', $mofile );
 	}
 
-	// Core theme supports
+	// Core theme supports.
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'post-thumbnails' );
 
-	// Custom image sizes
+	// Custom image sizes.
 	add_image_size( 'kotak', 394, 394, true );
 
-	// Set default image sizes (runs once on theme activation)
-	if ( get_option( 'elemenane_image_sizes_set' ) !== 'yes' ) {
-		update_option( 'medium_size_w', 700 );
-		update_option( 'medium_size_h', 394 );
-		update_option( 'medium_crop', 1 );
-		update_option( 'large_size_w', 1000 );
-		update_option( 'large_size_h', 563 );
-		update_option( 'large_crop', 1 );
-		update_option( 'thumbnail_size_w', 400 );
-		update_option( 'thumbnail_size_h', 225 );
-		update_option( 'thumbnail_crop', 1 );
-		update_option( 'elemenane_image_sizes_set', 'yes' );
-	}
-
-	// Navigation menus
+	// Navigation menus.
 	register_nav_menus(
 		array(
 			'menuutama'  => __( 'Menu Utama', 'elemenane' ),
@@ -66,10 +77,10 @@ function elemenane_theme_setup() {
 		)
 	);
 
-	// Post formats
+	// Post formats.
 	add_theme_support( 'post-formats', array( 'video', 'gallery' ) );
 
-	// HTML5 support
+	// HTML5 support.
 	add_theme_support(
 		'html5',
 		array(
@@ -81,7 +92,7 @@ function elemenane_theme_setup() {
 		)
 	);
 
-	// Custom logo
+	// Custom logo.
 	add_theme_support(
 		'custom-logo',
 		array(
@@ -92,15 +103,16 @@ function elemenane_theme_setup() {
 		)
 	);
 
-	// Yoast SEO breadcrumbs support
+	// Yoast SEO breadcrumbs support.
 	add_theme_support( 'yoast-seo-breadcrumbs' );
 }
 add_action( 'after_setup_theme', 'elemenane_theme_setup' );
 
 /**
- * Register widget areas
+ * Register widget areas.
  *
  * @since 1.0.0
+ * @return void
  */
 function elemenane_widgets_init() {
 	register_sidebar(
@@ -130,7 +142,7 @@ function elemenane_widgets_init() {
 add_action( 'widgets_init', 'elemenane_widgets_init' );
 
 /**
- * Remove WordPress version from script and style URLs for security
+ * Remove WordPress version from script and style URLs for security.
  *
  * @param string $src The URL of the script or style.
  * @return string Modified URL without version query string.
@@ -146,7 +158,7 @@ function elemenane_remove_wp_version_strings( $src ) {
 	$query = wp_parse_url( $src, PHP_URL_QUERY );
 	if ( $query ) {
 		parse_str( $query, $params );
-		if ( isset( $params['ver'] ) && $params['ver'] === $GLOBALS['wp_version'] ) {
+		if ( isset( $params['ver'] ) && $GLOBALS['wp_version'] === $params['ver'] ) {
 			$src = remove_query_arg( 'ver', $src );
 		}
 	}
@@ -157,7 +169,7 @@ add_filter( 'script_loader_src', 'elemenane_remove_wp_version_strings' );
 add_filter( 'style_loader_src', 'elemenane_remove_wp_version_strings' );
 
 /**
- * Remove WordPress version from meta generator tag for security
+ * Remove WordPress version from meta generator tag for security.
  *
  * @return string Empty string to remove generator tag.
  * @since 1.0.0
@@ -168,9 +180,10 @@ function elemenane_remove_meta_version() {
 add_filter( 'the_generator', 'elemenane_remove_meta_version' );
 
 /**
- * Admin notice shown when ACF is not active
+ * Admin notice shown when ACF is not active.
  *
  * @since 1.1.4
+ * @return void
  */
 function elemenane_acf_missing_notice() {
 	if ( ! current_user_can( 'install_plugins' ) ) {
@@ -187,9 +200,10 @@ function elemenane_acf_missing_notice() {
 }
 
 /**
- * Frontend placeholder shown when ACF is not active
+ * Frontend placeholder shown when ACF is not active.
  *
  * @since 1.1.4
+ * @return void
  */
 function elemenane_acf_missing_frontend() {
 	wp_die(
@@ -215,16 +229,45 @@ if ( ! class_exists( 'ACF' ) ) {
 }
 
 /**
- * Auto-load all PHP files from /inc directory and subdirectories
+ * Load all theme modules explicitly (no glob()) for security and deterministic load order.
  *
- * @since 1.0.0
+ * @since 1.1.9
  */
-$root_files = glob( get_template_directory() . '/inc/*.php' );
-$subdirectory_files = glob( get_template_directory() . '/inc/**/*.php' );
-$all_files = array_merge( $root_files ?: array(), $subdirectory_files ?: array() );
+$elemenane_includes = array(
+	'/inc/acf.php',
+	'/inc/admin.php',
+	'/inc/branch-acf.php',
+	'/inc/custompost.php',
+	'/inc/elemenane.php',
+	'/inc/elementor-defaults.php',
+	'/inc/elementor.php',
+	'/inc/feature-toggles.php',
+	'/inc/handle.php',
+	'/inc/header-acf.php',
+	'/inc/icons.php',
+	'/inc/product-acf.php',
+	'/inc/product-filter.php',
+	'/inc/product-woocommerce.php',
+	'/inc/seo.php',
+	'/inc/single-iklan.php',
+	'/inc/sosmed.php',
+	'/inc/tracking-scripts.php',
+	'/inc/updater.php',
+	'/inc/webp-converter.php',
+	'/inc/widget.php',
+	'/inc/admin/content.php',
+	'/inc/admin/customizer.php',
+	'/inc/admin/dashboard.php',
+	'/inc/admin/design-tokens.php',
+	'/inc/admin/footer-mobile-menu.php',
+	'/inc/admin/header.php',
+	'/inc/admin/linktree-analytics.php',
+	'/inc/admin/linktree-core.php',
+	'/inc/admin/menu.php',
+	'/inc/admin/navigation.php',
+	'/inc/admin/user.php',
+);
 
-foreach ( $all_files as $file ) {
-	if ( is_file( $file ) && pathinfo( $file, PATHINFO_EXTENSION ) === 'php' ) {
-		include_once $file;
-	}
+foreach ( $elemenane_includes as $elemenane_include ) {
+	require_once ELEMENANE_DIR . $elemenane_include;
 }

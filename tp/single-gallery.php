@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					printf(
 						'<a class="post-cat" href="%s">%s</a>',
 						esc_url( get_category_link( $category->term_id ) ),
-						esc_html( $category->cat_name )
+						esc_html( $category->name )
 					);
 				}
 			}
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<?php
 		the_title( '<h1 class="post-title">', '</h1>' );
-		echo ane_post_meta_v2();
+		echo wp_kses( ane_post_meta_v2(), elemenane_kses_post_with_svg() );
 		?>
 	</header>
 
@@ -40,24 +40,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="share-this">
-			<?php echo ane_share_this_post(); ?>
+			<?php echo wp_kses( ane_share_this_post(), elemenane_kses_post_with_svg() ); ?>
 		</div>
 
 		<div class="ane-tags">
 			<?php
 			$tag_list = get_the_tag_list( '<ul><li>', '</li><li>', '</li></ul>' );
 			if ( $tag_list ) {
-				echo $tag_list;
+				echo wp_kses_post( $tag_list );
 			}
 			?>
 		</div>
 
 		<div class="ane-post-nav">
-			<?php echo ane_prev_next_post(); ?>
+			<?php echo wp_kses_post( ane_prev_next_post() ); ?>
 		</div>
 
 		<div class="ane-comment-form">
-			<?php echo ane_load_facebook_comment(); ?>
+			<?php echo wp_kses_post( ane_load_facebook_comment() ); ?>
 		</div>
 
 		<?php ane_related_posts(); ?>

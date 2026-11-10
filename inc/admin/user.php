@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Enqueue user profile styles and scripts.
  */
-function ane_user_profile_enqueue_scripts() : void {
+function ane_user_profile_enqueue_scripts(): void {
 	$screen = get_current_screen();
 
 	if ( ! $screen || ( 'profile' !== $screen->id && 'user-edit' !== $screen->id ) ) {
@@ -73,16 +73,16 @@ add_action( 'admin_enqueue_scripts', 'ane_user_profile_enqueue_scripts' );
  *
  * @param WP_User $user User object.
  */
-function ane_user_profile_header( WP_User $user ) : void {
+function ane_user_profile_header( WP_User $user ): void {
 	// Get user data.
-	$avatar         = get_avatar( $user->ID, 120 );
-	$display_name   = $user->display_name;
-	$username       = $user->user_login;
-	$email          = $user->user_email;
-	$roles          = $user->roles;
-	$role_name      = ! empty( $roles ) ? translate_user_role( ucfirst( $roles[0] ) ) : __( 'Subscriber', 'newsane' );
-	$registered     = date_i18n( get_option( 'date_format' ), strtotime( $user->user_registered ) );
-	$bio            = get_user_meta( $user->ID, 'description', true );
+	$avatar       = get_avatar( $user->ID, 120 );
+	$display_name = $user->display_name;
+	$username     = $user->user_login;
+	$email        = $user->user_email;
+	$roles        = $user->roles;
+	$role_name    = ! empty( $roles ) ? translate_user_role( ucfirst( $roles[0] ) ) : __( 'Subscriber', 'elemenane' );
+	$registered   = date_i18n( get_option( 'date_format' ), strtotime( $user->user_registered ) );
+	$bio          = get_user_meta( $user->ID, 'description', true );
 
 	?>
 	<div class="ane-user-profile__header">
@@ -116,7 +116,7 @@ function ane_user_profile_header( WP_User $user ) : void {
 					</svg>
 					<?php
 					/* translators: %s: Registration date */
-					printf( esc_html__( 'Joined %s', 'newsane' ), esc_html( $registered ) );
+					printf( esc_html__( 'Joined %s', 'elemenane' ), esc_html( $registered ) );
 					?>
 				</span>
 			</div>
@@ -133,13 +133,13 @@ function ane_user_profile_header( WP_User $user ) : void {
  *
  * @param WP_User $user User object.
  */
-function ane_user_profile_performance( WP_User $user ) : void {
+function ane_user_profile_performance( WP_User $user ): void {
 	// Get user stats.
 	$stats = ane_get_user_stats( $user->ID );
 
 	?>
 	<div class="ane-user-profile__performance">
-		<h3><?php esc_html_e( 'Performance', 'newsane' ); ?></h3>
+		<h3><?php esc_html_e( 'Performance', 'elemenane' ); ?></h3>
 
 		<div class="ane-user-profile__stats-grid">
 			<div class="ane-user-profile__stat">
@@ -154,7 +154,7 @@ function ane_user_profile_performance( WP_User $user ) : void {
 				</div>
 				<div class="ane-user-profile__stat-content">
 					<div class="ane-user-profile__stat-value"><?php echo esc_html( number_format_i18n( $stats['total_posts'] ) ); ?></div>
-					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Total Posts', 'newsane' ); ?></div>
+					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Total Posts', 'elemenane' ); ?></div>
 				</div>
 			</div>
 
@@ -167,7 +167,7 @@ function ane_user_profile_performance( WP_User $user ) : void {
 				</div>
 				<div class="ane-user-profile__stat-content">
 					<div class="ane-user-profile__stat-value"><?php echo esc_html( number_format_i18n( $stats['total_views'] ) ); ?></div>
-					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Total Views', 'newsane' ); ?></div>
+					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Total Views', 'elemenane' ); ?></div>
 				</div>
 			</div>
 
@@ -179,7 +179,7 @@ function ane_user_profile_performance( WP_User $user ) : void {
 				</div>
 				<div class="ane-user-profile__stat-content">
 					<div class="ane-user-profile__stat-value"><?php echo esc_html( number_format_i18n( $stats['total_comments'] ) ); ?></div>
-					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Total Comments', 'newsane' ); ?></div>
+					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Total Comments', 'elemenane' ); ?></div>
 				</div>
 			</div>
 
@@ -191,7 +191,7 @@ function ane_user_profile_performance( WP_User $user ) : void {
 				</div>
 				<div class="ane-user-profile__stat-content">
 					<div class="ane-user-profile__stat-value"><?php echo esc_html( number_format_i18n( $stats['avg_views'] ) ); ?></div>
-					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Avg Views/Post', 'newsane' ); ?></div>
+					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Avg Views/Post', 'elemenane' ); ?></div>
 				</div>
 			</div>
 
@@ -206,13 +206,13 @@ function ane_user_profile_performance( WP_User $user ) : void {
 				</div>
 				<div class="ane-user-profile__stat-content">
 					<div class="ane-user-profile__stat-value"><?php echo esc_html( number_format_i18n( $stats['posts_this_month'] ) ); ?></div>
-					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Posts This Month', 'newsane' ); ?></div>
+					<div class="ane-user-profile__stat-label"><?php esc_html_e( 'Posts This Month', 'elemenane' ); ?></div>
 				</div>
 			</div>
 		</div>
 
 		<div class="ane-user-profile__chart-container">
-			<h4><?php esc_html_e( 'Posts Per Month (Last 12 Months)', 'newsane' ); ?></h4>
+			<h4><?php esc_html_e( 'Posts Per Month (Last 12 Months)', 'elemenane' ); ?></h4>
 			<canvas id="ane-user-posts-chart"></canvas>
 		</div>
 	</div>
@@ -224,7 +224,7 @@ function ane_user_profile_performance( WP_User $user ) : void {
  *
  * @param WP_User $user User object.
  */
-function ane_user_profile_recent_activity( WP_User $user ) : void {
+function ane_user_profile_recent_activity( WP_User $user ): void {
 	// Get recent posts.
 	$recent_posts = get_posts(
 		array(
@@ -250,7 +250,7 @@ function ane_user_profile_recent_activity( WP_User $user ) : void {
 	?>
 	<div class="ane-user-profile__activity">
 		<div class="ane-user-profile__activity-section">
-			<h3><?php esc_html_e( 'Recent Posts', 'newsane' ); ?></h3>
+			<h3><?php esc_html_e( 'Recent Posts', 'elemenane' ); ?></h3>
 			<?php if ( ! empty( $recent_posts ) ) : ?>
 				<ul class="ane-user-profile__posts-list">
 					<?php foreach ( $recent_posts as $post ) : ?>
@@ -262,15 +262,15 @@ function ane_user_profile_recent_activity( WP_User $user ) : void {
 								<div class="ane-user-profile__post-meta">
 									<span class="ane-user-profile__post-date">
 										<?php echo esc_html( human_time_diff( strtotime( $post->post_date ), current_time( 'timestamp' ) ) ); ?>
-										<?php esc_html_e( 'ago', 'newsane' ); ?>
+										<?php esc_html_e( 'ago', 'elemenane' ); ?>
 									</span>
 									<span class="ane-user-profile__post-views">
 										<?php echo esc_html( ane_get_views( $post->ID ) ); ?>
-										<?php esc_html_e( 'views', 'newsane' ); ?>
+										<?php esc_html_e( 'views', 'elemenane' ); ?>
 									</span>
 									<span class="ane-user-profile__post-comments">
 										<?php echo esc_html( get_comments_number( $post->ID ) ); ?>
-										<?php esc_html_e( 'comments', 'newsane' ); ?>
+										<?php esc_html_e( 'comments', 'elemenane' ); ?>
 									</span>
 								</div>
 							</div>
@@ -281,12 +281,12 @@ function ane_user_profile_recent_activity( WP_User $user ) : void {
 					<?php endforeach; ?>
 				</ul>
 			<?php else : ?>
-				<p class="ane-user-profile__empty"><?php esc_html_e( 'No posts yet.', 'newsane' ); ?></p>
+				<p class="ane-user-profile__empty"><?php esc_html_e( 'No posts yet.', 'elemenane' ); ?></p>
 			<?php endif; ?>
 		</div>
 
 		<div class="ane-user-profile__activity-section">
-			<h3><?php esc_html_e( 'Recent Comments', 'newsane' ); ?></h3>
+			<h3><?php esc_html_e( 'Recent Comments', 'elemenane' ); ?></h3>
 			<?php if ( ! empty( $recent_comments ) ) : ?>
 				<ul class="ane-user-profile__comments-list">
 					<?php foreach ( $recent_comments as $comment ) : ?>
@@ -297,14 +297,14 @@ function ane_user_profile_recent_activity( WP_User $user ) : void {
 								</p>
 								<div class="ane-user-profile__comment-meta">
 									<span class="ane-user-profile__comment-post">
-										<?php esc_html_e( 'On:', 'newsane' ); ?>
-										<a href="<?php echo esc_url( get_permalink( $comment->comment_post_ID ) ); ?>">
-											<?php echo esc_html( get_the_title( $comment->comment_post_ID ) ); ?>
+										<?php esc_html_e( 'On:', 'elemenane' ); ?>
+										<a href="<?php echo esc_url( (string) get_permalink( (int) $comment->comment_post_ID ) ); ?>">
+											<?php echo esc_html( get_the_title( (int) $comment->comment_post_ID ) ); ?>
 										</a>
 									</span>
 									<span class="ane-user-profile__comment-date">
 										<?php echo esc_html( human_time_diff( strtotime( $comment->comment_date ), current_time( 'timestamp' ) ) ); ?>
-										<?php esc_html_e( 'ago', 'newsane' ); ?>
+										<?php esc_html_e( 'ago', 'elemenane' ); ?>
 									</span>
 								</div>
 							</div>
@@ -312,7 +312,7 @@ function ane_user_profile_recent_activity( WP_User $user ) : void {
 					<?php endforeach; ?>
 				</ul>
 			<?php else : ?>
-				<p class="ane-user-profile__empty"><?php esc_html_e( 'No comments yet.', 'newsane' ); ?></p>
+				<p class="ane-user-profile__empty"><?php esc_html_e( 'No comments yet.', 'elemenane' ); ?></p>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -325,7 +325,7 @@ function ane_user_profile_recent_activity( WP_User $user ) : void {
  * @param int $user_id User ID.
  * @return array User stats.
  */
-function ane_get_user_stats( int $user_id ) : array {
+function ane_get_user_stats( int $user_id ): array {
 	global $wpdb;
 
 	// Total posts.
@@ -373,8 +373,8 @@ function ane_get_user_stats( int $user_id ) : array {
 			AND MONTH(post_date) = %d
 			AND YEAR(post_date) = %d",
 			$user_id,
-			date( 'n' ),
-			date( 'Y' )
+			gmdate( 'n' ),
+			gmdate( 'Y' )
 		)
 	);
 
@@ -393,7 +393,7 @@ function ane_get_user_stats( int $user_id ) : array {
  * @param int $user_id User ID.
  * @return array Posts per month data.
  */
-function ane_get_user_posts_data( int $user_id ) : array {
+function ane_get_user_posts_data( int $user_id ): array {
 	global $wpdb;
 
 	$data = array(
@@ -405,14 +405,14 @@ function ane_get_user_posts_data( int $user_id ) : array {
 	// Get data for last 12 months.
 	for ( $i = 11; $i >= 0; $i-- ) {
 		$date  = strtotime( "-{$i} months" );
-		$month = date( 'n', $date );
-		$year  = date( 'Y', $date );
+		$month = gmdate( 'n', $date );
+		$year  = gmdate( 'Y', $date );
 
 		// Month label.
 		$data['labels'][] = date_i18n( 'M Y', $date );
 
 		// Posts count.
-		$posts_count = (int) $wpdb->get_var(
+		$posts_count     = (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*)
 				FROM {$wpdb->posts}
@@ -429,7 +429,7 @@ function ane_get_user_posts_data( int $user_id ) : array {
 		$data['posts'][] = $posts_count;
 
 		// Views count.
-		$views_count = (int) $wpdb->get_var(
+		$views_count     = (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT SUM(pm.meta_value)
 				FROM {$wpdb->postmeta} pm
@@ -456,10 +456,10 @@ function ane_get_user_posts_data( int $user_id ) : array {
  *
  * @param WP_User $user User object.
  */
-function ane_render_user_profile( WP_User $user ) : void {
+function ane_render_user_profile( WP_User $user ): void {
 	?>
 	<div class="ane-user-profile">
-		<h2 class="ane-user-profile__title"><?php esc_html_e( 'User Overview', 'newsane' ); ?></h2>
+		<h2 class="ane-user-profile__title"><?php esc_html_e( 'User Overview', 'elemenane' ); ?></h2>
 
 		<?php
 		// Header section.
@@ -488,10 +488,10 @@ add_action( 'personal_options', 'ane_render_user_profile', 1 );
  * WordPress personal_options hook doesn't allow full wrapping,
  * so we need to inject closing div + h2 for default form.
  */
-function ane_user_profile_close_wrapper() : void {
+function ane_user_profile_close_wrapper(): void {
 	?>
 	<!-- End Ane User Profile -->
-	<h2 style="margin-top: 2rem;"><?php esc_html_e( 'Personal Options', 'newsane' ); ?></h2>
+	<h2 style="margin-top: 2rem;"><?php esc_html_e( 'Personal Options', 'elemenane' ); ?></h2>
 	<?php
 }
 add_action( 'personal_options', 'ane_user_profile_close_wrapper', 999 );

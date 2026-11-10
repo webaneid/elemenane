@@ -1,0 +1,26 @@
+# Progres Retrofit & Optimasi — Elemen Ane (`elemenane`)
+
+Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa kode, dan optimasi PageSpeed pada tema **Elemen Ane**.
+
+---
+
+## Ringkasan Status Fase
+
+| Fase | Nama Fase | Target Gap | Status | Tanggal Selesai |
+| :--- | :--- | :--- | :--- | :--- |
+| **[Fase 00](phases/phase-00-fondasi.md)** | Audit Awal & Pemasangan Fondasi Standar (`AGENTS.md`, `docs/`, CI/CD, PHPCS, PHPStan, Security/CSS/Dist Scripts) | Fondasi & Pemetaan `GAP-01` s/d `GAP-28` | **Completed** | 2026-11-10 |
+| **[Fase 01](phases/phase-01-updater-dan-bootstrap.md)** | Hardening GitHub Auto-Updater (`inc/updater.php`), Konstanta `ELEMENANE_VERSION`, & Optimasi Bootstrap `functions.php` | `GAP-04`, `GAP-05`, `GAP-12`, `GAP-13` | **Completed** | 2026-11-11 |
+| **[Fase 02](phases/phase-02-security-dan-bugfix.md)** | Security Hardening (Anti-Webshell `ABSPATH`, Obfuscasi API Key Maps, Tutup Stored XSS & Unescaped Output, Sanitasi SVG, Guard ACF Admin) & Perbaikan Bug PHP 8.x (`0` PHPStan Error) | `GAP-01`, `GAP-02`, `GAP-03`, `GAP-06`, `GAP-07`, `GAP-08`, `GAP-09`, `GAP-10`, `GAP-11`, `GAP-15` | **Completed** | 2026-11-11 |
+| **[Fase 03](phases/phase-03-clean-code-dan-wpcs.md)** | Pembersihan Codebase, Eksplisit `require_once` (Hapus `glob()`), Penyeragaman Text Domain `'elemenane'`, & Format WPCS (`0` PHPCS Error) | `GAP-14`, `GAP-16`, `GAP-17`, `GAP-18` | **Completed** | 2026-11-11 |
+| **[Fase 04](phases/phase-04-webp-converter.md)** | Auto-Convert Upload Gambar ke WebP (`inc/webp-converter.php` dengan `ELEMENANE_WEBP_QUALITY = 78`) | `GAP-19` | **Completed** | 2026-11-11 |
+| **Fase 05** | Migrasi Icon `FontAne` ke Helper Inline SVG (`elemenane_icon()` di `inc/icons.php`) & Penghapusan `css/FontAne.css` + `fonts/` | `GAP-20` | **Completed** | 2026-11-11 |
+| **Fase 06** | Optimasi Speed Test & Core Web Vitals Standar Webane (`webane-pagespeed-cwv`: Konversi Hero `background-image` ke `<img>` DPR-aware, Preload LCP, Inline CSS OwlCarousel + Zero-CLS, Async CSS, Defer JS, `content-visibility`, & Aksesibilitas 100) | `GAP-21`, `GAP-22`, `GAP-23`, `GAP-24`, `GAP-25`, `GAP-26`, `GAP-27`, `GAP-28` | Planned | - |
+
+---
+
+## Baseline Metrik Kualitas (Akhir Fase 00)
+- **PHP Syntax (`composer lint:syntax`)**: `0` error sintaks pada seluruh file PHP.
+- **PHPStan Level 5 (`composer analyse`)**: Lulus (`0` error baru; `70` error warisan dibekukan di `phpstan-baseline.neon` dan dijadwalkan menjadi `0` error pada Fase 02).
+- **Security Scan (`composer security:scan`)**: `0` critical webshell error, `20` warning baseline (`18` file tanpa `ABSPATH`, `2` `print_r`, `1` hardcoded Google Maps API key) — seluruhnya dijadwalkan tuntas di Fase 01 & Fase 02.
+- **SCSS & CSS Check (`composer css:check`)**: Lulus (`38` file SCSS dan `11` file CSS seimbang, 5 entrypoint `.min.css` terverifikasi).
+- **Distribution Check (`composer dist:check`)**: Lulus (`146` file runtime siap rilis, `0` file dev bocor).

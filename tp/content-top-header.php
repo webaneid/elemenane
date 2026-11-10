@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<div class="ane-kanan">
-				<i class="ane-kalender"></i> <?php echo esc_html( wp_date( 'l, j F Y' ) ); ?>
+				<?php elemenane_icon( 'kalender' ); ?> <?php echo esc_html( wp_date( 'l, j F Y' ) ); ?>
 			</div>
 		</div>
 	</div>

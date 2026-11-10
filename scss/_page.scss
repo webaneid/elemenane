@@ -88,8 +88,7 @@
         overflow: hidden;
 
         &:before {
-            content:"\e91a";
-            font-family:'FontAne';
+            @include ane-glyph-mask(email);
             color: rgba(var(--ane-warna-gelap-rgb),0.1);
             font-style: normal;
             font-size: 100px;

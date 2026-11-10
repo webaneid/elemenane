@@ -30,7 +30,7 @@ function ane_admin_header_scripts( $hook ) {
 	}
 
 	$base_url = get_base_url_assets();
-	$version = wp_get_theme()->get( 'Version' );
+	$version  = wp_get_theme()->get( 'Version' );
 
 	if ( file_exists( get_template_directory() . '/js/admin-header.js' ) ) {
 		wp_enqueue_script(
@@ -68,7 +68,7 @@ function ane_customize_admin_bar( $wp_admin_bar ) {
 	$wp_admin_bar->add_node(
 		array(
 			'id'     => 'ane-new-post',
-			'title'  => '<span class="ane-btn-icon ane-btn-icon-post"></span>' . __( 'New Post', 'newsane' ),
+			'title'  => '<span class="ane-btn-icon ane-btn-icon-post"></span>' . __( 'New Post', 'elemenane' ),
 			'href'   => admin_url( 'post-new.php' ),
 			'parent' => 'top-secondary',
 			'meta'   => array(
@@ -81,7 +81,7 @@ function ane_customize_admin_bar( $wp_admin_bar ) {
 	$wp_admin_bar->add_node(
 		array(
 			'id'     => 'ane-new-page',
-			'title'  => '<span class="ane-btn-icon ane-btn-icon-page"></span>' . __( 'New Page', 'newsane' ),
+			'title'  => '<span class="ane-btn-icon ane-btn-icon-page"></span>' . __( 'New Page', 'elemenane' ),
 			'href'   => admin_url( 'post-new.php?post_type=page' ),
 			'parent' => 'top-secondary',
 			'meta'   => array(
@@ -94,7 +94,7 @@ function ane_customize_admin_bar( $wp_admin_bar ) {
 	$wp_admin_bar->add_node(
 		array(
 			'id'     => 'ane-dashboard',
-			'title'  => __( 'Dashboard', 'newsane' ),
+			'title'  => __( 'Dashboard', 'elemenane' ),
 			'href'   => admin_url( 'admin.php?page=ane-setup' ),
 			'parent' => 'site-name',
 			'meta'   => array(
@@ -149,8 +149,8 @@ function ane_replace_howdy( $wp_admin_bar ) {
 	}
 
 	// Replace "Howdy" with "Selamat datang".
-	$account->title = str_replace( 'Howdy,', __( 'Selamat datang,', 'newsane' ), $account->title );
+	$account->title = str_replace( 'Howdy,', __( 'Selamat datang,', 'elemenane' ), $account->title );
 
-	$wp_admin_bar->add_node( $account );
+	$wp_admin_bar->add_node( (array) $account );
 }
 add_action( 'admin_bar_menu', 'ane_replace_howdy', 25 );

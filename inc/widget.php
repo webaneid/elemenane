@@ -1,220 +1,268 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+/**
+ * Custom Posts Widget (Webane_Posts_Widget).
+ *
+ * @package elemenane
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Register Webane_Posts_Widget.
+ *
+ * @return void
+ */
 function ane_posts_widgets_init() {
-	register_widget('Webane_Posts_Widget');
+	register_widget( 'Webane_Posts_Widget' );
 }
 add_action( 'widgets_init', 'ane_posts_widgets_init' );
 
+/**
+ * Webane Posts Widget Class.
+ */
 class Webane_Posts_Widget extends WP_Widget {
-	private static $types    = array( 'Recent Post', 'Popular Post', 'Most Comments', 'Post Format: Gallery', 'Post Format: Video' );
-	private static $orderbys = array( 'ID', 'title', 'date', 'rand' );
-	private static $orders   = array( 'ASC', 'DESC' );
 
+	/**
+	 * Supported post listing types.
+	 *
+	 * @var string[]
+	 */
+	private static $types = array(
+		'Recent Post',
+		'Popular Post',
+		'Most Comments',
+		'Post Format: Gallery',
+		'Post Format: Video',
+	);
+
+	/**
+	 * Supported orderby fields.
+	 *
+	 * @var string[]
+	 */
+	private static $orderbys = array( 'ID', 'title', 'date', 'rand' );
+
+	/**
+	 * Supported sort directions.
+	 *
+	 * @var string[]
+	 */
+	private static $orders = array( 'ASC', 'DESC' );
+
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		parent::__construct(
-	 		'post-widget', // Base ID
-			'Webane: Posts', // Name
-			array( 'description' => 'Display posts by recent post, category, tagged or most comment post as widget items, order by date, id. you can customize', ) // Args
+			'post-widget',
+			'Webane: Posts',
+			array(
+				'description' => __( 'Display posts by recent post, category, tagged or most comment post as widget items.', 'elemenane' ),
+			)
 		);
-
-		//global $pagenow;
 	}
 
-    function widget($args, $instance) {
-        extract( $args );
-		extract( $instance );
-		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
-		$args = array();
-		$args['post_status'] = array('publish', 'inherit');
-		$args['orderby'] = in_array( $orderby, self::$orderbys, true ) ? $orderby : 'date';
-		$args['order'] = in_array( $order, self::$orders, true ) ? $order : 'DESC';
-		$args['posts_per_page'] = absint( $number ) ?: 5;
+	/**
+	 * Front-end display of widget.
+	 *
+	 * @param array<string, mixed> $args     Widget arguments.
+	 * @param array<string, mixed> $instance Saved values from database.
+	 * @return void
+	 */
+	public function widget( $args, $instance ) {
+		$before_widget = isset( $args['before_widget'] ) ? (string) $args['before_widget'] : '';
+		$after_widget  = isset( $args['after_widget'] ) ? (string) $args['after_widget'] : '';
 
-		if($type == "Most Comments") :
-			$args['orderby'] = 'comment_count';
-			$args['order'] = 'DESC';
-			$args['meta_query'] = null;
-		elseif($type == 'Popular Post' ) :
-			$args['orderby'] = 'meta_value_num';
-			$args['meta_key'] = 'musi_views';
-		elseif($type == 'Post Format: Gallery') :
-			$args['post_format'] = $args2['post_format'] = 'post-format-gallery';
-		elseif($type == 'Post Format: Video') :
-			$args['post_format'] = $args2['post_format'] = 'post-format-video';
-		endif;
-		if($post_tag):
-			$args['tag'] = $post_tag;
-		elseif($category !== "") :
-			$args['tax_query'] = $args2['tax_query'] = array(array('taxonomy' => 'category','field' => 'slug','terms' => $category,));
-		endif;
+		$raw_title = isset( $instance['title'] ) ? (string) $instance['title'] : '';
+		$title     = apply_filters( 'widget_title', $raw_title );
+		$type      = isset( $instance['type'] ) ? (string) $instance['type'] : 'Recent Post';
+		$category  = isset( $instance['category'] ) ? (string) $instance['category'] : '';
+		$post_tag  = isset( $instance['post_tag'] ) ? (string) $instance['post_tag'] : '';
+		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$orderby   = isset( $instance['orderby'] ) && in_array( $instance['orderby'], self::$orderbys, true ) ? (string) $instance['orderby'] : 'date';
+		$order     = isset( $instance['order'] ) && in_array( $instance['order'], self::$orders, true ) ? (string) $instance['order'] : 'DESC';
 
-		//print_r($args);
-		// Get the posts for this instance
-		$r = new WP_Query( $args );
+		$query_args = array(
+			'post_status'    => array( 'publish', 'inherit' ),
+			'orderby'        => $orderby,
+			'order'          => $order,
+			'posts_per_page' => $number > 0 ? $number : 5,
+		);
 
-		// Showing
-		if ( !defined('ABSPATH') )
-			die('-1');
+		if ( 'Most Comments' === $type ) {
+			$query_args['orderby'] = 'comment_count';
+			$query_args['order']   = 'DESC';
+		} elseif ( 'Popular Post' === $type ) {
+			$query_args['orderby']  = 'meta_value_num';
+			$query_args['meta_key'] = 'musi_views';
+		} elseif ( 'Post Format: Gallery' === $type ) {
+			$query_args['post_format'] = 'post-format-gallery';
+		} elseif ( 'Post Format: Video' === $type ) {
+			$query_args['post_format'] = 'post-format-video';
+		}
 
-		echo $before_widget;
-		if ( !empty($title) ) echo "<h2 class='widget-title general-title'>" . esc_html( $title ) . "</h2>";
-			echo "<div class='post-widget'>";
-			$count = 1;
-			if( $r->have_posts() ):
+		if ( '' !== $post_tag ) {
+			$query_args['tag'] = $post_tag;
+		} elseif ( '' !== $category ) {
+			$query_args['tax_query'] = array(
+				array(
+					'taxonomy' => 'category',
+					'field'    => 'slug',
+					'terms'    => $category,
+				),
+			);
+		}
 
-		?>
-				<?php while ( $r->have_posts() ) :
-					$r->the_post();
-					$id_cek = get_the_ID();
-					$title = get_the_title();
-					$permalink = get_permalink();
+		$r = new WP_Query( $query_args );
 
-						if( wp_is_mobile() ) {
-							get_template_part( 'tp/content','list' );
-						} else {
-							get_template_part( 'tp/content','list' );
-						}
-				$count++; endwhile; ?>
-		<?php
-		else: ?>
-				<p>No post found</p>
-		<?php
-		endif; // End have_posts()
-		?>
+		echo wp_kses_post( $before_widget );
+		if ( ! empty( $title ) ) {
+			echo "<h2 class='widget-title general-title'>" . esc_html( (string) $title ) . '</h2>';
+		}
+		echo "<div class='post-widget'>";
 
-		<?php
-		echo "</div>";
-		echo $after_widget;
+		if ( $r->have_posts() ) {
+			while ( $r->have_posts() ) {
+				$r->the_post();
+				get_template_part( 'tp/content', 'list' );
+			}
+		} else {
+			echo '<p>' . esc_html__( 'No post found', 'elemenane' ) . '</p>';
+		}
 
-		// Be sure to reset any post_data before proceeding
+		echo '</div>';
+		echo wp_kses_post( $after_widget );
+
 		wp_reset_postdata();
+	}
 
-    }
-
-    /**
+	/**
 	 * Sanitize widget form values as they are saved.
 	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
+	 * @param array<string, mixed> $new_instance Values just sent to be saved.
+	 * @param array<string, mixed> $old_instance Previously saved values from database.
+	 * @return array<string, mixed> Updated safe values to be saved.
 	 */
-    function update($new_instance, $old_instance) {
-		$instance 				= $old_instance;
-		$new_instance			= wp_parse_args( (array) $new_instance, array( 'title' => '', 'type' => '', 'category' => '', 'post_tag' => '', 'number' => 5, 'offset' => 0, 'orderby' => '', 'order' => '' ) );
-		$instance['title']		= sanitize_text_field( $new_instance['title'] );
-		$instance['type']		= in_array( $new_instance['type'], self::$types, true ) ? $new_instance['type'] : 'Recent Post';
-		$instance['category']	= sanitize_title( $new_instance['category'] );
-		$instance['post_tag']	= sanitize_text_field( $new_instance['post_tag'] );
-		$instance['number']		= absint( $new_instance['number'] ) ?: 5;
-		$instance['offset']		= absint( $new_instance['offset'] );
-		$instance['orderby']	= in_array( $new_instance['orderby'], self::$orderbys, true ) ? $new_instance['orderby'] : 'date';
-		$instance['order']		= in_array( $new_instance['order'], self::$orders, true ) ? $new_instance['order'] : 'DESC';
-        return $instance;
-    }
+	public function update( $new_instance, $old_instance ) {
+		$instance     = is_array( $old_instance ) ? $old_instance : array();
+		$new_instance = wp_parse_args(
+			(array) $new_instance,
+			array(
+				'title'    => '',
+				'type'     => '',
+				'category' => '',
+				'post_tag' => '',
+				'number'   => 5,
+				'offset'   => 0,
+				'orderby'  => '',
+				'order'    => '',
+			)
+		);
 
-    /**
+		$instance['title']    = sanitize_text_field( (string) $new_instance['title'] );
+		$instance['type']     = in_array( $new_instance['type'], self::$types, true ) ? $new_instance['type'] : 'Recent Post';
+		$instance['category'] = sanitize_title( (string) $new_instance['category'] );
+		$instance['post_tag'] = sanitize_text_field( (string) $new_instance['post_tag'] );
+		$instance['number']   = absint( $new_instance['number'] ) ? absint( $new_instance['number'] ) : 5;
+		$instance['offset']   = absint( $new_instance['offset'] );
+		$instance['orderby']  = in_array( $new_instance['orderby'], self::$orderbys, true ) ? $new_instance['orderby'] : 'date';
+		$instance['order']    = in_array( $new_instance['order'], self::$orders, true ) ? $new_instance['order'] : 'DESC';
+
+		return $instance;
+	}
+
+	/**
 	 * Back-end widget form.
 	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
+	 * @param array<string, mixed> $instance Previously saved values from database.
+	 * @return string
 	 */
-    function form($instance) {
+	public function form( $instance ) {
+		$instance = wp_parse_args(
+			(array) $instance,
+			array(
+				'title'    => '',
+				'type'     => 'Recent Post',
+				'category' => '',
+				'post_tag' => '',
+				'number'   => '5',
+				'offset'   => '0',
+				'orderby'  => 'date',
+				'order'    => 'DESC',
+			)
+		);
 
-		$types = self::$types;
-		$orderbys = self::$orderbys;
-		$orders = self::$orders;
-
-		$instance = wp_parse_args( (array) $instance, array(
-			'title'		=> '',
-			'type'		=> 'Recent Post',
-			'category'	=> '',
-			'number'	=> '5',
-			'offset'	=> '0',
-			'orderby'	=> 'date',
-			'order'		=> 'DESC',
-			'date'		=> 'all',
-			'thumbnail' => 'small',
-			'tdc' => true,
-			'author' => false,
-		) );
-
-		extract( $instance );
-
-        ?>
-            <p>
-                <label for="<?php echo $this->get_field_id('title'); ?>"><?php echo ('Widget Title'); ?></label>
-                <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-            </p>
-			<p>
-				<label for="<?php echo $this->get_field_id('type'); ?>"><?php echo ('Select a type'); ?></label>
-				<select onchange="typechange()" name="<?php echo $this->get_field_name('type'); ?>" id="<?php echo $this->get_field_id('type'); ?>">
+		$title    = (string) $instance['title'];
+		$type     = (string) $instance['type'];
+		$category = (string) $instance['category'];
+		$post_tag = (string) $instance['post_tag'];
+		$number   = (string) $instance['number'];
+		$orderby  = (string) $instance['orderby'];
+		$order    = (string) $instance['order'];
+		?>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Widget Title', 'elemenane' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>"><?php esc_html_e( 'Select a type', 'elemenane' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>">
+				<?php foreach ( self::$types as $option ) : ?>
+					<option value="<?php echo esc_attr( $option ); ?>" <?php selected( $type, $option ); ?>><?php echo esc_html( $option ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<hr />
+		<p id="category<?php echo esc_attr( $this->get_field_id( 'category' ) ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'category' ) ); ?>"><?php esc_html_e( 'Select a category:', 'elemenane' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'category' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'category' ) ); ?>">
+				<option value=""><?php esc_html_e( 'All Category', 'elemenane' ); ?></option>
 				<?php
-				foreach ($types as $option) {
-					echo '<option value="' . $option . '"', $type == $option ? ' selected="selected"' : '', '>', $option, '</option>';
-				}
+				$category_get = get_terms(
+					array(
+						'taxonomy'   => 'category',
+						'hide_empty' => false,
+					)
+				);
+				if ( ! is_wp_error( $category_get ) && ! empty( $category_get ) ) :
+					foreach ( $category_get as $option ) :
+						?>
+						<option value="<?php echo esc_attr( $option->slug ); ?>" <?php selected( $category, $option->slug ); ?>><?php echo esc_html( $option->name ); ?></option>
+						<?php
+					endforeach;
+				endif;
 				?>
 			</select>
-			</p>
-            <hr />
-			<p id="category<?php echo $this->get_field_id('category'); ?>" >
-				<label for="<?php echo $this->get_field_id('category'); ?>"><?php echo ('Select a category:'); ?></label>
-				<select name="<?php echo $this->get_field_name('category'); ?>" id="<?php echo $this->get_field_id('category'); ?>">
-					<option value="">All Category</option>
-					<?php
-							$args = array (
-								'hide_empty' => 0,);
-							$category_get = get_terms( 'category', $args );
-
-							if( !empty($category_get) ) :
-								$output = '';
-								foreach ( $category_get as $option ) :
-									$output .= '<option value="' . esc_attr( $option->slug ) . '"' . ( $category == $option->slug ? ' selected="selected"' : '' ) . '>' . esc_html( $option->name ) . '</option>';
-								endforeach;
-								echo( $output );
-							endif;
-					?>
-				</select>
-			</p>
-            <hr />
-            <p id="tag<?php echo $this->get_field_id('post_tag'); ?>">
-			<label for="<?php echo $this->get_field_id('post_tag'); ?>"><?php echo ('Type tag'); ?></label>
-			<input id="<?php echo $this->get_field_id('post_tag'); ?>" name="<?php echo $this->get_field_name('post_tag'); ?>" type="text" value="<?php echo esc_attr( $post_tag ); ?>" />
-            separate by comma
-            </p>
-            <hr />
-
-            <h4 style="">Display options</h4>
-            <p>
-              <label for="<?php echo $this->get_field_id('number'); ?>"><?php echo ('Number of posts to show:'); ?></label>
-              <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo esc_attr( $number ); ?>" style="width:40px; margin-left:.2em; text-align:right;" />
-            </p>
-            <p id="orderby<?php echo $this->get_field_id('orderby'); ?>" style="<?php if($type == 'Most Comments' or $type == 'Popular Post') echo "display:none"; else echo "display:block";?>">
-                <label for="<?php echo $this->get_field_id('orderby'); ?>"><?php echo ('Order post by:'); ?></label>
-                <select name="<?php echo $this->get_field_name('orderby'); ?>" id="<?php echo $this->get_field_id('orderby'); ?>">
-                    <?php
-                    foreach ($orderbys as $option) :
-                        echo '<option value="' . $option . '" id="' . $option . '"', $orderby == $option ? ' selected="selected"' : '', '>', $option, '</option>';
-                    endforeach;
-                    ?>
-                </select>
-            </p>
-            <p id="order<?php echo $this->get_field_id('order'); ?>" >
-                <label for="<?php echo $this->get_field_id('order'); ?>"><?php echo ('Order:'); ?></label>
-                <select name="<?php echo $this->get_field_name('order'); ?>" id="<?php echo $this->get_field_id('order'); ?>">
-                    <?php
-                    foreach ($orders as $option) :
-                        echo '<option value="' . $option . '"', $order == $option ? ' selected="selected"' : '', '>', $option, '</option>';
-                    endforeach;
-                    ?>
-                </select>
-            </p>
-
-        <?php
-    }
+		</p>
+		<hr />
+		<p id="tag<?php echo esc_attr( $this->get_field_id( 'post_tag' ) ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'post_tag' ) ); ?>"><?php esc_html_e( 'Type tag', 'elemenane' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'post_tag' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'post_tag' ) ); ?>" type="text" value="<?php echo esc_attr( $post_tag ); ?>" />
+			<?php esc_html_e( 'separate by comma', 'elemenane' ); ?>
+		</p>
+		<hr />
+		<h4><?php esc_html_e( 'Display options', 'elemenane' ); ?></h4>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php esc_html_e( 'Number of posts to show:', 'elemenane' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="text" value="<?php echo esc_attr( $number ); ?>" style="width:40px; margin-left:.2em; text-align:right;" />
+		</p>
+		<p id="orderby<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>" style="<?php echo ( 'Most Comments' === $type || 'Popular Post' === $type ) ? 'display:none' : 'display:block'; ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>"><?php esc_html_e( 'Order post by:', 'elemenane' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'orderby' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'orderby' ) ); ?>">
+				<?php foreach ( self::$orderbys as $option ) : ?>
+					<option value="<?php echo esc_attr( $option ); ?>" id="<?php echo esc_attr( $option ); ?>" <?php selected( $orderby, $option ); ?>><?php echo esc_html( $option ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<p id="order<?php echo esc_attr( $this->get_field_id( 'order' ) ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'order' ) ); ?>"><?php esc_html_e( 'Order:', 'elemenane' ); ?></label>
+			<select name="<?php echo esc_attr( $this->get_field_name( 'order' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'order' ) ); ?>">
+				<?php foreach ( self::$orders as $option ) : ?>
+					<option value="<?php echo esc_attr( $option ); ?>" <?php selected( $order, $option ); ?>><?php echo esc_html( $option ); ?></option>
+				<?php endforeach; ?>
+			</select>
+		</p>
+		<?php
+		return '';
+	}
 }

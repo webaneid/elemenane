@@ -45,14 +45,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php if ( have_rows( 'ane_kontak', 'option' ) ) : ?>
 						<div class="kontak text-right">
 							<?php
-							$phone    = get_field( 'ane_telepon','option' );
+							$phone = get_field( 'ane_telepon', 'option' );
 							while ( have_rows( 'ane_kontak', 'option' ) ) :
 								the_row();
 
-								$fax    = get_sub_field( 'ane_fax' );
-								$mobile   = get_sub_field( 'ane_handphone' );
-								$email    = get_sub_field( 'ane_email' );
-								$website  = get_sub_field( 'ane_website' );
+								$fax     = get_sub_field( 'ane_fax' );
+								$mobile  = get_sub_field( 'ane_handphone' );
+								$email   = get_sub_field( 'ane_email' );
+								$website = get_sub_field( 'ane_website' );
 
 								if ( ! empty( $phone ) ) :
 									?>
@@ -116,17 +116,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<!-- Google Maps -->
 			<?php
-				$location = get_field('ane_gmap', 'option');
-				if( !empty($location) ):
-			?>
+				$location = get_field( 'ane_gmap', 'option' );
+			if ( is_array( $location ) && isset( $location['lat'], $location['lng'] ) ) :
+				$lat     = (string) $location['lat'];
+				$lng     = (string) $location['lng'];
+				$address = isset( $location['address'] ) ? (string) $location['address'] : '';
+				?>
 			<div class="ane-kanan">
 				<div class="kontak-map">
-                    <div class="acf-map">
-                        <div class="marker" data-lat="<?php echo $location['lat']; ?>" data-lng="<?php echo $location['lng']; ?>">
-                        <a class="directions" href="https://www.google.com/maps?saddr=My+Location&daddr=<?php echo $location['lat'] . ',' . $location['lng']; ?>"><?php _e('Get Directions to','roots'); ?> <?php echo $location['address']; ?></a> <!-- Output the title -->
-                        </div>
-                    </div>
-            	</div>
+					<div class="acf-map">
+						<div class="marker" data-lat="<?php echo esc_attr( $lat ); ?>" data-lng="<?php echo esc_attr( $lng ); ?>">
+							<a class="directions" href="<?php echo esc_url( 'https://www.google.com/maps?saddr=My+Location&daddr=' . rawurlencode( $lat . ',' . $lng ) ); ?>"><?php esc_html_e( 'Get Directions to', 'elemenane' ); ?> <?php echo esc_html( $address ); ?></a>
+						</div>
+					</div>
+				</div>
 			</div>
 		<?php endif; ?>
 	</div>

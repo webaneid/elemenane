@@ -45,10 +45,9 @@
                 &:before {
                     position: absolute;
                     left: 0;
-                    bottom: 0;
-                    top: 7.5px;
-                    content: '\e901';
-                    font-family: FontAne;
+                    top: 16px;
+                    bottom: auto;
+                    @include ane-glyph-mask(arrow-right);
                     font-size: 7px;
                     line-height: 24px;
                     color: var(--ane-warna-utama);

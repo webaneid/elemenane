@@ -183,8 +183,7 @@
   justify-content: center;
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: var(--ane-color-white);
   padding: 0.5rem 1rem;
   border-radius: 8px;
@@ -198,8 +197,7 @@
 }
 .ane-admin__location {
   background-color: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   padding: 0.875rem 1.125rem;
   border-radius: 10px;
   font-size: 0.875rem;
@@ -1423,8 +1421,7 @@ body.login::after {
   font-size: 0.95rem;
   width: 100%;
   transition: all 0.3s ease;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 #loginform input[type=text]:focus,
@@ -1438,10 +1435,6 @@ body.login::after {
   border-color: var(--webane-green);
   outline: none;
   box-shadow: 0 0 0 3px rgba(115, 171, 1, 0.1);
-}
-
-#loginform input[type=text]::-moz-placeholder, #loginform input[type=password]::-moz-placeholder, #loginform input[type=email]::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.5);
 }
 
 #loginform input[type=text]::placeholder,
@@ -1593,8 +1586,7 @@ body.login::after {
   color: #ffffff;
   padding: 0.5rem 2rem 0.5rem 1rem;
   border-radius: 8px;
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   font-size: 0.875rem;
 }
 
@@ -1822,10 +1814,6 @@ select:focus {
 }
 
 /* Placeholder styling */
-::-moz-placeholder {
-  color: var(--ane-color-secondary, #6b7280);
-  opacity: 0.6;
-}
 ::placeholder {
   color: var(--ane-color-secondary, #6b7280);
   opacity: 0.6;
@@ -1839,9 +1827,7 @@ select:focus {
   align-items: center;
   gap: 0.75rem;
   cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .ane-toggle {
@@ -2480,8 +2466,7 @@ body.has-open-submenu #wpcontent {
 /* Submenu as secondary panel */
 #adminmenu .wp-submenu {
   background: var(--ane-color-light, #f1f0ea) !important; /* Light brand color */
-  -webkit-backdrop-filter: none;
-          backdrop-filter: none;
+  backdrop-filter: none;
   border-radius: 0;
   border-right: 1px solid rgba(var(--ane-color-primary-rgb, 45, 35, 46), 0.12);
   margin: 0 !important;
@@ -2747,12 +2732,13 @@ body.has-open-submenu #wpcontent {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   max-width: 100vw;
   width: 100%;
-  /* Top-level menu items - dark text */
-  /* Menu item hover */
 }
 #wpadminbar .ab-item {
   height: 48px !important;
   line-height: 48px !important;
+}
+#wpadminbar {
+  /* Top-level menu items - dark text */
 }
 #wpadminbar .ab-item,
 #wpadminbar a.ab-item,
@@ -2761,6 +2747,9 @@ body.has-open-submenu #wpcontent {
   color: var(--ane-color-body) !important;
   transition: all 0.15s ease;
   background: transparent !important;
+}
+#wpadminbar {
+  /* Menu item hover */
 }
 #wpadminbar .ab-item:hover,
 #wpadminbar a.ab-item:hover,
@@ -2805,18 +2794,24 @@ body.admin-bar {
    ============================================ */
 #wpadminbar {
   /* Hide WordPress logo */
-  /* Hide default new-content menu */
-  /* Hide comments */
-  /* Hide updates */
 }
 #wpadminbar #wp-admin-bar-wp-logo {
   display: none !important;
 }
+#wpadminbar {
+  /* Hide default new-content menu */
+}
 #wpadminbar #wp-admin-bar-new-content {
   display: none !important;
 }
+#wpadminbar {
+  /* Hide comments */
+}
 #wpadminbar #wp-admin-bar-comments {
   display: none !important;
+}
+#wpadminbar {
+  /* Hide updates */
 }
 #wpadminbar #wp-admin-bar-updates {
   display: none !important;
@@ -2841,10 +2836,6 @@ body.admin-bar {
    ============================================ */
 #wpadminbar {
   /* Override ALL submenu backgrounds */
-  /* User info section */
-  /* Submenu items */
-  /* Submenu separator */
-  /* Remove default dark backgrounds */
 }
 #wpadminbar .ab-submenu,
 #wpadminbar .ab-sub-wrapper,
@@ -2857,6 +2848,9 @@ body.admin-bar {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
   padding: 0 !important;
   margin-top: 0 !important;
+}
+#wpadminbar {
+  /* User info section */
 }
 #wpadminbar #wp-admin-bar-user-info {
   border: none !important;
@@ -2892,6 +2886,9 @@ body.admin-bar {
   flex-direction: column;
   padding: 0 !important;
 }
+#wpadminbar {
+  /* Submenu items */
+}
 #wpadminbar .ab-submenu .ab-item,
 #wpadminbar .ab-submenu a,
 #wpadminbar #wp-admin-bar-user-actions .ab-item {
@@ -2915,8 +2912,14 @@ body.admin-bar {
   background: var(--ane-color-primary) !important;
   color: var(--ane-color-light) !important;
 }
+#wpadminbar {
+  /* Submenu separator */
+}
 #wpadminbar .ab-submenu .ab-item.menupop {
   color: #1e2d2f !important;
+}
+#wpadminbar {
+  /* Remove default dark backgrounds */
 }
 #wpadminbar .quicklinks .ab-sub-wrapper,
 #wpadminbar .quicklinks .ab-submenu {
@@ -2951,19 +2954,21 @@ body.admin-bar {
    ============================================ */
 #wpadminbar {
   /* Position buttons on right */
-  /* Container untuk buttons */
-  /* Base button styles */
-  /* New Post - Solid */
-  /* New Page - Outline */
 }
 #wpadminbar #wp-admin-bar-top-secondary {
   float: right !important;
   padding-right: 1rem;
 }
+#wpadminbar {
+  /* Container untuk buttons */
+}
 #wpadminbar #wp-admin-bar-ane-new-post,
 #wpadminbar #wp-admin-bar-ane-new-page {
   display: inline-block !important;
   margin: 0 3px !important;
+}
+#wpadminbar {
+  /* Base button styles */
 }
 #wpadminbar .ane-action-btn {
   display: inline-flex !important;
@@ -2980,6 +2985,9 @@ body.admin-bar {
   line-height: 1 !important;
   white-space: nowrap !important;
   margin-top: 8px !important;
+}
+#wpadminbar {
+  /* New Post - Solid */
 }
 #wpadminbar #wp-admin-bar-ane-new-post > a {
   background: var(--ane-color-primary) !important;
@@ -3000,6 +3008,9 @@ body.admin-bar {
   background: #474448 !important;
   color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(45, 35, 46, 0.12) !important;
+}
+#wpadminbar {
+  /* New Page - Outline */
 }
 #wpadminbar #wp-admin-bar-ane-new-page > a {
   background: rgba(var(--ane-color-white-rgb), 0.7) !important;
@@ -3075,14 +3086,6 @@ body.admin-bar {
     padding: 0 !important;
     max-width: 100vw !important;
     /* Hide unnecessary items */
-    /* Main toolbar - No flexbox, use width-based layout */
-    /* LEFT SIDE: root-default (80% width) */
-    /* RIGHT SIDE: top-secondary (60px fixed width) */
-    /* HIDE original WordPress submenu - we use custom panel instead */
-    /* Mobile dropdown menu - Full width overlay */
-    /* User info header in dropdown */
-    /* Dropdown action items */
-    /* Logout button styling */
   }
   #wpadminbar #wp-admin-bar-menu-toggle,
   #wpadminbar #wp-admin-bar-ane-new-post,
@@ -3094,6 +3097,9 @@ body.admin-bar {
   #wpadminbar #wp-admin-bar-new-content {
     display: none !important;
   }
+  #wpadminbar {
+    /* Main toolbar - No flexbox, use width-based layout */
+  }
   #wpadminbar #wp-toolbar {
     display: flex;
     padding: 0 !important;
@@ -3104,6 +3110,9 @@ body.admin-bar {
     max-width: 100vw;
     align-items: center;
   }
+  #wpadminbar {
+    /* LEFT SIDE: root-default (80% width) */
+  }
   #wpadminbar #wp-admin-bar-root-default {
     width: calc(100% - 60px) !important;
     height: 50px !important;
@@ -3113,13 +3122,11 @@ body.admin-bar {
     margin: 0 !important;
     padding: 0 0 0 16px !important;
     /* Hamburger (site-name) - left */
-    /* CENTER: Logo - absolute centered (dynamically injected via PHP) */
   }
   #wpadminbar #wp-admin-bar-root-default #wp-admin-bar-site-name {
     display: inline-block !important;
     margin: 0 !important;
     vertical-align: middle !important;
-    /* Hide site name text */
   }
   #wpadminbar #wp-admin-bar-root-default #wp-admin-bar-site-name > .ab-item {
     width: 40px !important;
@@ -3146,9 +3153,15 @@ body.admin-bar {
   #wpadminbar #wp-admin-bar-root-default #wp-admin-bar-site-name > .ab-item:hover {
     background: rgba(45, 35, 46, 0.06) !important;
   }
+  #wpadminbar #wp-admin-bar-root-default #wp-admin-bar-site-name {
+    /* Hide site name text */
+  }
   #wpadminbar #wp-admin-bar-root-default #wp-admin-bar-site-name .ab-item {
     font-size: 0 !important;
     color: transparent !important;
+  }
+  #wpadminbar #wp-admin-bar-root-default {
+    /* CENTER: Logo - absolute centered (dynamically injected via PHP) */
   }
   #wpadminbar #wp-admin-bar-root-default::after {
     content: "" !important;
@@ -3163,6 +3176,9 @@ body.admin-bar {
     background-position: center !important;
     pointer-events: none !important;
     /* background-image injected via ane_admin_bar_logo() */
+  }
+  #wpadminbar {
+    /* RIGHT SIDE: top-secondary (60px fixed width) */
   }
   #wpadminbar #wp-admin-bar-top-secondary {
     width: 50px;
@@ -3202,12 +3218,14 @@ body.admin-bar {
     border: 2px solid rgba(45, 35, 46, 0.1) !important;
     margin: 0 !important;
     display: block !important;
-    -o-object-fit: cover !important;
-       object-fit: cover !important;
+    object-fit: cover !important;
     top: 8px;
   }
   #wpadminbar #wp-admin-bar-top-secondary #wp-admin-bar-my-account > .ab-item .display-name {
     display: none !important;
+  }
+  #wpadminbar {
+    /* HIDE original WordPress submenu - we use custom panel instead */
   }
   #wpadminbar #wp-admin-bar-my-account .ab-submenu,
   #wpadminbar #wp-admin-bar-site-name .ab-submenu {
@@ -3215,6 +3233,9 @@ body.admin-bar {
     visibility: hidden !important;
     pointer-events: none !important;
     opacity: 0 !important;
+  }
+  #wpadminbar {
+    /* Mobile dropdown menu - Full width overlay */
   }
   #wpadminbar .ab-submenu {
     position: fixed !important;
@@ -3230,6 +3251,9 @@ body.admin-bar {
     background: #ffffff !important;
     border: none !important;
     border-top: 1px solid rgba(45, 35, 46, 0.08) !important;
+  }
+  #wpadminbar {
+    /* User info header in dropdown */
   }
   #wpadminbar #wp-admin-bar-user-info {
     padding: 16px 20px !important;
@@ -3260,6 +3284,9 @@ body.admin-bar {
     margin-top: 4px !important;
     color: #6b7280 !important;
   }
+  #wpadminbar {
+    /* Dropdown action items */
+  }
   #wpadminbar .ab-submenu .ab-item,
   #wpadminbar #wp-admin-bar-user-actions .ab-item {
     min-height: 52px !important;
@@ -3269,6 +3296,9 @@ body.admin-bar {
     align-items: center !important;
     margin: 0 !important;
     border-radius: 0 !important;
+  }
+  #wpadminbar {
+    /* Logout button styling */
   }
   #wpadminbar #wp-admin-bar-logout .ab-item {
     background: transparent !important;
@@ -3319,27 +3349,22 @@ body.admin-bar {
     overflow-y: auto;
     transition: left 0.3s ease;
     -webkit-overflow-scrolling: touch;
-    /* Menu styles */
   }
   .ane-mobile-menu.is-open {
     left: 0;
+  }
+  .ane-mobile-menu {
+    /* Menu styles */
   }
   .ane-mobile-menu #ane-mobile-adminmenu {
     padding: 0;
     margin: 0;
     background: transparent;
     /* Menu items */
-    /* Accordion icon */
-    /* Submenu */
-    /* Open submenu state */
-    /* Hide separators */
   }
   .ane-mobile-menu #ane-mobile-adminmenu li {
     margin: 0;
     border-bottom: 1px solid rgba(45, 35, 46, 0.08);
-  }
-  .ane-mobile-menu #ane-mobile-adminmenu li.menu-top {
-    /* Current menu item */
   }
   .ane-mobile-menu #ane-mobile-adminmenu li.menu-top > a.menu-top {
     display: flex;
@@ -3352,11 +3377,12 @@ body.admin-bar {
     text-decoration: none;
     background: transparent;
     transition: background 0.15s ease;
-    /* Menu icon */
-    /* Menu name */
   }
   .ane-mobile-menu #ane-mobile-adminmenu li.menu-top > a.menu-top:hover {
     background: rgba(45, 35, 46, 0.04);
+  }
+  .ane-mobile-menu #ane-mobile-adminmenu li.menu-top > a.menu-top {
+    /* Menu icon */
   }
   .ane-mobile-menu #ane-mobile-adminmenu li.menu-top > a.menu-top .wp-menu-image {
     width: 20px;
@@ -3369,9 +3395,15 @@ body.admin-bar {
     font-size: 20px;
     padding: 0;
   }
+  .ane-mobile-menu #ane-mobile-adminmenu li.menu-top > a.menu-top {
+    /* Menu name */
+  }
   .ane-mobile-menu #ane-mobile-adminmenu li.menu-top > a.menu-top .wp-menu-name {
     flex: 1;
     font-size: 15px;
+  }
+  .ane-mobile-menu #ane-mobile-adminmenu li.menu-top {
+    /* Current menu item */
   }
   .ane-mobile-menu #ane-mobile-adminmenu li.menu-top.current > a.menu-top, .ane-mobile-menu #ane-mobile-adminmenu li.menu-top.wp-has-current-submenu > a.menu-top {
     background: rgba(45, 35, 46, 0.06);
@@ -3380,6 +3412,9 @@ body.admin-bar {
   }
   .ane-mobile-menu #ane-mobile-adminmenu li.menu-top.current > a.menu-top .wp-menu-image::before, .ane-mobile-menu #ane-mobile-adminmenu li.menu-top.wp-has-current-submenu > a.menu-top .wp-menu-image::before {
     opacity: 1;
+  }
+  .ane-mobile-menu #ane-mobile-adminmenu {
+    /* Accordion icon */
   }
   .ane-mobile-menu #ane-mobile-adminmenu .ane-accordion-icon {
     width: 24px;
@@ -3394,6 +3429,9 @@ body.admin-bar {
     font-weight: 300;
     transition: transform 0.3s ease, background 0.15s ease;
     flex-shrink: 0;
+  }
+  .ane-mobile-menu #ane-mobile-adminmenu {
+    /* Submenu */
   }
   .ane-mobile-menu #ane-mobile-adminmenu .wp-submenu {
     display: none;
@@ -3426,6 +3464,9 @@ body.admin-bar {
     font-weight: 500;
     background: rgba(45, 35, 46, 0.04);
   }
+  .ane-mobile-menu #ane-mobile-adminmenu {
+    /* Open submenu state */
+  }
   .ane-mobile-menu #ane-mobile-adminmenu li.ane-submenu-open > a.menu-top {
     background: rgba(45, 35, 46, 0.06);
   }
@@ -3436,6 +3477,9 @@ body.admin-bar {
   }
   .ane-mobile-menu #ane-mobile-adminmenu li.ane-submenu-open .wp-submenu {
     display: block;
+  }
+  .ane-mobile-menu #ane-mobile-adminmenu {
+    /* Hide separators */
   }
   .ane-mobile-menu #ane-mobile-adminmenu .wp-menu-separator {
     display: none;
@@ -3461,13 +3505,12 @@ body.admin-bar {
     overflow-y: auto;
     transition: right 0.3s ease;
     -webkit-overflow-scrolling: touch;
-    /* User submenu styling */
-    /* User info */
-    /* User actions */
-    /* Logout button */
   }
   .ane-mobile-user.is-open {
     right: 0;
+  }
+  .ane-mobile-user {
+    /* User submenu styling */
   }
   .ane-mobile-user .ab-submenu {
     position: static !important;
@@ -3480,6 +3523,9 @@ body.admin-bar {
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
+  }
+  .ane-mobile-user {
+    /* User info */
   }
   .ane-mobile-user #wp-admin-bar-user-info {
     padding: 0 !important;
@@ -3519,6 +3565,9 @@ body.admin-bar {
     color: #6b7280 !important;
     margin-top: 4px !important;
   }
+  .ane-mobile-user {
+    /* User actions */
+  }
   .ane-mobile-user #wp-admin-bar-user-actions {
     border: none !important;
     border-radius: 0 !important;
@@ -3539,6 +3588,9 @@ body.admin-bar {
   .ane-mobile-user #wp-admin-bar-user-actions .ab-item:hover {
     background: rgba(45, 35, 46, 0.04) !important;
     color: #2d232e !important;
+  }
+  .ane-mobile-user {
+    /* Logout button */
   }
   .ane-mobile-user #wp-admin-bar-logout {
     margin-top: 8px !important;
@@ -4318,4 +4370,6 @@ select:focus {
   .ane-footer-mobile-menu {
     display: none;
   }
-}/*# sourceMappingURL=admin.css.map */
+}
+
+/*# sourceMappingURL=admin.css.map */

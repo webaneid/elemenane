@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'paged'          => $paged,
 			'post_status'    => 'publish',
 		);
-		$mobile_query = new WP_Query( $mobile_query_args );
+		$mobile_query      = new WP_Query( $mobile_query_args );
 		?>
 
 		<section class="ane-konten-mobile">
@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$counter = -1;
 				while ( $mobile_query->have_posts() ) :
 					$mobile_query->the_post();
-					$counter++;
+					++$counter;
 
 					// Alternate content layouts at specific positions
 					if ( 4 === $counter ) {
@@ -70,14 +70,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 			</section>
 
-			<?php
-			// Pagination
-			if ( $mobile_query->max_num_pages > 1 ) :
-				global $wp_query;
-				$orig_query = $wp_query;
-				$wp_query   = $mobile_query; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-				echo ane_post_pagination();
-				$wp_query = $orig_query; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				<?php
+				// Pagination
+				if ( $mobile_query->max_num_pages > 1 ) :
+					global $wp_query;
+					$orig_query = $wp_query;
+					$wp_query   = $mobile_query; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					echo wp_kses( ane_post_pagination(), elemenane_kses_post_with_svg() );
+					$wp_query = $orig_query; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			endif;
 
 			else :

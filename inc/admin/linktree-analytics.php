@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function ane_register_linktree_analytics_menu() {
 	add_submenu_page(
 		'ane-setup',
-		__( 'Linktree Analytics', 'newsane' ),
-		__( 'Linktree Analytics', 'newsane' ),
+		__( 'Linktree Analytics', 'elemenane' ),
+		__( 'Linktree Analytics', 'elemenane' ),
 		'manage_options',
 		'ane-linktree-analytics',
 		'ane_render_linktree_analytics_page'
@@ -79,9 +79,9 @@ function ane_linktree_analytics_assets( $hook ) {
 		'ane-linktree-analytics',
 		'aneLinktreeData',
 		array(
-			'clicksData'  => $analytics_data,
-			'deviceData'  => $device_data,
-			'colors'      => array(
+			'clicksData' => $analytics_data,
+			'deviceData' => $device_data,
+			'colors'     => array(
 				'primary'   => '#dc3545',
 				'secondary' => '#ff6b35',
 				'accent'    => '#e0ddcf',
@@ -96,13 +96,13 @@ add_action( 'admin_enqueue_scripts', 'ane_linktree_analytics_assets' );
  * Render Linktree Analytics dashboard page.
  */
 function ane_render_linktree_analytics_page() {
-	$stats           = ane_get_linktree_stats();
-	$top_links       = ane_get_top_linktree_links( 5 );
-	$top_referrers   = ane_get_top_referrers( 5 );
-	$device_stats    = ane_get_device_breakdown();
+	$stats         = ane_get_linktree_stats();
+	$top_links     = ane_get_top_linktree_links( 5 );
+	$top_referrers = ane_get_top_referrers( 5 );
+	$device_stats  = ane_get_device_breakdown();
 	?>
 	<div class="wrap ane-custom-dashboard">
-		<h1 class="wp-heading-inline"><?php esc_html_e( 'Linktree Analytics', 'newsane' ); ?></h1>
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Linktree Analytics', 'elemenane' ); ?></h1>
 
 		<div class="ane-dashboard-grid">
 			<!-- Stats Cards -->
@@ -119,7 +119,7 @@ function ane_render_linktree_analytics_page() {
 						</svg>
 					</div>
 					<div class="ane-stat-card__content">
-						<div class="ane-stat-card__label"><?php esc_html_e( 'Total Clicks', 'newsane' ); ?></div>
+						<div class="ane-stat-card__label"><?php esc_html_e( 'Total Clicks', 'elemenane' ); ?></div>
 						<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['total_clicks'] ) ); ?></div>
 					</div>
 				</div>
@@ -135,7 +135,7 @@ function ane_render_linktree_analytics_page() {
 						</svg>
 					</div>
 					<div class="ane-stat-card__content">
-						<div class="ane-stat-card__label"><?php esc_html_e( 'Clicks This Month', 'newsane' ); ?></div>
+						<div class="ane-stat-card__label"><?php esc_html_e( 'Clicks This Month', 'elemenane' ); ?></div>
 						<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['clicks_this_month'] ) ); ?></div>
 					</div>
 				</div>
@@ -148,7 +148,7 @@ function ane_render_linktree_analytics_page() {
 						</svg>
 					</div>
 					<div class="ane-stat-card__content">
-						<div class="ane-stat-card__label"><?php esc_html_e( 'Unique Links', 'newsane' ); ?></div>
+						<div class="ane-stat-card__label"><?php esc_html_e( 'Unique Links', 'elemenane' ); ?></div>
 						<div class="ane-stat-card__value"><?php echo esc_html( number_format_i18n( $stats['unique_links'] ) ); ?></div>
 					</div>
 				</div>
@@ -160,7 +160,7 @@ function ane_render_linktree_analytics_page() {
 			<!-- Clicks Chart - Full Width -->
 			<div class="ane-dashboard-section ane-dashboard-section--full">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Clicks Last 12 Months', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Clicks Last 12 Months', 'elemenane' ); ?></h2>
 					<div class="inside">
 						<div style="position: relative; height: 300px;">
 							<canvas id="ane-linktree-clicks-chart"></canvas>
@@ -171,7 +171,7 @@ function ane_render_linktree_analytics_page() {
 
 			<div class="ane-dashboard-section">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Device Breakdown', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Device Breakdown', 'elemenane' ); ?></h2>
 					<div class="inside">
 						<div style="position: relative; height: 300px;">
 							<canvas id="ane-device-chart"></canvas>
@@ -183,15 +183,15 @@ function ane_render_linktree_analytics_page() {
 			<!-- 3 Column Grid: Device Breakdown, Top Links, Top Traffic Sources -->
 			<div class="ane-dashboard-section">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Top Links', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Top Links', 'elemenane' ); ?></h2>
 					<div class="inside">
 					<?php if ( ! empty( $top_links ) ) : ?>
 						<table class="wp-list-table widefat fixed striped">
 							<thead>
 								<tr>
-									<th><?php esc_html_e( 'Link', 'newsane' ); ?></th>
-									<th><?php esc_html_e( 'Type', 'newsane' ); ?></th>
-									<th><?php esc_html_e( 'Clicks', 'newsane' ); ?></th>
+									<th><?php esc_html_e( 'Link', 'elemenane' ); ?></th>
+									<th><?php esc_html_e( 'Type', 'elemenane' ); ?></th>
+									<th><?php esc_html_e( 'Clicks', 'elemenane' ); ?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -205,7 +205,7 @@ function ane_render_linktree_analytics_page() {
 							</tbody>
 						</table>
 					<?php else : ?>
-						<p><?php esc_html_e( 'No data yet.', 'newsane' ); ?></p>
+						<p><?php esc_html_e( 'No data yet.', 'elemenane' ); ?></p>
 					<?php endif; ?>
 					</div>
 				</div>
@@ -214,15 +214,15 @@ function ane_render_linktree_analytics_page() {
 			<!-- Top Referrers -->
 			<div class="ane-dashboard-section">
 				<div class="postbox">
-					<h2 class="hndle"><?php esc_html_e( 'Top Traffic Sources', 'newsane' ); ?></h2>
+					<h2 class="hndle"><?php esc_html_e( 'Top Traffic Sources', 'elemenane' ); ?></h2>
 					<div class="inside">
 					<?php if ( ! empty( $top_referrers ) ) : ?>
 						<table class="wp-list-table widefat fixed striped">
 							<thead>
 								<tr>
-									<th><?php esc_html_e( 'Platform', 'newsane' ); ?></th>
-									<th><?php esc_html_e( 'Clicks', 'newsane' ); ?></th>
-									<th><?php esc_html_e( 'Percentage', 'newsane' ); ?></th>
+									<th><?php esc_html_e( 'Platform', 'elemenane' ); ?></th>
+									<th><?php esc_html_e( 'Clicks', 'elemenane' ); ?></th>
+									<th><?php esc_html_e( 'Percentage', 'elemenane' ); ?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -236,7 +236,7 @@ function ane_render_linktree_analytics_page() {
 							</tbody>
 						</table>
 					<?php else : ?>
-						<p><?php esc_html_e( 'No data yet.', 'newsane' ); ?></p>
+						<p><?php esc_html_e( 'No data yet.', 'elemenane' ); ?></p>
 					<?php endif; ?>
 					</div>
 				</div>
@@ -256,6 +256,7 @@ function ane_get_linktree_stats() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'ane_linktree_clicks';
 
+	// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses trusted $wpdb->prefix.
 	// Total clicks
 	$total_clicks = (int) $wpdb->get_var(
 		"SELECT COUNT(*) FROM $table_name"
@@ -276,6 +277,7 @@ function ane_get_linktree_stats() {
 	$unique_links = (int) $wpdb->get_var(
 		"SELECT COUNT(DISTINCT link_url) FROM $table_name"
 	);
+	// phpcs:enable
 
 	return array(
 		'total_clicks'      => $total_clicks,
@@ -294,6 +296,7 @@ function ane_get_top_linktree_links( $limit = 5 ) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'ane_linktree_clicks';
 
+	// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses trusted $wpdb->prefix.
 	$results = $wpdb->get_results(
 		$wpdb->prepare(
 			"SELECT link_label, link_type, COUNT(*) as clicks
@@ -304,6 +307,7 @@ function ane_get_top_linktree_links( $limit = 5 ) {
 			$limit
 		)
 	);
+	// phpcs:enable
 
 	return $results;
 }
@@ -318,6 +322,7 @@ function ane_get_top_referrers( $limit = 5 ) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'ane_linktree_clicks';
 
+	// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses trusted $wpdb->prefix.
 	// Get total clicks for percentage calculation
 	$total_clicks = (int) $wpdb->get_var( "SELECT COUNT(*) FROM $table_name" );
 
@@ -332,6 +337,7 @@ function ane_get_top_referrers( $limit = 5 ) {
 			$limit
 		)
 	);
+	// phpcs:enable
 
 	// Calculate percentage
 	if ( $total_clicks > 0 ) {
@@ -352,6 +358,7 @@ function ane_get_device_breakdown() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'ane_linktree_clicks';
 
+	// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses trusted $wpdb->prefix.
 	$results = $wpdb->get_results(
 		"SELECT device_type, COUNT(*) as clicks
 		FROM $table_name
@@ -359,6 +366,7 @@ function ane_get_device_breakdown() {
 		GROUP BY device_type
 		ORDER BY clicks DESC"
 	);
+	// phpcs:enable
 
 	return $results;
 }
@@ -379,11 +387,12 @@ function ane_get_linktree_analytics_data() {
 
 	// Get last 12 months
 	for ( $i = 11; $i >= 0; $i-- ) {
-		$date = strtotime( "-$i months" );
-		$year = gmdate( 'Y', $date );
+		$date  = strtotime( "-$i months" );
+		$year  = gmdate( 'Y', $date );
 		$month = gmdate( 'n', $date );
 		$label = gmdate( 'M Y', $date );
 
+		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- $table_name uses trusted $wpdb->prefix.
 		$clicks = (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT(*) FROM $table_name
@@ -393,6 +402,7 @@ function ane_get_linktree_analytics_data() {
 				$year
 			)
 		);
+		// phpcs:enable
 
 		$data['labels'][] = $label;
 		$data['clicks'][] = $clicks;

@@ -47,28 +47,28 @@ function ane_share_this_post() {
 	// Facebook Share
 	$content .= '<li>';
 	$content .= '<a id="share-facebook" class="facebook" href="' . esc_url( $share_urls['facebook'] ) . '" target="_blank" rel="nofollow noopener" aria-label="' . esc_attr__( 'Share on Facebook', 'elemenane' ) . '">';
-	$content .= '<i class="ane-facebook"></i>';
+	$content .= elemenane_get_icon_svg( 'facebook' );
 	$content .= '</a>';
 	$content .= '</li>';
 
 	// Twitter Share
 	$content .= '<li>';
 	$content .= '<a id="share-twitter" class="twitter" href="' . esc_url( $share_urls['twitter'] ) . '" target="_blank" rel="nofollow noopener" aria-label="' . esc_attr__( 'Share on Twitter', 'elemenane' ) . '">';
-	$content .= '<i class="ane-twitter"></i>';
+	$content .= elemenane_get_icon_svg( 'twitter' );
 	$content .= '</a>';
 	$content .= '</li>';
 
 	// WhatsApp Share
 	$content .= '<li>';
 	$content .= '<a id="share-whatsapp" class="whatsapp" href="' . esc_url( $share_urls['whatsapp'] ) . '" target="_blank" rel="nofollow noopener" aria-label="' . esc_attr__( 'Share on WhatsApp', 'elemenane' ) . '">';
-	$content .= '<i class="ane-whatsapp"></i>';
+	$content .= elemenane_get_icon_svg( 'whatsapp' );
 	$content .= '</a>';
 	$content .= '</li>';
 
 	// LinkedIn Share
 	$content .= '<li>';
 	$content .= '<a id="share-linkedin" class="linkedin" href="' . esc_url( $share_urls['linkedin'] ) . '" target="_blank" rel="nofollow noopener" aria-label="' . esc_attr__( 'Share on LinkedIn', 'elemenane' ) . '">';
-	$content .= '<i class="ane-linkedin"></i>';
+	$content .= elemenane_get_icon_svg( 'linkedin' );
 	$content .= '</a>';
 	$content .= '</li>';
 

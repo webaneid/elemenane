@@ -40,17 +40,17 @@ function ane_register_branch_fields() {
 			'fields'   => array(
 				// Provinsi.
 				array(
-					'key'           => 'field_ane_branch_province',
-					'label'         => __( 'Provinsi', 'elemenane' ),
-					'name'          => 'ane_branch_province',
-					'type'          => 'select',
-					'instructions'  => __( 'Pilih provinsi.', 'elemenane' ),
-					'required'      => 1,
-					'choices'       => array(),
-					'allow_null'    => 1,
-					'ui'            => 1,
-					'ajax'          => 0,
-					'placeholder'   => __( 'Pilih Provinsi', 'elemenane' ),
+					'key'          => 'field_ane_branch_province',
+					'label'        => __( 'Provinsi', 'elemenane' ),
+					'name'         => 'ane_branch_province',
+					'type'         => 'select',
+					'instructions' => __( 'Pilih provinsi.', 'elemenane' ),
+					'required'     => 1,
+					'choices'      => array(),
+					'allow_null'   => 1,
+					'ui'           => 1,
+					'ajax'         => 0,
+					'placeholder'  => __( 'Pilih Provinsi', 'elemenane' ),
 				),
 				// Kabupaten/Kota.
 				array(
@@ -94,84 +94,84 @@ function ane_register_branch_fields() {
 				),
 				// Alamat Lengkap.
 				array(
-					'key'           => 'field_ane_branch_address',
-					'label'         => __( 'Alamat Lengkap', 'elemenane' ),
-					'name'          => 'ane_branch_address',
-					'type'          => 'textarea',
-					'instructions'  => __( 'Masukkan alamat lengkap cabang.', 'elemenane' ),
-					'required'      => 1,
-					'rows'          => 3,
-					'new_lines'     => 'br',
+					'key'          => 'field_ane_branch_address',
+					'label'        => __( 'Alamat Lengkap', 'elemenane' ),
+					'name'         => 'ane_branch_address',
+					'type'         => 'textarea',
+					'instructions' => __( 'Masukkan alamat lengkap cabang.', 'elemenane' ),
+					'required'     => 1,
+					'rows'         => 3,
+					'new_lines'    => 'br',
 				),
 				// Google Maps.
 				array(
-					'key'           => 'field_ane_branch_map',
-					'label'         => __( 'Google Maps', 'elemenane' ),
-					'name'          => 'ane_branch_map',
-					'type'          => 'google_map',
-					'instructions'  => __( 'Pilih lokasi cabang pada peta.', 'elemenane' ),
-					'required'      => 1,
-					'center_lat'    => '-6.200000',
-					'center_lng'    => '106.816666',
-					'zoom'          => 12,
-					'height'        => 400,
+					'key'          => 'field_ane_branch_map',
+					'label'        => __( 'Google Maps', 'elemenane' ),
+					'name'         => 'ane_branch_map',
+					'type'         => 'google_map',
+					'instructions' => __( 'Pilih lokasi cabang pada peta.', 'elemenane' ),
+					'required'     => 1,
+					'center_lat'   => '-6.200000',
+					'center_lng'   => '106.816666',
+					'zoom'         => 12,
+					'height'       => 400,
 				),
 				// Nomor Telepon.
 				array(
-					'key'           => 'field_ane_branch_phone',
-					'label'         => __( 'Nomor Telepon', 'elemenane' ),
-					'name'          => 'ane_branch_phone',
-					'type'          => 'text',
-					'instructions'  => __( 'Contoh: (021) 12345678', 'elemenane' ),
-					'required'      => 0,
-					'placeholder'   => '(021) 12345678',
+					'key'          => 'field_ane_branch_phone',
+					'label'        => __( 'Nomor Telepon', 'elemenane' ),
+					'name'         => 'ane_branch_phone',
+					'type'         => 'text',
+					'instructions' => __( 'Contoh: (021) 12345678', 'elemenane' ),
+					'required'     => 0,
+					'placeholder'  => '(021) 12345678',
 				),
 				// Email.
 				array(
-					'key'           => 'field_ane_branch_email',
-					'label'         => __( 'Email', 'elemenane' ),
-					'name'          => 'ane_branch_email',
-					'type'          => 'email',
-					'instructions'  => __( 'Email cabang.', 'elemenane' ),
-					'required'      => 0,
-					'placeholder'   => 'cabang@example.com',
+					'key'          => 'field_ane_branch_email',
+					'label'        => __( 'Email', 'elemenane' ),
+					'name'         => 'ane_branch_email',
+					'type'         => 'email',
+					'instructions' => __( 'Email cabang.', 'elemenane' ),
+					'required'     => 0,
+					'placeholder'  => 'cabang@example.com',
 				),
 				// WhatsApp.
 				array(
-					'key'           => 'field_ane_branch_whatsapp',
-					'label'         => __( 'WhatsApp', 'elemenane' ),
-					'name'          => 'ane_branch_whatsapp',
-					'type'          => 'text',
-					'instructions'  => __( 'Nomor WhatsApp dengan kode negara. Contoh: 628123456789', 'elemenane' ),
-					'required'      => 0,
-					'placeholder'   => '628123456789',
+					'key'          => 'field_ane_branch_whatsapp',
+					'label'        => __( 'WhatsApp', 'elemenane' ),
+					'name'         => 'ane_branch_whatsapp',
+					'type'         => 'text',
+					'instructions' => __( 'Nomor WhatsApp dengan kode negara. Contoh: 628123456789', 'elemenane' ),
+					'required'     => 0,
+					'placeholder'  => '628123456789',
 				),
 				// Jam Operasional.
 				array(
-					'key'           => 'field_ane_branch_hours',
-					'label'         => __( 'Jam Operasional', 'elemenane' ),
-					'name'          => 'ane_branch_hours',
-					'type'          => 'textarea',
-					'instructions'  => __( 'Contoh: Senin - Jumat: 08:00 - 17:00, Sabtu: 08:00 - 12:00', 'elemenane' ),
-					'required'      => 0,
-					'rows'          => 3,
-					'placeholder'   => 'Senin - Jumat: 08:00 - 17:00',
+					'key'          => 'field_ane_branch_hours',
+					'label'        => __( 'Jam Operasional', 'elemenane' ),
+					'name'         => 'ane_branch_hours',
+					'type'         => 'textarea',
+					'instructions' => __( 'Contoh: Senin - Jumat: 08:00 - 17:00, Sabtu: 08:00 - 12:00', 'elemenane' ),
+					'required'     => 0,
+					'rows'         => 3,
+					'placeholder'  => 'Senin - Jumat: 08:00 - 17:00',
 				),
 				// Foto Cabang (Gallery).
 				array(
-					'key'           => 'field_ane_branch_photos',
-					'label'         => __( 'Foto Cabang', 'elemenane' ),
-					'name'          => 'ane_branch_photos',
-					'type'          => 'gallery',
-					'instructions'  => __( 'Upload foto-foto cabang.', 'elemenane' ),
-					'required'      => 0,
-					'min'           => 0,
-					'max'           => 10,
-					'insert'        => 'append',
-					'library'       => 'all',
-					'min_width'     => 800,
-					'min_height'    => 600,
-					'preview_size'  => 'medium',
+					'key'          => 'field_ane_branch_photos',
+					'label'        => __( 'Foto Cabang', 'elemenane' ),
+					'name'         => 'ane_branch_photos',
+					'type'         => 'gallery',
+					'instructions' => __( 'Upload foto-foto cabang.', 'elemenane' ),
+					'required'     => 0,
+					'min'          => 0,
+					'max'          => 10,
+					'insert'       => 'append',
+					'library'      => 'all',
+					'min_width'    => 800,
+					'min_height'   => 600,
+					'preview_size' => 'medium',
 				),
 			),
 			'location' => array(
@@ -238,14 +238,14 @@ function ane_load_city_choices( $field ) {
 	$province_id = '';
 
 	// Check if we're editing existing post.
-	if ( isset( $_GET['post'] ) ) {
-		$post_id     = absint( $_GET['post'] );
+	if ( isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$post_id     = absint( wp_unslash( $_GET['post'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$province_id = get_field( 'ane_branch_province', $post_id );
 	}
 
 	// Check AJAX request.
-	if ( isset( $_POST['province_id'] ) ) {
-		$province_id = sanitize_text_field( $_POST['province_id'] );
+	if ( isset( $_POST['province_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$province_id = sanitize_text_field( wp_unslash( $_POST['province_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 
 	if ( empty( $province_id ) ) {
@@ -289,12 +289,13 @@ add_filter( 'acf/load_field/key=field_ane_branch_city', 'ane_load_city_choices' 
  */
 function ane_ajax_load_cities() {
 	// Check nonce.
-	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'ane_branch_locations' ) ) {
+	$nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+	if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'ane_branch_locations' ) ) {
 		wp_send_json_error( array( 'message' => 'Invalid nonce' ) );
 	}
 
 	// Get province ID.
-	$province_id = isset( $_POST['province_id'] ) ? sanitize_text_field( $_POST['province_id'] ) : '';
+	$province_id = isset( $_POST['province_id'] ) ? sanitize_text_field( wp_unslash( $_POST['province_id'] ) ) : '';
 
 	if ( empty( $province_id ) ) {
 		wp_send_json_error( array( 'message' => 'No province selected' ) );

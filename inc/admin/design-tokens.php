@@ -30,8 +30,8 @@ function ane_admin_design_tokens() {
 	<style id="ane-admin-design-tokens">
 		:root {
 			/* ============================================
-			   BORDER RADIUS
-			   ============================================ */
+				BORDER RADIUS
+				============================================ */
 			--ane-radius-xl: 20px;   /* Large containers, modals */
 			--ane-radius-lg: 12px;   /* Cards, postboxes */
 			--ane-radius-md: 10px;   /* Inputs, buttons */
@@ -40,8 +40,8 @@ function ane_admin_design_tokens() {
 			--ane-radius-circle: 50%; /* Avatars, rank badges */
 
 			/* ============================================
-			   SPACING SCALE
-			   ============================================ */
+				SPACING SCALE
+				============================================ */
 			--ane-space-xs: 0.5rem;   /* 8px - Tight spacing */
 			--ane-space-sm: 0.75rem;  /* 12px - Small gaps */
 			--ane-space-md: 1rem;     /* 16px - Default spacing */
@@ -51,23 +51,23 @@ function ane_admin_design_tokens() {
 			--ane-space-3xl: 3rem;    /* 48px - Extra large */
 
 			/* ============================================
-			   SHADOWS
-			   ============================================ */
+				SHADOWS
+				============================================ */
 			--ane-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
 			--ane-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
 			--ane-shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.1);
 			--ane-shadow-xl: 0 12px 28px rgba(0, 0, 0, 0.15);
 
 			/* ============================================
-			   TRANSITIONS
-			   ============================================ */
+				TRANSITIONS
+				============================================ */
 			--ane-transition-fast: 0.15s ease;
 			--ane-transition-base: 0.2s ease;
 			--ane-transition-slow: 0.3s ease;
 
 			/* ============================================
-			   Z-INDEX LAYERS
-			   ============================================ */
+				Z-INDEX LAYERS
+				============================================ */
 			--ane-z-base: 1;
 			--ane-z-dropdown: 1000;
 			--ane-z-sticky: 1020;
@@ -78,8 +78,8 @@ function ane_admin_design_tokens() {
 			--ane-z-tooltip: 1070;
 
 			/* ============================================
-			   TYPOGRAPHY SCALE
-			   ============================================ */
+				TYPOGRAPHY SCALE
+				============================================ */
 			--ane-font-xs: 0.75rem;      /* 12px */
 			--ane-font-sm: 0.8125rem;    /* 13px */
 			--ane-font-base: 0.9375rem;  /* 15px */
@@ -91,8 +91,8 @@ function ane_admin_design_tokens() {
 			--ane-font-4xl: 2.25rem;     /* 36px */
 
 			/* ============================================
-			   FONT WEIGHTS
-			   ============================================ */
+				FONT WEIGHTS
+				============================================ */
 			--ane-font-normal: 400;
 			--ane-font-medium: 500;
 			--ane-font-semibold: 600;
@@ -100,8 +100,8 @@ function ane_admin_design_tokens() {
 			--ane-font-extrabold: 800;
 
 			/* ============================================
-			   LINE HEIGHTS
-			   ============================================ */
+				LINE HEIGHTS
+				============================================ */
 			--ane-leading-tight: 1.2;
 			--ane-leading-snug: 1.4;
 			--ane-leading-normal: 1.5;
@@ -109,44 +109,44 @@ function ane_admin_design_tokens() {
 			--ane-leading-loose: 1.8;
 
 			/* ============================================
-			   LETTER SPACING
-			   ============================================ */
+				LETTER SPACING
+				============================================ */
 			--ane-tracking-tight: -0.02em;
 			--ane-tracking-normal: 0;
 			--ane-tracking-wide: 0.05em;
 			--ane-tracking-wider: 0.08em;
 
 			/* ============================================
-			   CONTAINER WIDTHS
-			   ============================================ */
+				CONTAINER WIDTHS
+				============================================ */
 			--ane-container-sm: 640px;
 			--ane-container-md: 768px;
 			--ane-container-lg: 1024px;
 			--ane-container-xl: 1280px;
 
 			/* ============================================
-			   MOBILE TOUCH TARGETS
-			   ============================================ */
+				MOBILE TOUCH TARGETS
+				============================================ */
 			--ane-tap-target-min: 44px; /* Apple HIG minimum */
 
 			/* ============================================
-			   BREAKPOINTS (for reference in JS)
-			   ============================================ */
+				BREAKPOINTS (for reference in JS)
+				============================================ */
 			--ane-breakpoint-sm: 600px;
 			--ane-breakpoint-md: 782px;  /* WordPress mobile admin */
 			--ane-breakpoint-lg: 1024px;
 			--ane-breakpoint-xl: 1200px;
 
 			/* ============================================
-			   GLASSMORPHISM (for login & special cards)
-			   ============================================ */
+				GLASSMORPHISM (for login & special cards)
+				============================================ */
 			--ane-glass-bg: rgba(255, 255, 255, 0.08);
 			--ane-glass-border: rgba(255, 255, 255, 0.1);
 			--ane-glass-blur: blur(20px);
 
 			/* ============================================
-			   GRADIENT OVERLAYS
-			   ============================================ */
+				GRADIENT OVERLAYS
+				============================================ */
 			--ane-gradient-overlay: linear-gradient(
 				135deg,
 				rgba(0, 0, 0, 0.4),
@@ -167,30 +167,30 @@ add_action( 'admin_head', 'ane_admin_design_tokens', 1 ); // Priority 1 - load b
  * @param string $token_name Token name tanpa prefix (e.g. 'radius-lg', 'space-md').
  * @return string Token value atau empty string jika tidak found.
  */
-function ane_get_design_token( string $token_name ) : string {
+function ane_get_design_token( string $token_name ): string {
 	$tokens = array(
 		// Border radius.
-		'radius-xl'     => '20px',
-		'radius-lg'     => '12px',
-		'radius-md'     => '10px',
-		'radius-sm'     => '8px',
-		'radius-full'   => '999px',
-		'radius-circle' => '50%',
+		'radius-xl'       => '20px',
+		'radius-lg'       => '12px',
+		'radius-md'       => '10px',
+		'radius-sm'       => '8px',
+		'radius-full'     => '999px',
+		'radius-circle'   => '50%',
 
 		// Spacing.
-		'space-xs'  => '0.5rem',
-		'space-sm'  => '0.75rem',
-		'space-md'  => '1rem',
-		'space-lg'  => '1.5rem',
-		'space-xl'  => '2rem',
-		'space-2xl' => '2.5rem',
-		'space-3xl' => '3rem',
+		'space-xs'        => '0.5rem',
+		'space-sm'        => '0.75rem',
+		'space-md'        => '1rem',
+		'space-lg'        => '1.5rem',
+		'space-xl'        => '2rem',
+		'space-2xl'       => '2.5rem',
+		'space-3xl'       => '3rem',
 
 		// Shadows.
-		'shadow-sm' => '0 1px 3px rgba(0, 0, 0, 0.05)',
-		'shadow-md' => '0 4px 12px rgba(0, 0, 0, 0.08)',
-		'shadow-lg' => '0 8px 20px rgba(0, 0, 0, 0.1)',
-		'shadow-xl' => '0 12px 28px rgba(0, 0, 0, 0.15)',
+		'shadow-sm'       => '0 1px 3px rgba(0, 0, 0, 0.05)',
+		'shadow-md'       => '0 4px 12px rgba(0, 0, 0, 0.08)',
+		'shadow-lg'       => '0 8px 20px rgba(0, 0, 0, 0.1)',
+		'shadow-xl'       => '0 12px 28px rgba(0, 0, 0, 0.15)',
 
 		// Transitions.
 		'transition-fast' => '0.15s ease',
@@ -198,25 +198,25 @@ function ane_get_design_token( string $token_name ) : string {
 		'transition-slow' => '0.3s ease',
 
 		// Typography.
-		'font-xs'   => '0.75rem',
-		'font-sm'   => '0.8125rem',
-		'font-base' => '0.9375rem',
-		'font-md'   => '1rem',
-		'font-lg'   => '1.125rem',
-		'font-xl'   => '1.25rem',
-		'font-2xl'  => '1.5rem',
-		'font-3xl'  => '1.875rem',
-		'font-4xl'  => '2.25rem',
+		'font-xs'         => '0.75rem',
+		'font-sm'         => '0.8125rem',
+		'font-base'       => '0.9375rem',
+		'font-md'         => '1rem',
+		'font-lg'         => '1.125rem',
+		'font-xl'         => '1.25rem',
+		'font-2xl'        => '1.5rem',
+		'font-3xl'        => '1.875rem',
+		'font-4xl'        => '2.25rem',
 
 		// Font weights.
-		'font-normal'    => '400',
-		'font-medium'    => '500',
-		'font-semibold'  => '600',
-		'font-bold'      => '700',
-		'font-extrabold' => '800',
+		'font-normal'     => '400',
+		'font-medium'     => '500',
+		'font-semibold'   => '600',
+		'font-bold'       => '700',
+		'font-extrabold'  => '800',
 
 		// Touch targets.
-		'tap-target-min' => '44px',
+		'tap-target-min'  => '44px',
 	);
 
 	return $tokens[ $token_name ] ?? '';
@@ -231,7 +231,7 @@ function ane_get_design_token( string $token_name ) : string {
  * @param string $token    Token name (e.g. 'radius-lg', 'space-md').
  * @return string Inline style attribute atau empty string.
  */
-function ane_token_style( string $property, string $token ) : string {
+function ane_token_style( string $property, string $token ): string {
 	$value = ane_get_design_token( $token );
 
 	if ( empty( $value ) ) {
@@ -249,7 +249,7 @@ function ane_token_style( string $property, string $token ) : string {
  *
  * @return bool True if mobile admin, false otherwise.
  */
-function ane_is_mobile_admin() : bool {
+function ane_is_mobile_admin(): bool {
 	// Check if wp_is_mobile() available.
 	if ( function_exists( 'wp_is_mobile' ) ) {
 		return wp_is_mobile();
@@ -290,7 +290,7 @@ function ane_is_mobile_admin() : bool {
  * @param bool $force_mobile Force mobile size even on desktop.
  * @return string Size value (e.g. '44px' atau '32px').
  */
-function ane_tap_target_size( bool $force_mobile = false ) : string {
+function ane_tap_target_size( bool $force_mobile = false ): string {
 	if ( $force_mobile || ane_is_mobile_admin() ) {
 		return ane_get_design_token( 'tap-target-min' ); // 44px
 	}

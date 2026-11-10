@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ane_enqueue_carousel();
 
 // Get ACF fields
-$category      = get_sub_field( 'ane_category' );
-$custom_title  = get_sub_field( 'ane_judul' );
+$category     = get_sub_field( 'ane_category' );
+$custom_title = get_sub_field( 'ane_judul' );
 
 if ( empty( $category ) ) {
 	return;
@@ -37,7 +37,7 @@ $section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
 				</h2>
 			</div>
 			<a class="lainnya" href="<?php echo esc_url( $category_link ); ?>">
-				<?php esc_html_e( 'Display More', 'elemenane' ); ?> <i class="ane-chevron-right-alt-2"></i>
+				<?php esc_html_e( 'Display More', 'elemenane' ); ?> <?php elemenane_icon( 'chevron-right-alt-2' ); ?>
 			</a>
 		</div>
 

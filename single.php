@@ -5,6 +5,8 @@
  * Supports Elementor Theme Builder for single post templates.
  * Falls back to native theme template if no Elementor template is set.
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 
 // Track post views

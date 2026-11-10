@@ -18,16 +18,16 @@ while ( have_posts() ) :
 	the_post();
 
 	// Get ACF fields.
-	$province    = get_field( 'ane_branch_province' );
-	$city        = get_field( 'ane_branch_city' );
-	$district    = get_field( 'ane_branch_district' );
-	$address     = get_field( 'ane_branch_address' );
-	$map_data    = get_field( 'ane_branch_map' );
-	$phone       = get_field( 'ane_branch_phone' );
-	$email       = get_field( 'ane_branch_email' );
-	$whatsapp    = get_field( 'ane_branch_whatsapp' );
-	$hours       = get_field( 'ane_branch_hours' );
-	$photos      = get_field( 'ane_branch_photos' );
+	$province = get_field( 'ane_branch_province' );
+	$city     = get_field( 'ane_branch_city' );
+	$district = get_field( 'ane_branch_district' );
+	$address  = get_field( 'ane_branch_address' );
+	$map_data = get_field( 'ane_branch_map' );
+	$phone    = get_field( 'ane_branch_phone' );
+	$email    = get_field( 'ane_branch_email' );
+	$whatsapp = get_field( 'ane_branch_whatsapp' );
+	$hours    = get_field( 'ane_branch_hours' );
+	$photos   = get_field( 'ane_branch_photos' );
 
 	// Get location names from JSON.
 	$province_name = '';
@@ -250,9 +250,9 @@ while ( have_posts() ) :
 						<?php
 						while ( $related_query->have_posts() ) :
 							$related_query->the_post();
-							$rel_map    = get_field( 'ane_branch_map' );
-							$rel_phone  = get_field( 'ane_branch_phone' );
-							$rel_city   = get_field( 'ane_branch_city' );
+							$rel_map      = get_field( 'ane_branch_map' );
+							$rel_phone    = get_field( 'ane_branch_phone' );
+							$rel_city     = get_field( 'ane_branch_city' );
 							$rel_province = get_field( 'ane_branch_province' );
 
 							// Get city name.

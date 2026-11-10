@@ -5,6 +5,8 @@
  * Custom contact page template with company information and Google Maps integration.
  * Displays contact details from ACF options and an interactive map.
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 ?>
 <main id="main" class="site-main" role="main">
@@ -23,4 +25,5 @@ get_header();
 		?>
 	</div>
 </main>
-<?php get_footer();
+<?php
+get_footer();

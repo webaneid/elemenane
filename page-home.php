@@ -6,6 +6,8 @@
  * This is a standalone template that uses ACF fields and is independent of Elementor.
  * Displays different layouts based on device type (page-home-mobile.php or page-home-desktop.php).
  */
+defined( 'ABSPATH' ) || exit;
+
 get_header();
 ?>
 <main id="main" class="site-main" role="main">
@@ -18,4 +20,5 @@ get_header();
 	}
 	?>
 </main>
-<?php get_footer();
+<?php
+get_footer();

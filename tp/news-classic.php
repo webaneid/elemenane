@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Get ACF fields
-$category      = get_sub_field( 'ane_category' );
-$custom_title  = get_sub_field( 'ane_judul' );
+$category     = get_sub_field( 'ane_category' );
+$custom_title = get_sub_field( 'ane_judul' );
 
 if ( empty( $category ) ) {
 	return;
@@ -35,7 +35,7 @@ $section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
 				</h2>
 			</div>
 			<a class="lainnya" href="<?php echo esc_url( $category_link ); ?>">
-				<?php esc_html_e( 'Display More', 'elemenane' ); ?> <i class="ane-chevron-right-alt-2"></i>
+				<?php esc_html_e( 'Display More', 'elemenane' ); ?> <?php elemenane_icon( 'chevron-right-alt-2' ); ?>
 			</a>
 		</div>
 
@@ -65,7 +65,7 @@ $section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
 
 				<!-- Next 4 posts -->
 				<div class="ane-kiri-2">
-					<?php
+						<?php
 						while ( $main_query->have_posts() ) :
 							$main_query->the_post();
 							get_template_part( 'tp/content', 'klasik' );
@@ -85,14 +85,14 @@ $section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
 							<?php
 							$popular_query = new WP_Query(
 								array(
-									'post_type'              => 'post',
-									'cat'                    => $category->term_id,
-									'posts_per_page'         => 5,
-									'orderby'                => 'meta_value_num',
-									'meta_key'               => 'musi_views',
-									'post_status'            => 'publish',
-									'ignore_sticky_posts'    => true,
-									'no_found_rows'          => true,
+									'post_type'           => 'post',
+									'cat'                 => $category->term_id,
+									'posts_per_page'      => 5,
+									'orderby'             => 'meta_value_num',
+									'meta_key'            => 'musi_views',
+									'post_status'         => 'publish',
+									'ignore_sticky_posts' => true,
+									'no_found_rows'       => true,
 									'update_post_term_cache' => false,
 								)
 							);

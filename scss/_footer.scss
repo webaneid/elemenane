@@ -63,7 +63,7 @@
                         width: 40px;
                         border-radius: 5px;
 
-                        i {
+                        i, .ane-icon {
                             line-height: 40px;
                         }
 
@@ -92,7 +92,7 @@
                             width: 28px;
                             margin-left: 0;
 
-                            i {
+                            i, .ane-icon {
                                 line-height: 28px;
                             }
                         }
@@ -231,7 +231,7 @@
                         padding-bottom: 0;
                     }
 
-                    i {
+                    i, .ane-icon {
                         color: var(--ane-warna-putih);
                         margin-right: 5px;
                     }

@@ -8,6 +8,8 @@
  * @since 1.0.0
  */
 
+defined( 'ABSPATH' ) || exit;
+
 // Get social media URLs from ACF options
 $social_links = array(
 	'whatsapp'  => array(
@@ -57,10 +59,10 @@ $social_links = array(
 				?>
 				<li class="<?php echo esc_attr( $platform ); ?>">
 					<a href="<?php echo esc_url( $data['url'] ); ?>"
-					   target="_blank"
-					   rel="noopener noreferrer"
-					   aria-label="<?php echo esc_attr( sprintf( __( 'Follow us on %s', 'elemenane' ), $data['label'] ) ); ?>">
-						<i class="ane-<?php echo esc_attr( $platform ); ?>"></i>
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="<?php echo esc_attr( sprintf( __( 'Follow us on %s', 'elemenane' ), $data['label'] ) ); ?>">
+						<?php elemenane_icon( $platform ); ?>
 					</a>
 				</li>
 				<?php

@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						printf(
 							'<a class="post-cat" href="%s">%s</a>',
 							esc_url( get_category_link( $category->term_id ) ),
-							esc_html( $category->cat_name )
+							esc_html( $category->name )
 						);
 					}
 				}
@@ -43,6 +43,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="post-content prlm-15">
 		<?php the_title( sprintf( '<h3 class="post-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
-		<?php echo ane_load_times_ago(); ?>
+		<?php echo esc_html( ane_load_times_ago() ); ?>
 	</div>
 </article>

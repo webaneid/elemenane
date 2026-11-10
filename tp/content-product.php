@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 $product_id = get_the_ID();
 
 // Get product data.
-$prices        = ane_get_product_price_data( $product_id );
-$stock_status  = function_exists( 'ane_get_product_stock_status' )
+$prices       = ane_get_product_price_data( $product_id );
+$stock_status = function_exists( 'ane_get_product_stock_status' )
 	? ane_get_product_stock_status( $product_id )
 	: 'instock';
 
@@ -27,7 +27,7 @@ $thumbnail_id = get_post_thumbnail_id( $product_id );
 ?>
 
 <div class="col-lg-4 col-md-3 col-6">
-	<article id="product-<?php echo esc_attr( $product_id ); ?>" <?php post_class( 'ane-product-card' ); ?>>
+	<article id="product-<?php echo esc_attr( (string) $product_id ); ?>" <?php post_class( 'ane-product-card' ); ?>>
 
 		<!-- Product Image -->
 		<div class="ane-product-card-image">
@@ -36,8 +36,8 @@ $thumbnail_id = get_post_thumbnail_id( $product_id );
 					<?php echo wp_get_attachment_image( $thumbnail_id, 'kotak', false, array( 'class' => 'product-image' ) ); ?>
 				<?php else : ?>
 					<img src="<?php echo esc_url( get_template_directory_uri() . '/img/placeholder.jpg' ); ?>"
-					     alt="<?php the_title_attribute(); ?>"
-					     class="product-image placeholder">
+						alt="<?php the_title_attribute(); ?>"
+						class="product-image placeholder">
 				<?php endif; ?>
 
 				<!-- Badges -->
@@ -55,12 +55,12 @@ $thumbnail_id = get_post_thumbnail_id( $product_id );
 
 				<!-- Check if product is new (less than 7 days old) -->
 				<?php
-				$post_date = get_the_date( 'U' );
+				$post_date    = get_the_date( 'U' );
 				$current_date = current_time( 'timestamp' );
-				$days_diff = ( $current_date - $post_date ) / DAY_IN_SECONDS;
+				$days_diff    = ( $current_date - $post_date ) / DAY_IN_SECONDS;
 
 				if ( $days_diff <= 7 ) :
-				?>
+					?>
 					<span class="ane-product-badge ane-badge-new">
 						<?php esc_html_e( 'New', 'elemenane' ); ?>
 					</span>
@@ -75,7 +75,7 @@ $thumbnail_id = get_post_thumbnail_id( $product_id );
 			<?php
 			$categories = get_the_terms( $product_id, 'product_cat' );
 			if ( $categories && ! is_wp_error( $categories ) ) :
-			?>
+				?>
 				<div class="ane-product-category">
 					<a href="<?php echo esc_url( get_term_link( $categories[0] ) ); ?>">
 						<?php echo esc_html( $categories[0]->name ); ?>

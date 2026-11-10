@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php else : ?>
 				<div class="img-100">
 					<img src="https://dummyimage.com/700x394/f1f1f1/545454.jpg&text=Set+Your+Featured+Image+(700x394+pixel)"
-					     alt="<?php echo esc_attr( get_the_title() ); ?>">
+						alt="<?php echo esc_attr( get_the_title() ); ?>">
 				</div>
 			<?php endif; ?>
 		</div>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="entry-content prlm-15">
 		<div class="share-this">
-			<?php echo ane_share_this_post(); ?>
+			<?php echo wp_kses( ane_share_this_post(), elemenane_kses_post_with_svg() ); ?>
 		</div>
 
 		<div class="ane-content">
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="comments-form">
-			<?php echo ane_load_facebook_comment(); ?>
+			<?php echo wp_kses_post( ane_load_facebook_comment() ); ?>
 		</div>
 	</div>
 </article>
