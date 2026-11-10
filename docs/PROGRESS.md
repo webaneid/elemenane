@@ -15,6 +15,7 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 | **[Fase 04](phases/phase-04-webp-converter.md)** | Auto-Convert Upload Gambar ke WebP (`inc/webp-converter.php` dengan `ELEMENANE_WEBP_QUALITY = 78`) | `GAP-19` | **Completed** | 2026-11-11 |
 | **Fase 05** | Migrasi Icon `FontAne` ke Helper Inline SVG (`elemenane_icon()` di `inc/icons.php`) & Penghapusan `css/FontAne.css` + `fonts/` | `GAP-20` | **Completed** | 2026-11-11 |
 | **Fase 06** | Optimasi Speed Test & Core Web Vitals Standar Webane (`webane-pagespeed-cwv`: Konversi Hero `background-image` ke `<img>` DPR-aware, Preload LCP, Inline CSS OwlCarousel + Zero-CLS, Async CSS, Defer JS, `content-visibility`, & Aksesibilitas 100) | `GAP-21`, `GAP-22`, `GAP-23`, `GAP-24`, `GAP-25`, `GAP-26`, `GAP-27`, `GAP-28` | **Completed** | 2026-11-11 |
+| **[Fase 07](phases/phase-07-footer-baru.md)** | Refactoring Total Footer Default (`tp/footer-default.php`, `scss/_footer.scss` baru, mobile-first & responsif) | Permintaan desain | **Completed** | 2026-11-11 |
 
 ---
 
