@@ -9,6 +9,10 @@ html.ane-lock {
     overflow: hidden;
 }
 
+// Wrapped in `body` so these rules out-rank Elementor kit selectors (`.elementor-kit-N a`, `.elementor-kit-N button`)
+// on pages rendered by Elementor Theme Builder templates.
+html body {
+
 .ane-header {
     --ane-header-bg: var(--ane-warna-putih);
     --ane-header-text: var(--ane-warna-text);
@@ -848,4 +852,5 @@ html.ane-lock {
             transition: none !important;
         }
     }
+}
 }

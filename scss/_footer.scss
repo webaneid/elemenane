@@ -1,3 +1,5 @@
+// Wrapped in `body` so these rules out-rank Elementor kit selectors (`.elementor-kit-N a`) on Elementor-rendered pages.
+html body {
 // Default site footer (tp/footer-default.php). Mobile-first; BEM-style .ane-footer__*.
 // Fluid spacing via clamp(); layout via CSS Grid. Colours use the Elementor-synced theme tokens.
 
@@ -295,4 +297,5 @@
             transform: none !important;
         }
     }
+}
 }

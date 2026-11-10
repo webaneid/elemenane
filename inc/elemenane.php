@@ -626,9 +626,13 @@ function ane_reading_time() {
 /**
  * Displays or returns pagination for posts
  *
+ * Markup: nav.ane-pagination > ul > li > .page-numbers (prev / next / current / dots).
+ * Prev and next always render (disabled placeholder at the ends) so the bar keeps its shape.
+ * On narrow screens CSS hides the numbers and shows "Previous  2 / 9  Next" via the status item.
+ *
  * @param WP_Query|null $wp_query WordPress Query object
- * @param bool         $echo     Whether to echo or return the pagination
- * @return string|null           Pagination HTML or null if no pages
+ * @param bool          $echo     Whether to echo or return the pagination
+ * @return string|null            Pagination HTML or null if no pages
  */
 function ane_post_pagination( ?\WP_Query $wp_query = null, bool $echo = true ) {
 	// Use global query if no query object provided
@@ -641,7 +645,13 @@ function ane_post_pagination( ?\WP_Query $wp_query = null, bool $echo = true ) {
 		return null;
 	}
 
-	// Build pagination arguments
+	$current = max( 1, absint( get_query_var( 'paged' ) ) );
+	$total   = absint( $wp_query->max_num_pages );
+
+	if ( $total < 2 ) {
+		return null;
+	}
+
 	$args = array(
 		'base'         => str_replace(
 			'999999999',
@@ -649,65 +659,88 @@ function ane_post_pagination( ?\WP_Query $wp_query = null, bool $echo = true ) {
 			esc_url( get_pagenum_link( 999999999 ) )
 		),
 		'format'       => '?paged=%#%',
-		'current'      => max( 1, absint( get_query_var( 'paged' ) ) ),
-		'total'        => absint( $wp_query->max_num_pages ),
+		'current'      => $current,
+		'total'        => $total,
 		'type'         => 'array',
 		'show_all'     => false,
-		'end_size'     => 3,
-		'mid_size'     => 1,
+		'end_size'     => 1,
+		'mid_size'     => 2,
 		'prev_next'    => true,
 		'prev_text'    => sprintf(
-			'%s<span class="screen-reader-text">%s</span>',
+			'%s<span class="ane-pagination__label">%s</span>',
 			elemenane_get_icon_svg( 'chevron-left' ),
-			esc_html__( 'Previous Page', 'elemenane' )
+			esc_html__( 'Previous', 'elemenane' )
 		),
 		'next_text'    => sprintf(
-			'%s<span class="screen-reader-text">%s</span>',
-			elemenane_get_icon_svg( 'chevron-right' ),
-			esc_html__( 'Next Page', 'elemenane' )
+			'<span class="ane-pagination__label">%s</span>%s',
+			esc_html__( 'Next', 'elemenane' ),
+			elemenane_get_icon_svg( 'chevron-right' )
 		),
 		'add_args'     => array(),
 		'add_fragment' => '',
 	);
 
-	// Get pagination links
 	$pages = paginate_links( $args );
 
-	// Return if no pages
 	if ( ! is_array( $pages ) || empty( $pages ) ) {
 		return null;
 	}
 
-	// Build pagination HTML
-	$pagination = sprintf(
-		'<nav class="pagination-area" aria-label="%s"><ul>',
-		esc_attr__( 'Posts Navigation', 'elemenane' )
-	);
-
-	foreach ( $pages as $page ) {
-		$pagination .= sprintf(
-			'<li>%s</li>',
-			wp_kses(
-				$page,
-				array_merge(
-					array(
-						'a'    => array(
-							'href'         => array(),
-							'class'        => array(),
-							'aria-current' => array(),
-						),
-						'span' => array(
-							'class'       => array(),
-							'aria-hidden' => array(),
-						),
-					),
-					elemenane_kses_svg_allowed_html()
-				)
+	// Disabled placeholders keep prev / next in place on the first and last page.
+	if ( 1 === $current ) {
+		array_unshift(
+			$pages,
+			sprintf(
+				'<span class="page-numbers prev is-disabled" aria-hidden="true">%s<span class="ane-pagination__label">%s</span></span>',
+				elemenane_get_icon_svg( 'chevron-left' ),
+				esc_html__( 'Previous', 'elemenane' )
 			)
 		);
 	}
+	if ( $current === $total ) {
+		$pages[] = sprintf(
+			'<span class="page-numbers next is-disabled" aria-hidden="true"><span class="ane-pagination__label">%s</span>%s</span>',
+			esc_html__( 'Next', 'elemenane' ),
+			elemenane_get_icon_svg( 'chevron-right' )
+		);
+	}
 
-	$pagination .= '</ul></nav>';
+	$allowed = array_merge(
+		array(
+			'a'    => array(
+				'href'         => array(),
+				'class'        => array(),
+				'aria-current' => array(),
+			),
+			'span' => array(
+				'class'       => array(),
+				'aria-hidden' => array(),
+				'aria-current' => array(),
+			),
+		),
+		elemenane_kses_svg_allowed_html()
+	);
+
+	$status = sprintf(
+		'<li class="ane-pagination__status" aria-hidden="true">%s</li>',
+		esc_html( sprintf( '%d / %d', $current, $total ) )
+	);
+
+	$items = '';
+	$last  = count( $pages ) - 1;
+	foreach ( $pages as $index => $page ) {
+		// Status sits between prev and next (only visible on mobile).
+		if ( $index === $last ) {
+			$items .= $status;
+		}
+		$items .= sprintf( '<li>%s</li>', wp_kses( $page, $allowed ) );
+	}
+
+	$pagination = sprintf(
+		'<nav class="ane-pagination pagination-area" aria-label="%s"><ul class="ane-pagination__list">%s</ul></nav>',
+		esc_attr__( 'Posts Navigation', 'elemenane' ),
+		$items
+	);
 
 	if ( $echo ) {
 		echo wp_kses( $pagination, elemenane_kses_post_with_svg() );

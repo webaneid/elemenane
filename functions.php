@@ -236,6 +236,7 @@ if ( ! class_exists( 'ACF' ) ) {
 $elemenane_includes = array(
 	'/inc/acf.php',
 	'/inc/admin.php',
+	'/inc/archive.php',
 	'/inc/branch-acf.php',
 	'/inc/custompost.php',
 	'/inc/elemenane.php',

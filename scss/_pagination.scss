@@ -1,79 +1,123 @@
-.pagination-area {
-    @include DisplayBlock;
-    margin-bottom: 30px;
+// Pagination (ane_post_pagination()): nav.ane-pagination > ul > li > .page-numbers.
+// Desktop: numbered pills. Mobile (< 640px): "Previous  2 / 9  Next" with numbers hidden.
 
-    ul {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: var(--ane-warna-putih);
+.ane-pagination {
+    display: block;
+    width: 100%;
+    margin: clamp(32px, 5vw, 48px) 0 0;
 
-      li {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-right: 8px;
-          font-size: 16px;
-          line-height: 40px;
-          cursor: pointer;
-          text-align: center;
-          background: rgba(var(--ane-warna-gelap-rgb),0.08);
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-          .page-numbers {
-              color: var(--ane-warna-text);
-              width: 40px;
-              height: 40px;
-              border-radius: 3px;
-          }
+        > li {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            list-style: none;
 
-          .current {
-              color: var(--ane-warna-putih);
-              background: var(--ane-warna-utama);
-              font-weight: 600;
-              border: 1px solid var(--ane-warna-utama);
-          }
-          .prev,
-          .next {
-              background: var(--ane-warna-putih);
-              color: var(--ane-warna-utama);
-              pointer-events: none;
-              font-size: 14px;
-          }
-          .dots {
-              background: var(--ane-warna-putih);
-              color: var(--ane-warna-utama);
-          }
-
-          &:last-child {
-              margin-right: 0;
-          }
-            &:hover {
-                background: var(--ane-warna-utama-2);
-
-                .page-numbers {
-                    color: var(--ane-warna-gelap);
-                }
+            &:before {
+                display: none;
             }
-      }
+        }
+
+        // On mobile only prev, status and next are shown.
+        > li:not(:first-child):not(:last-child):not(.ane-pagination__status) {
+            display: none;
+        }
+    }
+    &__status {
+        flex: 1 1 auto;
+        justify-content: center;
+        color: rgba(var(--ane-warna-gelap-rgb), 0.65);
+        font-size: 14px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
     }
 
-    @include mobile {
-        ul {
-            li {
-                font-size: 15px;
-                font-weight: 600;
-                line-height: 32px;
-                margin-right: 3px;
+    .page-numbers {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 44px;
+        height: 44px;
+        padding: 0 12px;
+        border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.14);
+        border-radius: 999px;
+        background: var(--ane-warna-putih);
+        color: var(--ane-warna-text);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 
-                .page-numbers {
-                    width: 32px;
-                    height: 32px;
-                }
-                .prev,
-                .next {
-                    font-size: 11px;
-                }
+        .ane-icon {
+            width: 13px;
+            height: 13px;
+        }
+        &:hover {
+            border-color: var(--ane-warna-utama);
+            color: var(--ane-warna-utama);
+        }
+        &:active {
+            transform: scale(0.96);
+        }
+        &:focus-visible {
+            outline: 2px solid var(--ane-warna-alternatif);
+            outline-offset: 2px;
+        }
+
+        &.current {
+            border-color: var(--ane-warna-utama);
+            background: var(--ane-warna-utama);
+            color: var(--ane-warna-putih);
+            box-shadow: 0 6px 16px rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.3);
+        }
+        &.dots {
+            min-width: 28px;
+            padding: 0;
+            border-color: transparent;
+            background: transparent;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.5);
+        }
+        &.prev,
+        &.next {
+            padding: 0 18px;
+            border-color: rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.35);
+            color: var(--ane-warna-utama);
+
+            &:hover {
+                background: var(--ane-warna-utama);
+                color: var(--ane-warna-putih);
             }
+        }
+        &.is-disabled {
+            border-color: rgba(var(--ane-warna-gelap-rgb), 0.08);
+            background: rgba(var(--ane-warna-gelap-rgb), 0.03);
+            color: rgba(var(--ane-warna-gelap-rgb), 0.3);
+            pointer-events: none;
+        }
+    }
+
+    @media only screen and (min-width: 640px) {
+        &__list {
+            justify-content: center;
+            gap: 8px;
+
+            > li:not(:first-child):not(:last-child):not(.ane-pagination__status) {
+                display: flex;
+            }
+        }
+        &__list > .ane-pagination__status {
+            display: none;
         }
     }
 }

@@ -36,3 +36,9 @@ Dokumen ini mencatat temuan penting dan jebakan teknis (pitfalls) yang ditemukan
 - Gunakan `wp_script_add_data( $handle, 'strategy', 'defer' )` (WP 6.3+) untuk menunda script tema. Core otomatis memakai blocking bila ada dependen/inline script yang butuh jQuery, sehingga plugin & Elementor tidak rusak. Jangan men-`defer` `jquery-core` lewat `script_loader_tag`.
 - `owl.carousel.js` yang di-defer berarti `.owl-carousel { display: none }` menyembunyikan slider sampai init. Pre-init guard `:not(.owl-loaded)` di `scss/_owlcarousel.scss` wajib dipertahankan agar slide pertama tampil tanpa CLS.
 - `wp_get_attachment_image()` menambah `sizes="auto, ..."` pada gambar lazy; untuk preload, `imagesizes` harus berisi nilai `sizes` tanpa `auto,` agar kandidat srcset sama.
+
+## Gaya header/footer vs kit Elementor
+Pada halaman yang dirender Elementor Theme Builder, body mendapat `.elementor-kit-N` dan kit menulis `.elementor-kit-N a { color }` / `button { background }` (specificity 0,1,1) yang dimuat setelah `main.css`. Selector BEM satu kelas (`.ane-header__toggle`) kalah. Bungkus komponen global (header, footer) dengan `html body { ... }` agar menang tanpa `!important`.
+
+## Template arsip tidak selalu dipakai
+`elementor_theme_do_location( 'archive' )` mengambil alih category/tag/search/author bila ada template Elementor. Saat menguji template tema, jangan mengira halaman `?s=` memakai `search.php`; cek template aktif dulu.

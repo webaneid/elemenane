@@ -236,3 +236,87 @@ msgstr "Terapkan"
 #: inc/product-filter.php
 msgid "Reset"
 msgstr "Reset"
+
+# Post archives (tp/archive-*.php, ane_post_pagination)
+#: tp/archive-*.php
+msgid "Search results"
+msgstr "Hasil pencarian"
+
+#: tp/archive-*.php
+msgid "Author"
+msgstr "Penulis"
+
+#: tp/archive-*.php
+msgid "Tag"
+msgstr "Tag"
+
+#: tp/archive-*.php
+msgid "Archive"
+msgstr "Arsip"
+
+#: tp/archive-*.php
+msgid "Latest posts"
+msgstr "Artikel terbaru"
+
+#: tp/archive-*.php
+#, php-format
+msgid "%s article"
+msgstr "%s artikel"
+
+#: tp/archive-*.php
+#, php-format
+msgid "%s articles"
+msgstr "%s artikel"
+
+#: tp/archive-*.php
+msgid "article"
+msgstr "artikel"
+
+#: tp/archive-*.php
+msgid "articles"
+msgstr "artikel"
+
+#: tp/archive-*.php
+msgid "latest article"
+msgstr "artikel terbaru"
+
+#: tp/archive-*.php
+msgid "Visit website"
+msgstr "Kunjungi website"
+
+#: tp/archive-*.php
+#, php-format
+msgid "All articles written by %s."
+msgstr "Semua artikel yang ditulis oleh %s."
+
+#: tp/archive-*.php
+msgid "No results found"
+msgstr "Tidak ada hasil"
+
+#: tp/archive-*.php
+msgid "No posts yet"
+msgstr "Belum ada artikel"
+
+#: tp/archive-*.php
+msgid "Nothing matched your search. Check the spelling or try different, more general keywords."
+msgstr "Tidak ada yang cocok dengan pencarian Anda. Periksa ejaan atau coba kata kunci lain yang lebih umum."
+
+#: tp/archive-*.php
+msgid "There is nothing to show here at the moment. Please check back later."
+msgstr "Belum ada konten untuk ditampilkan. Silakan kembali lagi nanti."
+
+#: tp/archive-*.php
+msgid "Browse popular categories"
+msgstr "Jelajahi kategori populer"
+
+#: tp/archive-*.php
+msgid "Previous"
+msgstr "Sebelumnya"
+
+#: tp/archive-*.php
+msgid "Next"
+msgstr "Berikutnya"
+
+#: tp/archive-*.php
+msgid "Posts Navigation"
+msgstr "Navigasi artikel"

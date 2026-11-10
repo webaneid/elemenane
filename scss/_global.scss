@@ -169,54 +169,6 @@ ul {
     }
 }
 
-.author_bio_section {
-    @include DisplayBlock;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px 0 rgba(var(--ane-warna-gelap-rgb),0.1);
-    color: var(--e-global-color-text);
-    position: relative;
-    border-left: 3px solid var(--ane-warna-utama);
-    overflow: hidden;
-    margin-bottom: 30px;
-
-    &:before {
-        @include ane-glyph-mask(buku);
-        color: rgba(var(--ane-warna-gelap-rgb),0.1);
-        font-style: normal;
-        font-size: 100px;
-        line-height: 1;
-        position: absolute;
-        left: 0;
-        top: -10px;
-        z-index: -1;
-        -webkit-transform: rotate(-45deg);
-        -moz-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
-        -o-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-    }
-
-    h2 {
-        margin-bottom: 15px;
-        font-size: 20px;
-        color: var(--ane-warna-gelap);
-    }
-    .author_details {
-        @include DisplayBlock;
-
-        img {
-            width: 100px;
-            height: auto;
-            display: block;
-            float: left;
-            margin-right: 20px;
-            border-radius: 8px;
-            border: 1px solid;
-            @include BorderColor;
-        }
-    }
-}
 .share-this {
     @include DisplayBlock;
     width: 100%;
