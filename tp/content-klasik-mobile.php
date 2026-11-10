@@ -43,6 +43,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="post-content prlm-15">
 		<?php the_title( sprintf( '<h3 class="post-title"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' ); ?>
-		<?php echo esc_html( ane_load_times_ago() ); ?>
+		<?php echo wp_kses( ane_load_times_ago(), elemenane_kses_post_with_svg() ); ?>
 	</div>
 </article>

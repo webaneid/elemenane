@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						?>
 					</div>
 				</li>
-				<li><?php echo esc_html( ane_load_times_ago() ); ?></li>
+				<li><?php echo wp_kses( ane_load_times_ago(), elemenane_kses_post_with_svg() ); ?></li>
 			</ul>
 		</div>
 
