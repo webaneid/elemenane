@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  */
 if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'header' ) ) {
 	// No Elementor header found, use native theme header
-	get_template_part( 'tp/header-asli' );
+	get_template_part( 'tp/header-default' );
 }
 // If elementor_theme_do_location() returns true, Elementor already rendered the header
 ?>

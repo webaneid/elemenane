@@ -66,10 +66,53 @@ function ane_enqueue_scripts() {
 		ane_enqueue_carousel();
 	}
 
+	// Header: drawer, dropdowns, search dialog, sticky behaviour (vanilla JS).
+	wp_enqueue_script( 'ane-header', get_base_url_assets() . '/js/header.js', array(), '1.0.0', true );
+	wp_localize_script(
+		'ane-header',
+		'elemenaneHeader',
+		array(
+			'submenu' => __( 'Toggle submenu', 'elemenane' ),
+		)
+	);
+
 	// Vanilla JS, no jQuery needed.
 	wp_enqueue_script( 'main-js', get_base_url_assets() . '/js/newsane.js', array(), '2.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'ane_enqueue_scripts' );
+
+/**
+ * Page list used when no menu is assigned to the `menuutama` location.
+ *
+ * @since 1.2.0
+ */
+function elemenane_fallback_menu() {
+	echo '<ul class="ane-header__menu">';
+	wp_list_pages(
+		array(
+			'title_li'    => '',
+			'depth'       => 2,
+			'sort_column' => 'menu_order, post_title',
+		)
+	);
+	echo '</ul>';
+}
+
+/**
+ * Drop menu item ids for secondary menus (avoids duplicate ids when the same
+ * menu is also used elsewhere). Opt in with the `ane_no_ids` wp_nav_menu arg.
+ *
+ * @since 1.2.0
+ *
+ * @param string   $id   Item id attribute.
+ * @param WP_Post  $item Menu item.
+ * @param stdClass $args wp_nav_menu() arguments.
+ * @return string
+ */
+function elemenane_menu_item_id( $id, $item, $args ) {
+	return ! empty( $args->ane_no_ids ) ? '' : $id;
+}
+add_filter( 'nav_menu_item_id', 'elemenane_menu_item_id', 10, 3 );
 
 /**
  * Defer the theme's front-end scripts.
@@ -85,7 +128,7 @@ function elemenane_defer_scripts() {
 		return;
 	}
 
-	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'main-js' ) as $handle ) {
+	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'main-js' ) as $handle ) {
 		if ( wp_script_is( $handle, 'registered' ) ) {
 			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}

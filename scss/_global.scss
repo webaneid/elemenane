@@ -148,8 +148,9 @@ ul {
     max-width: 100%;
     position: relative;
 
+    // `clip` (not `hidden`) so position: sticky on the header keeps working.
     @include mobile {
-        overflow: hidden;
+        overflow-x: clip;
     }
 }
 .content-area {
