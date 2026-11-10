@@ -31,3 +31,8 @@ Dokumen ini mencatat temuan penting dan jebakan teknis (pitfalls) yang ditemukan
   - Berikan `fetchpriority="high"` dan jangan pasang `loading="lazy"` pada item pertama (index `0`) di slider/featured section; pasang `loading="lazy"` dan `decoding="async"` pada item ke-2 dst.
   - Preload gambar LCP di `wp_head` prioritas `1` lengkap dengan `imagesrcset` dan `imagesizes`.
   - Cegah layout shift (CLS) sebelum `owl.carousel.min.js` dieksekusi (karena JS di-`defer`) dengan menyuntikkan CSS pre-init `:not(.owl-loaded)` yang menyembunyikan slide ke-2 dst (`> *:not(:first-child) { display: none; }`).
+
+## 5. Defer JS & Async CSS
+- Gunakan `wp_script_add_data( $handle, 'strategy', 'defer' )` (WP 6.3+) untuk menunda script tema. Core otomatis memakai blocking bila ada dependen/inline script yang butuh jQuery, sehingga plugin & Elementor tidak rusak. Jangan men-`defer` `jquery-core` lewat `script_loader_tag`.
+- `owl.carousel.js` yang di-defer berarti `.owl-carousel { display: none }` menyembunyikan slider sampai init. Pre-init guard `:not(.owl-loaded)` di `scss/_owlcarousel.scss` wajib dipertahankan agar slide pertama tampil tanpa CLS.
+- `wp_get_attachment_image()` menambah `sizes="auto, ..."` pada gambar lazy; untuk preload, `imagesizes` harus berisi nilai `sizes` tanpa `auto,` agar kandidat srcset sama.

@@ -1,8 +1,132 @@
+// Owl Carousel 2.2.1 structural CSS (was loaded render-blocking from cdnjs).
+.owl-carousel {
+    display: none;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    -webkit-tap-highlight-color: transparent;
+
+    .owl-stage {
+        position: relative;
+        touch-action: manipulation;
+        &:after {
+            content: ".";
+            display: block;
+            clear: both;
+            visibility: hidden;
+            line-height: 0;
+            height: 0;
+        }
+    }
+    .owl-stage-outer {
+        position: relative;
+        overflow: hidden;
+        transform: translate3d(0, 0, 0);
+    }
+    .owl-item {
+        position: relative;
+        min-height: 1px;
+        float: left;
+        -webkit-backface-visibility: hidden;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        img {
+            display: block;
+            width: 100%;
+        }
+    }
+    .owl-nav.disabled,
+    .owl-dots.disabled {
+        display: none;
+    }
+    .owl-nav .owl-prev,
+    .owl-nav .owl-next,
+    .owl-dot {
+        cursor: pointer;
+        user-select: none;
+    }
+    .owl-nav button.owl-prev,
+    .owl-nav button.owl-next,
+    button.owl-dot {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+    }
+    &.owl-loaded {
+        display: block;
+    }
+    &.owl-loading {
+        opacity: 0;
+        display: block;
+    }
+    &.owl-hidden {
+        opacity: 0;
+    }
+    &.owl-refresh .owl-item {
+        visibility: hidden;
+    }
+    &.owl-drag .owl-item {
+        user-select: none;
+        touch-action: pan-y;
+    }
+    &.owl-grab {
+        cursor: grab;
+    }
+    &.owl-rtl {
+        direction: rtl;
+        .owl-item {
+            float: right;
+        }
+    }
+    .owl-height {
+        transition: height 0.5s ease-in-out;
+    }
+}
+
+// Zero-CLS before owl.carousel.js runs (scripts are deferred): show the first
+// slide at its final size and hide the rest so nothing jumps when Owl inits.
+.one-item-carousel.owl-carousel:not(.owl-loaded) {
+    display: block;
+    overflow: hidden;
+    > *:not(:first-child) {
+        display: none;
+    }
+}
+#home-sliding.owl-carousel:not(.owl-loaded) {
+    // Mirrors the responsive items in js/carousel-init.js: 2 / 3 / 4 per view.
+    display: flex;
+    gap: 15px;
+    overflow: hidden;
+    > * {
+        flex: 0 0 calc((100% - 15px) / 2);
+        min-width: 0;
+    }
+    @media (min-width: 768px) {
+        > * {
+            flex-basis: calc((100% - 30px) / 3);
+        }
+    }
+    @media (min-width: 1200px) {
+        > * {
+            flex-basis: calc((100% - 45px) / 4);
+        }
+    }
+}
+
 .owl-carousel {
     .owl-dots {
         @include DisplayBlock;
         text-align: center;
         .owl-dot {
+            position: relative;
+            // 44px tap target around the 10px dot.
+            &:after {
+                content: '';
+                position: absolute;
+                inset: -17px -6px;
+            }
             width: 10px;
             height: 10px;
             background-color: var(--ane-warna-utama);
@@ -15,4 +139,14 @@
             background-color: var(--ane-warna-utama-2);
         }
     }
+}
+
+// Prev/next arrows: 44x44 minimum tap target.
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -61,9 +61,11 @@ ane_enqueue_carousel();
 						)
 					);
 
+					$slide_index = 0;
 					while ( $featured_query->have_posts() ) :
 						$featured_query->the_post();
-						get_template_part( 'tp/content', 'overlay' );
+						// First slide is the LCP element: eager + high priority; the rest lazy.
+						get_template_part( 'tp/content', 'overlay', array( 'priority' => 0 === $slide_index++ ) );
 					endwhile;
 					wp_reset_postdata();
 					?>

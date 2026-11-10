@@ -59,7 +59,7 @@ $section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
 
 				while ( $sliding_query->have_posts() ) :
 					$sliding_query->the_post();
-					get_template_part( 'tp/content', 'overlay' );
+					get_template_part( 'tp/content', 'overlay', array( 'sizes' => '(max-width: 767px) 50vw, 300px' ) );
 				endwhile;
 				wp_reset_postdata();
 				?>

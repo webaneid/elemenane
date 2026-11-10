@@ -77,7 +77,19 @@ while ( have_posts() ) :
 						<div class="ane-gallery-main">
 							<a href="<?php echo esc_url( wp_get_attachment_image_url( $images[0], 'full' ) ); ?>"
 								class="ane-gallery-popup">
-								<?php echo wp_get_attachment_image( $images[0], 'kotak', false, array( 'class' => 'ane-gallery-main-img' ) ); ?>
+								<?php
+								echo wp_get_attachment_image(
+									$images[0],
+									'kotak',
+									false,
+									array(
+										'class'         => 'ane-gallery-main-img',
+										'loading'       => 'eager',
+										'fetchpriority' => 'high',
+										'sizes'         => '(max-width: 767px) 100vw, 500px',
+									)
+								);
+								?>
 							</a>
 						</div>
 

@@ -48,9 +48,18 @@ function ane_enqueue_scripts() {
 	wp_register_style( 'magnific-popup', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css', array(), null );
 	wp_register_script( 'magnific', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js', array( 'jquery' ), null, true );
 	wp_register_script( 'ane-lightbox-init', get_base_url_assets() . '/js/lightbox-init.js', array( 'magnific' ), '1.0.0', true );
-	wp_register_style( 'OwlCarouse', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css', array(), null );
 	wp_register_script( 'OwlCarousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js', array( 'jquery' ), null, true );
-	wp_register_script( 'ane-carousel-init', get_base_url_assets() . '/js/carousel-init.js', array( 'OwlCarousel' ), '1.0.1', true );
+	wp_register_script( 'ane-carousel-init', get_base_url_assets() . '/js/carousel-init.js', array( 'OwlCarousel' ), '1.0.2', true );
+	wp_localize_script(
+		'ane-carousel-init',
+		'elemenaneCarousel',
+		array(
+			'prev' => __( 'Previous slide', 'elemenane' ),
+			'next' => __( 'Next slide', 'elemenane' ),
+			/* translators: %d: slide number */
+			'goto' => __( 'Go to slide %d', 'elemenane' ),
+		)
+	);
 
 	// Only the Landing Page template renders carousels (tp/news-featured*, tp/news-sliding).
 	if ( is_page_template( 'page-home.php' ) ) {
@@ -61,6 +70,138 @@ function ane_enqueue_scripts() {
 	wp_enqueue_script( 'main-js', get_base_url_assets() . '/js/newsane.js', array(), '2.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'ane_enqueue_scripts' );
+
+/**
+ * Defer the theme's front-end scripts.
+ *
+ * Uses WordPress's script strategy API (6.3+) rather than rewriting tags, so
+ * core falls back to blocking automatically when a non-deferred script or
+ * inline snippet from a plugin depends on jQuery.
+ *
+ * @since 1.2.0
+ */
+function elemenane_defer_scripts() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'main-js' ) as $handle ) {
+		if ( wp_script_is( $handle, 'registered' ) ) {
+			wp_script_add_data( $handle, 'strategy', 'defer' );
+		}
+	}
+}
+add_action( 'wp_enqueue_scripts', 'elemenane_defer_scripts', 99 );
+
+/**
+ * Load non-critical stylesheets asynchronously (no render blocking).
+ *
+ * @since 1.2.0
+ *
+ * @param string $tag    Link tag HTML.
+ * @param string $handle Stylesheet handle.
+ * @return string
+ */
+function elemenane_async_styles( $tag, $handle ) {
+	if ( is_admin() || ! in_array( $handle, array( 'ane-google-fonts', 'magnific-popup' ), true ) ) {
+		return $tag;
+	}
+
+	$async = str_replace( "media='all'", "media='print' onload=\"this.media='all'\"", $tag );
+	if ( $async === $tag ) {
+		return $tag;
+	}
+
+	return $async . '<noscript>' . $tag . "</noscript>\n";
+}
+add_filter( 'style_loader_tag', 'elemenane_async_styles', 10, 2 );
+
+/**
+ * Find the likely LCP image of the current request.
+ *
+ * @since 1.2.0
+ *
+ * @return array{id:int,size:string,sizes:string}|null
+ */
+function elemenane_get_lcp_image() {
+	if ( is_singular( 'post' ) ) {
+		$id = get_post_thumbnail_id();
+		return $id ? array(
+			'id'    => (int) $id,
+			'size'  => 'medium',
+			'sizes' => elemenane_single_image_sizes(),
+		) : null;
+	}
+
+	if ( is_singular( 'product' ) ) {
+		$id = get_post_thumbnail_id();
+		return $id ? array(
+			'id'    => (int) $id,
+			'size'  => 'kotak',
+			'sizes' => '(max-width: 767px) 100vw, 500px',
+		) : null;
+	}
+
+	if ( is_page_template( 'page-home.php' ) ) {
+		$posts = get_posts(
+			array(
+				'post_type'              => 'post',
+				'posts_per_page'         => 1,
+				'post_status'            => 'publish',
+				'fields'                 => 'ids',
+				'meta_key'               => 'ane_news_utama', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Same lookup as tp/news-featured.php, limited to 1.
+				'meta_value'             => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				'ignore_sticky_posts'    => true,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+			)
+		);
+		$id    = $posts ? get_post_thumbnail_id( (int) $posts[0] ) : 0;
+		return $id ? array(
+			'id'    => (int) $id,
+			'size'  => 'large',
+			'sizes' => wp_is_mobile() ? '100vw' : '(max-width: 767px) 100vw, 800px',
+		) : null;
+	}
+
+	return null;
+}
+
+/**
+ * `sizes` attribute for the main image on single posts.
+ *
+ * @return string
+ */
+function elemenane_single_image_sizes() {
+	return '(max-width: 767px) 100vw, 760px';
+}
+
+/**
+ * Preload the LCP image so the browser fetches it before CSS/JS.
+ *
+ * @since 1.2.0
+ */
+function elemenane_preload_lcp_image() {
+	$lcp = elemenane_get_lcp_image();
+	if ( ! $lcp ) {
+		return;
+	}
+
+	$src = wp_get_attachment_image_src( $lcp['id'], $lcp['size'] );
+	if ( ! $src ) {
+		return;
+	}
+
+	$srcset = wp_get_attachment_image_srcset( $lcp['id'], $lcp['size'] );
+
+	printf(
+		'<link rel="preload" as="image" href="%s"%s%s fetchpriority="high">' . "\n",
+		esc_url( $src[0] ),
+		$srcset ? ' imagesrcset="' . esc_attr( $srcset ) . '"' : '',
+		$srcset ? ' imagesizes="' . esc_attr( $lcp['sizes'] ) . '"' : ''
+	);
+}
+add_action( 'wp_head', 'elemenane_preload_lcp_image', 1 );
 
 /**
  * Page-specific stylesheets, split out of main.min.css so other pages don't
@@ -99,7 +240,7 @@ function ane_enqueue_page_styles() {
  * WordPress prints the files in the footer.
  */
 function ane_enqueue_carousel() {
-	wp_enqueue_style( 'OwlCarouse' );
+	// Owl's structural CSS now lives in main.min.css (scss/_owlcarousel.scss).
 	wp_enqueue_script( 'ane-carousel-init' );
 }
 

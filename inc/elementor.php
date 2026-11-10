@@ -469,6 +469,8 @@ add_action( 'wp_print_styles', 'ane_enqueue_google_fonts' );
  */
 function ane_google_fonts_preconnect( $urls, $relation_type ) {
 	if ( 'preconnect' === $relation_type && ! is_admin() && ane_get_kit_google_fonts() ) {
+		// Keep to these two origins: PageSpeed warns above 4 preconnects.
+		$urls[] = 'https://fonts.googleapis.com';
 		$urls[] = array(
 			'href'        => 'https://fonts.gstatic.com',
 			'crossorigin' => 'anonymous',

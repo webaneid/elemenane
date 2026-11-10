@@ -37,9 +37,17 @@ ane_enqueue_carousel();
 					)
 				);
 
+				$slide_index = 0;
 				while ( $featured_query->have_posts() ) :
 					$featured_query->the_post();
-					get_template_part( 'tp/content', 'overlay' );
+					get_template_part(
+						'tp/content',
+						'overlay',
+						array(
+							'priority' => 0 === $slide_index++,
+							'sizes'    => '100vw',
+						)
+					);
 				endwhile;
 				wp_reset_postdata();
 				?>

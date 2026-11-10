@@ -333,10 +333,19 @@
     @include DisplayBlock;
     margin-bottom: 30px;
 
+    // Real <img> (not background-image) so it can be preloaded, lazy-loaded and get srcset/sizes.
+    .ane-overlay-bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        object-fit: cover;
+        object-position: center center;
+    }
+
     .entry-header {
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
         position: relative;
         width: 100%;
         margin-bottom: 0;
@@ -712,6 +721,9 @@
 .ane-related {
     @include DisplayBlock;
     position: relative;
+    // Below the fold: skip rendering until near the viewport.
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
 
     h1 {
         font-size: 1.5rem;

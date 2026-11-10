@@ -1,6 +1,8 @@
 .ane-footer {
     @include DisplayBlock;
     position: relative;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
     background: var(--ane-warna-gelap);
 
     .sosmed-footer {

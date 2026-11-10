@@ -36,7 +36,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="ane-image">
 			<?php if ( has_post_thumbnail() ) : ?>
-				<?php the_post_thumbnail( 'medium', array( 'alt' => esc_attr( get_the_title() ) ) ); ?>
+				<?php
+				the_post_thumbnail(
+					'medium',
+					array(
+						'alt'           => get_the_title(),
+						'loading'       => 'eager',
+						'fetchpriority' => 'high',
+						'decoding'      => 'async',
+						'sizes'         => elemenane_single_image_sizes(),
+					)
+				);
+				?>
 				<?php
 				$thumbnail_id = get_post_thumbnail_id();
 				$caption      = get_post( $thumbnail_id )->post_excerpt;
