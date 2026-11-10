@@ -17,6 +17,7 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 | **Fase 06** | Optimasi Speed Test & Core Web Vitals Standar Webane (`webane-pagespeed-cwv`: Konversi Hero `background-image` ke `<img>` DPR-aware, Preload LCP, Inline CSS OwlCarousel + Zero-CLS, Async CSS, Defer JS, `content-visibility`, & Aksesibilitas 100) | `GAP-21`, `GAP-22`, `GAP-23`, `GAP-24`, `GAP-25`, `GAP-26`, `GAP-27`, `GAP-28` | **Completed** | 2026-11-11 |
 | **[Fase 07](phases/phase-07-footer-baru.md)** | Refactoring Total Footer Default (`tp/footer-default.php`, `scss/_footer.scss` baru, mobile-first & responsif) | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 08](phases/phase-08-header-baru.md)** | Refactoring Total Header Default (`tp/header-default.php`, `js/header.js`, `scss/_header.scss` baru: drawer mobile, dropdown aksesibel, dialog pencarian, sticky) | Permintaan desain | **Completed** | 2026-11-11 |
+| **[Fase 09](phases/phase-09-sidebar-baru.md)** | Refactoring Total Sidebar & Widget (judul "kicker", kartu baru, Search pill, Latest Posts bernomor, Webane Posts, daftar/tag/select/kalender) | Permintaan desain | **Completed** | 2026-11-11 |
 
 ---
 

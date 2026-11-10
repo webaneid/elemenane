@@ -120,10 +120,10 @@ function elemenane_widgets_init() {
 			'name'          => __( 'Default Sidebar', 'elemenane' ),
 			'id'            => 'default-sidebar',
 			'description'   => __( 'Sidebar widget area for posts and pages', 'elemenane' ),
-			'before_widget' => '<div class="ane-sidebar">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h2 class="widget-title general-title">',
-			'after_title'   => '</h2>',
+			'before_widget' => '<section id="%1$s" class="ane-sidebar ane-widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title general-title"><span>',
+			'after_title'   => '</span></h2>',
 		)
 	);
 
@@ -132,10 +132,10 @@ function elemenane_widgets_init() {
 			'name'          => __( 'Home Sidebar', 'elemenane' ),
 			'id'            => 'home-sidebar',
 			'description'   => __( 'Sidebar widget area for homepage', 'elemenane' ),
-			'before_widget' => '<div class="ane-sidebar">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h2 class="widget-title general-title">',
-			'after_title'   => '</h2>',
+			'before_widget' => '<section id="%1$s" class="ane-sidebar ane-widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title general-title"><span>',
+			'after_title'   => '</span></h2>',
 		)
 	);
 }

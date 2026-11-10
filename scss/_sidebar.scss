@@ -1,299 +1,735 @@
-.right-sidebar {
-    @include DisplayBlock;
+// Sidebar & widgets (sidebar.php, widget areas, searchform.php). Mobile-first, BEM-ish .ane-widget / .ane-searchform.
+// Covers classic widgets, block widgets (search, latest posts, categories, ...) and the Webane Posts widget.
 
-    .ane-sidebar {
-        background: var(--ane-warna-putih);
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 30px;
-        border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
-        border-bottom: 3px solid var(--ane-warna-utama);
+// ---- Shared pieces ------------------------------------------------------------------------
 
-        h2.widget-title {
-            color: var(--ane-warna-gelap);
-            font-size: 1.5rem;
-            font-weight: 700;
-            line-height: 1;
-            padding-left: 15px;
-            z-index: 1;
+// Rounded "pill" field: used by searchform.php and the Search block so both look identical.
+@mixin ane-pill-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 5px;
+    border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.16);
+    border-radius: 999px;
+    background: var(--ane-warna-putih);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        border-color: rgba(var(--ane-warna-gelap-rgb), 0.3);
+    }
+    &:focus-within {
+        border-color: var(--ane-warna-utama);
+        box-shadow: 0 0 0 4px rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.13);
+    }
+}
+@mixin ane-pill-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 42px;
+    padding: 0 14px;
+    border: 0 !important;
+    border-radius: 999px;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ane-warna-text);
+    font-size: 15px;
+    outline: none;
+
+    &::placeholder {
+        color: rgba(var(--ane-warna-gelap-rgb), 0.45);
+    }
+    &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+    }
+}
+@mixin ane-pill-button {
+    flex: none;
+    height: 42px;
+    margin: 0;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--ane-warna-utama);
+    color: var(--ane-warna-putih);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        filter: brightness(1.12);
+    }
+    &:active {
+        transform: scale(0.97);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ane-warna-alternatif);
+        outline-offset: 2px;
+    }
+}
+
+// Section label: editorial "kicker" - diamond, caps, hairline filling the row.
+@mixin ane-widget-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 16px;
+    padding: 0;
+    color: var(--ane-warna-gelap);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    &:before {
+        content: '';
+        flex: none;
+        width: 9px;
+        height: 9px;
+        border-radius: 2px;
+        background: var(--ane-warna-alternatif);
+        transform: rotate(45deg);
+    }
+    &:after {
+        content: '';
+        flex: 1 1 auto;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(var(--ane-warna-gelap-rgb), 0.18), rgba(var(--ane-warna-gelap-rgb), 0));
+    }
+}
+
+// Rows with an accent chevron, hairline separators and a right-aligned count.
+@mixin ane-link-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 8px;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+        color: rgba(var(--ane-warna-gelap-rgb), 0.55);
+        font-size: 12px;
+        list-style: none;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+        > a {
             position: relative;
-            margin-bottom: 20px;
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 10px 0 10px 18px;
+            color: var(--ane-warna-text);
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            transition: color 0.2s ease, padding-left 0.2s ease;
 
             &:before {
-                content: "";
+                @include ane-glyph-mask(arrow-right);
                 position: absolute;
-                left: 0px;
-                width: 0.6rem;
-                height: 1.5rem;
-                background: var(--ane-warna-alternatif);
-                border-radius: 0 4px 4px 0;
+                left: 0;
+                top: 50%;
+                margin-top: -4px;
+                font-size: 8px;
+                color: var(--ane-warna-alternatif);
+                transition: transform 0.2s ease;
+            }
+            &:hover {
+                color: var(--ane-warna-utama);
+                padding-left: 22px;
             }
         }
+        // Nested levels.
+        ul {
+            flex: 0 0 100%;
+            margin: 0 0 6px;
+            padding-left: 14px;
+            border-left: 2px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
 
-        &>ul {
-            padding: 0;
+            > li > a {
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+// ---- Widget area ---------------------------------------------------------------------------
+
+.right-sidebar {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+.ane-widget {
+    position: relative;
+    min-width: 0;
+    margin: 0 0 24px;
+    padding: 20px;
+    border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+    border-radius: 16px;
+    background: var(--ane-warna-putih);
+    box-shadow: 0 1px 2px rgba(var(--ane-warna-gelap-rgb), 0.04), 0 10px 28px rgba(var(--ane-warna-gelap-rgb), 0.06);
+    color: var(--ane-warna-text);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+        outline: 2px solid var(--ane-warna-alternatif);
+        outline-offset: 2px;
+    }
+
+    // Titles: classic widgets, block-widget labels and heading blocks used as titles.
+    .widget-title,
+    .wp-block-search__label,
+    .wp-block-heading,
+    > h2,
+    > h3 {
+        @include ane-widget-title;
+    }
+    // The widget-area wrapper added by legacy-widget blocks.
+    .wp-widget-group__inner-blocks {
+        margin: 0;
+        padding: 0;
+    }
+
+    p {
+        margin: 0 0 0.9em;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // ---- Lists ---------------------------------------------------------------------------
+    > ul:not(.wp-block-latest-posts):not(.wp-block-social-links):not(.wp-block-latest-comments),
+    .widget_categories ul,
+    .wp-block-categories-list,
+    .wp-block-archives-list,
+    .wp-block-page-list,
+    .menu,
+    .widget_meta ul,
+    .widget_pages ul,
+    .widget_nav_menu ul,
+    .widget_archive ul,
+    .widget_recent_entries ul,
+    .widget_rss ul,
+    .wp-block-rss {
+        @include ane-link-list;
+    }
+
+    // ---- Latest posts block: numbered list ---------------------------------------------------
+    .wp-block-latest-posts,
+    .wp-block-latest-posts__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: ane-rank;
+
+        > li {
+            position: relative;
+            display: grid;
+            grid-template-columns: 34px minmax(0, 1fr);
+            column-gap: 12px;
+            align-items: start;
             margin: 0;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+            list-style: none;
+            counter-increment: ane-rank;
 
-            li {
-                color: var(--ane-warna-gelap);
-                list-style: none;
+            &:first-child {
+                padding-top: 0;
+            }
+            &:last-child {
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+            // Large outlined rank number.
+            &:before {
+                content: counter(ane-rank, decimal-leading-zero);
+                grid-column: 1;
+                grid-row: 1;
+                color: rgba(var(--ane-warna-gelap-rgb), 0.16);
+                font-size: 26px;
+                font-weight: 800;
+                font-variant-numeric: tabular-nums;
+                line-height: 1;
+                letter-spacing: -0.03em;
+                transition: color 0.25s ease;
+            }
+            &:hover:before {
+                color: var(--ane-warna-alternatif);
+            }
+            > * {
+                grid-column: 2;
+                min-width: 0;
+            }
+            &:first-child:before {
+                margin-top: 2px;
+            }
+        }
+        .wp-block-latest-posts__post-title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            color: var(--ane-warna-gelap);
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--ane-warna-utama);
+            }
+        }
+        .wp-block-latest-posts__post-date,
+        .wp-block-latest-posts__post-author {
+            display: block;
+            margin-top: 4px;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.55);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .wp-block-latest-posts__post-excerpt {
+            margin-top: 6px;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.75);
+            font-size: 13.5px;
+            line-height: 1.55;
+        }
+        .wp-block-latest-posts__featured-image {
+            margin: 0 0 8px;
+
+            &.alignleft,
+            &.alignright {
+                float: none;
+                margin: 0 0 8px;
+            }
+            img {
+                display: block;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+                object-fit: cover;
+                border-radius: 10px;
+            }
+        }
+        // Grid layout option: keep cards, drop the numbering.
+        &.is-grid > li:before {
+            display: none;
+        }
+    }
+
+    // ---- Webane Posts widget (tp/content-list.php inside .post-widget) ----------------------------
+    .post-widget {
+        display: block;
+
+        .ane-konten-lis {
+            display: grid;
+            grid-template-columns: 84px minmax(0, 1fr);
+            gap: 14px;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+
+            &:first-child {
+                padding-top: 0;
+            }
+            &:last-child {
+                padding-bottom: 0;
+                border-bottom: 0;
+            }
+            .entry-header {
+                width: 84px;
+                max-width: none;
+                margin: 0;
+                padding: 0;
+            }
+            .ane-image {
                 position: relative;
-                padding: 7.5px 0 7.5px 20px;
-                border-bottom: 1px solid;
-                @include BorderColor;
+                width: 84px;
+                height: 84px;
+                overflow: hidden;
+                border-radius: 12px;
+                background: rgba(var(--ane-warna-gelap-rgb), 0.06);
+
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 0;
+                    transition: transform 0.4s ease;
+                }
+                // Format icons from _post.scss are too big for a thumbnail: shrink them.
+                &:before {
+                    font-size: 22px;
+                }
+            }
+            &:hover .ane-image img {
+                transform: scale(1.08);
+            }
+            .entry-content {
+                width: auto;
+                min-width: 0;
+                padding: 0;
+
+                .post-title,
+                h2,
+                h3 {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 3;
+                    overflow: hidden;
+                    margin: 0 0 6px;
+                    font-size: 14.5px;
+                    font-weight: 700;
+                    line-height: 1.4;
+                    text-transform: none;
+
+                    a {
+                        color: var(--ane-warna-gelap);
+                        transition: color 0.2s ease;
+
+                        &:hover {
+                            color: var(--ane-warna-utama);
+                        }
+                    }
+                }
+                .post-meta-info {
+                    margin: 0;
+
+                    ul {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        gap: 2px 10px;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    li {
+                        margin: 0;
+                        padding: 0;
+                        border: 0;
+                        color: rgba(var(--ane-warna-gelap-rgb), 0.55);
+                        font-size: 12px;
+                        line-height: 1.5;
+
+                        &:before {
+                            display: none !important;
+                        }
+                    }
+                    .content-category a {
+                        margin: 0;
+                        padding: 0;
+                        background: none;
+                        color: var(--ane-warna-utama);
+                        font-size: 12px;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+
+    // ---- Search block ---------------------------------------------------------------------
+    form.wp-block-search {
+        margin: 0;
+
+        .wp-block-search__inside-wrapper {
+            @include ane-pill-field;
+        }
+        .wp-block-search__input {
+            @include ane-pill-input;
+            margin: 0;
+            // Magnifier inside the field (the block has no icon of its own).
+            padding-left: 40px;
+            background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 14px center / 18px;
+        }
+        .wp-block-search__button {
+            @include ane-pill-button;
+
+            &.has-icon {
+                width: 42px;
+                padding: 0;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    width: 22px;
+                    height: 22px;
+                    fill: currentColor;
+                }
+            }
+        }
+        // Button-less variant: the field stands alone.
+        &.wp-block-search__no-button .wp-block-search__inside-wrapper {
+            padding-inline: 8px;
+        }
+    }
+
+    // ---- Tag cloud --------------------------------------------------------------------------
+    .tagcloud,
+    .wp-block-tag-cloud {
+        margin: 0;
+
+        a {
+            display: inline-block;
+            margin: 0 6px 8px 0;
+            padding: 5px 13px;
+            border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.16);
+            border-radius: 999px;
+            color: var(--ane-warna-text);
+            font-size: 13px !important; // WordPress adds inline font sizes
+            font-weight: 600;
+            line-height: 1.4;
+            text-transform: capitalize;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+            &:before {
+                content: '#';
+                margin-right: 2px;
+                color: var(--ane-warna-alternatif);
+                transition: color 0.2s ease;
+            }
+            &:hover {
+                border-color: var(--ane-warna-utama);
+                background: var(--ane-warna-utama);
+                color: var(--ane-warna-putih);
 
                 &:before {
-                    position: absolute;
-                    left: 0;
-                    top: 16px;
-                    bottom: auto;
-                    @include ane-glyph-mask(arrow-right);
-                    font-size: 7px;
-                    line-height: 24px;
-                    color: var(--ane-warna-utama);
-                    font-weight: 400;
-                }
-
-                a {
-                    font-size: 15px;
-                    font-weight: 600;
-                    color: var(--ane-warna-text);
-                    @include Transisi;
-
-                    &:hover {
-                        color: var(--ane-warna-utama);
-                    }
-                    @include mobile {
-                        font-size: 16px;
-                        font-weight: 700;
-                        line-height: 1.4;
-                    }
-                }
-
-                &:last-child {
-                    border-bottom: 0;
+                    color: inherit;
                 }
             }
         }
-        .post-widget {
-            .ane-konten-lis {
-                flex-direction: row-reverse;
-                margin-bottom: 0;
-                padding: 7.5px 0 7.5px 0;
-                border-bottom: 1px solid;
-                @include BorderColor;
+    }
 
-                .entry-header {
-                    padding: 0 0 0 7.5px;
+    // ---- Dropdowns (archives / categories "as dropdown") ----------------------------------------------
+    select {
+        width: 100%;
+        height: 46px;
+        padding: 0 40px 0 16px;
+        border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.16);
+        border-radius: 12px;
+        background: var(--ane-warna-putih) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23777' stroke-width='1.6' stroke-linecap='round' d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 16px center / 12px;
+        color: var(--ane-warna-text);
+        font-size: 15px;
+        appearance: none;
+        -webkit-appearance: none;
 
-                }
-                .entry-content {
-                    padding: 0;
-
-                    h2 {
-                        font-size: 15px;
-                        font-weight: 600;
-                        margin-bottom: 10px;
-                        @include mobile {
-                            font-size: 16px;
-                            line-height: 1.4;
-                            margin-bottom: 15px;
-                            font-weight: 700;
-                        }
-
-                    }
-                    .post-meta-info {
-                        ul {
-                            li {
-                                border-bottom: 0;
-                                font-size: 12px;
-                                padding: 0;
-
-                                &::before {
-                                    content: '' !important;
-                                    @include tablet {
-                                        content: '';
-                                    }
-                                }
-
-                                .content-category {
-                                    margin-right: 0;
-                                    a {
-                                        font-size: 12px;
-                                        margin-right: 0;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-            }
+        &:hover {
+            border-color: rgba(var(--ane-warna-gelap-rgb), 0.3);
         }
-        .wp-block-table {
-            margin-bottom: 0;
-            box-shadow: 0 0 0;
-            border-radius: 0;
-        }
+    }
 
-        .wp-block-embed {
-            margin-bottom: 0;
-        }
+    // ---- Latest comments --------------------------------------------------------------------------
+    .wp-block-latest-comments {
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-        ul.wp-block-social-links {
-            li {
-                font-size: 24px;
-                line-height: 1;
+        .wp-block-latest-comments__comment {
+            margin: 0;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+            font-size: 14px;
+
+            &:first-child {
                 padding-top: 0;
+            }
+            &:last-child {
                 padding-bottom: 0;
                 border-bottom: 0;
             }
         }
-
-        .wp-block-tag-cloud {
-            margin-bottom: 0;
-            a {
-                background-color: var(--ane-warna-utama);
-                color: var(--ane-warna-terang);
-                padding: 3px 8px;
-                font-size: 15px !important;
-                border-radius: 3px;
-                margin-right: 3px;
-                margin-bottom: 5px;
-                display: inline-block;
-                text-transform: capitalize;
-                @include Transisi;
-
-                &:before {
-                    content: '#';
-                    color: var(--ane-warna-alternatif);
-                }
-
-                &:hover {
-                    color: var(--ane-warna-terang);
-                    background-color: var(--ane-warna-utama);
-                }
-
-            }
+        .wp-block-latest-comments__comment-link,
+        .wp-block-latest-comments__comment-author {
+            font-weight: 700;
         }
-        .wp-block-image {
-            margin-bottom: 0;
-
-            img {
-                width: 100%;
-                max-width: none;
-                border-radius: 4px;
-            }
-            figcaption {
-                margin-top: 0;
-                margin-bottom: 0;
-                display: block;
-                padding: 10px;
-                padding-bottom: 0;
-                font-size: 14px;
-                text-align: center;
-                font-style: italic;
-                width: 100%;
-            }
+        .wp-block-latest-comments__comment-link:hover {
+            color: var(--ane-warna-utama);
         }
-        .screen-reader-text {
-            display: none;
+        .wp-block-latest-comments__comment-date {
+            display: block;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.55);
+            font-size: 12px;
         }
-
-        .wp-block-gallery {
-            margin-bottom: 0;
+        .wp-block-latest-comments__comment-excerpt p {
+            margin: 6px 0 0;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.75);
+            font-size: 13.5px;
         }
-        .columns-2 {
-            .wp-block-image {
-                width: calc(50% - 15px) !important;
-                margin-right: 5px!important;
-                margin-bottom: 5px!important;
-
-                &:nth-child(2n+2) {
-                  margin-right: 0px;
-                }
-            }
-        }
-        .wp-block-search.wp-block-search__button-inside .wp-block-search__inside-wrapper {
-          padding: 4px;
-          border: 1px solid var(--ane-warna-utama);
-        }
-        .wp-block-search__inside-wrapper {
-            .wp-block-search__input {
-                border: 1px solid var(--ane-warna-utama);
-            }
-            .wp-block-search__button {
-                background: var(--ane-warna-utama);
-                border-color: var(--ane-warna-utama);
-                color: var(--ane-warna-terang);
-                border-radius: 2px;
-                padding: 0 8px;
-            }
-        }
-
-        .columns-3 {
-            .wp-block-image {
-                width: calc(34% - 15px) !important;
-                margin-right: 5px!important;
-                margin-bottom: 5px!important;
-
-                &:nth-child(3n+3) {
-                  margin-right: 0px;
-                }
-
-                img {
-                    border-radius: 2px !important;
-                }
-            }
-        }
-
-        @include mobile {
-            @include DisplayLebar;
-
-            .ane-sidebar {
-                border-radius: 0;
-                margin-bottom: 15px;
-            }
-        }
-
     }
 
+    // ---- Calendar -------------------------------------------------------------------------------------
+    .wp-calendar-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        text-align: center;
+
+        caption {
+            padding-bottom: 10px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        th {
+            padding: 6px 0;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.55);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 6px 0;
+            border: 0;
+
+            a {
+                display: inline-block;
+                min-width: 26px;
+                border-radius: 50%;
+                background: rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.12);
+                color: var(--ane-warna-utama);
+                font-weight: 700;
+            }
+        }
+        #today {
+            color: var(--ane-warna-putih);
+            background: var(--ane-warna-alternatif);
+            border-radius: 50%;
+        }
+    }
+    .wp-calendar-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    // ---- Media & misc blocks ------------------------------------------------------------------------------
+    .wp-block-image,
+    .wp-block-embed,
+    .wp-block-gallery,
+    .wp-block-table {
+        margin: 0;
+    }
+    .wp-block-image img,
+    .wp-block-gallery img {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: auto;
+        border-radius: 12px;
+    }
+    .wp-block-image figcaption {
+        margin: 8px 0 0;
+        color: rgba(var(--ane-warna-gelap-rgb), 0.6);
+        font-size: 13px;
+        font-style: italic;
+        text-align: center;
+    }
+    .wp-block-embed iframe,
+    iframe {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+    ul.wp-block-social-links {
+        margin: 0;
+        padding: 0;
+
+        li {
+            padding: 0;
+            border: 0;
+        }
+    }
+    .wp-block-button__link {
+        border-radius: 999px;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
+// Mobile: widgets span the container width, a touch tighter.
+@media only screen and (max-width: 767px) {
+    .ane-widget {
+        margin-bottom: 16px;
+        padding: 16px;
+        border-radius: 14px;
+    }
+}
+// Sidebar under the content on tablets: breathe from the article.
+@media only screen and (max-width: 992px) {
+    .ane-kanan .right-sidebar {
+        margin-top: 8px;
+    }
+}
+
+// ---- Search form (searchform.php; same look as the Search block) --------------------------------------------------
 .ane-cari {
-    @include DisplayBlock;
+    display: block;
+    width: 100%;
     position: relative;
-    form {
-        display: flex;
-        flex: auto;
-        flex-wrap: nowrap;
-        max-width: 100%;
+}
+.ane-searchform {
+    @include ane-pill-field;
+    padding-left: 14px;
 
-        input {
-            padding: 8px;
-            flex-grow: 1;
-            min-width: 3em;
-            border: 1px solid var(--ane-warna-utama);
-        }
-        button {
-            background: var(--ane-warna-utama);
-            border: 1px solid var(--ane-warna-utama-2);
-            padding: .375em .625em;
-            color: var(--ane-warna-terang);
-            margin-left: .625em;
-            word-break: normal;
-            border-radius: 4px;
-            cursor: pointer;
-
-        }
-
-        &:hover {
-            input {
-                border: 1px solid var(--ane-warna-utama-2);
-            }
-            button {
-                background: var(--ane-warna-utama-2);
-            }
-        }
+    .ane-searchform__icon {
+        flex: none;
+        display: inline-flex;
+        color: rgba(var(--ane-warna-gelap-rgb), 0.5);
+        font-size: 18px;
+    }
+    .ane-searchform__input {
+        @include ane-pill-input;
+        padding-left: 4px;
+    }
+    .ane-searchform__btn {
+        @include ane-pill-button;
+    }
+    .screen-reader-text {
+        position: absolute;
+    }
+}
+@media only screen and (max-width: 420px) {
+    // Very narrow: keep the field usable, button shrinks.
+    .ane-searchform .ane-searchform__btn {
+        padding: 0 14px;
     }
 }

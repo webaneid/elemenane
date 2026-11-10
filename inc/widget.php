@@ -117,7 +117,9 @@ class Webane_Posts_Widget extends WP_Widget {
 
 		echo wp_kses_post( $before_widget );
 		if ( ! empty( $title ) ) {
-			echo "<h2 class='widget-title general-title'>" . esc_html( (string) $title ) . '</h2>';
+			$before_title = isset( $args['before_title'] ) ? (string) $args['before_title'] : '<h2 class="widget-title general-title">';
+			$after_title  = isset( $args['after_title'] ) ? (string) $args['after_title'] : '</h2>';
+			echo wp_kses_post( $before_title ) . esc_html( (string) $title ) . wp_kses_post( $after_title );
 		}
 		echo "<div class='post-widget'>";
 
