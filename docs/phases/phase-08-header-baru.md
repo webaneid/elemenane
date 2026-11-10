@@ -62,3 +62,8 @@
 - Browser (iframe 375 / 820 / 1280): tidak ada overflow horizontal; tap target 44px; drawer (aria-expanded, scroll lock, submenu aktif terbuka), dropdown desktop, dan dialog pencarian (fokus ke input, saran artikel) berfungsi; menu utama dirender sekali.
 - Quality gate (`lint:syntax`, `lint:changed`, `lint:phpcs`, `analyse`, `security:scan`, `css:check`, `dist:check`) lulus.
 - Belum diuji: perilaku "sembunyi saat scroll turun" pada perangkat sentuh nyata, VoiceOver/NVDA, dan halaman beranda `page-home.php` (situs lokal memakai template Elementor Canvas).
+
+## Penyelarasan Lebar Container
+- Header (1240px) dan footer (gutter `clamp`) sebelumnya tidak sejajar dengan `.container` konten (1140px, padding 15px di <= 992px). Kini satu sumber: mixin `container-box` + `$ane-container-max` di `scss/_mixins.scss`, dipakai oleh `.container`, `.ane-header__inner`, dan `.ane-footer__inner`.
+- Diukur di browser: 1140px dan titik awal yang sama pada header, utility bar, konten, dan footer (desktop, 820px, 375px).
+- Catatan lama (tidak diubah): di rentang 993-1140px `.container` tidak punya padding samping sehingga konten menempel tepi layar.

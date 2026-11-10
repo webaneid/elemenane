@@ -108,20 +108,16 @@ ul li {
   display: block;
   width: 100%;
   max-width: 1140px;
-  margin: auto;
+  margin-inline: auto;
+}
+@media only screen and (max-width: 992px) {
+  .container {
+    padding-inline: 15px;
+  }
+}
+.container {
+  margin-block: auto;
   position: relative;
-}
-@media only screen and (min-width: 768px) and (max-width: 992px) {
-  .container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-@media only screen and (min-width: 100px) and (max-width: 767px) {
-  .container {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
 }
 
 .row {
@@ -1698,9 +1694,14 @@ html.ane-lock {
   outline-offset: 2px;
 }
 .ane-header__inner {
-  width: min(100% - (var(--ane-header-gutter, 32px)), 1240px);
+  width: 100%;
+  max-width: 1140px;
   margin-inline: auto;
-  --ane-header-gutter: clamp(24px, 6vw, 64px);
+}
+@media only screen and (max-width: 992px) {
+  .ane-header__inner {
+    padding-inline: 15px;
+  }
 }
 .ane-header__utility {
   display: none;
@@ -3896,7 +3897,6 @@ html.ane-lock {
 }
 
 .ane-footer {
-  --ane-footer-gutter: clamp(16px, 4vw, 40px);
   --ane-footer-gap: clamp(28px, 5vw, 56px);
   --ane-footer-pad-y: clamp(36px, 6vw, 72px);
   --ane-footer-muted: rgba(var(--ane-warna-putih-rgb), 0.72);
@@ -3918,8 +3918,14 @@ html.ane-lock {
   box-sizing: border-box;
 }
 .ane-footer__inner {
-  width: min(100% - var(--ane-footer-gutter) * 2, 1140px);
+  width: 100%;
+  max-width: 1140px;
   margin-inline: auto;
+}
+@media only screen and (max-width: 992px) {
+  .ane-footer__inner {
+    padding-inline: 15px;
+  }
 }
 .ane-footer .screen-reader-text {
   position: absolute;

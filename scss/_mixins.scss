@@ -17,6 +17,19 @@ $font-weight: (
     @return map-get($font-weight, $weight-name);
 }
 
+// Single source for the content width. Used by .container, the header and the footer
+// so every band lines up: 1140px box, 15px side padding on tablet and mobile.
+$ane-container-max: 1140px;
+@mixin container-box {
+    width: 100%;
+    max-width: $ane-container-max;
+    margin-inline: auto;
+
+    @media only screen and (max-width: 992px) {
+        padding-inline: 15px;
+    }
+}
+
 @mixin FlexCenter {
     display: flex;
     justify-content: center;

@@ -56,10 +56,9 @@ html.ane-lock {
         outline-offset: 2px;
     }
 
+    // Same box as .container (see container-box in _mixins.scss) so header, content and footer align.
     &__inner {
-        width: min(100% - (var(--ane-header-gutter, 32px)), 1240px);
-        margin-inline: auto;
-        --ane-header-gutter: clamp(24px, 6vw, 64px);
+        @include container-box;
     }
 
     // ---- Utility bar (>= 768px) -------------------------------------------

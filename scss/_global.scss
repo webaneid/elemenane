@@ -65,20 +65,9 @@ ul {
 
 .container {
     display: block;
-    width: 100%;
-    max-width: 1140px;
-    margin: auto;
+    @include container-box;
+    margin-block: auto;
     position: relative;
-
-    @include tablet {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    @include mobile {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    
 }
 .row {
     @include FlexRow;

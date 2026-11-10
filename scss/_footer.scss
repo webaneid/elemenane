@@ -2,7 +2,6 @@
 // Fluid spacing via clamp(); layout via CSS Grid. Colours use the Elementor-synced theme tokens.
 
 .ane-footer {
-    --ane-footer-gutter: clamp(16px, 4vw, 40px);
     --ane-footer-gap: clamp(28px, 5vw, 56px);
     --ane-footer-pad-y: clamp(36px, 6vw, 72px);
     --ane-footer-muted: rgba(var(--ane-warna-putih-rgb), 0.72);
@@ -27,9 +26,9 @@
     }
 
     // Centered content box shared by every band.
+    // Same box as .container (see container-box in _mixins.scss) so footer, content and header align.
     &__inner {
-        width: min(100% - (var(--ane-footer-gutter) * 2), 1140px);
-        margin-inline: auto;
+        @include container-box;
     }
 
     .screen-reader-text {
