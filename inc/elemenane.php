@@ -88,6 +88,19 @@ function ane_enqueue_scripts() {
 		)
 	);
 
+	// Floating WhatsApp chat (only when enabled in the ACF options).
+	if ( function_exists( 'get_field' ) && get_field( 'ane_cs_aktif', 'option' ) ) {
+		wp_enqueue_script( 'ane-floating-chat', get_base_url_assets() . '/js/floating-chat.js', array(), '1.0.0', true );
+		wp_localize_script(
+			'ane-floating-chat',
+			'elemenaneChat',
+			array(
+				'empty'    => __( 'Please type a message first.', 'elemenane' ),
+				'noNumber' => __( 'No WhatsApp number available.', 'elemenane' ),
+			)
+		);
+	}
+
 	// Vanilla JS, no jQuery needed.
 	wp_enqueue_script( 'main-js', get_base_url_assets() . '/js/newsane.js', array(), '2.0.0', true );
 }
@@ -140,7 +153,7 @@ function elemenane_defer_scripts() {
 		return;
 	}
 
-	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'ane-home', 'main-js' ) as $handle ) {
+	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'ane-home', 'ane-floating-chat', 'main-js' ) as $handle ) {
 		if ( wp_script_is( $handle, 'registered' ) ) {
 			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}

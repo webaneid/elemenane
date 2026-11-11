@@ -409,3 +409,36 @@ msgstr "Konten Terbaru"
 #: tp/news-*.php
 msgid "Sorry, no posts matched your criteria."
 msgstr "Maaf, tidak ada artikel yang sesuai."
+
+# Floating chat (tp/floating-chat.php)
+#: tp/floating-chat.php
+msgid "Chat with us"
+msgstr "Chat dengan kami"
+
+#: tp/floating-chat.php
+msgid "via WhatsApp"
+msgstr "via WhatsApp"
+
+#: tp/floating-chat.php
+msgid "Close chat"
+msgstr "Tutup chat"
+
+#: tp/floating-chat.php
+msgid "Or chat directly with our admins"
+msgstr "Atau chat langsung dengan Admin kami"
+
+#: tp/floating-chat.php
+msgid "Your message"
+msgstr "Pesan Anda"
+
+#: tp/floating-chat.php
+msgid "Type a message..."
+msgstr "Ketik pesan..."
+
+#: tp/floating-chat.php
+msgid "Please type a message first."
+msgstr "Silakan ketik pesan terlebih dahulu."
+
+#: tp/floating-chat.php
+msgid "No WhatsApp number available."
+msgstr "Nomor WhatsApp tidak tersedia."

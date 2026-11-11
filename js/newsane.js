@@ -85,35 +85,6 @@
 				});
 			});
 		});
-
-		// Floating chat
-		var floatingChat = document.querySelector('.floating-chat');
-		if (floatingChat) {
-			var chatBox = floatingChat.querySelector('.chat');
-			var closeButton = floatingChat.querySelector('.ane-tutupin');
-
-			// Show the chat button after 1 second.
-			setTimeout(function () {
-				floatingChat.classList.add('enter');
-			}, 1000);
-
-			floatingChat.addEventListener('click', function () {
-				floatingChat.classList.add('expand');
-				if (chatBox) {
-					chatBox.classList.add('enter');
-				}
-			});
-
-			if (closeButton) {
-				closeButton.addEventListener('click', function (event) {
-					event.stopPropagation();
-					floatingChat.classList.remove('expand');
-					if (chatBox) {
-						chatBox.classList.remove('enter');
-					}
-				});
-			}
-		}
 	}
 
 	if (document.readyState === 'loading') {
