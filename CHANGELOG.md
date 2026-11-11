@@ -1,3 +1,16 @@
+# [1.3.0](https://github.com/webaneid/elemenane/compare/v1.2.0...v1.3.0) (2026-11-11)
+
+
+### Features
+
+* **contact:** rebuild contact page with contact cards, styled form, themed map and branch banner ([7f86c59](https://github.com/webaneid/elemenane/commit/7f86c593d05040286bb77f2ef4e8e1c8d17a5d09))
+* **pages:** rebuild standard pages, No Sidebar template and 404 on a shared layout ([40b91af](https://github.com/webaneid/elemenane/commit/40b91afb7de9cff96084b68e25153253e92535d3))
+
+
+### Performance Improvements
+
+* split CSS per context, drop Magnific/Owl for a native lightbox, skip theme assets on Elementor Canvas ([eedbbdd](https://github.com/webaneid/elemenane/commit/eedbbdd6bff6c2189388674a1ea21c1540fb679b))
+
 # [1.2.0](https://github.com/webaneid/elemenane/compare/v1.1.8...v1.2.0) (2026-11-11)
 
 
