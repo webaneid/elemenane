@@ -29,6 +29,7 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 | **[Fase 18](phases/phase-18-branch-archive.md)** | Arsip cabang `/branch/` + `ane-branch-card` baru, pin peta bertoken, dialog aksesibel, warna sesuai token | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 19](phases/phase-19-single-branch.md)** | Single cabang baru + kartu Hubungi Kami dengan fallback ke kontak perusahaan, cabang terdekat memakai kartu arsip | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 20](phases/phase-20-halaman-kontak.md)** | Halaman kontak baru: kartu kontak, formulir CF7 bergaya, peta bertoken, banner cabang | Permintaan desain | **Completed** | 2026-11-11 |
+| **[Fase 21](phases/phase-21-halaman-standar-404.md)** | Halaman standar (page, No Sidebar) + 404 baru, satu layout, tanpa inline style / dummyimage | Permintaan desain | **Completed** | 2026-11-11 |
 
 ---
 
