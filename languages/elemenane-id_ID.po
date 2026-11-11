@@ -479,3 +479,47 @@ msgstr "Tersalin: judul, deskripsi, dan tautan"
 #: inc/sosmed.php
 msgid "Could not copy. Please copy the link manually."
 msgstr "Gagal menyalin. Silakan salin tautan secara manual."
+
+# Product card & archive (tp/content-product.php, tp/product-archive.php)
+#: tp/content-product.php
+msgid "Product tag"
+msgstr "Tag produk"
+
+#: tp/content-product.php
+msgid "Product category"
+msgstr "Kategori produk"
+
+#: tp/content-product.php
+msgid "Catalog"
+msgstr "Katalog"
+
+#: tp/content-product.php
+#, php-format
+msgid "%s product"
+msgstr "%s produk"
+
+#: tp/content-product.php
+#, php-format
+msgid "%s products"
+msgstr "%s produk"
+
+#: tp/content-product.php
+msgid "No products found"
+msgstr "Produk tidak ditemukan"
+
+#: tp/content-product.php
+msgid "No product matches these filters. Try removing a filter or widening the price range."
+msgstr "Tidak ada produk yang cocok dengan filter ini. Coba hapus filter atau perlebar rentang harga."
+
+#: tp/content-product.php
+msgid "There are no products here yet. Please check back later."
+msgstr "Belum ada produk di sini. Silakan kembali lagi nanti."
+
+#: tp/content-product.php
+msgid "View details"
+msgstr "Lihat detail"
+
+#: tp/content-product.php
+#, php-format
+msgid "Rated %s out of 5"
+msgstr "Dinilai %s dari 5"

@@ -316,17 +316,15 @@ while ( have_posts() ) :
 				if ( $related_query->have_posts() ) :
 					?>
 				<div class="ane-related-products">
-					<h2><?php esc_html_e( 'Related Products', 'elemenane' ); ?></h2>
-					<div class="ane-products-wrap">
-						<div class="row">
-							<?php
-							while ( $related_query->have_posts() ) :
-								$related_query->the_post();
-								get_template_part( 'tp/content', 'product' );
-							endwhile;
-							wp_reset_postdata();
-							?>
-						</div>
+					<h2 class="ane-section-title"><?php esc_html_e( 'Related Products', 'elemenane' ); ?></h2>
+					<div class="ane-pgrid">
+						<?php
+						while ( $related_query->have_posts() ) :
+							$related_query->the_post();
+							get_template_part( 'tp/content', 'product' );
+						endwhile;
+						wp_reset_postdata();
+						?>
 					</div>
 				</div>
 					<?php

@@ -1,127 +1,94 @@
 <?php
 /**
- * Product Loop Item Template
+ * Product card (archive, taxonomy, related products, WooCommerce loops).
  *
- * Template part for displaying products in archive/taxonomy.
+ * Works with the theme's own products and with WooCommerce products: data comes from
+ * elemenane_get_product_card_data(). Args (get_template_part):
+ * - product_id (int):   product to render (defaults to the current post).
+ * - heading (string):   title tag, h3 (default) or h2.
+ * - priority (bool):    eager-load the image (above the fold).
  *
  * @package elemenane
- * @since 1.0.0
+ * @since   1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
-$product_id = get_the_ID();
-
-// Get product data.
-$prices       = ane_get_product_price_data( $product_id );
-$stock_status = function_exists( 'ane_get_product_stock_status' )
-	? ane_get_product_stock_status( $product_id )
-	: 'instock';
-
-$discount_percent = $prices['discount'];
-
-// Get thumbnail.
-$thumbnail_id = get_post_thumbnail_id( $product_id );
+$elemenane_card = elemenane_get_product_card_data( ! empty( $args['product_id'] ) ? (int) $args['product_id'] : null );
+$elemenane_tag  = ( ! empty( $args['heading'] ) && 'h2' === $args['heading'] ) ? 'h2' : 'h3';
+$elemenane_out  = 'outofstock' === $elemenane_card['stock'];
+$elemenane_img  = array(
+	'class'    => 'ane-product-card__img',
+	'alt'      => '',
+	'sizes'    => '(max-width: 639px) 50vw, (max-width: 992px) 33vw, 270px',
+	'decoding' => 'async',
+	'loading'  => ! empty( $args['priority'] ) ? 'eager' : 'lazy',
+);
+$elemenane_classes = array_merge( array( 'ane-product-card' ), $elemenane_out ? array( 'is-out' ) : array(), $elemenane_card['woocommerce'] ? array( 'has-woocommerce' ) : array() );
 ?>
+<article id="product-<?php echo esc_attr( (string) $elemenane_card['id'] ); ?>" class="<?php echo esc_attr( implode( ' ', array_merge( get_post_class( $elemenane_classes, $elemenane_card['id'] ) ) ) ); ?>">
+	<a class="ane-product-card__media" href="<?php echo esc_url( $elemenane_card['url'] ); ?>" tabindex="-1" aria-hidden="true">
+		<?php
+		if ( $elemenane_card['thumb_id'] ) {
+			echo wp_get_attachment_image( $elemenane_card['thumb_id'], 'kotak', false, $elemenane_img ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core-generated, escaped image markup.
+		} else {
+			printf(
+				'<img class="ane-product-card__img is-placeholder" src="%s" alt="" loading="lazy" decoding="async">',
+				esc_url( get_template_directory_uri() . '/img/placeholder.jpg' )
+			);
+		}
+		?>
+	</a>
 
-<div class="col-lg-4 col-md-3 col-6">
-	<article id="product-<?php echo esc_attr( (string) $product_id ); ?>" <?php post_class( 'ane-product-card' ); ?>>
-
-		<!-- Product Image -->
-		<div class="ane-product-card-image">
-			<a href="<?php the_permalink(); ?>" class="ane-product-card-link">
-				<?php if ( $thumbnail_id ) : ?>
-					<?php echo wp_get_attachment_image( $thumbnail_id, 'kotak', false, array( 'class' => 'product-image' ) ); ?>
-				<?php else : ?>
-					<img src="<?php echo esc_url( get_template_directory_uri() . '/img/placeholder.jpg' ); ?>"
-						alt="<?php the_title_attribute(); ?>"
-						class="product-image placeholder">
-				<?php endif; ?>
-
-				<!-- Badges -->
-				<?php if ( $discount_percent > 0 ) : ?>
-					<span class="ane-product-badge ane-badge-sale">
-						-<?php echo esc_html( $discount_percent ); ?>%
-					</span>
-				<?php endif; ?>
-
-				<?php if ( $stock_status !== 'instock' ) : ?>
-					<span class="ane-product-badge ane-badge-out">
-						<?php esc_html_e( 'Out of Stock', 'elemenane' ); ?>
-					</span>
-				<?php endif; ?>
-
-				<!-- Check if product is new (less than 7 days old) -->
-				<?php
-				$post_date    = get_the_date( 'U' );
-				$current_date = current_time( 'timestamp' );
-				$days_diff    = ( $current_date - $post_date ) / DAY_IN_SECONDS;
-
-				if ( $days_diff <= 7 ) :
-					?>
-					<span class="ane-product-badge ane-badge-new">
-						<?php esc_html_e( 'New', 'elemenane' ); ?>
-					</span>
-				<?php endif; ?>
-			</a>
-		</div>
-
-		<!-- Product Info -->
-		<div class="ane-product-card-content">
-
-			<!-- Category -->
-			<?php
-			$categories = get_the_terms( $product_id, 'product_cat' );
-			if ( $categories && ! is_wp_error( $categories ) ) :
-				?>
-				<div class="ane-product-category">
-					<a href="<?php echo esc_url( get_term_link( $categories[0] ) ); ?>">
-						<?php echo esc_html( $categories[0]->name ); ?>
-					</a>
-				</div>
+	<?php if ( $elemenane_card['on_sale'] || $elemenane_card['is_new'] || $elemenane_out ) : ?>
+		<div class="ane-product-card__badges">
+			<?php if ( $elemenane_out ) : ?>
+				<span class="ane-product-card__badge ane-product-card__badge--out"><?php esc_html_e( 'Out of Stock', 'elemenane' ); ?></span>
 			<?php endif; ?>
+			<?php if ( $elemenane_card['on_sale'] && ! $elemenane_out ) : ?>
+				<span class="ane-product-card__badge ane-product-card__badge--sale">-<?php echo esc_html( (string) $elemenane_card['discount'] ); ?>%</span>
+			<?php endif; ?>
+			<?php if ( $elemenane_card['is_new'] && ! $elemenane_out ) : ?>
+				<span class="ane-product-card__badge ane-product-card__badge--new"><?php esc_html_e( 'New', 'elemenane' ); ?></span>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
-			<!-- Title -->
-			<h3 class="ane-product-card-title">
-				<a href="<?php the_permalink(); ?>">
-					<?php the_title(); ?>
-				</a>
-			</h3>
+	<div class="ane-product-card__body">
+		<?php if ( $elemenane_card['category'] ) : ?>
+			<a class="ane-product-card__cat" href="<?php echo esc_url( (string) get_term_link( $elemenane_card['category'] ) ); ?>"><?php echo esc_html( $elemenane_card['category']->name ); ?></a>
+		<?php endif; ?>
 
-			<!-- Price (hidden when the product has no price) -->
-			<?php if ( $prices['price'] > 0 ) : ?>
-			<div class="ane-product-card-price">
-				<?php if ( $prices['on_sale'] ) : ?>
-					<span class="price-sale"><?php echo esc_html( ane_format_rupiah( $prices['sale'] ) ); ?></span>
-					<span class="price-regular"><?php echo esc_html( ane_format_rupiah( $prices['regular'] ) ); ?></span>
+		<<?php echo esc_attr( $elemenane_tag ); ?> class="ane-product-card__title">
+			<a href="<?php echo esc_url( $elemenane_card['url'] ); ?>"><?php echo esc_html( $elemenane_card['title'] ); ?></a>
+		</<?php echo esc_attr( $elemenane_tag ); ?>>
+
+		<?php if ( $elemenane_card['rating_count'] > 0 ) : ?>
+			<div class="ane-product-card__rating" role="img" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: average rating out of 5 */ __( 'Rated %s out of 5', 'elemenane' ), number_format_i18n( $elemenane_card['rating'], 1 ) ) ); ?>">
+				<span class="ane-stars" style="--ane-rating: <?php echo esc_attr( (string) $elemenane_card['rating'] ); ?>"></span>
+				<span class="ane-product-card__reviews">(<?php echo esc_html( number_format_i18n( $elemenane_card['rating_count'] ) ); ?>)</span>
+			</div>
+		<?php endif; ?>
+
+		<?php if ( '' !== $elemenane_card['price_html'] ) : ?>
+			<div class="ane-product-card__price"><?php echo wp_kses_post( $elemenane_card['price_html'] ); ?></div>
+		<?php elseif ( $elemenane_card['price'] > 0 ) : ?>
+			<div class="ane-product-card__price">
+				<?php if ( $elemenane_card['on_sale'] ) : ?>
+					<span class="ane-product-card__price-now"><?php echo wp_kses_post( elemenane_format_price( $elemenane_card['sale'] ) ); ?></span>
+					<del class="ane-product-card__price-was"><?php echo wp_kses_post( elemenane_format_price( $elemenane_card['regular'] ) ); ?></del>
 				<?php else : ?>
-					<span class="price-current"><?php echo esc_html( ane_format_rupiah( $prices['price'] ) ); ?></span>
+					<span class="ane-product-card__price-now"><?php echo wp_kses_post( elemenane_format_price( $elemenane_card['price'] ) ); ?></span>
 				<?php endif; ?>
 			</div>
-			<?php endif; ?>
+		<?php endif; ?>
 
-			<!-- Stock Status -->
-			<?php if ( $stock_status === 'instock' ) : ?>
-				<div class="ane-product-stock in-stock">
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="8" r="8" fill="#10b981"/>
-						<path d="M11 6L7 10L5 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-					<span><?php esc_html_e( 'In Stock', 'elemenane' ); ?></span>
-				</div>
-			<?php else : ?>
-				<div class="ane-product-stock out-of-stock">
-					<svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-						<circle cx="8" cy="8" r="8" fill="#ef4444"/>
-						<path d="M10 6L6 10M6 6L10 10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-					</svg>
-					<span><?php esc_html_e( 'Out of Stock', 'elemenane' ); ?></span>
-				</div>
-			<?php endif; ?>
+		<?php if ( ! $elemenane_out ) : ?>
+			<p class="ane-product-card__stock is-in"><?php esc_html_e( 'In Stock', 'elemenane' ); ?></p>
+		<?php endif; ?>
 
+		<div class="ane-product-card__cta">
+			<?php elemenane_product_card_cta( $elemenane_card ); ?>
 		</div>
-
-	</article>
-</div>
+	</div>
+</article>
