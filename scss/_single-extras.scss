@@ -1,0 +1,331 @@
+// Blocks below a single post (tp/single-tags|author|nav.php, ane_related_posts()).
+// Section titles share the sidebar "kicker" look via the ane-widget-title mixin.
+
+$ane-single-gap: clamp(28px, 5vw, 44px);
+
+.ane-tags,
+.ane-author-box,
+.ane-post-nav,
+.ane-related {
+    box-sizing: border-box;
+    margin: $ane-single-gap 0 0;
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+}
+
+// One title style for every block (same as .widget-title.general-title).
+.ane-section-title {
+    @include ane-widget-title;
+    margin-bottom: 16px;
+}
+
+// ---- Tags ---------------------------------------------------------------------------------
+
+.ane-tags__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        &:before {
+            display: none;
+        }
+    }
+    a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0 16px;
+        border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.16);
+        border-radius: 999px;
+        color: var(--ane-warna-text);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+        span {
+            margin-right: 2px;
+            color: var(--ane-warna-alternatif);
+            font-weight: 800;
+            transition: color 0.2s ease;
+        }
+        &:hover {
+            border-color: var(--ane-warna-utama);
+            background: var(--ane-warna-utama);
+            color: var(--ane-warna-putih);
+
+            span {
+                color: var(--ane-warna-putih);
+            }
+        }
+        &:focus-visible {
+            outline: 2px solid var(--ane-warna-alternatif);
+            outline-offset: 2px;
+        }
+    }
+}
+
+// ---- Author box ---------------------------------------------------------------------------
+
+.ane-author-box {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 14px;
+    padding: 24px 20px;
+    border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+    border-radius: 20px;
+    background:
+        radial-gradient(120% 140% at 100% 0%, rgba(var(--ane-warna-alternatif-rgb, var(--ane-warna-gelap-rgb)), 0.09), transparent 55%),
+        linear-gradient(135deg, rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.06), rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.015));
+    text-align: center;
+
+    @media only screen and (min-width: 640px) {
+        grid-template-columns: auto minmax(0, 1fr);
+        justify-items: start;
+        gap: 24px;
+        padding: 28px;
+        text-align: left;
+    }
+
+    &__avatar {
+        display: block;
+        line-height: 0;
+
+        img {
+            display: block;
+            width: 88px;
+            height: 88px;
+            border: 4px solid var(--ane-warna-putih);
+            border-radius: 50%;
+            background: var(--ane-warna-putih);
+            box-shadow: 0 6px 18px rgba(var(--ane-warna-gelap-rgb), 0.16);
+            object-fit: cover;
+
+            @media only screen and (min-width: 640px) {
+                width: 104px;
+                height: 104px;
+            }
+        }
+    }
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+
+        @media only screen and (min-width: 640px) {
+            align-items: flex-start;
+        }
+    }
+    &__kicker {
+        color: var(--ane-warna-utama);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        line-height: 1;
+        text-transform: uppercase;
+    }
+    // Class doubled so these beat the .ane-content typography when the box is appended by the content filter.
+    .ane-author-box__name {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+
+        a {
+            color: var(--ane-warna-gelap);
+
+            &:hover {
+                color: var(--ane-warna-utama);
+            }
+        }
+    }
+    .ane-author-box__bio {
+        max-width: 62ch;
+        margin: 0;
+        color: rgba(var(--ane-warna-text-rgb, var(--ane-warna-gelap-rgb)), 0.8);
+        font-size: 15px;
+        line-height: 1.7;
+    }
+    &__links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px 16px;
+        margin-top: 8px;
+
+        @media only screen and (min-width: 640px) {
+            justify-content: flex-start;
+        }
+    }
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 999px;
+        background: var(--ane-warna-utama);
+        color: var(--ane-warna-putih);
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        transition: filter 0.2s ease, transform 0.2s ease;
+
+        .ane-icon {
+            width: 12px;
+            height: 12px;
+        }
+        &:hover {
+            color: var(--ane-warna-putih);
+            filter: brightness(1.12);
+        }
+        &:active {
+            transform: scale(0.97);
+        }
+    }
+    &__site {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 44px;
+        color: var(--ane-warna-text);
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+
+        .ane-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--ane-warna-utama);
+        }
+        &:hover {
+            color: var(--ane-warna-utama);
+        }
+    }
+    a:focus-visible {
+        outline: 2px solid var(--ane-warna-alternatif);
+        outline-offset: 2px;
+    }
+}
+
+// ---- Previous / next ----------------------------------------------------------------------
+
+.ane-post-nav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+
+    @media only screen and (min-width: 640px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+        padding: 16px;
+        border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.12);
+        border-radius: 16px;
+        background: var(--ane-warna-putih);
+        color: var(--ane-warna-gelap);
+        text-decoration: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+            border-color: var(--ane-warna-utama);
+            box-shadow: 0 10px 26px rgba(var(--ane-warna-gelap-rgb), 0.1);
+            transform: translateY(-2px);
+            color: var(--ane-warna-gelap);
+        }
+        &:focus-visible {
+            outline: 2px solid var(--ane-warna-alternatif);
+            outline-offset: 2px;
+        }
+        // Only a "next" article: keep it on the right.
+        &--next {
+            @media only screen and (min-width: 640px) {
+                grid-column: 2;
+                text-align: right;
+            }
+        }
+    }
+    &__label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--ane-warna-utama);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        line-height: 1;
+        text-transform: uppercase;
+
+        .ane-icon {
+            width: 10px;
+            height: 10px;
+        }
+    }
+    @media only screen and (min-width: 640px) {
+        &__item--next &__label {
+            align-self: flex-end;
+        }
+        &__item--next &__row {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+    }
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+    }
+    &__thumb {
+        flex: none;
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+    &__title {
+        display: -webkit-box;
+        min-width: 0;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+    }
+}
+
+// ---- Related content ----------------------------------------------------------------------
+
+.ane-related {
+    // Below the fold: skip rendering until near the viewport.
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+}

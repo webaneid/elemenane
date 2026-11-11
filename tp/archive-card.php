@@ -5,6 +5,7 @@
  * Args (get_template_part):
  * - variant (string): featured | standard | wide.
  * - priority (bool):  first card, treat image as LCP candidate.
+ * - heading (string): title tag, h2 (default) or h3.
  *
  * @package elemenane
  * @since   1.1.9
@@ -15,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
 $elemenane_variant  = ! empty( $args['variant'] ) ? (string) $args['variant'] : 'standard';
 $elemenane_priority = ! empty( $args['priority'] );
 $elemenane_featured = 'featured' === $elemenane_variant;
+$elemenane_heading  = ( ! empty( $args['heading'] ) && 'h3' === $args['heading'] ) ? 'h3' : 'h2';
 
 $elemenane_img_size = $elemenane_featured ? 'large' : 'medium_large';
 $elemenane_sizes    = $elemenane_featured
@@ -69,9 +71,9 @@ $elemenane_format = get_post_format();
 			</a>
 		<?php endif; ?>
 
-		<h2 class="ane-card__title">
+		<<?php echo esc_attr( $elemenane_heading ); ?> class="ane-card__title">
 			<a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a>
-		</h2>
+		</<?php echo esc_attr( $elemenane_heading ); ?>>
 
 		<?php if ( has_excerpt() || ! $elemenane_featured ) : ?>
 			<div class="ane-card__excerpt"><?php the_excerpt(); ?></div>

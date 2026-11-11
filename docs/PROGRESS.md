@@ -19,6 +19,7 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 | **[Fase 08](phases/phase-08-header-baru.md)** | Refactoring Total Header Default (`tp/header-default.php`, `js/header.js`, `scss/_header.scss` baru: drawer mobile, dropdown aksesibel, dialog pencarian, sticky) | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 09](phases/phase-09-sidebar-baru.md)** | Refactoring Total Sidebar & Widget (judul "kicker", kartu baru, Search pill, Latest Posts bernomor, Webane Posts, daftar/tag/select/kalender) | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 10](phases/phase-10-arsip-baru.md)** | Refactoring Total Arsip Post (category, tag, search, archive, author, paginasi) dengan layout kartu bersama | Permintaan desain | **Completed** | 2026-11-11 |
+| **[Fase 11](phases/phase-11-single-bawah-artikel.md)** | Refactoring blok bawah artikel single (Tags, Author box, Post nav, Related) dengan judul konsisten gaya sidebar | Permintaan desain | **Completed** | 2026-11-11 |
 
 ---
 

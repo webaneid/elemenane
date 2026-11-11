@@ -14,7 +14,9 @@ ane_set_views( get_the_ID() );
 
 // Check if Elementor has a custom single post template
 if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_location( 'single' ) ) {
-	// No Elementor single template, use native theme template
+	// No Elementor single template, use native theme template.
+	// The author box is rendered by tp/single-*.php, so skip the content filter that appends it.
+	remove_filter( 'the_content', 'ane_author_info_box', 20 );
 	?>
 	<main id="main" class="site-main">
 		<?php get_template_part( 'breadcrumbs' ); ?>

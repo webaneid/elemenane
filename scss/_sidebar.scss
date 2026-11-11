@@ -72,37 +72,6 @@
     }
 }
 
-// Section label: editorial "kicker" - diamond, caps, hairline filling the row.
-@mixin ane-widget-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 16px;
-    padding: 0;
-    color: var(--ane-warna-gelap);
-    font-size: 13px;
-    font-weight: 800;
-    line-height: 1.2;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-
-    &:before {
-        content: '';
-        flex: none;
-        width: 9px;
-        height: 9px;
-        border-radius: 2px;
-        background: var(--ane-warna-alternatif);
-        transform: rotate(45deg);
-    }
-    &:after {
-        content: '';
-        flex: 1 1 auto;
-        height: 1px;
-        background: linear-gradient(90deg, rgba(var(--ane-warna-gelap-rgb), 0.18), rgba(var(--ane-warna-gelap-rgb), 0));
-    }
-}
-
 // Rows with an accent chevron, hairline separators and a right-aligned count.
 @mixin ane-link-list {
     margin: 0;

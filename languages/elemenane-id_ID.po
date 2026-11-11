@@ -320,3 +320,45 @@ msgstr "Berikutnya"
 #: tp/archive-*.php
 msgid "Posts Navigation"
 msgstr "Navigasi artikel"
+
+# Single post blocks (tp/single-*.php)
+#: tp/single-*.php
+msgid "Tags"
+msgstr "Tag"
+
+#: tp/single-*.php
+msgid "Post navigation"
+msgstr "Navigasi artikel"
+
+#: tp/single-*.php
+msgid "Next article"
+msgstr "Artikel berikutnya"
+
+#: tp/single-*.php
+msgid "Previous article"
+msgstr "Artikel sebelumnya"
+
+#: tp/single-*.php
+msgid "About the author"
+msgstr "Tentang penulis"
+
+#: tp/single-*.php
+msgid "Written by"
+msgstr "Ditulis oleh"
+
+#: tp/single-*.php
+#, php-format
+msgid "View %s article"
+msgstr "Lihat %s artikel"
+
+#: tp/single-*.php
+#, php-format
+msgid "View all %s articles"
+msgstr "Lihat semua %s artikel"
+
+#: tp/single-*.php
+msgid "Website"
+msgstr "Website"
+#: inc/elemenane.php
+msgid "Related Content"
+msgstr "Konten Terkait"

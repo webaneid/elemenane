@@ -801,94 +801,11 @@ function ane_dummy_square() {
  * @return string Sanitized HTML for post navigation
  */
 function ane_prev_next_post() {
-	$post = get_post();
-	if ( ! $post instanceof WP_Post ) {
-		return '';
-	}
-
 	ob_start();
-	?>
-	<div class="ane-col-55">
-		<?php
-		// Previous Post
-		$prev_post = get_previous_post();
-		if ( ! empty( $prev_post ) ) {
-			ane_render_nav_post( $prev_post, 'prev' );
-		}
-
-		// Next Post
-		$next_post = get_next_post();
-		if ( ! empty( $next_post ) ) {
-			ane_render_nav_post( $next_post, 'next' );
-		}
-		?>
-	</div>
-	<?php
-	return ob_get_clean();
+	get_template_part( 'tp/single', 'nav' );
+	return (string) ob_get_clean();
 }
 
-/**
- * Renders individual navigation post
- *
- * @param WP_Post $post Post object
- * @param string  $type Navigation type ('prev' or 'next')
- */
-function ane_render_nav_post( $post, $type = 'prev' ) {
-	if ( ! $post instanceof WP_Post ) {
-		return;
-	}
-
-	$is_next      = $type === 'next';
-	$post_id      = absint( $post->ID );
-	$title        = esc_html( get_the_title( $post_id ) );
-	$permalink    = esc_url( get_permalink( $post_id ) );
-	$post_classes = get_post_class( '', $post_id );
-
-	// Get thumbnail
-	if ( has_post_thumbnail( $post ) ) {
-		$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'kotak' );
-		$image_url = esc_url( $thumb[0] );
-	} else {
-		$image_url = esc_url( ane_dummy_square() );
-	}
-
-	// Navigation classes and text
-	$nav_classes = array(
-		'ane-kgv',
-		'ane-konten-nav',
-		$is_next ? 'nav-next' : '',
-		esc_attr( implode( ' ', $post_classes ) ),
-	);
-
-	$nav_header_class = $is_next ? 'nav-header-prev text-right' : 'nav-header-prev';
-	$nav_text         = $is_next ?
-		'Next Post ' . elemenane_get_icon_svg( 'chevron-right' ) :
-		elemenane_get_icon_svg( 'chevron-left' ) . ' Prev Post';
-	?>
-	<div class="ane-isi">
-		<div class="<?php echo esc_attr( $nav_header_class ); ?>">
-			<span><?php echo wp_kses( $nav_text, elemenane_kses_post_with_svg() ); ?></span>
-		</div>
-		<article id="post-<?php echo esc_attr( (string) $post_id ); ?>" class="<?php echo esc_attr( implode( ' ', $nav_classes ) ); ?>">
-			<div class="entry-header">
-				<a href="<?php echo esc_url( $permalink ); ?>">
-					<div class="ane-image">
-						<img src="<?php echo esc_url( $image_url ); ?>" 
-							alt="<?php echo esc_attr( $title ); ?>" 
-							title="<?php echo esc_attr( $title ); ?>"
-							loading="lazy">
-					</div>
-				</a>
-			</div>
-			<div class="entry-content">
-				<a href="<?php echo esc_url( $permalink ); ?>">
-					<?php echo esc_html( $title ); ?>
-				</a>
-			</div>
-		</article>
-	</div>
-	<?php
-}
 /**
  * Converts timestamp to human-readable time difference
  *
@@ -1074,73 +991,10 @@ function ane_author_info_box( $content ) {
 		return $content;
 	}
 
-	// Get author data
-	$author_id   = absint( $post->post_author );
-	$author_data = array(
-		'display_name' => get_the_author_meta( 'display_name', $author_id ),
-		'nickname'     => get_the_author_meta( 'nickname', $author_id ),
-		'description'  => get_the_author_meta( 'user_description', $author_id ),
-		'website'      => esc_url( get_the_author_meta( 'url', $author_id ) ),
-		'email'        => get_the_author_meta( 'user_email', $author_id ),
-		'posts_url'    => esc_url( get_author_posts_url( $author_id ) ),
-	);
-
-	// Use nickname if display name is empty
-	$display_name = ! empty( $author_data['display_name'] )
-		? $author_data['display_name']
-		: $author_data['nickname'];
-
-	// Only proceed if we have an author description
-	if ( empty( $author_data['description'] ) ) {
-		return $content;
-	}
-
-	// Build author box HTML
 	ob_start();
-	?>
-	<footer class="ane-author">
-		<div class="ane-author-isi">
-			<div class="author-gambar">
-				<?php
-				echo get_avatar(
-					$author_data['email'],
-					90,
-					'',
-					esc_attr( $display_name ),
-					array( 'class' => 'author-avatar' )
-				);
-				?>
-			</div>
-			<div class="author-deskripsi">
-				<h2>
-					<?php
-					printf(
-						'%s %s',
-						esc_html__( 'By:', 'elemenane' ),
-						esc_html( $display_name )
-					);
-					?>
-				</h2>
-				<p><?php echo wp_kses_post( nl2br( $author_data['description'] ) ); ?></p>
-				<div class="author_links">
-					<a href="<?php echo esc_url( $author_data['posts_url'] ); ?>">
-						<?php esc_html_e( 'View All Posts', 'elemenane' ); ?>
-					</a>
-					<?php if ( ! empty( $author_data['website'] ) ) : ?>
-						<a href="<?php echo esc_url( $author_data['website'] ); ?>" 
-							target="_blank" 
-							rel="nofollow noopener">
-							<?php esc_html_e( 'Website', 'elemenane' ); ?>
-						</a>
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<?php
-	$author_box = ob_get_clean();
+	get_template_part( 'tp/single', 'author', array( 'author_id' => absint( $post->post_author ) ) );
 
-	return $content . wp_kses_post( $author_box );
+	return $content . ob_get_clean();
 }
 
 /**
@@ -1363,7 +1217,7 @@ function ane_related_posts() {
 	$args = array(
 		'tag__in'             => array_map( 'absint', $tag_ids ),
 		'post__not_in'        => array( $post->ID ),
-		'posts_per_page'      => 5,
+		'posts_per_page'      => 4,
 		'orderby'             => 'date',
 		'order'               => 'DESC',
 		'post_status'         => 'publish',
@@ -1378,33 +1232,32 @@ function ane_related_posts() {
 		return;
 	}
 
-	// Start output buffering
-	ob_start();
 	?>
-	<div class="ane-related">
-		<h1><?php esc_html_e( 'Related Content', 'elemenane' ); ?></h1>
-		<div class="isi">
+	<section class="ane-related" aria-labelledby="ane-related-title">
+		<h2 id="ane-related-title" class="ane-section-title"><?php esc_html_e( 'Related Content', 'elemenane' ); ?></h2>
+		<div class="ane-grid">
 			<?php
+			$count = (int) $related_query->post_count;
+			$index = 0;
 			while ( $related_query->have_posts() ) :
 				$related_query->the_post();
-
-				// Load appropriate template based on device
-				if ( wp_is_mobile() ) {
-					get_template_part( 'tp/content', 'list' );
-				} else {
-					get_template_part( 'tp/content', get_post_format() );
-				}
+				++$index;
+				get_template_part(
+					'tp/archive',
+					'card',
+					array(
+						'variant' => ( $index === $count && 1 === $count % 2 ) ? 'wide' : 'standard',
+						'heading' => 'h3',
+					)
+				);
 			endwhile;
 			?>
 		</div>
-	</div>
+	</section>
 	<?php
 
 	// Reset post data
 	wp_reset_postdata();
-
-	// Output the buffer
-	echo wp_kses( ob_get_clean(), elemenane_kses_post_with_svg() );
 }
 
 

@@ -78,18 +78,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php the_content(); ?>
 		</div>
 
-		<div class="ane-tags">
-			<?php
-			$tag_list = get_the_tag_list( '<ul><li>', '</li><li>', '</li></ul>' );
-			if ( $tag_list ) {
-				echo wp_kses_post( $tag_list );
-			}
-			?>
-		</div>
-
-		<div class="ane-post-nav">
-			<?php echo wp_kses_post( ane_prev_next_post() ); ?>
-		</div>
+		<?php
+		get_template_part( 'tp/single', 'tags' );
+		get_template_part( 'tp/single', 'author', array( 'author_id' => (int) get_the_author_meta( 'ID' ) ) );
+		get_template_part( 'tp/single', 'nav' );
+		?>
 
 		<div class="ane-comment-form">
 			<?php echo wp_kses_post( ane_load_facebook_comment() ); ?>
