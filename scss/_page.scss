@@ -75,65 +75,6 @@
         }
     }
 }
-.ane-page-kontak {
-    .kontak-konten {
-        @include DisplayBlock;
-        margin-bottom: 31px;
-        @include boxshadow;
-        @include borderradius;
-        border-radius: 20px;
-        padding: 15px;
-        border-bottom: 2px solid var(--ane-warna-utama);
-        position: relative;
-        overflow: hidden;
-
-        &:before {
-            @include ane-glyph-mask(email);
-            color: rgba(var(--ane-warna-gelap-rgb),0.1);
-            font-style: normal;
-            font-size: 100px;
-            line-height: 1;
-            position: absolute;
-            left: 0;
-            top: -10px;
-            z-index: -1;
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-        }
-
-        .alamat {
-            @include DisplayBlock;
-
-            h3 {
-                font-size: 20px;
-                text-transform: uppercase;
-                margin-bottom: 0;
-            }
-            p {
-                font-size: 16px;
-                margin-bottom: 0;
-            }
-        }
-        .kontak{
-            @include DisplayBlock;
-            p {
-                font-size: 16px;
-                margin-bottom: 0;
-            }
-        }
-    }
-    .kontak-map {
-
-        .acf-map {
-            @include borderradius;
-            @include boxshadow;
-            border-bottom: 2px solid var(--ane-warna-utama);
-        }
-    }
-}
 .featured-image-caption {
     margin-top: 0;
     margin-bottom: 0;

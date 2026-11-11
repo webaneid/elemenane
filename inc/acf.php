@@ -145,7 +145,7 @@ function ane_load_gmap_script() {
 		null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		true
 	);
-	wp_enqueue_script( 'map', get_base_url_assets() . '/js/gmap.js', array( 'jquery', 'googlemap' ), '1.0.1', true );
+	wp_enqueue_script( 'map', get_base_url_assets() . '/js/gmap.js', array( 'jquery', 'googlemap' ), '1.1.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'ane_load_gmap_script' );
 

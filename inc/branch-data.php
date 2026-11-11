@@ -99,13 +99,15 @@ function elemenane_get_branch_data( $post_id = null ) {
 /**
  * Company contact details from the theme settings (ACF options): main phone, mobile numbers, WhatsApp, email, website.
  *
+ * @param bool $include_fax Also return fax numbers (contact page); branches never show the company fax.
  * @return array<int,array{type:string,label:string,text:string,href:string}>
  */
-function elemenane_get_company_contacts() {
+function elemenane_get_company_contacts( $include_fax = false ) {
 	$items   = array();
 	$seen    = array();
 	$phone   = trim( (string) get_field( 'ane_telepon', 'option' ) );
 	$mobiles = array();
+	$faxes   = array();
 	$email   = '';
 	$web     = '';
 
@@ -115,6 +117,10 @@ function elemenane_get_company_contacts() {
 			$mobile = trim( (string) get_sub_field( 'ane_handphone' ) );
 			if ( '' !== $mobile ) {
 				$mobiles[] = $mobile;
+			}
+			$fax = trim( (string) get_sub_field( 'ane_fax' ) );
+			if ( '' !== $fax ) {
+				$faxes[] = $fax;
 			}
 			if ( '' === $email ) {
 				$email = trim( (string) get_sub_field( 'ane_email' ) );
@@ -146,6 +152,20 @@ function elemenane_get_company_contacts() {
 			'text'  => $mobile,
 			'href'  => 'tel:' . preg_replace( '/[^0-9+]/', '', $mobile ),
 		);
+	}
+
+	if ( $include_fax ) {
+		foreach ( array_unique( $faxes ) as $fax ) {
+			if ( isset( $seen[ preg_replace( '/\D/', '', $fax ) ] ) ) {
+				continue;
+			}
+			$items[] = array(
+				'type'  => 'fax',
+				'label' => __( 'Fax', 'elemenane' ),
+				'text'  => $fax,
+				'href'  => '',
+			);
+		}
 	}
 
 	// WhatsApp: dedicated number, then the first customer-care number, then the WhatsApp social link.
