@@ -58,9 +58,12 @@
     margin-bottom: 30px;
     min-width: 0;
 
+    // Plain block, not a wrapping flex column: a wrapping column sizes its items to their widest child
+    // (e.g. a 600px image) instead of the container, which pushed .ane-content past the screen on phones.
     .entry-content {
-        @include FlexColumn;
+        display: block;
         width: 100%;
+        min-width: 0;
     }
 }
 .ane-konten-default {

@@ -1,113 +1,324 @@
+// Article body (.ane-content) and WordPress block output inside it.
+// Rules: the container never exceeds its parent (min-width: 0, media max-width: 100%), blocks bleed to the screen
+// edge on phones via one mixin, and nothing relies on fixed pixel widths or background-attachment: fixed.
+
+$ane-content-gutter: 15px; // Must match the container side padding at <= 992px (see container-box in _mixins.scss).
+
+// Phones: let a block span the full screen width.
+@mixin ane-bleed {
+    @include mobile {
+        width: calc(100% + #{$ane-content-gutter * 2});
+        max-width: none;
+        margin-inline: -#{$ane-content-gutter};
+    }
+}
+
 .ane-content {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    line-height: 1.75;
+    overflow-wrap: break-word;
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    // Anything embedded can shrink, never push the page wider than the screen.
+    img,
+    video,
+    iframe,
+    embed,
+    object,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+    img,
+    video {
+        height: auto;
+    }
+    iframe {
+        width: 100%;
+    }
+
+    // ---- Text flow --------------------------------------------------------------------------
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 1.6em 0 0.6em;
+        line-height: 1.25;
+        scroll-margin-top: calc(var(--ane-header-h, 72px) + 16px);
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
     h2 {
-        margin: 10px 0 15px 0;
+        font-size: clamp(22px, 4vw, 30px);
     }
     h3 {
-        margin: 10px 0 15px 0;
+        font-size: clamp(20px, 3.4vw, 24px);
     }
     h4 {
-        margin: 10px 0 15px 0;
+        font-size: clamp(18px, 3vw, 20px);
     }
-    h5 {
-        margin: 10px 0 15px 0;
+    h5,
+    h6 {
+        font-size: 16px;
+    }
+
+    p,
+    ul,
+    ol,
+    dl,
+    pre,
+    figure,
+    blockquote,
+    .wp-block-embed,
+    .wp-block-media-text,
+    .wp-block-columns,
+    .wp-block-group,
+    .wp-block-buttons,
+    .wp-block-details,
+    .wp-block-file {
+        margin: 0 0 1.4em;
     }
     p {
-        margin-bottom: 20px !important;
-        &:last-child {
-            margin-bottom: 0;
-        }
-        @include mobile {
-            margin-bottom: 20px !important;
+        // Beats the global `p` rules coming from the Elementor kit.
+        margin-bottom: 1.25em !important;
+    }
+    > :last-child,
+    > p:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    p a,
+    li a {
+        color: var(--ane-warna-utama);
+        text-decoration: underline !important;
+        text-decoration-color: rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.35);
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 3px;
+        transition: text-decoration-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: var(--ane-warna-alternatif);
+            text-decoration-color: currentColor;
         }
     }
+
+    hr,
+    .wp-block-separator {
+        height: 0;
+        margin: 2em auto;
+        border: 0;
+        border-top: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.14);
+    }
+    mark {
+        padding: 0 0.2em;
+        background: rgba(var(--ane-warna-alternatif-rgb, var(--ane-warna-gelap-rgb)), 0.35);
+        color: inherit;
+    }
+
+    // ---- Lists ------------------------------------------------------------------------------
     ul {
         padding: 0;
-        margin: 0;
-        margin-bottom: 30px;
+        list-style: none;
 
         li {
+            position: relative;
+            padding-left: 22px;
             color: var(--ane-warna-gelap);
             list-style: none;
-            position: relative;
-            padding-left: 20px;
 
             &:before {
                 position: absolute;
                 left: 0;
-                top: 8.5px;
-                bottom: auto;
+                top: 0.78em;
                 @include ane-glyph-mask(arrow-right);
                 font-size: 7px;
-                line-height: 24px;
                 color: var(--ane-warna-utama);
-                font-weight: 400;
             }
             ul {
-                margin: 10px 0;
+                margin: 0.4em 0;
 
-                li {
-                    margin-left: 0;
-                    &:before {
-                        @include ane-glyph-mask-image(chevron-right-box);
-                        color: var(--ane-warna-alternatif);
-                    }
-                    ul {
-                        margin: 10px 0;
-
-                        li {
-                            margin-left: 0;
-                            &:before {
-                                color: var(--ane-warna-gelap);
-                            }
-                        }
-                    }
+                li:before {
+                    @include ane-glyph-mask-image(chevron-right-box);
+                    color: var(--ane-warna-alternatif);
+                }
+                ul li:before {
+                    color: var(--ane-warna-gelap);
                 }
             }
         }
     }
-    .ane-iklan {
-        .isi {
-            width: 50%;
-            margin: auto;
-
-            @include mobile {
-                width: 70%;
-            }
-        }
-    }
     ol {
-        padding: 0;
-        margin: 0;
-        margin-left: 25px;
-        margin-bottom: 30px;
+        margin-left: 0;
+        padding-left: 1.5em;
 
         li {
+            padding-left: 6px;
             color: var(--ane-warna-gelap);
             list-style-type: decimal;
-            padding-left: 15px;
 
-
+            &::marker {
+                color: var(--ane-warna-utama);
+                font-weight: 800;
+            }
             ol {
-                margin: 15px 0;
-                padding-left: 25px;
+                margin: 0.4em 0;
+
                 li {
-                    color: var(--ane-warna-gelap);
-                   list-style-type: lower-alpha;
-               }
+                    list-style-type: lower-alpha;
+                }
             }
         }
     }
-    .wp-block-cover {
-        margin-bottom: 30px;
+    li + li {
+        margin-top: 0.35em;
+    }
+    // Block lists keep their own look: reset the bullets where the block brings its own markup.
+    ul.wp-block-latest-posts li:before,
+    ul.wp-block-gallery li:before,
+    ul.blocks-gallery-grid li:before {
+        display: none;
+    }
+
+    // ---- Quotes and code --------------------------------------------------------------------
+    blockquote,
+    .wp-block-quote,
+    .wp-block-pullquote {
+        position: relative;
+        padding: 22px 24px 22px 28px;
+        overflow: hidden;
+        border: 0;
+        border-left: 4px solid var(--ane-warna-utama);
+        border-radius: 0 14px 14px 0;
+        background: rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.06);
+
+        &:before {
+            position: absolute;
+            right: 16px;
+            top: 12px;
+            @include ane-glyph-mask(quote-left);
+            font-size: 44px;
+            color: rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.14);
+            pointer-events: none;
+        }
+        p {
+            margin-bottom: 0.6em !important;
+            font-size: clamp(17px, 2.6vw, 20px);
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.55;
+        }
+        cite,
+        .wp-block-quote__citation {
+            display: block;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.65);
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+
+            &:before {
+                content: '\2014\00a0';
+            }
+        }
+    }
+    pre {
+        max-width: 100%;
+        padding: 18px 20px;
+        overflow-x: auto;
+        border-radius: 12px;
+        background: #1f2430;
+        color: #e8ecf3;
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-overflow-scrolling: touch;
+    }
+    code,
+    kbd {
+        padding: 0.12em 0.4em;
+        border-radius: 6px;
+        background: rgba(var(--ane-warna-gelap-rgb), 0.08);
+        font-size: 0.9em;
+        overflow-wrap: anywhere;
+    }
+    pre code {
+        padding: 0;
+        background: transparent;
+        color: inherit;
+        overflow-wrap: normal;
+    }
+
+    // ---- Media ------------------------------------------------------------------------------
+    .wp-block-image,
+    figure.aligncenter,
+    figure.alignnone {
+        display: block;
+        width: 100%;
+        position: relative;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+    }
+    // Resized / aligned images keep their own size.
+    .wp-block-image.is-resized img,
+    .wp-block-image.alignleft img,
+    .wp-block-image.alignright img {
+        width: auto;
+    }
+    .alignleft,
+    .alignright {
+        max-width: 50%;
+        margin-bottom: 1em;
+    }
+    .alignleft {
+        float: left;
+        margin-right: 1.5em;
+    }
+    .alignright {
+        float: right;
+        margin-left: 1.5em;
+    }
+    .aligncenter {
+        margin-inline: auto;
+    }
+    figcaption,
+    .wp-element-caption {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 10px 4px 0;
+        color: rgba(var(--ane-warna-gelap-rgb), 0.6);
+        font-size: 13px;
+        font-style: italic;
+        line-height: 1.4;
+        text-align: left;
+    }
+
+    .wp-block-cover,
+    .wp-block-cover-image {
+        min-height: 320px;
+        margin-bottom: 1.6em;
+        border-radius: 14px;
+        overflow: hidden;
         text-align: center;
-        height: 400px;
-        background-attachment: fixed;
 
         h2 {
-            margin-left: 0;
-            font-size: 1.5rem;
+            margin: 0;
+            font-size: clamp(22px, 5vw, 30px);
             font-weight: 800;
-            margin-bottom: 0;
 
             &:before {
                 content: '';
@@ -116,190 +327,183 @@
         }
     }
 
-    .wp-block-cover-image {
-        height: 400px;
-        background-attachment: fixed;
-    }
-
+    // Gallery: legacy grid markup and the current nested-figure markup.
     .wp-block-gallery {
-        margin-bottom: 30px;
-        
-        ul.blocks-gallery-grid {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            li.blocks-gallery-item {
-                padding: 0;
-                margin: 0;
-                &:before {
-                    content: '';
-                }
-            }
+        margin-bottom: 1.6em;
 
+        figure {
+            position: relative;
+            margin: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        img {
+            border-radius: 10px;
+        }
+        ul.blocks-gallery-grid,
+        .blocks-gallery-grid {
+            margin: 0;
+            padding: 0;
         }
         .blocks-gallery-item {
-            figure {
-                border-radius: 6px;
-                overflow: hidden;
-                position: relative;
-                margin: 2px;
+            padding: 0;
 
-                img {
-                    border-radius: 4px;
-                }
-                figcaption {
-                    line-height: 1.2;
-                    padding: 20px 8px 8px 8px;
-                    font-size: 13px;
-                    background: linear-gradient(0deg,rgba(var(--ane-warna-gelap-rgb),.8),rgba(var(--ane-warna-text-rgb),.3) 70%,transparent);
-                }
+            figure {
+                margin: 2px;
             }
         }
-    }
-    .wp-block-image {
-        width: 100%;
-        display: block;
-        position: relative;
-        margin-bottom: 30px;
-
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 4px;
-            position: relative;
+        figcaption {
+            padding: 24px 10px 10px;
+            background: linear-gradient(0deg, rgba(var(--ane-warna-gelap-rgb), 0.82), rgba(var(--ane-warna-gelap-rgb), 0.3) 70%, transparent);
+            color: var(--ane-warna-putih);
+            font-size: 13px;
+            font-style: normal;
+            line-height: 1.3;
         }
     }
-    figcaption {
-        margin-top: 0;
-        margin-bottom: 0;
-        display: block;
-        padding: 10px;
-        padding-bottom: 0;
-        font-size: 13px;
-        line-height: 1.2;
-        text-align: center;
-        font-style: italic;
-        width: 100%;
-    }
 
+    // Embeds: video providers get a 16:9 box; social posts and WordPress embeds size themselves.
     .wp-block-embed {
-        width: 100%;
         display: block;
-        margin: 1rem 0;
-        margin-bottom: 30px;
+        width: 100%;
+        max-width: 100%;
 
         .wp-block-embed__wrapper {
             position: relative;
-            padding-top: 0;
-            height: 0 !important;
-            min-height: 0;
-            padding-bottom: 116%;
+            max-width: 100%;
+            margin: 0;
+        }
+        iframe {
+            display: block;
+            max-width: 100%;
+        }
+        &.is-type-video .wp-block-embed__wrapper,
+        &.wp-embed-aspect-16-9 .wp-block-embed__wrapper {
+            aspect-ratio: 16 / 9;
             overflow: hidden;
-            margin-bottom: 0;
+            border-radius: 12px;
 
             iframe {
-                z-index: 0;
                 position: absolute;
-                top: 0;
-                left: 0;
+                inset: 0;
                 width: 100%;
                 height: 100%;
             }
         }
-    }
-    .wp-block-embed-wordpress {
-        .wp-block-embed__wrapper {
-            padding-bottom: 92%;
+        &.wp-embed-aspect-4-3 .wp-block-embed__wrapper {
+            aspect-ratio: 4 / 3;
         }
-
-        @include mobile {
-            .wp-block-embed__wrapper {
-                padding-bottom: 125%;
-            }
+        &.wp-embed-aspect-1-1 .wp-block-embed__wrapper {
+            aspect-ratio: 1 / 1;
         }
-    }
-    .wp-block-embed-twitter {
-
-        @include mobile {
-            .wp-block-embed__wrapper {
-                padding-bottom: 125%;
-            }
-        }
-    }
-    .wp-block-embed-instagram {
-        @include mobile {
-            .wp-block-embed__wrapper {
-                padding-bottom: 116%;
-            }
+        &.is-type-rich iframe,
+        &.wp-block-embed-wordpress iframe {
+            min-height: 200px;
         }
     }
     iframe.embed-facebook {
-        @include mobile  {
-            width: 100%;
-        }
-    }
-    .wp-block-embed-youtube {
-        .wp-block-embed__wrapper {
-            padding-bottom: 57%;
-        }
-    }
-
-    figure {
-        margin-bottom: 30px;
-    }
-    ul.wp-block-latest-posts {
-        display: block;
         width: 100%;
-        height: auto;
-        margin-bottom: 30px;
-        box-shadow: 0 0 20px 0 rgba(var(--ane-warna-gelap-rgb), 0.1);
-        padding: 15px;
-        border-radius: 4px;
-        position: relative;
-        overflow: hidden;
-        width: 50%;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        float: left;
+    }
 
-        &:after {
-            @include ane-glyph-mask(dokumen);
-            color: rgba(var(--ane-warna-gelap-rgb), 0.1);
-            font-style: normal;
-            font-size: 100px;
-            line-height: 1;
-            position: absolute;
-            left: 0;
-            top: -10px;
-            z-index: -1;
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
+    // ---- Layout blocks ----------------------------------------------------------------------
+    .wp-block-group {
+        width: 100%;
+    }
+    .wp-block-columns {
+        gap: 1.5em;
+
+        .wp-block-column > :last-child {
+            margin-bottom: 0 !important;
         }
+    }
+    .wp-block-media-text {
+        width: 100%;
+    }
+    .has-large-font-size {
+        font-size: clamp(20px, 3.6vw, 24px);
+        line-height: 1.3;
+        margin-bottom: 0;
+    }
+
+    // Buttons: same pill as the rest of the theme.
+    .wp-block-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .wp-block-button__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 0 26px;
+        border: 2px solid var(--ane-warna-utama);
+        border-radius: 999px;
+        background: var(--ane-warna-utama);
+        color: var(--ane-warna-putih);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none !important;
+        transition: filter 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: var(--ane-warna-putih);
+            filter: brightness(1.1);
+        }
+        &:active {
+            transform: scale(0.97);
+        }
+    }
+    .is-style-outline > .wp-block-button__link {
+        background: transparent;
+        color: var(--ane-warna-utama);
+
+        &:hover {
+            background: var(--ane-warna-utama);
+            color: var(--ane-warna-putih);
+        }
+    }
+    .wp-block-file {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 16px;
+    }
+    .wp-block-details summary {
+        cursor: pointer;
+        font-weight: 700;
+    }
+
+    // Latest posts block inside an article: a plain bordered card, full width.
+    ul.wp-block-latest-posts {
+        position: relative;
+        width: 100%;
+        margin: 0 0 1.6em;
+        padding: 18px 20px;
+        overflow: hidden;
+        border: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.1);
+        border-radius: 14px;
+        background: var(--ane-warna-putih);
+        box-shadow: 0 8px 24px rgba(var(--ane-warna-gelap-rgb), 0.06);
 
         &:before {
             content: 'Konten Terbaru';
-            margin-bottom: 25px;
-            font-size: 20px;
-            font-weight: 600;
-            font-family: "Poppins", sans-serif;
+            display: block;
+            margin-bottom: 8px;
             color: var(--ane-warna-gelap);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
         li {
-            margin-left: 0;
-            padding-left: 0;
-            padding-bottom: 7px;
-            padding-top: 7px;
+            padding: 10px 0;
             border-bottom: 1px solid;
             @include BorderColor;
-            line-height: 1.2;
-
-            &:before {
-                content: '';
-            }
+            line-height: 1.35;
 
             &:last-child {
                 border-bottom: 0;
@@ -307,6 +511,7 @@
             }
             a {
                 color: var(--ane-warna-text);
+                text-decoration: none !important;
 
                 &:hover {
                     color: var(--ane-warna-utama);
@@ -315,175 +520,96 @@
         }
     }
 
-    blockquote {
-        margin: 20px 0;
-        padding: 30px;
-        position: relative;
-        width: 100%;
-        margin-bottom: 30px;
-        box-shadow: 0 0 30px rgba(var(--ane-warna-gelap-rgb),0.1);
-        border-radius: 10px;
-        overflow: hidden;
-        border-left: 4px solid var(--ane-warna-utama);
+    .ane-iklan .isi {
+        width: 50%;
+        margin: auto;
 
-        p {
-            font-weight: 400;
-            font-style: italic;
-            font-size: 20px;
-            line-height: 1.4;
-        }
-        &:before {
-            @include ane-glyph-mask(quote-left);
-            color: rgba(var(--ane-warna-gelap-rgb),0.1);
-            font-style: normal;
-            font-size: 100px;
-            line-height: 1;
-            position: absolute;
-            left: 0;
-            top: -10px;
-            z-index: -1;
-            -webkit-transform: rotate(-45deg);
-            -moz-transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-        }
-        cite {
-            float: center;
-            font-size: 14px;
-            font-weight: 700;
-            &:before {
-                content: "~";
-                padding-right: 5px;
-            }
+        @include mobile {
+            width: 70%;
         }
     }
 
-    .wp-block-media-text {
-        width: 100%;
-        margin-bottom: 30px;
-    }
-
-    .has-large-font-size {
-        font-size: 23px;
-        line-height: 1.25;
-        margin-bottom: 0;
-    }
-    .wp-block-group {
-        width: 100%;
-    }
-    .wp-block-columns {
-        margin-bottom: 30px;
-        .wp-block-column {
-            margin-bottom: 30px;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-            p {
-                &:last-child {
-                    margin-bottom: 0;
-                }
-            }
-        }
-    }
-
-
-
+    // ---- Phones ----------------------------------------------------------------------------
     @include mobile {
+        // Floats make no sense on a 375px screen.
+        .alignleft,
+        .alignright {
+            float: none;
+            max-width: 100%;
+            margin-inline: 0;
+        }
+        // Edge-to-edge media: direct children only, so nested images (columns, galleries) stay inside.
+        > .wp-block-image:not(.alignleft):not(.alignright):not(.is-resized),
+        > .wp-block-cover,
+        > .wp-block-cover-image,
+        > .wp-block-gallery,
+        > .wp-block-embed.is-type-video {
+            @include ane-bleed;
 
-        .wp-block-image {
-            max-width: none;
-            width: auto;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
-
-            img {
+            img,
+            .wp-block-embed__wrapper {
                 border-radius: 0;
             }
         }
-        ul.wp-block-latest-posts {
-            width: 100%;
-            float: none;
+        > .wp-block-cover,
+        > .wp-block-cover-image {
+            border-radius: 0;
         }
-        .wp-block-cover {
-            max-width: none;
-            width: auto;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
+        figcaption,
+        .wp-element-caption {
+            padding-inline: $ane-content-gutter;
         }
-        .wp-block-group {
-            max-width: 100%;
-            margin-right: 0;
+        blockquote,
+        .wp-block-quote {
+            padding: 18px 18px 18px 20px;
         }
-        .wp-block-gallery {
-            @include DisplayLebar;
-
-            .blocks-gallery-item {
-                figure {
-                    border-radius: 4px;
-                }
-            }
-        }
-
     }
-
 }
-.wp-block-table {
-    border-collapse: collapse;
-    font-size: 16px;
-    line-height: 1.3;
-    width: 100%;
-    margin-bottom: 30px;
-    padding: 10px 0;
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
 
-    thead {
-        tr {
-            border-bottom: 2px solid var(--ane-warna-utama);
-            margin-bottom: 2px;
-            font-weight: 600;
-            color: var(--ane-warna-gelap);
-        }
+// Tables (block and classic editor): scroll sideways instead of widening the page.
+.wp-block-table,
+.ane-content > table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1.6em;
+    padding: 0;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+    line-height: 1.4;
+    -webkit-overflow-scrolling: touch;
+
+    table {
+        width: 100%;
+        min-width: 480px;
+        border-collapse: collapse;
+    }
+    thead tr {
+        border-bottom: 2px solid var(--ane-warna-utama);
+        color: var(--ane-warna-gelap);
+        font-weight: 700;
     }
     th,
     td {
-        padding: 12px 15px;
+        padding: 12px 14px;
+        text-align: left;
+        vertical-align: top;
     }
-    tbody {
-        tr {
-            border-bottom: 1px solid;
-            @include BorderColor;
+    tbody tr {
+        border-bottom: 1px solid;
+        @include BorderColor;
 
-            &:nth-of-type(even) {
-                background-color: rgba(var(--ane-warna-gelap-rgb),0.08);
-            }
-
-            &:last-child {
-                border-bottom: 2px solid var(--ane-warna-utama);
-                margin-bottom: 2px;
-            }
-
-            .active-row {
-                font-weight: bold;
-                color: var(--ane-warna-utama);
-            }
+        &:nth-of-type(even) {
+            background-color: rgba(var(--ane-warna-gelap-rgb), 0.04);
+        }
+        &:last-child {
+            border-bottom: 2px solid var(--ane-warna-utama);
         }
     }
     figcaption {
-        font-size: 13px;
         padding: 10px 0;
+        font-size: 13px;
         font-style: italic;
         text-align: center;
     }
