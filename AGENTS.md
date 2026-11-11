@@ -53,12 +53,15 @@ Tema ini sudah berjalan di situs produksi klien. **DILARANG KERAS** mengubah:
 
 ### 2.4. Arsitektur SCSS & Split CSS Per Konteks Halaman
 - **Sumber Styling**: Seluruh perubahan CSS wajib ditulis di dalam folder `scss/` (`_tokens.scss`, `_global.scss`, `_header.scss`, `_post.scss`, `_product.scss`, `_branch.scss`, `_landingpage.scss`, `_linktree.scss`, `_admin-*.scss`, dll.).
-- **5 Entrypoint SCSS → CSS**:
-  1. `scss/main.scss` → `css/main.css` & `css/main.min.css` (dimuat global di frontend)
+- **8 Entrypoint SCSS → CSS** (semua `.min.css` dikompilasi `--no-source-map`; file peta tidak ikut paket rilis):
+  1. `scss/main.scss` → `css/main.css` & `css/main.min.css` (dimuat di frontend, **kecuali** halaman Elementor Canvas; filter `elemenane_load_main_css`)
   2. `scss/catalog.scss` → `css/catalog.css` & `css/catalog.min.css` (dimuat kondisional pada halaman CPT `product` & taxonomy `product_cat`/`product_tag`)
   3. `scss/landing.scss` → `css/landing.css` & `css/landing.min.css` (dimuat kondisional pada `page-home.php` / front page)
   4. `scss/linktree-page.scss` → `css/linktree-page.css` & `css/linktree-page.min.css` (dimuat kondisional pada `page-linktree.php`)
   5. `scss/admin.scss` → `css/admin.css` & `css/admin.min.css` (dimuat di wp-admin & halaman login)
+  6. `scss/content.scss` → `css/content.min.css` (isi artikel `.ane-content`; halaman singular non-Elementor; filter `elemenane_load_content_css`)
+  7. `scss/widgets.scss` → `css/widgets.min.css` (widget sidebar; semua halaman kecuali Canvas, 404, kontak, link tree, produk, cabang; filter `elemenane_load_widgets_css`)
+  8. `scss/contact-page.scss` → `css/contact-page.min.css` (hanya `page-kontak.php`)
 - **Kompilasi Wajib**: Setiap kali mengubah file `.scss`, jalankan kompilasi SCSS ke `.css` dan `.min.css` serta verifikasi dengan `composer css:check`.
 - **Reuse Class & CSS Variables**: Gunakan variabel CSS global (`--e-global-color-primary`, `--e-global-color-secondary`, `--e-global-color-text`, `--e-global-color-accent`, `--ane-color-*`) yang disinkronkan dengan Elementor Kit.
 

@@ -48,3 +48,11 @@ Saat WooCommerce diaktifkan ia menulis ulang aturan permalink dan memindahkan ar
 
 ## Nama kelas BEM bentrok antar halaman di `catalog.css`
 `catalog.css` memuat gaya produk dan cabang sekaligus. Dialog cabang di halaman produk memakai `.ane-branch-modal` / `.ane-branch-list` (non-BEM), sehingga dialog arsip cabang dengan nama sama tertimpa (`display: none`, `display: flex`). Arsip cabang kini memakai `.ane-branch-dialog` dan `.ane-branch-grid`. Pakai awalan unik per komponen.
+
+## Performa: ukur dulu, lalu buang
+- Audit CSS terpakai: muat halaman-halaman nyata di iframe, ambil `main.css`, cocokkan tiap selector (tanpa pseudo) dengan `querySelector`. Aturan yang tidak cocok di semua halaman dipilah: **mati** (komponen lama yang templatenya sudah tidak ada) dihapus, **digerakkan data** (blok editor, widget, status `.is-open`) dipertahankan.
+- Pecah CSS per konteks lebih efektif daripada menghapus aturan: `content`, `widgets`, `contact-page` hanya dimuat di halaman yang memakainya (`main.min.css` 143 KB -> 84 KB, gzip 22,9 -> 13,9 KB). Selalu uji ulang: bandingkan selector bundel yang *tidak dimuat* dengan DOM tiap halaman (tidak boleh ada yang cocok).
+- Stylesheet yang menumpang `array( 'main-css' )` sebagai dependensi **tidak dicetak** bila `main-css` tidak di-enqueue (mis. halaman Canvas).
+- Komentar `/*# sourceMappingURL=... */` di `.min.css` menyebabkan 404 di konsol bila `.map` tidak dirilis: kompilasi `.min.css` dengan `--no-source-map`.
+- `preconnect` ke host yang tidak dipakai (Google Fonts saat Elementor menyajikan font lokal) dinilai PageSpeed sebagai "unused preconnect": cetak hanya saat stylesheet fonts benar-benar di-enqueue.
+- Hindari pustaka pihak ketiga (Magnific CDN) untuk fitur sederhana: `<dialog>` native + ~3 KB JS cukup, dan menghilangkan 2 request lintas-origin.

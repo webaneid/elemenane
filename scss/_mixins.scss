@@ -159,3 +159,138 @@ $ane-container-max: 1140px;
         background: linear-gradient(90deg, rgba(var(--ane-warna-gelap-rgb), 0.18), rgba(var(--ane-warna-gelap-rgb), 0));
     }
 }
+
+
+// Search / widget building blocks (shared by _searchform.scss and _sidebar.scss).
+
+// Rounded "pill" field: used by searchform.php and the Search block so both look identical.
+@mixin ane-pill-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 5px;
+    border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.16);
+    border-radius: 999px;
+    background: var(--ane-warna-putih);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        border-color: rgba(var(--ane-warna-gelap-rgb), 0.3);
+    }
+    &:focus-within {
+        border-color: var(--ane-warna-utama);
+        box-shadow: 0 0 0 4px rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.13);
+    }
+}
+@mixin ane-pill-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 42px;
+    padding: 0 14px;
+    border: 0 !important;
+    border-radius: 999px;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ane-warna-text);
+    font-size: 15px;
+    outline: none;
+
+    &::placeholder {
+        color: rgba(var(--ane-warna-gelap-rgb), 0.45);
+    }
+    &::-webkit-search-cancel-button {
+        -webkit-appearance: none;
+    }
+}
+@mixin ane-pill-button {
+    flex: none;
+    height: 42px;
+    margin: 0;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--ane-warna-utama);
+    color: var(--ane-warna-putih);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        filter: brightness(1.12);
+    }
+    &:active {
+        transform: scale(0.97);
+    }
+    &:focus-visible {
+        outline: 2px solid var(--ane-warna-alternatif);
+        outline-offset: 2px;
+    }
+}
+
+// Rows with an accent chevron, hairline separators and a right-aligned count.
+@mixin ane-link-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 8px;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+        color: rgba(var(--ane-warna-gelap-rgb), 0.55);
+        font-size: 12px;
+        list-style: none;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+        > a {
+            position: relative;
+            flex: 1 1 0;
+            min-width: 0;
+            padding: 10px 0 10px 18px;
+            color: var(--ane-warna-text);
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.4;
+            transition: color 0.2s ease, padding-left 0.2s ease;
+
+            &:before {
+                @include ane-glyph-mask(arrow-right);
+                position: absolute;
+                left: 0;
+                top: 50%;
+                margin-top: -4px;
+                font-size: 8px;
+                color: var(--ane-warna-alternatif);
+                transition: transform 0.2s ease;
+            }
+            &:hover {
+                color: var(--ane-warna-utama);
+                padding-left: 22px;
+            }
+        }
+        // Nested levels.
+        ul {
+            flex: 0 0 100%;
+            margin: 0 0 6px;
+            padding-left: 14px;
+            border-left: 2px solid rgba(var(--ane-warna-gelap-rgb), 0.08);
+
+            > li > a {
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+}

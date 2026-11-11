@@ -31,33 +31,74 @@ function ane_get_asset_url( $path ) {
 	return esc_url( trailingslashit( get_base_url_assets() ) . ltrim( $path, '/' ) );
 }
 
+/**
+ * Whether the request is an Elementor "Canvas" page: Elementor prints only its own content (no theme header,
+ * footer or floating chat), so the theme's CSS and front-end scripts have nothing to act on.
+ *
+ * @since 1.2.1
+ *
+ * @return bool
+ */
+function elemenane_is_canvas_page() {
+	return is_page_template( 'elementor_canvas' );
+}
+
+/**
+ * Whether the theme stylesheet (main.min.css) is needed on this request.
+ *
+ * Pages built with Elementor's "Canvas" template have no theme header / footer / templates, so they render nothing
+ * from main.min.css; skipping it removes a render-blocking request. Filterable.
+ *
+ * @since 1.2.1
+ *
+ * @return bool
+ */
+function elemenane_load_main_css() {
+	$load = ! elemenane_is_canvas_page();
+
+	/**
+	 * Filter whether main.min.css loads (e.g. force it on a Canvas page that uses theme components).
+	 *
+	 * @param bool $load Default: false only on Elementor Canvas pages.
+	 */
+	return (bool) apply_filters( 'elemenane_load_main_css', $load );
+}
+
+/**
+ * Whether the current singular post / page was built with Elementor (the theme's own post templates are not used).
+ *
+ * @since 1.2.1
+ *
+ * @return bool
+ */
+function elemenane_is_elementor_built() {
+	return is_singular() && 'builder' === get_post_meta( (int) get_queried_object_id(), '_elementor_edit_mode', true );
+}
+
 function ane_enqueue_scripts() {
-	wp_enqueue_style( 'main-css', get_base_url_assets() . '/css/main.min.css', array(), '1.4.0' );
+	if ( elemenane_load_main_css() ) {
+		wp_enqueue_style( 'main-css', get_base_url_assets() . '/css/main.min.css', array(), '1.4.0' );
+	}
 	ane_enqueue_page_styles();
 
 	// WordPress's bundled jQuery (same-origin, kept up to date by core). The
 	// `jquery` handle normally adds jQuery Migrate; the theme never shipped it on
 	// the front-end, so point `jquery` at jquery-core only. It is not enqueued
-	// here: it loads only when a script that needs it (carousel, lightbox, maps,
-	// product/branch pages, Elementor, plugins) declares it as a dependency.
+	// here: it loads only when a script that needs it (maps, product / branch
+	// pages, Elementor, plugins) declares it as a dependency.
 	wp_deregister_script( 'jquery' );
 	wp_register_script( 'jquery', false, array( 'jquery-core' ), null );
 
-	// Carousel and lightbox are only registered here; pages that use them load
-	// them via ane_enqueue_carousel() / ane_enqueue_lightbox().
-	wp_register_style( 'magnific-popup', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css', array(), null );
-	wp_register_script( 'magnific', 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js', array( 'jquery' ), null, true );
-	wp_register_script( 'ane-lightbox-init', get_base_url_assets() . '/js/lightbox-init.js', array( 'magnific' ), '1.0.0', true );
-	wp_register_script( 'OwlCarousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js', array( 'jquery' ), null, true );
-	wp_register_script( 'ane-carousel-init', get_base_url_assets() . '/js/carousel-init.js', array( 'OwlCarousel' ), '1.0.2', true );
+	// Lightbox (vanilla, no library): registered here, enqueued by ane_enqueue_lightbox() on pages that use it.
+	wp_register_script( 'ane-lightbox', get_base_url_assets() . '/js/lightbox.js', array(), '1.0.0', true );
 	wp_localize_script(
-		'ane-carousel-init',
-		'elemenaneCarousel',
+		'ane-lightbox',
+		'elemenaneLightbox',
 		array(
-			'prev' => __( 'Previous slide', 'elemenane' ),
-			'next' => __( 'Next slide', 'elemenane' ),
-			/* translators: %d: slide number */
-			'goto' => __( 'Go to slide %d', 'elemenane' ),
+			'label' => __( 'Image viewer', 'elemenane' ),
+			'close' => __( 'Close', 'elemenane' ),
+			'prev'  => __( 'Previous', 'elemenane' ),
+			'next'  => __( 'Next', 'elemenane' ),
 		)
 	);
 
@@ -78,6 +119,11 @@ function ane_enqueue_scripts() {
 		);
 	}
 
+	// Elementor Canvas pages render none of the theme's header / footer / chat: no theme scripts there.
+	if ( elemenane_is_canvas_page() ) {
+		return;
+	}
+
 	// Header: drawer, dropdowns, search dialog, sticky behaviour (vanilla JS).
 	wp_enqueue_script( 'ane-header', get_base_url_assets() . '/js/header.js', array(), '1.0.0', true );
 	wp_localize_script(
@@ -88,8 +134,8 @@ function ane_enqueue_scripts() {
 		)
 	);
 
-	// Share bar: copy link + native share sheet.
-	if ( is_singular() ) {
+	// Share bar: copy link + native share sheet (only where the theme's own templates print it).
+	if ( is_singular() && ! elemenane_is_elementor_built() ) {
 		wp_enqueue_script( 'ane-share', get_base_url_assets() . '/js/share.js', array(), '1.0.0', true );
 		wp_localize_script(
 			'ane-share',
@@ -166,7 +212,7 @@ function elemenane_defer_scripts() {
 		return;
 	}
 
-	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'ane-home', 'ane-share', 'ane-floating-chat', 'main-js' ) as $handle ) {
+	foreach ( array( 'jquery-core', 'ane-lightbox', 'ane-header', 'ane-home', 'ane-share', 'ane-floating-chat', 'main-js' ) as $handle ) {
 		if ( wp_script_is( $handle, 'registered' ) ) {
 			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}
@@ -184,7 +230,7 @@ add_action( 'wp_enqueue_scripts', 'elemenane_defer_scripts', 99 );
  * @return string
  */
 function elemenane_async_styles( $tag, $handle ) {
-	if ( is_admin() || ! in_array( $handle, array( 'ane-google-fonts', 'magnific-popup' ), true ) ) {
+	if ( is_admin() || ! in_array( $handle, array( 'ane-google-fonts' ), true ) ) {
 		return $tag;
 	}
 
@@ -273,6 +319,43 @@ function elemenane_preload_lcp_image() {
 add_action( 'wp_head', 'elemenane_preload_lcp_image', 1 );
 
 /**
+ * Article body styles (content.min.css: .ane-content blocks, tables): single posts, pages, products.
+ *
+ * @since 1.2.1
+ *
+ * @return bool
+ */
+function elemenane_needs_content_css() {
+	$need = is_singular() && ! elemenane_is_canvas_page() && ! elemenane_is_elementor_built() && ! is_page_template( 'page-linktree.php' );
+
+	/** This filter lets a child theme / snippet force the article styles on (e.g. content shortcodes in Elementor). */
+	return (bool) apply_filters( 'elemenane_load_content_css', $need );
+}
+
+/**
+ * Sidebar widget styles (widgets.min.css: .ane-widget, widget blocks, Webane Posts).
+ *
+ * Skipped where the theme never prints a widget area: Elementor Canvas, 404, contact, link tree, product and branch
+ * pages. Elementor-built pages keep it (the Sidebar widget prints the theme's widget markup).
+ *
+ * @since 1.2.1
+ *
+ * @return bool
+ */
+function elemenane_needs_widgets_css() {
+	$need = true;
+
+	if ( elemenane_is_canvas_page() || is_404() || is_page_template( array( 'page-kontak.php', 'page-linktree.php' ) ) ) {
+		$need = false;
+	} elseif ( is_singular( array( 'product', 'branch' ) ) || is_post_type_archive( array( 'product', 'branch' ) ) || is_tax( array( 'product_cat', 'product_tag' ) ) ) {
+		$need = false;
+	}
+
+	/** This filter lets a child theme / snippet force the widget styles on or off. */
+	return (bool) apply_filters( 'elemenane_load_widgets_css', $need );
+}
+
+/**
  * Page-specific stylesheets, split out of main.min.css so other pages don't
  * download them. Each is compiled from scss/{name}.scss.
  *
@@ -285,6 +368,9 @@ function ane_enqueue_page_styles() {
 			|| is_tax( array( 'product_cat', 'product_tag' ) ),
 		'landing'       => is_page_template( 'page-home.php' ),
 		'linktree-page' => is_page_template( 'page-linktree.php' ),
+		'contact-page'  => is_page_template( 'page-kontak.php' ),
+		'content'       => elemenane_needs_content_css(),
+		'widgets'       => elemenane_needs_widgets_css(),
 	);
 
 	/**
@@ -305,20 +391,11 @@ function ane_enqueue_page_styles() {
 }
 
 /**
- * Load Owl Carousel. Safe to call from templates: if called after the head,
- * WordPress prints the files in the footer.
- */
-function ane_enqueue_carousel() {
-	// Owl's structural CSS now lives in main.min.css (scss/_owlcarousel.scss).
-	wp_enqueue_script( 'ane-carousel-init' );
-}
-
-/**
- * Load Magnific Popup (image lightbox). Safe to call from templates.
+ * Load the lightbox (vanilla JS). Safe to call from templates: if called after the head, WordPress prints the
+ * script in the footer.
  */
 function ane_enqueue_lightbox() {
-	wp_enqueue_style( 'magnific-popup' );
-	wp_enqueue_script( 'ane-lightbox-init' );
+	wp_enqueue_script( 'ane-lightbox' );
 }
 
 /**
@@ -404,6 +481,11 @@ function ane_popup_gallery( $content ) {
 
 	global $post;
 	if ( ! $post instanceof WP_Post ) {
+		return $content;
+	}
+
+	// Elementor-built content has its own lightbox; do not touch it.
+	if ( 'builder' === get_post_meta( $post->ID, '_elementor_edit_mode', true ) ) {
 		return $content;
 	}
 

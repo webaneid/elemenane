@@ -1,0 +1,18 @@
+// Base rules for inline SVG icons (elemenane_icon()). Loaded by main.scss only.
+
+.ane-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    fill: currentColor;
+    vertical-align: -0.125em;
+}
+
+.ane-sosmed ul li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+

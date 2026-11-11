@@ -451,17 +451,10 @@ body.ane-modal-open {
 	overflow: hidden;
 }
 
-/* Branch Detail Popup (Magnific Popup override) */
-.ane-branch-detail-popup {
-	.mfp-content {
-		max-width: 500px;
-	}
-}
-
 .ane-branch-detail-content {
-	background: #fff;
+	background: var(--ane-warna-putih);
 	padding: 2rem;
-	border-radius: 16px;
+	border-radius: 20px;
 
 	@media (max-width: 768px) {
 		padding: 1.5rem;

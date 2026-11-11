@@ -456,27 +456,11 @@ function ane_enqueue_google_fonts() {
 	// Build the URL by hand: css2 uses a repeated `family` parameter.
 	$font_url = 'https://fonts.googleapis.com/css2?' . implode( '&', $families ) . '&display=swap';
 
+	// Warm up the font hosts only now that the theme really loads Google Fonts (Elementor usually serves them
+	// locally, in which case these hints would be unused and PageSpeed flags them).
+	echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+	echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+
 	wp_enqueue_style( 'ane-google-fonts', $font_url, array(), null );
 }
 add_action( 'wp_print_styles', 'ane_enqueue_google_fonts' );
-
-/**
- * Preconnect to the Google Fonts file host so font downloads start sooner.
- *
- * @param array  $urls          URLs to print for resource hints.
- * @param string $relation_type The relation type the URLs are printed for.
- * @return array
- */
-function ane_google_fonts_preconnect( $urls, $relation_type ) {
-	if ( 'preconnect' === $relation_type && ! is_admin() && ane_get_kit_google_fonts() ) {
-		// Keep to these two origins: PageSpeed warns above 4 preconnects.
-		$urls[] = 'https://fonts.googleapis.com';
-		$urls[] = array(
-			'href'        => 'https://fonts.gstatic.com',
-			'crossorigin' => 'anonymous',
-		);
-	}
-
-	return $urls;
-}
-add_filter( 'wp_resource_hints', 'ane_google_fonts_preconnect', 10, 2 );

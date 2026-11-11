@@ -1,7 +1,7 @@
 # Arsitektur SCSS & Split CSS — Elemen Ane (`elemenane`)
 
 ## 1. Filosofi Desain & Arsitektur Split CSS
-Berbeda dari tema sederhana yang menggabungkan seluruh CSS ke satu file raksasa, **Elemen Ane** melayani berbagai tipe halaman (Portal Berita, Landing Page Elementor, Katalog Produk E-Commerce, Direktori Cabang, dan Halaman Bio Linktree). Untuk menjaga ukuran CSS tetap ramping di setiap halaman (mendukung skor PageSpeed Mobile >= 90), `elemenane` menerapkan **arsitektur SCSS modular dengan 5 entrypoint terpisah**.
+Berbeda dari tema sederhana yang menggabungkan seluruh CSS ke satu file raksasa, **Elemen Ane** melayani berbagai tipe halaman (Portal Berita, Landing Page Elementor, Katalog Produk E-Commerce, Direktori Cabang, dan Halaman Bio Linktree). Untuk menjaga ukuran CSS tetap ramping di setiap halaman (mendukung skor PageSpeed Mobile >= 90), `elemenane` menerapkan **arsitektur SCSS modular dengan 8 entrypoint terpisah**.
 
 ---
 
@@ -9,10 +9,13 @@ Berbeda dari tema sederhana yang menggabungkan seluruh CSS ke satu file raksasa,
 
 | Entrypoint SCSS | Output CSS Produksi | Kondisi Pemuatan (Enqueue) |
 | :--- | :--- | :--- |
-| `scss/main.scss` | `css/main.min.css` | Dimuat secara global di seluruh halaman frontend (`inc/elemenane.php`) |
+| `scss/main.scss` | `css/main.min.css` | Dimuat di frontend kecuali halaman Elementor Canvas (`inc/elemenane.php`, filter `elemenane_load_main_css`) |
 | `scss/catalog.scss` | `css/catalog.min.css` | Dimuat hanya pada halaman CPT `product`, `archive-product.php`, `single-product.php`, dan taxonomy `product_cat`/`product_tag` |
 | `scss/landing.scss` | `css/landing.min.css` | Dimuat hanya pada template `page-home.php` / halaman beranda |
 | `scss/linktree-page.scss` | `css/linktree-page.min.css` | Dimuat hanya pada template `page-linktree.php` (`inc/linktree.php`) |
+| `scss/content.scss` | `css/content.min.css` | Isi artikel (`.ane-content`, tabel, blok editor): halaman singular bukan buatan Elementor |
+| `scss/widgets.scss` | `css/widgets.min.css` | Widget sidebar (`.ane-widget`): semua halaman kecuali Canvas, 404, kontak, link tree, produk, cabang |
+| `scss/contact-page.scss` | `css/contact-page.min.css` | Hanya template `page-kontak.php` |
 | `scss/admin.scss` | `css/admin.min.css` | Dimuat hanya di area `wp-admin` dan `wp-login.php` (`inc/admin.php`) |
 
 ---
@@ -22,11 +25,10 @@ Berbeda dari tema sederhana yang menggabungkan seluruh CSS ke satu file raksasa,
   - `_tokens.scss` — Token warna, tipografi, border-radius, dan jembatan ke variabel Elementor (`--e-global-color-*`).
   - `_mixins.scss` — Mixin media query responsif, flexbox, dan transisi.
   - `_resets.scss` & `_global.scss` — Reset CSS dasar, tipografi body, dan utilitas layout.
-  - `_kolom.scss` — Sistem grid/kolom ringan (`.ane-col-*`, `.row`).
   - `_button.scss` & `_pagination.scss` — Komponen tombol dan navigasi halaman.
 - **Layout & Berita**:
   - `_header.scss`, `_footer.scss`, `_sidebar.scss`, `_page.scss`
-  - `_anecontent.scss`, `_post.scss`, `_arsip.scss`, `_banner.scss`, `_owlcarousel.scss`, `_bottomchat.scss`
+  - `_anecontent.scss` (bundle `content`), `_post.scss`, `_arsip.scss`, `_banner.scss`, `_bottomchat.scss`, `_lightbox.scss`, `_searchform.scss`, `_icon-base.scss`
 - **Modul Spesifik**:
   - `_product.scss` (diimpor oleh `catalog.scss`)
   - `_branch.scss` (diimpor oleh `main.scss`)

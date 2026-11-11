@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'ane-konten-lis ane-kgv' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'ane-konten-lis' ); ?>>
 	<header class="entry-header">
 		<?php if ( has_post_thumbnail() ) : ?>
 			<a href="<?php echo esc_url( get_permalink() ); ?>">

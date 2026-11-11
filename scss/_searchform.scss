@@ -1,0 +1,36 @@
+// Search form (searchform.php; same look as the Search block). Global: header dialog, archives, 404, empty states.
+
+// ---- Search form (searchform.php; same look as the Search block) --------------------------------------------------
+.ane-cari {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+.ane-searchform {
+    @include ane-pill-field;
+    padding-left: 14px;
+
+    .ane-searchform__icon {
+        flex: none;
+        display: inline-flex;
+        color: rgba(var(--ane-warna-gelap-rgb), 0.5);
+        font-size: 18px;
+    }
+    .ane-searchform__input {
+        @include ane-pill-input;
+        padding-left: 4px;
+    }
+    .ane-searchform__btn {
+        @include ane-pill-button;
+    }
+    .screen-reader-text {
+        position: absolute;
+    }
+}
+@media only screen and (max-width: 420px) {
+    // Very narrow: keep the field usable, button shrinks.
+    .ane-searchform .ane-searchform__btn {
+        padding: 0 14px;
+    }
+}
+

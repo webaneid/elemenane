@@ -53,7 +53,8 @@ def compile_scss() -> int:
         out_expanded = os.path.join(CSS_DIR, f"{name}.css")
         out_min = os.path.join(CSS_DIR, f"{name}.min.css")
         subprocess.run([sass_bin, src, out_expanded], check=True)
-        subprocess.run([sass_bin, "--style=compressed", src, out_min], check=True)
+        # Production file: no sourceMappingURL comment (the .map files are not shipped).
+        subprocess.run([sass_bin, "--style=compressed", "--no-source-map", src, out_min], check=True)
         print(f"[COMPILED] {src} -> {out_expanded}, {out_min}")
     return 0
 

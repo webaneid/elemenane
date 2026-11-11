@@ -158,24 +158,6 @@
         }
     }
 }
-.buttons-excel {
-    display: inline-block;
-    overflow: hidden;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-    padding: 12px 20px;
-    margin-bottom: 20px;
-    border-radius: 30px;
-    position: relative;
-    z-index: 1;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.4s ease-in-out;
-    background: rgba(var(--ane-warna-gelap-rgb),0.08);
-    color: var(--ane-warna-utama);
-}
-
 @media (max-width: 767px) {
 
     .btn {

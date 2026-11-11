@@ -69,52 +69,6 @@ ul {
     margin-block: auto;
     position: relative;
 }
-.row {
-    @include FlexRow;
-    width: 100%;
-    max-width: 100%;
-}
-.col-lg-4 {
-    width: 25%;
-    @include tablet {
-        width: 33.333%;
-    }
-    @include mobile {
-        width: 100%;
-    }
-}
-.col-md-3 {
-
-    @include tablet {
-        width: 33.333%;
-    }
-    @include mobile {
-        width: 100%;
-    }
-}
-
-.col-lg-4 {
-    width: 25%;
-    @include tablet {
-        width: 50%;
-    }
-    @include mobile {
-        width: 100%;
-    }
-}
-.col-6 {
-    
-    @include mobile {
-        width: 50%;
-    }
-}
-
-.col-12 {
-    @include mobile {
-        width: 100%;
-    }
-}
-
 .breadcrumb {
     padding: 15px 0;
     font-size: 12px;
@@ -142,21 +96,6 @@ ul {
         overflow-x: clip;
     }
 }
-.content-area {
-    @include DisplayBlock;
-    margin-bottom: 70px;
-
-    @include mobile {
-        margin-bottom: 40px;
-    }
-}
-.post-tengah {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
 .ane-image {
     @include DisplayBlock;
     margin: 0;

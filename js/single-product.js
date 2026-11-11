@@ -43,17 +43,16 @@
 	}
 
 	/**
-	 * Gallery Lightbox (Magnific Popup)
+	 * Gallery Lightbox (js/lightbox.js)
 	 *
 	 * Opens at the image currently shown in the main slot, with all gallery
 	 * images available as next/previous.
 	 */
 	function initGalleryLightbox() {
-		if (typeof $.fn.magnificPopup === 'undefined') {
-			return;
-		}
-
 		$('.ane-gallery-popup').on('click', function (e) {
+			if (!window.aneLightbox) {
+				return; // Falls back to opening the image URL.
+			}
 			e.preventDefault();
 
 			const $thumbs = $('.ane-gallery-thumb');
@@ -62,23 +61,14 @@
 
 			if ($thumbs.length > 1) {
 				items = $thumbs.map(function () {
-					return { src: $(this).data('full') };
+					return { src: $(this).data('full'), title: $(this).find('img').attr('alt') || '' };
 				}).get();
 				index = Math.max(0, $thumbs.index($thumbs.filter('.active')));
 			} else {
-				items = [{ src: $(this).attr('href') }];
+				items = [{ src: $(this).attr('href'), title: '' }];
 			}
 
-			$.magnificPopup.open({
-				items: items,
-				type: 'image',
-				gallery: { enabled: items.length > 1 },
-				closeOnContentClick: items.length === 1,
-				closeBtnInside: false,
-				fixedContentPos: true,
-				mainClass: 'mfp-with-zoom',
-				image: { verticalFit: true }
-			}, index);
+			window.aneLightbox.open(items, index);
 		});
 	}
 
@@ -291,7 +281,7 @@
 	}
 
 	/**
-	 * Branch Detail Popup (Reuse existing branch popup modal)
+	 * Branch Detail Popup (reuses the lightbox dialog)
 	 */
 	function initBranchDetail() {
 		$(document).on('click', '.ane-branch-detail', function () {
@@ -302,27 +292,16 @@
 			const $modal = $('#ane-branch-modal');
 			$modal.css('visibility', 'hidden');
 
-			// Open branch detail popup (using Magnific Popup inline)
-			if (typeof $.fn.magnificPopup !== 'undefined') {
-				$.magnificPopup.open({
-					items: {
-						src: buildBranchDetailHTML(branchData),
-						type: 'inline'
-					},
-					closeBtnInside: true,
-					mainClass: 'ane-branch-detail-popup',
-					callbacks: {
-						open: function() {
-							// Remove ane-modal-open temporarily so Magnific can handle overflow
-							$('body').removeClass('ane-modal-open');
-						},
-						close: function() {
-							// When detail popup closes, show branch modal again
-							$modal.css('visibility', 'visible');
-							$('body').addClass('ane-modal-open');
-						}
+			// Open the branch detail card in the lightbox dialog; show the branch list again when it closes.
+			if (window.aneLightbox) {
+				window.aneLightbox.openHtml(buildBranchDetailHTML(branchData), {
+					className: 'ane-branch-detail-popup',
+					onClose: function () {
+						$modal.css('visibility', 'visible');
 					}
 				});
+			} else {
+				$modal.css('visibility', 'visible');
 			}
 		});
 	}

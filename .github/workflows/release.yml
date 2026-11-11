@@ -49,7 +49,7 @@ jobs:
           for f in scss/[!_]*.scss; do
             name=$(basename "$f" .scss)
             sass "$f" "css/${name}.css"
-            sass --style=compressed "$f" "css/${name}.min.css"
+            sass --style=compressed --no-source-map "$f" "css/${name}.min.css"
           done
 
       - name: Run semantic-release
