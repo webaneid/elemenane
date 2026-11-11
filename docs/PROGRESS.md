@@ -22,6 +22,7 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 | **[Fase 11](phases/phase-11-single-bawah-artikel.md)** | Refactoring blok bawah artikel single (Tags, Author box, Post nav, Related) dengan judul konsisten gaya sidebar | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 12](phases/phase-12-landing-news.md)** | Refactoring total landing page news (hero slider vanilla, section konsisten, rail, ranked list, latest + paginasi) | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 13](phases/phase-13-floating-chat.md)** | Refactoring total floating chat WhatsApp (FAB + panel aksesibel, tanpa script inline) | Permintaan desain | **Completed** | 2026-11-11 |
+| **[Fase 14](phases/phase-14-entry-header-share.md)** | Refactoring entry header single + share bar (WhatsApp/Facebook/X/LinkedIn/Email, Salin tautan, native share) berisi judul, deskripsi, URL | Permintaan desain | **Completed** | 2026-11-11 |
 
 ---
 

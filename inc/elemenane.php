@@ -88,6 +88,19 @@ function ane_enqueue_scripts() {
 		)
 	);
 
+	// Share bar: copy link + native share sheet.
+	if ( is_singular() ) {
+		wp_enqueue_script( 'ane-share', get_base_url_assets() . '/js/share.js', array(), '1.0.0', true );
+		wp_localize_script(
+			'ane-share',
+			'elemenaneShare',
+			array(
+				'copied' => __( 'Copied: title, description and link', 'elemenane' ),
+				'failed' => __( 'Could not copy. Please copy the link manually.', 'elemenane' ),
+			)
+		);
+	}
+
 	// Floating WhatsApp chat (only when enabled in the ACF options).
 	if ( function_exists( 'get_field' ) && get_field( 'ane_cs_aktif', 'option' ) ) {
 		wp_enqueue_script( 'ane-floating-chat', get_base_url_assets() . '/js/floating-chat.js', array(), '1.0.0', true );
@@ -153,7 +166,7 @@ function elemenane_defer_scripts() {
 		return;
 	}
 
-	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'ane-home', 'ane-floating-chat', 'main-js' ) as $handle ) {
+	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'ane-home', 'ane-share', 'ane-floating-chat', 'main-js' ) as $handle ) {
 		if ( wp_script_is( $handle, 'registered' ) ) {
 			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}

@@ -18,10 +18,10 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 	// The author box is rendered by tp/single-*.php, so skip the content filter that appends it.
 	remove_filter( 'the_content', 'ane_author_info_box', 20 );
 	?>
-	<main id="main" class="site-main">
+	<main id="main" class="site-main ane-archive ane-archive--single">
 		<?php get_template_part( 'breadcrumbs' ); ?>
 		<div class="container">
-			<div class="ane-col-64">
+			<div class="ane-archive__layout<?php echo is_active_sidebar( 'default-sidebar' ) ? ' has-sidebar' : ''; ?>">
 				<?php
 				if ( have_posts() ) :
 					while ( have_posts() ) :

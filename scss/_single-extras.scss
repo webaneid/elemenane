@@ -23,6 +23,269 @@ $ane-single-gap: clamp(28px, 5vw, 44px);
     margin-bottom: 16px;
 }
 
+// ---- Entry header -------------------------------------------------------------------------
+
+.ane-entry {
+    display: block;
+    width: 100%;
+    margin: 0 0 clamp(24px, 4vw, 36px);
+
+    &__cats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 0 14px;
+    }
+    &__cat {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(var(--ane-warna-utama-rgb, var(--ane-warna-gelap-rgb)), 0.1);
+        color: var(--ane-warna-utama);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        line-height: 1.2;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            background: var(--ane-warna-utama);
+            color: var(--ane-warna-putih);
+        }
+    }
+    .ane-entry__title {
+        margin: 0;
+        color: var(--ane-warna-gelap);
+        font-size: clamp(26px, 5.4vw, 42px);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        text-transform: none;
+        text-wrap: balance;
+        overflow-wrap: anywhere;
+    }
+    &__lead {
+        max-width: 62ch;
+        margin: 14px 0 0;
+        color: rgba(var(--ane-warna-text-rgb, var(--ane-warna-gelap-rgb)), 0.78);
+        font-size: clamp(16px, 2.4vw, 19px);
+        line-height: 1.6;
+    }
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 18px;
+        margin: 20px 0 0;
+        padding: 14px 0;
+        border-block: 1px solid rgba(var(--ane-warna-gelap-rgb), 0.1);
+        color: rgba(var(--ane-warna-gelap-rgb), 0.65);
+        font-size: 13px;
+        line-height: 1.3;
+    }
+    &__author {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ane-warna-gelap);
+        font-weight: 700;
+        text-decoration: none;
+
+        img {
+            display: block;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        &:hover {
+            color: var(--ane-warna-utama);
+        }
+    }
+    &__item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        .ane-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--ane-warna-utama);
+        }
+    }
+    &__figure {
+        margin: clamp(20px, 3vw, 28px) 0 0;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+        .featured-image-caption {
+            display: block;
+            margin: 10px 0 0;
+            color: rgba(var(--ane-warna-gelap-rgb), 0.6);
+            font-size: 13px;
+            font-style: italic;
+            line-height: 1.4;
+            text-align: left;
+        }
+    }
+}
+
+// ---- Share bar ----------------------------------------------------------------------------
+
+.ane-share {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin: 18px 0 0;
+
+    &__label {
+        color: rgba(var(--ane-warna-gelap-rgb), 0.6);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin: 0;
+            padding: 0;
+
+            &:before {
+                display: none;
+            }
+        }
+    }
+    &__native {
+        display: none !important;
+    }
+    &.has-native &__native {
+        display: block !important;
+    }
+    &__btn {
+        --ane-share-brand: var(--ane-warna-utama);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-width: 44px;
+        height: 44px;
+        padding: 0 12px;
+        border: 1.5px solid rgba(var(--ane-warna-gelap-rgb), 0.14);
+        border-radius: 999px;
+        background: var(--ane-warna-putih);
+        color: var(--ane-share-brand);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+        .ane-icon {
+            width: 18px;
+            height: 18px;
+        }
+        &:hover {
+            border-color: var(--ane-share-brand);
+            background: var(--ane-share-brand);
+            color: #fff;
+        }
+        &:active {
+            transform: scale(0.95);
+        }
+        &:focus-visible {
+            outline: 2px solid var(--ane-warna-alternatif);
+            outline-offset: 2px;
+        }
+
+        &--whatsapp {
+            --ane-share-brand: #1ea952;
+        }
+        &--facebook {
+            --ane-share-brand: #1877f2;
+        }
+        &--twitter {
+            --ane-share-brand: #14171a;
+        }
+        &--linkedin {
+            --ane-share-brand: #0a66c2;
+        }
+        &--email {
+            --ane-share-brand: #b4540a;
+        }
+        &--copy,
+        &--native {
+            --ane-share-brand: var(--ane-warna-utama);
+        }
+        &--copy.is-done {
+            border-color: #1ea952;
+            background: #1ea952;
+            color: #fff;
+        }
+    }
+    // Names are visible from tablet up; on phones the buttons are icon-only (still named for screen readers).
+    &__name {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+
+        @media only screen and (min-width: 768px) {
+            position: static;
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            clip: auto;
+        }
+    }
+    &__btn {
+        @media only screen and (min-width: 768px) {
+            padding: 0 16px;
+        }
+    }
+    &__toast {
+        flex: 1 0 100%;
+        margin: 0;
+        color: #1ea952;
+        font-size: 13px;
+        font-weight: 700;
+        opacity: 0;
+        transform: translateY(-4px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        min-height: 0;
+        height: 0;
+        overflow: visible;
+
+        &.is-visible {
+            opacity: 1;
+            transform: none;
+            height: auto;
+        }
+        &.is-error {
+            color: #c0392b;
+        }
+    }
+}
+
 // ---- Tags ---------------------------------------------------------------------------------
 
 .ane-tags__list {

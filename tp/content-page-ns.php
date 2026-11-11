@@ -37,9 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</header>
 
 	<div class="entry-content">
-		<div class="share-this">
-			<?php echo wp_kses( ane_share_this_post(), elemenane_kses_post_with_svg() ); ?>
-		</div>
+		<?php echo wp_kses( ane_share_this_post(), elemenane_kses_post_with_svg() ); ?>
 
 		<div class="ane-content">
 			<?php the_content(); ?>

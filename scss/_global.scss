@@ -169,62 +169,6 @@ ul {
     }
 }
 
-.share-this {
-    @include DisplayBlock;
-    width: 100%;
-    padding: 0;
-    margin-bottom: 30px;
-
-    .social-share-buttons {
-        @include FlexColumn;
-        width: 100%;
-        position: relative;
-        >ul {
-            @include FlexRow;
-            width: 100%;
-            align-items: center;
-            align-content: center;
-
-            >li {
-                text-align: center;
-                border-radius: 4px;
-                margin-right: 8px;
-                font-size: 15px;
-                transition: all 0.3s ease-in-out;
-
-                @include mobile {
-                    margin-right: 5px;
-                }
-
-                .fb-like {
-                    margin:0;
-                    span {
-                        width: 159px !important;
-                    }
-                }
-                a {
-                    background-color: var(--ane-warna-utama);
-                    height: 29px;
-                    width: 29px;
-                    line-height: 29px;
-                    border-radius: 5px;
-                    color: var(--ane-warna-putih);
-                    display: block;
-                    text-align: center;
-                }
-                a.twitter {
-                    background-color: #28a6e3;
-                }
-                a.whatsapp {
-                    background-color: #1ebea5;
-                }
-                a.linkedin {
-                    background-color: #0077b5;
-                }
-            }
-        }
-    }
-}
 .ane-sosmed {
     @include DisplayBlock;
 

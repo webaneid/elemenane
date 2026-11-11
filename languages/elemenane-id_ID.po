@@ -442,3 +442,40 @@ msgstr "Silakan ketik pesan terlebih dahulu."
 #: tp/floating-chat.php
 msgid "No WhatsApp number available."
 msgstr "Nomor WhatsApp tidak tersedia."
+
+# Share bar (inc/sosmed.php, js/share.js)
+#: inc/sosmed.php
+msgid "Share"
+msgstr "Bagikan"
+
+#: inc/sosmed.php
+msgid "Share this article"
+msgstr "Bagikan artikel ini"
+
+#: inc/sosmed.php
+msgid "Share on X"
+msgstr "Bagikan ke X"
+
+#: inc/sosmed.php
+msgid "Share by email"
+msgstr "Bagikan lewat email"
+
+#: inc/sosmed.php
+msgid "Copy link"
+msgstr "Salin tautan"
+
+#: inc/sosmed.php
+msgid "Copy title, description and link"
+msgstr "Salin judul, deskripsi, dan tautan"
+
+#: inc/sosmed.php
+msgid "Share via..."
+msgstr "Bagikan lewat..."
+
+#: inc/sosmed.php
+msgid "Copied: title, description and link"
+msgstr "Tersalin: judul, deskripsi, dan tautan"
+
+#: inc/sosmed.php
+msgid "Could not copy. Please copy the link manually."
+msgstr "Gagal menyalin. Silakan salin tautan secara manual."
