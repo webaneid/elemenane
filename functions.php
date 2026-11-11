@@ -238,6 +238,7 @@ $elemenane_includes = array(
 	'/inc/admin.php',
 	'/inc/archive.php',
 	'/inc/branch-acf.php',
+	'/inc/branch-data.php',
 	'/inc/custompost.php',
 	'/inc/elemenane.php',
 	'/inc/elementor-defaults.php',

@@ -21,45 +21,15 @@ $elemenane_query = new WP_Query(
 	)
 );
 
-// City ID => name, read once (branches store the ID).
-$elemenane_city_names = array();
-$elemenane_locations  = json_decode( (string) file_get_contents( get_template_directory() . '/inc/indonesia-locations.json' ), true );
-if ( is_array( $elemenane_locations ) && ! empty( $elemenane_locations['provinces'] ) ) {
-	foreach ( $elemenane_locations['provinces'] as $elemenane_province ) {
-		foreach ( (array) ( $elemenane_province['cities'] ?? array() ) as $elemenane_city ) {
-			$elemenane_city_names[ (string) $elemenane_city['id'] ] = (string) $elemenane_city['name'];
-		}
-	}
-}
-
 // Branches with map data, passed to the script and used for the first page of cards.
 $elemenane_branches = array();
 while ( $elemenane_query->have_posts() ) {
 	$elemenane_query->the_post();
 
-	$elemenane_map = get_field( 'ane_branch_map' );
-	if ( ! $elemenane_map ) {
-		continue;
+	$elemenane_branch = elemenane_get_branch_data( get_the_ID() );
+	if ( $elemenane_branch['has_map'] ) {
+		$elemenane_branches[] = $elemenane_branch;
 	}
-
-	$elemenane_branches[] = array(
-		'id'        => get_the_ID(),
-		// Plain text: escaped at output (esc_html in PHP, escapeHtml in JS).
-		'title'     => html_entity_decode( get_the_title(), ENT_QUOTES, get_bloginfo( 'charset' ) ),
-		'permalink' => get_permalink(),
-		'province'  => get_field( 'ane_branch_province' ),
-		'city'      => get_field( 'ane_branch_city' ),
-		'city_name' => $elemenane_city_names[ (string) get_field( 'ane_branch_city' ) ] ?? '',
-		'district'  => get_field( 'ane_branch_district' ),
-		'address'   => get_field( 'ane_branch_address' ),
-		'phone'     => get_field( 'ane_branch_phone' ),
-		'email'     => get_field( 'ane_branch_email' ),
-		'whatsapp'  => get_field( 'ane_branch_whatsapp' ),
-		'hours'     => get_field( 'ane_branch_hours' ),
-		'lat'       => (float) $elemenane_map['lat'],
-		'lng'       => (float) $elemenane_map['lng'],
-		'thumbnail' => get_the_post_thumbnail_url( get_the_ID(), 'medium' ),
-	);
 }
 wp_reset_postdata();
 

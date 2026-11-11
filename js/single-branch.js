@@ -10,6 +10,17 @@
 (function($) {
 	'use strict';
 
+	/** Map pin in the theme's primary colour (Elementor-synced CSS token). */
+	function pinIcon() {
+		var primary = (getComputedStyle(document.documentElement).getPropertyValue('--ane-warna-utama') || '').trim() || '#014C78';
+		var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="42" viewBox="0 0 32 42"><path fill="' + primary + '" stroke="#ffffff" stroke-width="2" d="M16 1C8 1 2 7 2 15c0 10 14 25 14 25s14-15 14-25C30 7 24 1 16 1z"/><circle cx="16" cy="15" r="5.5" fill="#ffffff"/></svg>';
+		return {
+			url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg),
+			scaledSize: new google.maps.Size(32, 42),
+			anchor: new google.maps.Point(16, 40)
+		};
+	}
+
 	/**
 	 * Initialize Google Maps for single branch.
 	 */
@@ -43,9 +54,7 @@
 			map: map,
 			title: title,
 			animation: google.maps.Animation.DROP,
-			icon: {
-				url: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png'
-			}
+			icon: pinIcon()
 		});
 
 		// Add info window.

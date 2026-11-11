@@ -448,7 +448,7 @@ function ane_enqueue_branch_frontend_scripts() {
 			'ane-single-branch',
 			get_template_directory_uri() . '/js/single-branch.js',
 			array( 'jquery' ),
-			'1.0.1',
+			'1.1.0',
 			true
 		);
 	}
