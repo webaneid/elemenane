@@ -1,114 +1,74 @@
 <?php
 /**
- * News Classic Section Template
- *
- * ACF Flexible Content layout for homepage.
- * Displays category posts in classic layout with popular sidebar.
+ * Landing section: category with a wide lead story, card grid and a "Popular" panel.
+ * ACF Flexible Content layout `ane_box_classic`.
  *
  * @package elemenane
- * @since 1.0.0
+ * @since   1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
-// Get ACF fields
-$category     = get_sub_field( 'ane_category' );
-$custom_title = get_sub_field( 'ane_judul' );
+$elemenane_category = get_sub_field( 'ane_category' );
+$elemenane_custom   = get_sub_field( 'ane_judul' );
 
-if ( empty( $category ) ) {
+if ( empty( $elemenane_category ) ) {
 	return;
 }
 
-$category_link = get_category_link( $category->term_id );
-$section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
+$elemenane_url   = get_category_link( $elemenane_category->term_id );
+$elemenane_title = ! empty( $elemenane_custom ) ? $elemenane_custom : $elemenane_category->name;
+
+$elemenane_q = new WP_Query(
+	array(
+		'post_type'              => 'post',
+		'cat'                    => $elemenane_category->term_id,
+		'posts_per_page'         => 5,
+		'post_status'            => 'publish',
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => false,
+	)
+);
+
+if ( ! $elemenane_q->have_posts() ) {
+	return;
+}
 ?>
-<section class="news-classic">
+<section class="ane-block ane-block--classic">
 	<div class="container">
-		<div class="section-title">
-			<div class="section-title-item">
-				<h2>
-					<a href="<?php echo esc_url( $category_link ); ?>" rel="bookmark">
-						<?php echo esc_html( $section_title ); ?>
-					</a>
-				</h2>
-			</div>
-			<a class="lainnya" href="<?php echo esc_url( $category_link ); ?>">
-				<?php esc_html_e( 'Display More', 'elemenane' ); ?> <?php elemenane_icon( 'chevron-right-alt-2' ); ?>
-			</a>
-		</div>
+		<?php
+		get_template_part(
+			'tp/home-head',
+			null,
+			array(
+				'title' => $elemenane_title,
+				'url' => $elemenane_url,
+			)
+		);
+		?>
 
-		<div class="ane-col-73">
-			<div class="ane-kiri">
-				<!-- First featured post -->
-				<div class="ane-kiri-1">
+		<div class="ane-split">
+			<div class="ane-split__main">
+				<div class="ane-grid">
 					<?php
-					$main_query = new WP_Query(
-						array(
-							'post_type'              => 'post',
-							'cat'                    => $category->term_id,
-							'posts_per_page'         => 5,
-							'post_status'            => 'publish',
-							'ignore_sticky_posts'    => true,
-							'no_found_rows'          => true,
-							'update_post_meta_cache' => false,
-							'update_post_term_cache' => false,
-						)
-					);
-
-					if ( $main_query->have_posts() ) :
-						$main_query->the_post();
-						get_template_part( 'tp/content', 'klasik' );
-						?>
-				</div>
-
-				<!-- Next 4 posts -->
-				<div class="ane-kiri-2">
-						<?php
-						while ( $main_query->have_posts() ) :
-							$main_query->the_post();
-							get_template_part( 'tp/content', 'klasik' );
-						endwhile;
-					endif;
+					$elemenane_i = 0;
+					while ( $elemenane_q->have_posts() ) :
+						$elemenane_q->the_post();
+						++$elemenane_i;
+						get_template_part( 'tp/archive', 'card', array( 'variant' => 1 === $elemenane_i ? 'wide' : 'standard' ) );
+					endwhile;
 					wp_reset_postdata();
 					?>
 				</div>
 			</div>
 
-			<!-- Popular posts sidebar -->
-			<div class="ane-kanan">
-				<div class="konten-populer">
-					<h3><?php esc_html_e( 'Popular', 'elemenane' ); ?></h3>
-					<div class="isinya">
-						<ol>
-							<?php
-							$popular_query = new WP_Query(
-								array(
-									'post_type'           => 'post',
-									'cat'                 => $category->term_id,
-									'posts_per_page'      => 5,
-									'orderby'             => 'meta_value_num',
-									'meta_key'            => 'musi_views',
-									'post_status'         => 'publish',
-									'ignore_sticky_posts' => true,
-									'no_found_rows'       => true,
-									'update_post_term_cache' => false,
-								)
-							);
-
-							while ( $popular_query->have_posts() ) :
-								$popular_query->the_post();
-								echo '<li>';
-								get_template_part( 'tp/content', 'list-title' );
-								echo '</li>';
-							endwhile;
-							wp_reset_postdata();
-							?>
-						</ol>
-					</div>
+			<aside class="ane-split__aside">
+				<div class="ane-panel">
+					<h3 class="ane-section-title"><?php esc_html_e( 'Popular', 'elemenane' ); ?></h3>
+					<?php get_template_part( 'tp/home-rank', null, array( 'cat' => $elemenane_category->term_id ) ); ?>
 				</div>
-			</div>
+			</aside>
 		</div>
 
 		<?php get_template_part( 'tp/banner/header' ); ?>

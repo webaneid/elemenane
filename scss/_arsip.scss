@@ -466,9 +466,10 @@ $ane-arc-bp-lg: 993px;
         }
     }
 
-    // --- Mobile default: compact row, thumbnail on the left ---
+    // --- Mobile default (and always for --row): compact row, thumbnail on the left ---
     &--standard,
-    &--wide {
+    &--wide,
+    &--row {
         display: grid;
         grid-template-columns: 112px minmax(0, 1fr);
         gap: 14px;
@@ -483,6 +484,10 @@ $ane-arc-bp-lg: 993px;
         .ane-card__title {
             font-size: 15px;
         }
+    }
+    &--row:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
     }
 
     // --- Featured: image with text over a gradient ---

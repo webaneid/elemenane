@@ -246,6 +246,7 @@ $elemenane_includes = array(
 	'/inc/handle.php',
 	'/inc/header-acf.php',
 	'/inc/icons.php',
+	'/inc/landing.php',
 	'/inc/product-acf.php',
 	'/inc/product-filter.php',
 	'/inc/product-woocommerce.php',

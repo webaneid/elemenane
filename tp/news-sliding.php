@@ -1,69 +1,70 @@
 <?php
 /**
- * News Sliding Section Template
- *
- * ACF Flexible Content layout for homepage.
- * Displays category posts in owl carousel slider.
+ * Landing section: horizontal rail of portrait story cards for a category.
+ * ACF Flexible Content layout `ane_box_sliding`. Scroll-snap, arrows handled by js/home.js.
  *
  * @package elemenane
- * @since 1.0.0
+ * @since   1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
-ane_enqueue_carousel();
+$elemenane_category = get_sub_field( 'ane_category' );
+$elemenane_custom   = get_sub_field( 'ane_judul' );
 
-// Get ACF fields
-$category     = get_sub_field( 'ane_category' );
-$custom_title = get_sub_field( 'ane_judul' );
-
-if ( empty( $category ) ) {
+if ( empty( $elemenane_category ) ) {
 	return;
 }
 
-$category_link = get_category_link( $category->term_id );
-$section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
-?>
-<section class="news-sliding">
-	<div class="container">
-		<div class="section-title">
-			<div class="section-title-item">
-				<h2>
-					<a href="<?php echo esc_url( $category_link ); ?>" rel="bookmark">
-						<?php echo esc_html( $section_title ); ?>
-					</a>
-				</h2>
-			</div>
-			<a class="lainnya" href="<?php echo esc_url( $category_link ); ?>">
-				<?php esc_html_e( 'Display More', 'elemenane' ); ?> <?php elemenane_icon( 'chevron-right-alt-2' ); ?>
-			</a>
-		</div>
+$elemenane_url   = get_category_link( $elemenane_category->term_id );
+$elemenane_title = ! empty( $elemenane_custom ) ? $elemenane_custom : $elemenane_category->name;
 
-		<div class="news-sliding-isi">
-			<div class="owl-carousel dot-style2" id="home-sliding">
-				<?php
-				$sliding_query = new WP_Query(
+$elemenane_q = new WP_Query(
+	array(
+		'post_type'              => 'post',
+		'cat'                    => $elemenane_category->term_id,
+		'posts_per_page'         => 8,
+		'post_status'            => 'publish',
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => false,
+	)
+);
+
+if ( ! $elemenane_q->have_posts() ) {
+	return;
+}
+?>
+<section class="ane-block ane-block--sliding" data-ane-rail>
+	<div class="container">
+		<?php
+		get_template_part(
+			'tp/home-head',
+			null,
+			array(
+				'title' => $elemenane_title,
+				'url' => $elemenane_url,
+				'rail' => true,
+			)
+		);
+		?>
+
+		<div class="ane-rail" tabindex="0" role="region" aria-label="<?php echo esc_attr( $elemenane_title ); ?>">
+			<?php
+			while ( $elemenane_q->have_posts() ) :
+				$elemenane_q->the_post();
+				get_template_part(
+					'tp/archive',
+					'card',
 					array(
-						'post_type'              => 'post',
-						'cat'                    => $category->term_id,
-						'posts_per_page'         => 8,
-						'post_status'            => 'publish',
-						'ignore_sticky_posts'    => true,
-						'no_found_rows'          => true,
-						'update_post_meta_cache' => false,
-						'update_post_term_cache' => false,
+						'variant' => 'featured',
+						'heading' => 'h3',
+						'sizes' => '(max-width: 639px) 72vw, 280px',
 					)
 				);
-
-				while ( $sliding_query->have_posts() ) :
-					$sliding_query->the_post();
-					get_template_part( 'tp/content', 'overlay', array( 'sizes' => '(max-width: 767px) 50vw, 300px' ) );
-				endwhile;
-				wp_reset_postdata();
-				?>
-			</div>
+			endwhile;
+			wp_reset_postdata();
+			?>
 		</div>
 	</div>
 </section>

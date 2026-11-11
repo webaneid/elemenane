@@ -1,81 +1,80 @@
 <?php
 /**
- * News Column Section Template
- *
- * ACF Flexible Content layout for homepage.
- * Displays multiple category columns side by side.
+ * Landing section: several category columns side by side (lead card + compact rows).
+ * ACF Flexible Content layout `ane_box_column`.
  *
  * @package elemenane
- * @since 1.0.0
+ * @since   1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! have_rows( 'ane_box_column_isi' ) ) {
 	return;
 }
 ?>
-<section class="news-column">
+<section class="ane-block ane-block--column">
 	<div class="container">
-		<div class="ane-col-3">
+		<div class="ane-columns">
 			<?php
 			while ( have_rows( 'ane_box_column_isi' ) ) :
 				the_row();
 
-				$category     = get_sub_field( 'ane_category' );
-				$custom_title = get_sub_field( 'judul_custom' );
+				$elemenane_category = get_sub_field( 'ane_category' );
+				$elemenane_custom   = get_sub_field( 'judul_custom' );
 
-				if ( empty( $category ) ) {
+				if ( empty( $elemenane_category ) ) {
 					continue;
 				}
 
-				$category_link = get_category_link( $category->term_id );
-				$section_title = ! empty( $custom_title ) ? $custom_title : $category->name;
+				$elemenane_url   = get_category_link( $elemenane_category->term_id );
+				$elemenane_title = ! empty( $elemenane_custom ) ? $elemenane_custom : $elemenane_category->name;
+
+				$elemenane_q = new WP_Query(
+					array(
+						'post_type'              => 'post',
+						'cat'                    => $elemenane_category->term_id,
+						'posts_per_page'         => 5,
+						'post_status'            => 'publish',
+						'ignore_sticky_posts'    => true,
+						'no_found_rows'          => true,
+						'update_post_meta_cache' => false,
+					)
+				);
+
+				if ( ! $elemenane_q->have_posts() ) {
+					continue;
+				}
 				?>
-				<div class="ane-isi">
-					<div class="section-title">
-						<div class="section-title-item">
-							<h2>
-								<a href="<?php echo esc_url( $category_link ); ?>" rel="bookmark">
-									<?php echo esc_html( $section_title ); ?>
-								</a>
-							</h2>
-						</div>
-						<a class="lainnya" href="<?php echo esc_url( $category_link ); ?>">
-							<?php esc_html_e( 'More', 'elemenane' ); ?> <?php elemenane_icon( 'chevron-right-alt-2' ); ?>
-						</a>
-					</div>
+				<div class="ane-columns__col">
+					<?php
+					get_template_part(
+						'tp/home-head',
+						null,
+						array(
+							'title' => $elemenane_title,
+							'url' => $elemenane_url,
+							'more' => __( 'More', 'elemenane' ),
+						)
+					);
+					?>
 
-					<div class="kepalanya">
+					<div class="ane-columns__list">
 						<?php
-						$column_query = new WP_Query(
-							array(
-								'post_type'              => 'post',
-								'cat'                    => $category->term_id,
-								'posts_per_page'         => 5,
-								'post_status'            => 'publish',
-								'ignore_sticky_posts'    => true,
-								'no_found_rows'          => true,
-								'update_post_meta_cache' => false,
-								'update_post_term_cache' => false,
-							)
-						);
-
-						if ( $column_query->have_posts() ) :
-							$column_query->the_post();
-							get_template_part( 'tp/content', 'overlay' );
-							?>
-					</div>
-
-					<div class="badannya">
-							<?php
-							while ( $column_query->have_posts() ) :
-								$column_query->the_post();
-								get_template_part( 'tp/content', 'list' );
-							endwhile;
-						endif;
+						$elemenane_i = 0;
+						while ( $elemenane_q->have_posts() ) :
+							$elemenane_q->the_post();
+							++$elemenane_i;
+							get_template_part(
+								'tp/archive',
+								'card',
+								array(
+									'variant' => 1 === $elemenane_i ? 'featured' : 'row',
+									'heading' => 'h3',
+									'sizes'   => '(max-width: 992px) 100vw, 370px',
+								)
+							);
+						endwhile;
 						wp_reset_postdata();
 						?>
 					</div>

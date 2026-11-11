@@ -362,3 +362,50 @@ msgstr "Website"
 #: inc/elemenane.php
 msgid "Related Content"
 msgstr "Konten Terkait"
+
+# Landing page (page-home.php, tp/news-*.php)
+#: tp/news-*.php
+msgid "Featured articles"
+msgstr "Artikel pilihan"
+
+#: tp/news-*.php
+msgid "Latest"
+msgstr "Terbaru"
+
+#: tp/news-*.php
+msgid "Previous slide"
+msgstr "Slide sebelumnya"
+
+#: tp/news-*.php
+msgid "Next slide"
+msgstr "Slide berikutnya"
+
+#: tp/news-*.php
+#, php-format
+msgid "Go to slide %d"
+msgstr "Ke slide %d"
+
+#: tp/news-*.php
+#, php-format
+msgid "Slide %1$d of %2$d"
+msgstr "Slide %1$d dari %2$d"
+
+#: tp/news-*.php
+msgid "Display More"
+msgstr "Lihat Semua"
+
+#: tp/news-*.php
+msgid "More"
+msgstr "Lainnya"
+
+#: tp/news-*.php
+msgid "Popular"
+msgstr "Populer"
+
+#: tp/news-*.php
+msgid "Latest Content"
+msgstr "Konten Terbaru"
+
+#: tp/news-*.php
+msgid "Sorry, no posts matched your criteria."
+msgstr "Maaf, tidak ada artikel yang sesuai."

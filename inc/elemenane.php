@@ -61,9 +61,21 @@ function ane_enqueue_scripts() {
 		)
 	);
 
-	// Only the Landing Page template renders carousels (tp/news-featured*, tp/news-sliding).
+	// Landing Page: hero slider + rails (vanilla JS, no jQuery / Owl).
 	if ( is_page_template( 'page-home.php' ) ) {
-		ane_enqueue_carousel();
+		wp_enqueue_script( 'ane-home', get_base_url_assets() . '/js/home.js', array(), '1.0.0', true );
+		wp_localize_script(
+			'ane-home',
+			'elemenaneHome',
+			array(
+				'prev'  => __( 'Previous slide', 'elemenane' ),
+				'next'  => __( 'Next slide', 'elemenane' ),
+				/* translators: %d: slide number */
+				'goto'  => __( 'Go to slide %d', 'elemenane' ),
+				/* translators: 1: current slide, 2: total slides */
+				'slide' => __( 'Slide %1$d of %2$d', 'elemenane' ),
+			)
+		);
 	}
 
 	// Header: drawer, dropdowns, search dialog, sticky behaviour (vanilla JS).
@@ -128,7 +140,7 @@ function elemenane_defer_scripts() {
 		return;
 	}
 
-	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'main-js' ) as $handle ) {
+	foreach ( array( 'jquery-core', 'OwlCarousel', 'ane-carousel-init', 'magnific', 'ane-lightbox-init', 'ane-header', 'ane-home', 'main-js' ) as $handle ) {
 		if ( wp_script_is( $handle, 'registered' ) ) {
 			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}
@@ -186,24 +198,12 @@ function elemenane_get_lcp_image() {
 	}
 
 	if ( is_page_template( 'page-home.php' ) ) {
-		$posts = get_posts(
-			array(
-				'post_type'              => 'post',
-				'posts_per_page'         => 1,
-				'post_status'            => 'publish',
-				'fields'                 => 'ids',
-				'meta_key'               => 'ane_news_utama', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Same lookup as tp/news-featured.php, limited to 1.
-				'meta_value'             => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-				'ignore_sticky_posts'    => true,
-				'no_found_rows'          => true,
-				'update_post_term_cache' => false,
-			)
-		);
-		$id    = $posts ? get_post_thumbnail_id( (int) $posts[0] ) : 0;
+		$ids = elemenane_home_hero_ids();
+		$id  = $ids ? get_post_thumbnail_id( $ids[0] ) : 0;
 		return $id ? array(
 			'id'    => (int) $id,
 			'size'  => 'large',
-			'sizes' => wp_is_mobile() ? '100vw' : '(max-width: 767px) 100vw, 800px',
+			'sizes' => '(max-width: 992px) 100vw, 760px',
 		) : null;
 	}
 
@@ -645,7 +645,7 @@ function ane_post_pagination( ?\WP_Query $wp_query = null, bool $echo = true ) {
 		return null;
 	}
 
-	$current = max( 1, absint( get_query_var( 'paged' ) ) );
+	$current = max( 1, absint( get_query_var( 'paged' ) ), absint( get_query_var( 'page' ) ) );
 	$total   = absint( $wp_query->max_num_pages );
 
 	if ( $total < 2 ) {

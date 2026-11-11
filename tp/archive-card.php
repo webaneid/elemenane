@@ -3,7 +3,8 @@
  * Archive Card
  *
  * Args (get_template_part):
- * - variant (string): featured | standard | wide.
+ * - variant (string): featured | standard | wide | row (always a compact thumbnail row).
+ * - sizes (string):   optional `sizes` attribute override.
  * - priority (bool):  first card, treat image as LCP candidate.
  * - heading (string): title tag, h2 (default) or h3.
  *
@@ -19,9 +20,15 @@ $elemenane_featured = 'featured' === $elemenane_variant;
 $elemenane_heading  = ( ! empty( $args['heading'] ) && 'h3' === $args['heading'] ) ? 'h3' : 'h2';
 
 $elemenane_img_size = $elemenane_featured ? 'large' : 'medium_large';
-$elemenane_sizes    = $elemenane_featured
-	? '(max-width: 992px) 100vw, 760px'
-	: '(max-width: 639px) 112px, (max-width: 992px) 50vw, 370px';
+if ( ! empty( $args['sizes'] ) ) {
+	$elemenane_sizes = (string) $args['sizes'];
+} elseif ( $elemenane_featured ) {
+	$elemenane_sizes = '(max-width: 992px) 100vw, 760px';
+} elseif ( 'row' === $elemenane_variant ) {
+	$elemenane_sizes = '112px';
+} else {
+	$elemenane_sizes = '(max-width: 639px) 112px, (max-width: 992px) 50vw, 370px';
+}
 
 $elemenane_img_attrs = array(
 	'alt'      => '',

@@ -5,6 +5,9 @@
  * Card grid shared by every post archive. Page 1 opens with one featured card; later pages are a
  * uniform grid. Layout is pure CSS (no server-side device detection), so pages stay cacheable.
  *
+ * Args (get_template_part):
+ * - query (WP_Query): optional custom query (defaults to the main query).
+ *
  * @package elemenane
  * @since   1.1.9
  */
@@ -13,8 +16,10 @@ defined( 'ABSPATH' ) || exit;
 
 global $wp_query;
 
-$elemenane_total_posts  = (int) $wp_query->post_count;
-$elemenane_has_featured = ! is_paged() && $elemenane_total_posts >= 3;
+$elemenane_q            = ( ! empty( $args['query'] ) && $args['query'] instanceof WP_Query ) ? $args['query'] : $wp_query;
+$elemenane_total_posts  = (int) $elemenane_q->post_count;
+$elemenane_page         = max( 1, (int) $elemenane_q->get( 'paged' ) );
+$elemenane_has_featured = 1 === $elemenane_page && $elemenane_total_posts >= 3;
 // Banners go after complete rows so the grid never has a hole before an ad.
 $elemenane_banner_after = $elemenane_has_featured ? array( 5, 11 ) : array( 4, 10 );
 $elemenane_cells        = 0; // Cards placed in the current two-column row.
@@ -22,8 +27,8 @@ $elemenane_index        = 0;
 ?>
 <div class="ane-grid">
 	<?php
-	while ( have_posts() ) :
-		the_post();
+	while ( $elemenane_q->have_posts() ) :
+		$elemenane_q->the_post();
 		++$elemenane_index;
 
 		$elemenane_variant = 'standard';
@@ -55,5 +60,6 @@ $elemenane_index        = 0;
 			}
 		}
 	endwhile;
+	wp_reset_postdata();
 	?>
 </div>

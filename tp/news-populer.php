@@ -1,61 +1,69 @@
 <?php
 /**
- * News Popular Section Template
- *
- * ACF Flexible Content layout for homepage.
- * Displays most viewed posts from all categories.
+ * Landing section: most viewed posts (lead card + ranked list with thumbnails).
+ * ACF Flexible Content layout `ane_box_populer`.
  *
  * @package elemenane
- * @since 1.0.0
+ * @since   1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+$elemenane_custom = get_sub_field( 'judul_custom' );
+$elemenane_title  = ! empty( $elemenane_custom ) ? $elemenane_custom : __( 'Popular', 'elemenane' );
+
+$elemenane_lead = new WP_Query(
+	array(
+		'post_type'              => 'post',
+		'posts_per_page'         => 1,
+		'post_status'            => 'publish',
+		'orderby'                => 'meta_value_num',
+		'meta_key'               => 'musi_views', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Small, limited lookup.
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => true,
+	)
+);
+if ( ! $elemenane_lead->have_posts() ) {
+	$elemenane_lead = new WP_Query(
+		array(
+			'post_type'           => 'post',
+			'posts_per_page'      => 1,
+			'post_status'         => 'publish',
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		)
+	);
 }
-
-// Get ACF fields
-$custom_title  = get_sub_field( 'judul_custom' );
-$section_title = ! empty( $custom_title ) ? $custom_title : __( 'Popular', 'elemenane' );
+if ( ! $elemenane_lead->have_posts() ) {
+	return;
+}
 ?>
-<section class="news-populer">
+<section class="ane-block ane-block--populer">
 	<div class="container">
-		<div class="section-title">
-			<div class="section-title-item">
-				<h2><?php echo esc_html( $section_title ); ?></h2>
-			</div>
-		</div>
+		<?php get_template_part( 'tp/home-head', null, array( 'title' => $elemenane_title ) ); ?>
 
-		<div class="news-populer-isi">
-			<div class="kiri">
+		<div class="ane-duo">
+			<div class="ane-duo__lead">
 				<?php
-				$popular_query = new WP_Query(
+				while ( $elemenane_lead->have_posts() ) :
+					$elemenane_lead->the_post();
+					get_template_part( 'tp/archive', 'card', array( 'variant' => 'featured' ) );
+				endwhile;
+				wp_reset_postdata();
+				?>
+			</div>
+			<div class="ane-duo__list">
+				<?php
+				get_template_part(
+					'tp/home-rank',
+					null,
 					array(
-						'post_type'              => 'post',
-						'posts_per_page'         => 5,
-						'orderby'                => 'meta_value_num',
-						'meta_key'               => 'musi_views',
-						'post_status'            => 'publish',
-						'ignore_sticky_posts'    => true,
-						'no_found_rows'          => true,
-						'update_post_meta_cache' => false,
-						'update_post_term_cache' => false,
+						'count' => 5,
+						'offset' => 1,
+						'thumbs' => true,
 					)
 				);
-
-				if ( $popular_query->have_posts() ) :
-					$popular_query->the_post();
-					get_template_part( 'tp/content', 'overlay' );
-					?>
-			</div>
-
-			<div class="kanan">
-					<?php
-					while ( $popular_query->have_posts() ) :
-						$popular_query->the_post();
-						get_template_part( 'tp/content', 'list' );
-					endwhile;
-				endif;
-				wp_reset_postdata();
 				?>
 			</div>
 		</div>
