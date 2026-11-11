@@ -20,6 +20,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # semantic-release stores release info in git notes; fetch them so pushing the notes is a fast-forward
+      # (otherwise the run fails after tagging with "remote rejected refs/notes/semantic-release").
+      - name: Fetch semantic-release notes
+        run: git fetch origin 'refs/notes/*:refs/notes/*' || true
+
       - name: Setup PHP 8.2
         uses: shivammathur/setup-php@v2
         with:
