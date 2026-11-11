@@ -34,6 +34,28 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 
 ---
 
+## Status Terkini & Titik Lanjut (diperbarui 2026-11-11)
+
+**Posisi**: Fase 00–22 selesai. Rilis terbaru **v1.3.0** (GitHub Release + aset `elemenane-1.3.0.zip`). `main` bersih dan sudah di-push (commit terakhir `docs: record 1.3.0 PageSpeed results…`). CI hijau.
+
+**Rilis**: otomatis lewat `.github/workflows/release.yml` (semantic-release, Conventional Commits: `feat` = minor, `fix`/`perf` = patch, `docs`/`ci`/`chore` = tanpa rilis). Catatan: workflow kini mengambil `refs/notes/*` sebelum rilis (perbaikan setelah push notes semantic-release ditolak pada 1.3.0; GitHub Release 1.3.0 dibuat manual dari tag).
+
+**Hasil ukur terakhir (kenchick.id, mobile)**: 67 (sebelum 1.2) -> 86 (1.2) -> 81 (1.3.0, fluktuasi antar run). Sisa temuan **bukan dari tema** (Elementor, YouTube, GTM, One Tap, Meta SDK, cache server). Rincian dan rekomendasi klien: [Fase 22](phases/phase-22-performa-pembersihan-aset.md) bagian 5, 7 dan 8.
+
+**Keputusan pemilik proyek**: facade YouTube dari tema dan perbaikan kontras warna **tidak dikerjakan** (dampak di luar tema). Boleh dibuka sebagai fase baru.
+
+**Belum diverifikasi / kandidat pekerjaan berikutnya** (belum diminta):
+- Skor PageSpeed klien sesudah 1.3.0 diterapkan beberapa kali (rata-rata run).
+- Lightbox pada isi artikel sungguhan dan layar sentuh; galeri cabang dan filter setelah perubahan markup.
+- WooCommerce grouped / external / checkout; status kirim Contact Form 7.
+- Halaman Linktree (`page-linktree.php`) belum di-refactor.
+- Section landing column / classic / popular / banner belum dilihat dengan data nyata.
+- Utilitas `.btn*` dipertahankan untuk kemungkinan kelas kustom Elementor klien.
+
+**Aturan kerja (SOP)**: spesifikasi fase di `docs/phases/`, implementasi, quality gate (`composer lint:syntax`, `lint:changed`, `lint:phpcs`, `analyse`, `security:scan`, `css:check`, `dist:check`), sinkron dokumen, commit Conventional, minta persetujuan sebelum fase berikutnya. Jangan push kecuali diminta. Styling hanya lewat `scss/` lalu kompilasi ke `css/`.
+
+---
+
 ## Baseline Metrik Kualitas (Akhir Fase 00)
 - **PHP Syntax (`composer lint:syntax`)**: `0` error sintaks pada seluruh file PHP.
 - **PHPStan Level 5 (`composer analyse`)**: Lulus (`0` error baru; `70` error warisan dibekukan di `phpstan-baseline.neon` dan dijadwalkan menjadi `0` error pada Fase 02).
