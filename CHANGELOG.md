@@ -1,3 +1,34 @@
+# [1.2.0](https://github.com/webaneid/elemenane/compare/v1.1.8...v1.2.0) (2026-11-11)
+
+
+### Bug Fixes
+
+* **content:** rebuild .ane-content so article body never overflows on mobile ([ce6e847](https://github.com/webaneid/elemenane/commit/ce6e847e93b1ff375f033a5ecd9706618392acfe))
+* **layout:** align header and footer width with .container via shared container-box mixin ([4268e8f](https://github.com/webaneid/elemenane/commit/4268e8f2d04f6b18ca5a36c18bed458b2ebd5871))
+* render time-ago meta icon as HTML instead of escaped text ([86c595a](https://github.com/webaneid/elemenane/commit/86c595abb3139575fb534d0b1aca659bb363a69f))
+
+
+### Features
+
+* **archive:** rebuild post archives, author profile and pagination ([c9f07a5](https://github.com/webaneid/elemenane/commit/c9f07a5d713261b39eeb24b191d08f99caa5df6b))
+* **branch:** rebuild branch archive and card with token colors, themed map pins and accessible dialog ([7b4f4d7](https://github.com/webaneid/elemenane/commit/7b4f4d7786f2366dcd8bdd8d63c689cb4d300336))
+* **branch:** rebuild single branch page with company-contact fallback and shared branch cards ([1a5bc45](https://github.com/webaneid/elemenane/commit/1a5bc45236dca2c5834bc89190cd668de5d6ef33))
+* **chat:** rebuild floating WhatsApp chat as accessible FAB and panel ([070bced](https://github.com/webaneid/elemenane/commit/070bcedd2e62cf10d0267e2984b5e7e181de3eb0))
+* **footer:** rebuild default footer, mobile-first and fully responsive ([71c9229](https://github.com/webaneid/elemenane/commit/71c9229a8f5acbd73997f1676b6017214c9c36a8))
+* **header:** rebuild default header with drawer, dropdowns, search dialog and sticky bar ([0fa46dd](https://github.com/webaneid/elemenane/commit/0fa46dd0230308141ecaeae3993688114f738245))
+* **landing:** rebuild news landing page with responsive hero and modern sections ([f861864](https://github.com/webaneid/elemenane/commit/f861864b5b291f33cb286b03ac5bc6362048bd2a))
+* **product:** rebuild product archive and ane-product-card with WooCommerce compatibility ([8a579d9](https://github.com/webaneid/elemenane/commit/8a579d9fb3a7056724d00a03c752b60a30644c95))
+* **product:** rebuild single product page with WooCommerce variable product support ([b8dec83](https://github.com/webaneid/elemenane/commit/b8dec83fc3ae8858ecbae21f16289aa529a9f6dc))
+* retrofit theme to Webane standard (phases 00-05) ([650cc06](https://github.com/webaneid/elemenane/commit/650cc0680118d9c8b24794a2733ad9376ff10860))
+* **sidebar:** rebuild sidebar and widget styling ([d3a3583](https://github.com/webaneid/elemenane/commit/d3a3583ef295bf888f02ae8504885acc97ef21ea))
+* **single:** rebuild entry header and share bar with copy link and title/description/url ([ea80797](https://github.com/webaneid/elemenane/commit/ea80797f4be86c3ced28f4e468778a0b93cc859d))
+* **single:** rebuild tags, author box, post nav and related blocks ([edfd099](https://github.com/webaneid/elemenane/commit/edfd0991966933319c67141bc7f69a4a57b1fcc7))
+
+
+### Performance Improvements
+
+* Core Web Vitals optimizations (phase 06) ([48fc2d4](https://github.com/webaneid/elemenane/commit/48fc2d479f2c3100f7d68114151add63c70ecfe3))
+
 # Changelog
 
 All notable changes to the Elemen Ane WordPress theme will be documented in this file.
