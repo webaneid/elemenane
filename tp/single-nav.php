@@ -3,7 +3,7 @@
  * Single: previous / next post navigation
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

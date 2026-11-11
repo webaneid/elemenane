@@ -6,7 +6,7 @@
  * Called from archive.php, category.php, tag.php, search.php, author.php and index.php.
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

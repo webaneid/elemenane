@@ -7,7 +7,7 @@
  * WooCommerce active the card additionally shows ratings and WooCommerce's own add-to-cart / select-options button.
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

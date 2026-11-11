@@ -3,7 +3,7 @@
  * Branch data helpers: normalised branch array, location names and contact details with company fallback.
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

@@ -6,7 +6,7 @@
  * dimensions when WooCommerce is active. Reviews appear only when WooCommerce reviews are enabled.
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

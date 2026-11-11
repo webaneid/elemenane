@@ -5,7 +5,7 @@
  * Title panel for category, tag, date, search and blog index archives.
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

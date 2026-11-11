@@ -6,7 +6,7 @@
  * pagination, bottom spacing. Called from archive-product.php and taxonomy-product_*.php.
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

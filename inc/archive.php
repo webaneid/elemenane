@@ -5,7 +5,7 @@
  * Shared by tp/archive-layout.php so every post archive renders from one template.
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

@@ -9,7 +9,7 @@
  * - rail (bool):    show previous / next buttons for a rail (js/home.js).
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

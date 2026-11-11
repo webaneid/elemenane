@@ -6,7 +6,7 @@
  * - image (bool): show the featured image (default true; video / gallery posts show their media in the content).
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

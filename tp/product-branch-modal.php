@@ -5,7 +5,7 @@
  * Args: branches (array) from ane_get_product_branches().
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

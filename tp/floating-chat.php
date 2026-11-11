@@ -6,7 +6,7 @@
  * ACF: ane_cs_label, ane_cs_welcome, repeater ane_cs (ane_whatsapp, ane_image, ane_nama, ane_area).
  *
  * @package elemenane
- * @since   1.3.0
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

@@ -9,7 +9,7 @@
  * - query (WP_Query): optional custom query (defaults to the main query).
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

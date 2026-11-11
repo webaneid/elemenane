@@ -3,7 +3,7 @@
  * Archive: nothing found
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

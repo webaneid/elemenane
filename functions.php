@@ -23,7 +23,7 @@ if ( ! defined( 'ELEMENANE_URI' ) ) {
 /**
  * Configure default WordPress image sizes once per theme version or activation.
  *
- * @since 1.1.9
+ * @since 1.2.0
  * @return void
  */
 function elemenane_configure_image_sizes() {
@@ -231,7 +231,7 @@ if ( ! class_exists( 'ACF' ) ) {
 /**
  * Load all theme modules explicitly (no glob()) for security and deterministic load order.
  *
- * @since 1.1.9
+ * @since 1.2.0
  */
 $elemenane_includes = array(
 	'/inc/acf.php',

@@ -6,7 +6,7 @@
  * - author_id (int): post author ID.
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;

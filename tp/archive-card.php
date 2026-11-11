@@ -9,7 +9,7 @@
  * - heading (string): title tag, h2 (default) or h3.
  *
  * @package elemenane
- * @since   1.1.9
+ * @since   1.2.0
  */
 
 defined( 'ABSPATH' ) || exit;
