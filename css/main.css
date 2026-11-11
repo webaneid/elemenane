@@ -5450,6 +5450,51 @@ body .ane-pgrid.products::before, body .ane-pgrid.products::after {
   font-size: 13px;
 }
 
+html body .ane-product-card a.ane-product-card__btn,
+html body .ane-product-card .ane-product-card__cta .button,
+html body .ane-product-card .ane-product-card__cta a.added_to_cart {
+  width: 100%;
+  min-height: 42px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1.5px solid var(--ane-warna-utama);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ane-warna-utama);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+html body .ane-product-card a.ane-product-card__btn:hover,
+html body .ane-product-card .ane-product-card__cta .button:hover,
+html body .ane-product-card .ane-product-card__cta a.added_to_cart:hover {
+  background: var(--ane-warna-utama);
+  color: var(--ane-warna-putih);
+}
+html body .ane-product-card a.ane-product-card__btn.add_to_cart_button {
+  background: var(--ane-warna-utama);
+  color: var(--ane-warna-putih);
+}
+html body .ane-product-card a.ane-product-card__btn.add_to_cart_button:hover {
+  filter: brightness(1.1);
+}
+html body .ane-product-card a.ane-product-card__btn.add_to_cart_button.added {
+  border-color: #1b8a4b;
+  background: #1b8a4b;
+}
+html body .ane-product-card a.ane-product-card__btn.add_to_cart_button.loading:after, html body .ane-product-card a.ane-product-card__btn.add_to_cart_button.added:after {
+  position: static;
+  margin-left: 8px;
+  top: auto;
+  right: auto;
+}
+html body .ane-product-card .ane-product-card__cta a.added_to_cart {
+  margin-top: 6px;
+  min-height: 36px;
+}
+
 html body .ane-footer {
   --ane-footer-gap: clamp(28px, 5vw, 56px);
   --ane-footer-pad-y: clamp(36px, 6vw, 72px);

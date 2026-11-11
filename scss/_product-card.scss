@@ -334,3 +334,53 @@
     mask: var(--ane-star) 0 0 / 1em 1em repeat-x;
     font-size: 13px;
 }
+
+// WooCommerce's own button styles (.woocommerce a.button) are more specific than the rules above; win them back.
+html body .ane-product-card {
+    a.ane-product-card__btn,
+    .ane-product-card__cta .button,
+    .ane-product-card__cta a.added_to_cart {
+        width: 100%;
+        min-height: 42px;
+        margin: 0;
+        padding: 0 14px;
+        border: 1.5px solid var(--ane-warna-utama);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--ane-warna-utama);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+        text-decoration: none;
+
+        &:hover {
+            background: var(--ane-warna-utama);
+            color: var(--ane-warna-putih);
+        }
+    }
+    a.ane-product-card__btn.add_to_cart_button {
+        background: var(--ane-warna-utama);
+        color: var(--ane-warna-putih);
+
+        &:hover {
+            filter: brightness(1.1);
+        }
+        &.added {
+            border-color: #1b8a4b;
+            background: #1b8a4b;
+        }
+        // WooCommerce adds a check / spinner icon after the label.
+        &.loading:after,
+        &.added:after {
+            position: static;
+            margin-left: 8px;
+            top: auto;
+            right: auto;
+        }
+    }
+    .ane-product-card__cta a.added_to_cart {
+        margin-top: 6px;
+        min-height: 36px;
+    }
+}

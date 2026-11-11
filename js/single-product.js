@@ -83,22 +83,102 @@
 	}
 
 	/**
-	 * Product Tabs
+	 * Product Tabs (WAI-ARIA tabs: click, arrow keys, #reviews hash and [data-open-tab] links)
 	 */
 	function initProductTabs() {
-		$('.ane-tab-btn').on('click', function (e) {
+		const $tabs = $('.ane-tab-btn');
+		if (!$tabs.length) {
+			return;
+		}
+
+		function activate(key, focus) {
+			const $btn = $tabs.filter('[data-tab="' + key + '"]');
+			if (!$btn.length) {
+				return false;
+			}
+			$tabs.removeClass('active').attr({ 'aria-selected': 'false', tabindex: '-1' });
+			$btn.addClass('active').attr({ 'aria-selected': 'true', tabindex: '0' });
+			$('.ane-tab-pane').removeClass('active').attr('hidden', '');
+			$('#tab-' + key).addClass('active').removeAttr('hidden');
+			if (focus) {
+				$btn.trigger('focus');
+			}
+			return true;
+		}
+
+		$tabs.on('click', function (e) {
 			e.preventDefault();
+			activate($(this).data('tab'), false);
+		});
 
-			const $btn = $(this);
-			const tabId = $btn.data('tab');
+		$tabs.on('keydown', function (e) {
+			const keys = $tabs.map(function () { return $(this).data('tab'); }).get();
+			let i = keys.indexOf($(this).data('tab'));
+			if (e.key === 'ArrowRight') { i = (i + 1) % keys.length; }
+			else if (e.key === 'ArrowLeft') { i = (i - 1 + keys.length) % keys.length; }
+			else if (e.key === 'Home') { i = 0; }
+			else if (e.key === 'End') { i = keys.length - 1; }
+			else { return; }
+			e.preventDefault();
+			activate(keys[i], true);
+		});
 
-			// Update active button
-			$('.ane-tab-btn').removeClass('active');
-			$btn.addClass('active');
+		// "(12 reviews)" link, WooCommerce's rating link and #reviews / #comments in the URL.
+		$(document).on('click', '[data-open-tab], a.woocommerce-review-link', function (e) {
+			const key = $(this).data('tab-target') || $(this).data('open-tab') || 'reviews';
+			if (activate(key, false)) {
+				e.preventDefault();
+				document.querySelector('.ane-product-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		});
+		if (/^#(reviews|comments|comment-)/.test(window.location.hash)) {
+			activate('reviews', false);
+		}
+	}
 
-			// Show corresponding tab content
-			$('.ane-tab-pane').removeClass('active');
-			$('#tab-' + tabId).addClass('active');
+	/**
+	 * WooCommerce variable products: show the chosen variation's image in the main slot.
+	 * WooCommerce triggers found_variation / reset_data on form.variations_form (jQuery events).
+	 */
+	function initVariationImages() {
+		const mainImg = $('.ane-gallery-main-img').get(0);
+		if (!mainImg) {
+			return;
+		}
+		const attrs = ['src', 'srcset', 'sizes', 'alt', 'width', 'height'];
+		const original = {};
+		attrs.forEach(function (attr) { original[attr] = mainImg.getAttribute(attr); });
+		const originalFull = $('.ane-gallery-popup').attr('href');
+
+		function apply(source, full) {
+			attrs.forEach(function (attr) {
+				if (source[attr]) {
+					mainImg.setAttribute(attr, source[attr]);
+				} else {
+					mainImg.removeAttribute(attr);
+				}
+			});
+			if (full) {
+				$('.ane-gallery-popup').attr('href', full);
+			}
+		}
+
+		$(document).on('found_variation', 'form.variations_form', function (event, variation) {
+			if (variation && variation.image && variation.image.src) {
+				apply({
+					src: variation.image.src,
+					srcset: variation.image.srcset,
+					sizes: variation.image.sizes,
+					alt: variation.image.alt,
+					width: variation.image.src_w,
+					height: variation.image.src_h
+				}, variation.image.full_src);
+				$('.ane-gallery-thumb').removeClass('active');
+			}
+		});
+		$(document).on('reset_data', 'form.variations_form', function () {
+			apply(original, originalFull);
+			$('.ane-gallery-thumb').first().addClass('active');
 		});
 	}
 
@@ -112,18 +192,10 @@
 		const $overlay = $('.ane-branch-modal-overlay');
 		const $searchInput = $('#ane-branch-search');
 
-		console.log('Branch modal init', {
-			modal: $modal.length,
-			trigger: $trigger.length,
-			close: $close.length,
-			overlay: $overlay.length,
-			search: $searchInput.length
-		});
 
 		// Open modal
 		$trigger.on('click', function (e) {
 			e.preventDefault();
-			console.log('Branch trigger clicked');
 			$modal.addClass('active');
 			$('body').addClass('ane-modal-open');
 
@@ -338,10 +410,10 @@
 	 * Initialize on Document Ready
 	 */
 	$(document).ready(function () {
-		console.log('Single product JS initialized');
 		initGalleryThumbs();
 		initGalleryLightbox();
 		initProductTabs();
+		initVariationImages();
 		initBranchModal();
 		initBranchWhatsApp();
 		initBranchDetail();

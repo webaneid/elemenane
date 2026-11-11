@@ -144,3 +144,38 @@ function elemenane_product_card_cta( $data ) {
 		elemenane_get_icon_svg( 'chevron-right' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static inline SVG from the theme.
 	);
 }
+
+/**
+ * Product IDs for the "related products" row on a single product page.
+ *
+ * WooCommerce active: WooCommerce's own related logic (categories + tags, respects exclusions and stock settings).
+ * Otherwise: random products of the same category (ane_get_related_products()).
+ *
+ * @param int $product_id Product post ID.
+ * @param int $limit      Maximum number of IDs.
+ * @return int[]
+ */
+function elemenane_get_related_product_ids( $product_id, $limit = 4 ) {
+	if ( elemenane_get_wc_product( $product_id ) && function_exists( 'wc_get_related_products' ) ) {
+		return array_map( 'intval', (array) wc_get_related_products( $product_id, $limit ) );
+	}
+
+	return array_map( 'intval', ane_get_related_products( $product_id, $limit ) );
+}
+
+/**
+ * Print a row of product cards for the given IDs.
+ *
+ * @param int[] $ids Product post IDs.
+ */
+function elemenane_render_product_cards( $ids ) {
+	if ( empty( $ids ) ) {
+		return;
+	}
+
+	echo '<div class="ane-pgrid">';
+	foreach ( $ids as $id ) {
+		get_template_part( 'tp/content', 'product', array( 'product_id' => (int) $id ) );
+	}
+	echo '</div>';
+}

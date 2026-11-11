@@ -816,7 +816,7 @@ function ane_product_single_enqueue_scripts() {
 			'ane-single-product',
 			get_template_directory_uri() . '/js/single-product.js',
 			array( 'jquery', 'magnific' ),
-			'1.1.0',
+			'1.2.0',
 			true
 		);
 

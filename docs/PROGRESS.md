@@ -25,6 +25,7 @@ Dokumen ini melacak status pengerjaan setiap fase retrofit keamanan, rekayasa ko
 | **[Fase 14](phases/phase-14-entry-header-share.md)** | Refactoring entry header single + share bar (WhatsApp/Facebook/X/LinkedIn/Email, Salin tautan, native share) berisi judul, deskripsi, URL | Permintaan desain | **Completed** | 2026-11-11 |
 | **[Fase 15](phases/phase-15-ane-content.md)** | Perbaikan total `.ane-content`: akar masalah overflow mobile (flex column wrap), blok konten WordPress konsisten | Permintaan perbaikan | **Completed** | 2026-11-11 |
 | **[Fase 16](phases/phase-16-product-archive-card.md)** | Arsip produk (`/product/`, kategori, tag) + `ane-product-card` baru, adapter data tema/WooCommerce, override template WooCommerce | Permintaan desain | **Completed** | 2026-11-11 |
+| **[Fase 17](phases/phase-17-single-product.md)** | Single product baru: galeri, ringkasan, tab ARIA, WooCommerce (variabel, add-to-cart, atribut, ulasan, related/upsell) | Permintaan desain | **Completed** | 2026-11-11 |
 
 ---
 

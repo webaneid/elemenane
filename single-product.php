@@ -2,398 +2,74 @@
 /**
  * Single Product Template
  *
- * Displays individual product with gallery, pricing, purchase options, and related products.
+ * Works with the theme's own products and with WooCommerce products (simple, variable, grouped, external).
+ * Parts: tp/product-gallery.php, tp/product-summary.php, tp/product-tabs.php, tp/product-branch-modal.php.
  *
  * @package elemenane
- * @since 1.0.0
+ * @since   1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 get_header();
 
 while ( have_posts() ) :
 	the_post();
 
-	$product_id = get_the_ID();
-
-	// Get product data.
-	$prices       = ane_get_product_price_data( $product_id );
-	$sku          = get_field( '_sku', $product_id );
-	$stock_status = ane_get_product_stock_status( $product_id );
-	$gallery      = ane_get_product_gallery_ids( $product_id );
-	$specs        = get_field( 'ane_product_specs', $product_id );
-	$features     = get_field( 'ane_product_features', $product_id );
-	$marketplaces = ane_get_product_marketplaces( $product_id );
-	$branches     = ane_get_product_branches();
-	$whatsapp_url = ane_get_product_whatsapp_url( $product_id, 'admin' );
-	$categories   = get_the_terms( $product_id, 'product_cat' );
-
-
-	// Prepare gallery images.
-	$thumbnail = get_post_thumbnail_id( $product_id );
-	$images    = array();
-
-	// Add featured image first.
-	if ( $thumbnail ) {
-		$images[] = $thumbnail;
-	}
-
-	// Add gallery images (WooCommerce's _product_image_gallery IDs).
-	if ( ! empty( $gallery ) ) {
-		foreach ( $gallery as $image_id ) {
-			if ( (int) $image_id !== (int) $thumbnail ) {
-				$images[] = $image_id;
-			}
-		}
-	}
+	$elemenane_id      = (int) get_the_ID();
+	$elemenane_wc      = elemenane_get_wc_product( $elemenane_id );
+	$elemenane_args    = array( 'product_id' => $elemenane_id );
+	$elemenane_related = elemenane_get_related_product_ids( $elemenane_id, 4 );
+	$elemenane_upsell  = $elemenane_wc ? array_slice( array_map( 'intval', (array) $elemenane_wc->get_upsell_ids() ), 0, 4 ) : array();
+	$elemenane_classes = $elemenane_wc
+		? implode( ' ', array_map( 'sanitize_html_class', wc_get_product_class( 'ane-sp', $elemenane_wc ) ) )
+		: implode( ' ', array_map( 'sanitize_html_class', get_post_class( 'ane-sp product', $elemenane_id ) ) );
 	?>
+	<main id="main" class="site-main ane-archive ane-archive--single-product" role="main">
+		<?php get_template_part( 'breadcrumbs' ); ?>
 
-	<div class="ane-product-single">
-		<div class="ane-container">
-
-			<!-- Breadcrumb -->
-			<div class="ane-breadcrumb">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
-				<span class="separator">›</span>
-				<?php if ( $categories && ! is_wp_error( $categories ) ) : ?>
-					<a href="<?php echo esc_url( get_term_link( $categories[0] ) ); ?>">
-						<?php echo esc_html( $categories[0]->name ); ?>
-					</a>
-					<span class="separator">›</span>
-				<?php endif; ?>
-				<span class="current"><?php the_title(); ?></span>
-			</div>
-
-			<!-- Product Main Section -->
-			<div class="ane-product-main">
-
-				<!-- Gallery Section -->
-				<div class="ane-product-gallery">
-					<?php if ( ! empty( $images ) ) : ?>
-						<!-- Main Image -->
-						<div class="ane-gallery-main">
-							<a href="<?php echo esc_url( wp_get_attachment_image_url( $images[0], 'full' ) ); ?>"
-								class="ane-gallery-popup">
-								<?php
-								echo wp_get_attachment_image(
-									$images[0],
-									'kotak',
-									false,
-									array(
-										'class'         => 'ane-gallery-main-img',
-										'loading'       => 'eager',
-										'fetchpriority' => 'high',
-										'sizes'         => '(max-width: 767px) 100vw, 500px',
-									)
-								);
-								?>
-							</a>
-						</div>
-
-						<!-- Thumbnails -->
-						<?php if ( count( $images ) > 1 ) : ?>
-							<div class="ane-gallery-thumbs">
-								<?php foreach ( $images as $index => $image_id ) : ?>
-									<div class="ane-gallery-thumb <?php echo $index === 0 ? 'active' : ''; ?>"
-										data-full="<?php echo esc_url( wp_get_attachment_image_url( $image_id, 'full' ) ); ?>">
-										<?php echo wp_get_attachment_image( $image_id, 'kotak' ); ?>
-									</div>
-								<?php endforeach; ?>
-							</div>
-						<?php endif; ?>
-					<?php else : ?>
-						<div class="ane-gallery-placeholder">
-							<img src="<?php echo esc_url( get_template_directory_uri() . '/img/placeholder.jpg' ); ?>" alt="No image">
-						</div>
-					<?php endif; ?>
-				</div>
-
-				<!-- Product Info Section -->
-				<div class="ane-product-info">
-
-					<!-- Category -->
-					<?php if ( $categories && ! is_wp_error( $categories ) ) : ?>
-						<div class="ane-product-category">
-							<a href="<?php echo esc_url( get_term_link( $categories[0] ) ); ?>">
-								<?php echo esc_html( $categories[0]->name ); ?>
-							</a>
-						</div>
-					<?php endif; ?>
-
-					<!-- Title -->
-					<h1 class="ane-product-title"><?php the_title(); ?></h1>
-
-					<!-- SKU & Stock Status -->
-					<?php if ( $sku || $stock_status ) : ?>
-						<div class="ane-product-meta">
-							<?php if ( $sku ) : ?>
-								<span class="ane-sku">SKU: <?php echo esc_html( $sku ); ?></span>
-							<?php endif; ?>
-							<?php if ( $stock_status ) : ?>
-								<span class="ane-stock-status <?php echo $stock_status === 'instock' ? 'in-stock' : 'out-of-stock'; ?>">
-									<?php if ( $stock_status === 'instock' ) : ?>
-										<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-											<circle cx="8" cy="8" r="8" fill="#10b981"/>
-											<path d="M11 6L7 10L5 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										</svg>
-										<span><?php esc_html_e( 'In Stock', 'elemenane' ); ?></span>
-									<?php else : ?>
-										<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-											<circle cx="8" cy="8" r="8" fill="#ef4444"/>
-											<path d="M10 6L6 10M6 6L10 10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-										</svg>
-										<span><?php esc_html_e( 'Out of Stock', 'elemenane' ); ?></span>
-									<?php endif; ?>
-								</span>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-
-					<!-- Price (hidden when the product has no price) -->
-					<?php if ( $prices['price'] > 0 ) : ?>
-					<div class="ane-product-price-wrap">
-						<?php if ( $prices['on_sale'] ) : ?>
-							<div class="ane-price-main">
-								<span class="ane-price-sale"><?php echo esc_html( ane_format_rupiah( $prices['sale'] ) ); ?></span>
-								<span class="ane-price-regular-strike"><?php echo esc_html( ane_format_rupiah( $prices['regular'] ) ); ?></span>
-							</div>
-							<span class="ane-price-badge">-<?php echo esc_html( $prices['discount'] ); ?>%</span>
-						<?php else : ?>
-							<div class="ane-price-main">
-								<span class="ane-price-current"><?php echo esc_html( ane_format_rupiah( $prices['price'] ) ); ?></span>
-							</div>
-						<?php endif; ?>
-						<p class="ane-price-note">(MRP inclusive of all taxes)</p>
-					</div>
-					<?php endif; ?>
-
-					<!-- Short Description -->
-					<?php if ( has_excerpt() ) : ?>
-						<div class="ane-product-excerpt">
-							<?php the_excerpt(); ?>
-						</div>
-					<?php endif; ?>
-
-					<!-- Purchase Options -->
-					<div class="ane-purchase-options">
-
-						<!-- WhatsApp Admin -->
-						<?php if ( $whatsapp_url ) : ?>
-							<a href="<?php echo esc_url( $whatsapp_url ); ?>"
-								class="ane-btn ane-btn-whatsapp"
-								target="_blank"
-								rel="noopener">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-									<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-								</svg>
-								<?php esc_html_e( 'Chat WhatsApp', 'elemenane' ); ?>
-							</a>
-						<?php endif; ?>
-
-						<!-- Buy at Branch (Dropdown Trigger) -->
-						<?php if ( ! empty( $branches ) ) : ?>
-							<button class="ane-btn ane-btn-branch" id="ane-branch-trigger">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-									<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-									<circle cx="12" cy="10" r="3"/>
-								</svg>
-								<?php esc_html_e( 'Buy at Branch', 'elemenane' ); ?>
-							</button>
-						<?php endif; ?>
-
-						<!-- Marketplace Links -->
-						<?php if ( ! empty( $marketplaces ) ) : ?>
-							<div class="ane-marketplace-section">
-								<p class="ane-marketplace-label"><?php esc_html_e( 'Or buy on marketplace:', 'elemenane' ); ?></p>
-								<div class="ane-marketplace-links">
-									<?php foreach ( $marketplaces as $key => $marketplace ) : ?>
-										<a href="<?php echo esc_url( $marketplace['url'] ); ?>"
-											class="ane-marketplace-btn ane-marketplace-<?php echo esc_attr( $key ); ?>"
-											target="_blank"
-											rel="noopener">
-											<?php echo esc_html( $marketplace['name'] ); ?>
-										</a>
-									<?php endforeach; ?>
-								</div>
-							</div>
-						<?php endif; ?>
-
-					</div>
-
-				</div>
-
-			</div>
-
-			<!-- Product Tabs -->
-			<div class="ane-product-tabs">
-				<div class="ane-tabs-nav">
-					<button class="ane-tab-btn active" data-tab="description"><?php esc_html_e( 'Description', 'elemenane' ); ?></button>
-					<?php if ( ! empty( $specs ) ) : ?>
-						<button class="ane-tab-btn" data-tab="specs"><?php esc_html_e( 'Specifications', 'elemenane' ); ?></button>
-					<?php endif; ?>
-					<?php if ( ! empty( $features ) ) : ?>
-						<button class="ane-tab-btn" data-tab="features"><?php esc_html_e( 'Features', 'elemenane' ); ?></button>
-					<?php endif; ?>
-				</div>
-
-				<div class="ane-tabs-content">
-					<!-- Description Tab -->
-					<div class="ane-content ane-tab-pane active" id="tab-description">
-						<?php the_content(); ?>
-
-						<!-- Product Tags -->
-						<?php
-						$tags = get_the_terms( $product_id, 'product_tag' );
-						if ( $tags && ! is_wp_error( $tags ) ) :
-							?>
-							<div class="ane-product-tags">
-								<span class="tags-label"><?php esc_html_e( 'Tags:', 'elemenane' ); ?></span>
-								<div class="tags-list">
-									<?php foreach ( $tags as $tag ) : ?>
-										<a href="<?php echo esc_url( get_term_link( $tag ) ); ?>" class="tag-item">
-											<?php echo esc_html( $tag->name ); ?>
-										</a>
-									<?php endforeach; ?>
-								</div>
-							</div>
-						<?php endif; ?>
-					</div>
-
-					<!-- Specifications Tab -->
-					<?php if ( ! empty( $specs ) ) : ?>
-						<div class="ane-tab-pane" id="tab-specs">
-							<table class="ane-specs-table">
-								<tbody>
-									<?php foreach ( $specs as $spec ) : ?>
-										<tr>
-											<th><?php echo esc_html( $spec['label'] ); ?></th>
-											<td><?php echo esc_html( $spec['value'] ); ?></td>
-										</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
-						</div>
-					<?php endif; ?>
-
-					<!-- Features Tab -->
-					<?php if ( ! empty( $features ) ) : ?>
-						<div class="ane-tab-pane" id="tab-features">
-							<ul class="ane-features-list">
-								<?php foreach ( $features as $feature ) : ?>
-									<li><?php echo esc_html( $feature['feature'] ); ?></li>
-								<?php endforeach; ?>
-							</ul>
-						</div>
-					<?php endif; ?>
-				</div>
-			</div>
-
-			<!-- Related Products -->
+		<div class="container">
 			<?php
-			// Get products from same category
-			$categories = wp_get_post_terms( $product_id, 'product_cat', array( 'fields' => 'ids' ) );
-
-			if ( ! empty( $categories ) ) :
-				$related_args = array(
-					'post_type'      => 'product',
-					'posts_per_page' => 4,
-					'post__not_in'   => array( $product_id ),
-					'tax_query'      => array(
-						array(
-							'taxonomy' => 'product_cat',
-							'field'    => 'term_id',
-							'terms'    => $categories,
-						),
-					),
-					'orderby'        => 'rand',
-				);
-
-				$related_query = new WP_Query( $related_args );
-
-				if ( $related_query->have_posts() ) :
-					?>
-				<div class="ane-related-products">
-					<h2 class="ane-section-title"><?php esc_html_e( 'Related Products', 'elemenane' ); ?></h2>
-					<div class="ane-pgrid">
-						<?php
-						while ( $related_query->have_posts() ) :
-							$related_query->the_post();
-							get_template_part( 'tp/content', 'product' );
-						endwhile;
-						wp_reset_postdata();
-						?>
-					</div>
-				</div>
-					<?php
-				endif;
-			endif;
+			if ( $elemenane_wc ) {
+				// Notices ("added to cart"), password protection, plugins.
+				do_action( 'woocommerce_before_single_product' );
+			}
 			?>
 
-		</div>
-	</div>
-
-	<!-- Branch Popup Modal -->
-	<?php if ( ! empty( $branches ) ) : ?>
-		<!-- Debug: <?php echo count( $branches ); ?> branches found -->
-		<div class="ane-branch-modal" id="ane-branch-modal">
-			<div class="ane-branch-modal-overlay"></div>
-			<div class="ane-branch-modal-content">
-				<button class="ane-branch-modal-close" id="ane-branch-modal-close">×</button>
-				<h3><?php esc_html_e( 'Select Branch', 'elemenane' ); ?></h3>
-
-				<!-- Search Input -->
-				<div class="ane-branch-search-wrap">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="11" cy="11" r="8"/>
-						<path d="m21 21-4.35-4.35"/>
-					</svg>
-					<input type="text"
-							id="ane-branch-search"
-							class="ane-branch-search"
-							placeholder="<?php esc_attr_e( 'Search by city or branch name...', 'elemenane' ); ?>"
-							autocomplete="off">
+			<div id="product-<?php echo esc_attr( (string) $elemenane_id ); ?>" class="<?php echo esc_attr( $elemenane_classes ); ?>">
+				<div class="ane-sp__top">
+					<?php
+					get_template_part( 'tp/product', 'gallery', $elemenane_args );
+					get_template_part( 'tp/product', 'summary', $elemenane_args );
+					?>
 				</div>
 
-				<div class="ane-branch-list">
-					<?php foreach ( $branches as $branch ) : ?>
-						<div class="ane-branch-item" data-branch='<?php echo esc_attr( json_encode( $branch ) ); ?>'>
-							<div class="ane-branch-item-header">
-								<h4><?php echo esc_html( $branch['title'] ); ?></h4>
-								<?php if ( ! empty( $branch['city'] ) ) : ?>
-									<span class="ane-branch-city"><?php echo esc_html( $branch['city'] ); ?></span>
-								<?php endif; ?>
-							</div>
-							<div class="ane-branch-item-body">
-								<?php if ( ! empty( $branch['address'] ) ) : ?>
-									<p class="ane-branch-address">
-										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-											<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-											<circle cx="12" cy="10" r="3"/>
-										</svg>
-										<?php echo esc_html( $branch['address'] ); ?>
-									</p>
-								<?php endif; ?>
-								<div class="ane-branch-actions">
-									<?php if ( ! empty( $branch['whatsapp'] ) ) : ?>
-										<a href="#" class="ane-btn ane-btn-sm ane-btn-whatsapp ane-branch-whatsapp"
-											data-whatsapp="<?php echo esc_attr( $branch['whatsapp'] ); ?>">
-											<?php esc_html_e( 'WhatsApp', 'elemenane' ); ?>
-										</a>
-									<?php endif; ?>
-									<button class="ane-btn ane-btn-sm ane-btn-outline ane-branch-detail">
-										<?php esc_html_e( 'Detail', 'elemenane' ); ?>
-									</button>
-								</div>
-							</div>
-						</div>
-					<?php endforeach; ?>
-				</div>
+				<?php get_template_part( 'tp/product', 'tabs', $elemenane_args ); ?>
+
+				<?php if ( ! empty( $elemenane_upsell ) ) : ?>
+					<section class="ane-sp__more" aria-labelledby="ane-upsell-title">
+						<h2 id="ane-upsell-title" class="ane-section-title"><?php esc_html_e( 'You may also like', 'elemenane' ); ?></h2>
+						<?php elemenane_render_product_cards( $elemenane_upsell ); ?>
+					</section>
+				<?php endif; ?>
+
+				<?php if ( ! empty( $elemenane_related ) ) : ?>
+					<section class="ane-sp__more ane-related-products" aria-labelledby="ane-related-title">
+						<h2 id="ane-related-title" class="ane-section-title"><?php esc_html_e( 'Related Products', 'elemenane' ); ?></h2>
+						<?php elemenane_render_product_cards( $elemenane_related ); ?>
+					</section>
+				<?php endif; ?>
 			</div>
+
+			<?php
+			if ( $elemenane_wc ) {
+				do_action( 'woocommerce_after_single_product' );
+			}
+			?>
 		</div>
-	<?php endif; ?>
+	</main>
+
+	<?php get_template_part( 'tp/product', 'branch-modal', array( 'branches' => ane_get_product_branches() ) ); ?>
 
 	<?php
 endwhile;

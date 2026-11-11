@@ -523,3 +523,50 @@ msgstr "Lihat detail"
 #, php-format
 msgid "Rated %s out of 5"
 msgstr "Dinilai %s dari 5"
+
+# Single product (tp/product-*.php)
+#: tp/product-*.php
+msgid "Sale"
+msgstr "Diskon"
+
+#: tp/product-*.php
+msgid "Enlarge image"
+msgstr "Perbesar gambar"
+
+#: tp/product-*.php
+msgid "Product images"
+msgstr "Gambar produk"
+
+#: tp/product-*.php
+#, php-format
+msgid "Show image %d"
+msgstr "Tampilkan gambar %d"
+
+#: tp/product-*.php
+msgid "SKU:"
+msgstr "SKU:"
+
+#: tp/product-*.php
+msgid "N/A"
+msgstr "N/A"
+
+#: tp/product-*.php
+msgid "(MRP inclusive of all taxes)"
+msgstr "(Harga sudah termasuk pajak)"
+
+#: tp/product-*.php
+#, php-format
+msgid "Reviews (%d)"
+msgstr "Ulasan (%d)"
+
+#: tp/product-*.php
+msgid "Product information"
+msgstr "Informasi produk"
+
+#: tp/product-*.php
+msgid "You may also like"
+msgstr "Anda mungkin juga suka"
+
+#: tp/product-*.php
+msgid "Close"
+msgstr "Tutup"
