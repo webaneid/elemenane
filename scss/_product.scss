@@ -94,24 +94,25 @@
 }
 
 .ane-btn-branch {
-	background: #2d232e;
-	color: #fff;
+	background: var(--ane-warna-gelap);
+	color: var(--ane-warna-putih);
 
 	&:hover {
-		background: #1f1920;
+		background: var(--ane-warna-gelap);
+		filter: brightness(1.25);
 		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(45, 35, 46, 0.3);
+		box-shadow: 0 4px 12px rgba(var(--ane-warna-gelap-rgb), 0.3);
 	}
 }
 
 .ane-btn-outline {
-	background: #fff;
-	color: #2d232e;
-	border: 2px solid #2d232e;
+	background: var(--ane-warna-putih);
+	color: var(--ane-warna-utama);
+	border: 2px solid var(--ane-warna-utama);
 
 	&:hover {
-		background: #2d232e;
-		color: #fff;
+		background: var(--ane-warna-utama);
+		color: var(--ane-warna-putih);
 	}
 }
 
@@ -324,7 +325,7 @@
 
 	&:focus {
 		outline: none;
-		border-color: #2d232e;
+		border-color: var(--ane-warna-utama);
 		box-shadow: 0 0 0 4px rgba(45, 35, 46, 0.1);
 	}
 
@@ -379,7 +380,7 @@
 	transition: all 0.2s;
 
 	&:hover {
-		border-color: #2d232e;
+		border-color: var(--ane-warna-utama);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 	}
 }

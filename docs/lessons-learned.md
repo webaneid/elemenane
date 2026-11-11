@@ -42,3 +42,9 @@ Pada halaman yang dirender Elementor Theme Builder, body mendapat `.elementor-ki
 
 ## Template arsip tidak selalu dipakai
 `elementor_theme_do_location( 'archive' )` mengambil alih category/tag/search/author bila ada template Elementor. Saat menguji template tema, jangan mengira halaman `?s=` memakai `search.php`; cek template aktif dulu.
+
+## WooCommerce mengganti permalink arsip produk
+Saat WooCommerce diaktifkan ia menulis ulang aturan permalink dan memindahkan arsip produk dari `/product/` ke `/shop/`. Menonaktifkannya tidak mengembalikan aturan lama sampai permalink di-flush, sehingga `/product/` memberi 404. Setelah mengaktifkan / menonaktifkan WooCommerce (atau mengujinya) selalu jalankan `flush_rewrite_rules()` / simpan ulang Settings > Permalinks.
+
+## Nama kelas BEM bentrok antar halaman di `catalog.css`
+`catalog.css` memuat gaya produk dan cabang sekaligus. Dialog cabang di halaman produk memakai `.ane-branch-modal` / `.ane-branch-list` (non-BEM), sehingga dialog arsip cabang dengan nama sama tertimpa (`display: none`, `display: flex`). Arsip cabang kini memakai `.ane-branch-dialog` dan `.ane-branch-grid`. Pakai awalan unik per komponen.

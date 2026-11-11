@@ -393,7 +393,7 @@ function ane_enqueue_branch_frontend_scripts() {
 			'ane-branch-archive',
 			get_template_directory_uri() . '/js/branch-archive.js',
 			array( 'jquery' ),
-			'1.0.2',
+			'1.1.0',
 			true
 		);
 
@@ -403,6 +403,28 @@ function ane_enqueue_branch_frontend_scripts() {
 			'aneMapConfig',
 			array(
 				'location_json_url' => get_template_directory_uri() . '/inc/indonesia-locations.json',
+				'pageSize'          => 12,
+				'icons'             => array(
+					'lokasi'  => elemenane_get_icon_svg( 'lokasi' ),
+					'telepon' => elemenane_get_icon_svg( 'telepon' ),
+					'jam'     => elemenane_get_icon_svg( 'jam' ),
+					'whatsapp' => elemenane_get_icon_svg( 'whatsapp' ),
+					'email'   => elemenane_get_icon_svg( 'email' ),
+				),
+				'i18n'              => array(
+					'detail'      => __( 'Detail', 'elemenane' ),
+					'directions'  => __( 'Petunjuk Arah', 'elemenane' ),
+					'whatsapp'    => __( 'Chat WhatsApp', 'elemenane' ),
+					'detailPage'  => __( 'Halaman Detail', 'elemenane' ),
+					'address'     => __( 'Alamat', 'elemenane' ),
+					'phone'       => __( 'Telepon', 'elemenane' ),
+					'email'       => __( 'Email', 'elemenane' ),
+					'hours'       => __( 'Jam Operasional', 'elemenane' ),
+					'seeDetail'   => __( 'Lihat Detail', 'elemenane' ),
+					'allCities'   => __( 'Semua Kota', 'elemenane' ),
+					'noneInArea'  => __( 'Tidak ada cabang di lokasi yang dipilih.', 'elemenane' ),
+					'mapFailed'   => __( 'Peta tidak dapat dimuat atau tidak ada cabang.', 'elemenane' ),
+				),
 			)
 		);
 	}
