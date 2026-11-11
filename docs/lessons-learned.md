@@ -56,3 +56,5 @@ Saat WooCommerce diaktifkan ia menulis ulang aturan permalink dan memindahkan ar
 - Komentar `/*# sourceMappingURL=... */` di `.min.css` menyebabkan 404 di konsol bila `.map` tidak dirilis: kompilasi `.min.css` dengan `--no-source-map`.
 - `preconnect` ke host yang tidak dipakai (Google Fonts saat Elementor menyajikan font lokal) dinilai PageSpeed sebagai "unused preconnect": cetak hanya saat stylesheet fonts benar-benar di-enqueue.
 - Hindari pustaka pihak ketiga (Magnific CDN) untuk fitur sederhana: `<dialog>` native + ~3 KB JS cukup, dan menghilangkan 2 request lintas-origin.
+- Skor PageSpeed berfluktuasi antar run (86 -> 81 tanpa perubahan relevan di tema). Bandingkan beberapa run; atribusikan dulu tiap temuan ke sumbernya (tema / Elementor / pihak ketiga) sebelum mengubah kode.
+- Laporan PageSpeed yang dibuka lewat browser otomatis tidak bisa diekspor oleh alat (URL aset ber-query-string diblokir); minta pengguna menempel tabel temuan.

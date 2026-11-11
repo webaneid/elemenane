@@ -54,3 +54,29 @@ Pemeriksaan silang: untuk 16 halaman (termasuk Canvas dan halaman Elementor), se
 ## 6. Belum Diverifikasi
 - Skor PageSpeed setelah versi ini (perlu rilis ke situs klien).
 - Lightbox pada konten artikel sungguhan dengan banyak gambar (data lokal tidak punya tautan gambar di isi artikel) dan pada layar sentuh nyata.
+
+## 7. Pengukuran Setelah 1.3.0 (kenchick.id, mobile)
+| Kategori | Skor |
+|---|---|
+| Performance | 81 (FCP 1,5 s, LCP 1,5 s, TBT 510 ms, CLS 0,011, SI 6,4 s) |
+| Accessibility / Best Practices / SEO | 91 / 77 / 100 |
+
+Skor performa 81 (sebelumnya 86 pada 1.2.0) berfluktuasi antar run PageSpeed; TBT dan Speed Index yang bergerak, bukan FCP / LCP. Satu run tidak cukup untuk menyimpulkan kemunduran. Ukur beberapa kali sebelum membandingkan.
+
+Atribusi temuan (data detail dari laporan):
+- **CSS tidak terpakai (±130 KiB)**: 72 KiB tak teratribusi (`:root{--t…}` dan `.elementor-kit-80{…}`, milik Elementor) + 58 KiB `www-player.css` YouTube. `main.min.css` tema **tidak muncul lagi**.
+- **JS tidak terpakai (±742 KiB)**: YouTube (`base.js` 472 KiB + modul player, ±518 KiB hemat), Google One Tap `gsi/client` (±82 KiB), Google Tag Manager (±73 KiB), Meta SDK (±53 KiB), `swiper.min.js` Elementor (±20 KiB).
+- **Render-blocking (±2,1 s)**: puluhan stylesheet widget Elementor (`widget-*.min.css`, `custom-frontend`, `e-swiper`, `motion-fx`, `swiper`, font lokal `poppins|roboto|inter|bebasneue.css`) + `jquery.min.js` (29 KiB). Tidak ada berkas `elemenane`.
+- **Lainnya**: cache lifetimes 178 KiB, image delivery 231 KiB (Elementor / server), 16 long task, main-thread 5,3 s, 4 cookie pihak ketiga, kontras warna (a11y 91).
+
+Kesimpulan: sisa temuan bukan dari tema. Rekomendasi untuk klien tetap seperti bagian 5, urut dampak:
+1. Video YouTube -> *Lazy Load* / gambar overlay (hemat ±520 KiB JS + 58 KiB CSS).
+2. Matikan atau tunda Google One Tap.
+3. Tunda GTM dan Meta SDK sampai interaksi pertama (script Meta ada di ACF `ane_metasdk_body`, isi dari klien).
+4. Elementor > Features: *Improved Asset Loading*, *Improved CSS Loading*, *Inline Font Icons*.
+5. Plugin cache untuk menggabung / inline CSS, menunda JS, dan header `Cache-Control`.
+
+**Keputusan**: facade YouTube dari tema dan perbaikan kontras tidak dikerjakan sekarang (diputuskan pemilik proyek: dampaknya di luar tema dan tidak dipermasalahkan). Dapat dibuka sebagai fase baru bila diperlukan.
+
+## 8. Gambar Unggahan (WebP)
+`inc/webp-converter.php` (Fase 04) mengonversi otomatis saat unggah (`wp_handle_upload`, `wp_handle_sideload`): `image/jpeg` dan `image/png` menjadi `.webp` (kualitas `ELEMENANE_WEBP_QUALITY` = 78, filter `elemenane_webp_quality`), berkas asli dihapus setelah `.webp` terverifikasi, dan ukuran turunan WordPress ikut WebP. Tidak dikonversi: PNG beranimasi, GIF, SVG, dan server tanpa dukungan WebP pada editor gambar (diteruskan apa adanya). Konversi hanya berlaku untuk **unggahan baru**; gambar yang sudah ada di Media Library tidak diubah.
