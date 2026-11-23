@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/webaneid/elemenane/compare/v1.3.0...v1.4.0) (2026-11-23)
+
+
+### Features
+
+* **seo:** implement 2026 hybrid SEO, GEO llms.txt endpoints, unified schema graph, and 301 slug redirects ([02ce7e7](https://github.com/webaneid/elemenane/commit/02ce7e75d036ae2979532b08110e7e77074f9403))
+
 # [1.3.0](https://github.com/webaneid/elemenane/compare/v1.2.0...v1.3.0) (2026-11-11)
 
 
